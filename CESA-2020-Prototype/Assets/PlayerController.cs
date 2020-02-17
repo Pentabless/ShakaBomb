@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     // 接地フラグ
     bool isGround;
 
+    // プレイヤーの向き
+    float dir = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,31 +25,41 @@ public class PlayerController : MonoBehaviour
         // 速さ制限
         if (Mathf.Abs(rig.velocity.x) >= 5.0f)
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (dir != 0.0f)
             {
-                rig.velocity = new Vector2(-5.0f, rig.velocity.y);
+                rig.velocity = new Vector2(5.0f * dir, rig.velocity.y);
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                rig.velocity = new Vector2(5.0f, rig.velocity.y);
-            }
-
         }
 
         // 左右移動
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rig.AddForce(new Vector2(-80.0f, 0));
+            dir = -1.0f;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            rig.AddForce(new Vector2(80.0f, 0));
+            dir = 1.0f;
         }
+        else
+        {
+            dir = 0.0f;
+        }
+
+        // 移動
+        if(isGround)
+        {
+            rig.AddForce(new Vector2(80.0f * dir, 0));
+        }
+        else
+        {
+            rig.AddForce(new Vector2(40.0f * dir, 0));
+        }
+
 
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
         {
-            rig.AddForce(new Vector2(0, 700.0f));
+            rig.AddForce(new Vector2(0, 650.0f));
             isGround = false;
         }
     }
