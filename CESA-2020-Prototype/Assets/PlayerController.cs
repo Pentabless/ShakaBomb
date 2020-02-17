@@ -10,13 +10,14 @@ public class PlayerController : MonoBehaviour
     bool isGround;
 
     // プレイヤーの向き
-    float dir = 0.0f;
+    float dir;
 
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
+        dir = 0.0f;
     }
 
     // Update is called once per frame
@@ -27,9 +28,14 @@ public class PlayerController : MonoBehaviour
         {
             rig.velocity = new Vector2(5.0f, rig.velocity.y);
         }
-        else if(dir <= -1.0f && rig.velocity.x <= -5.0f)
+        else if (dir <= -1.0f && rig.velocity.x <= -5.0f)
         {
             rig.velocity = new Vector2(-5.0f, rig.velocity.y);
+        }
+        // Velocity最小化
+        if (Mathf.Abs(rig.velocity.x) <= 0.001f)
+        {
+            rig.velocity = new Vector2(0.0f, rig.velocity.y); ;
         }
 
 
@@ -47,10 +53,20 @@ public class PlayerController : MonoBehaviour
             dir = 0.0f;
         }
 
-        // 移動
-        if(isGround)
+        // 切り替えし
+        if (rig.velocity.x >= 0.0001f && Input.GetKey(KeyCode.LeftArrow))
         {
-            rig.AddForce(new Vector2(120.0f * dir, 0));
+            Debug.Log("RtoL");
+        }
+        if (rig.velocity.x <= -0.0001f && Input.GetKey(KeyCode.RightArrow))
+        {
+            Debug.Log("LtoR");
+        }
+
+        // 移動
+        if (isGround)
+        {
+            rig.AddForce(new Vector2(160.0f * dir, 0));
         }
         else
         {
@@ -63,6 +79,7 @@ public class PlayerController : MonoBehaviour
         {
             rig.AddForce(new Vector2(0, 650.0f));
             isGround = false;
+            Debug.Log("");
         }
     }
 
