@@ -23,13 +23,15 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // 速さ制限
-        if (Mathf.Abs(rig.velocity.x) >= 5.0f)
+        if (dir >= 1.0f && rig.velocity.x >= 5.0f)
         {
-            if (dir != 0.0f)
-            {
-                rig.velocity = new Vector2(5.0f * dir, rig.velocity.y);
-            }
+            rig.velocity = new Vector2(5.0f, rig.velocity.y);
         }
+        else if(dir <= -1.0f && rig.velocity.x <= -5.0f)
+        {
+            rig.velocity = new Vector2(-5.0f, rig.velocity.y);
+        }
+
 
         // 左右移動
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
         // 移動
         if(isGround)
         {
-            rig.AddForce(new Vector2(80.0f * dir, 0));
+            rig.AddForce(new Vector2(120.0f * dir, 0));
         }
         else
         {
