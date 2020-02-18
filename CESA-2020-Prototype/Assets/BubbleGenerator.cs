@@ -17,13 +17,13 @@ public class BubbleGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             //作ろうとしている状態にする
             isCreate = true;
         }
 
-        if(isCreate)
+        if (isCreate)
         {
             //プレファブと同じオブジェクトを作る
             GameObject go = Instantiate(bubblePrefab) as GameObject;
@@ -37,5 +37,11 @@ public class BubbleGenerator : MonoBehaviour
     public void CreateBubble(bool create)
     {
         isCreate = create;
+    }
+
+
+    public void BubbleCreate()
+    {
+        isCreate = true;
     }
 }

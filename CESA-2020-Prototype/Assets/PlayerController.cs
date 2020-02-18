@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rig;
 
+    [SerializeField]
+    BubbleGenerator bubbleG;
+
     // 接地フラグ
     bool isGround;
 
@@ -54,15 +57,17 @@ public class PlayerController : MonoBehaviour
         }
 
         // 切り替えし(地上にいるときのみ)
-        if(isGround)
+        if (isGround)
         {
             if (rig.velocity.x >= 0.0001f && Input.GetKey(KeyCode.LeftArrow))
             {
                 Debug.Log("RtoL");
+                bubbleG.BubbleCreate();
             }
             if (rig.velocity.x <= -0.0001f && Input.GetKey(KeyCode.RightArrow))
             {
                 Debug.Log("LtoR");
+                bubbleG.BubbleCreate();
             }
         }
 

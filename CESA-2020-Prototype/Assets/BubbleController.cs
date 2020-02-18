@@ -53,9 +53,11 @@ public class BubbleController : MonoBehaviour
         //ある程度の高さまで来たら
         if (transform.position.y >= 10.0f)
         {
-            Vector3 position = new Vector3(transform.position.x, -0.25f, 0.0f);
-            transform.position = position;
-            angle = 0.0f;
+            //Vector3 position = new Vector3(transform.position.x, -0.25f, 0.0f);
+            //transform.position = position;
+            //angle = 0.0f;
+
+            isDestroy = true;
         }
 
         //色の変更
@@ -78,7 +80,7 @@ public class BubbleController : MonoBehaviour
         //大きさを変更する
         if (now_scale != target_scale) //今の大きさと目的の大きさが違っていたら
         {
-            now_scale += (target_scale - now_scale)/target_scale_time;
+            now_scale += (target_scale - now_scale) / target_scale_time;
 
             //目的の大きさより大きくなったら
             if (now_scale.x >= target_scale.x)
