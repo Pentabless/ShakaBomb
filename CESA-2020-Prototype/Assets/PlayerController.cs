@@ -53,14 +53,17 @@ public class PlayerController : MonoBehaviour
             dir = 0.0f;
         }
 
-        // 切り替えし
-        if (rig.velocity.x >= 0.0001f && Input.GetKey(KeyCode.LeftArrow))
+        // 切り替えし(地上にいるときのみ)
+        if(isGround)
         {
-            Debug.Log("RtoL");
-        }
-        if (rig.velocity.x <= -0.0001f && Input.GetKey(KeyCode.RightArrow))
-        {
-            Debug.Log("LtoR");
+            if (rig.velocity.x >= 0.0001f && Input.GetKey(KeyCode.LeftArrow))
+            {
+                Debug.Log("RtoL");
+            }
+            if (rig.velocity.x <= -0.0001f && Input.GetKey(KeyCode.RightArrow))
+            {
+                Debug.Log("LtoR");
+            }
         }
 
         // 移動
