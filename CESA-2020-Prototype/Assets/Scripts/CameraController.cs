@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField]
     Camera camera;
+    CameraShake cameraShake;
     [SerializeField]
     GameObject player;
     [SerializeField]
@@ -13,7 +14,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraShake = camera.transform.GetComponent<CameraShake>();
     }
 
     // Update is called once per frame
@@ -31,5 +32,8 @@ public class CameraController : MonoBehaviour
         playerPos.z = camera.transform.position.z;
         camera.transform.position = Vector3.Lerp(camera.transform.position, playerPos, 0.05f);
 
+        // デバック処理
+        if (Input.GetKeyDown(KeyCode.A))
+            cameraShake.Shake(0.5f,0.3f);
     }
 }
