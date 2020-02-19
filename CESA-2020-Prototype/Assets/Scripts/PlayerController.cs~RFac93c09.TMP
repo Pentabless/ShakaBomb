@@ -4,31 +4,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // リジッドボディ
     Rigidbody2D rig;
 
-    // バブルジェネレータ
     [SerializeField]
     BubbleGenerator bubbleG;
-
-    // 切り替えし猶予フレーム
-    [SerializeField]
-    int turnCount;
 
     // 接地フラグ
     bool isGround;
 
     // プレイヤーの向き
-    int dir;            // 現在
-    float lastDir;      // 前フレーム
-    int dirCount;       // 切り替えし用向き保持カウント
+    float dir;
+    float lastDir;
+
+    int dirCount;
 
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
-        dir = 0;
+        dir = 0.0f;
         lastDir = 0.0f;
         dirCount = 0;
     }
@@ -51,43 +46,48 @@ public class PlayerController : MonoBehaviour
             rig.velocity = new Vector2(0.0f, rig.velocity.y);
         }
 
+
         // 左右移動
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            dir = -1;
-            dirCount = turnCount;
+            dir = -1.0f;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            dir = 1;
-            dirCount = turnCount;
+            dir = 1.0f;
         }
         else
         {
-            dir = 0;
+            dir = 0.0f;
         }
 
         // 切り替えし(地上にいるときのみ)
         if (isGround)
         {
-            if (lastDir > 0.0f && dir == -1)
+            //if (rig.velocity.x >= 0.0f && dir <= -1.0f/*Input.GetKeyDown(KeyCode.LeftArrow)*/)
+            //{
+            //    Debug.Log("RtoL");
+            //    bubbleG.BubbleCreate();
+            //}
+            //if (rig.velocity.x <= 0.0f && dir >= 1.0f/*Input.GetKeyDown(KeyCode.RightArrow)*/)
+            //{
+            //    Debug.Log("LtoR");
+            //    bubbleG.BubbleCreate();
+            //}
+
+            if (lastDir > 0.0f && dir <= -1.0f)
             {
-                //Debug.Log("RtoL");
+                Debug.Log("RtoL");
                 bubbleG.BubbleCreate();
             }
-            if (lastDir < 0.0f && dir == 1)
+            if (lastDir < 0.0f && dir >= 1.0f)
             {
-                //Debug.Log("LtoR");
+                Debug.Log("LtoR");
                 bubbleG.BubbleCreate();
             }
         }
 
-        // 最終入力方向
-        dirCount--;
-        if (dirCount <= 0 || dir != 0)
-        {
-            lastDir = dir;
-        }
+        lastDir = dir;
 
         // 移動
         if (isGround)
@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
         {
             rig.AddForce(new Vector2(40.0f * dir, 0));
         }
+
 
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
