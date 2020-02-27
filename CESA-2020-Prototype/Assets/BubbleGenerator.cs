@@ -36,8 +36,6 @@ public class BubbleGenerator : MonoBehaviour
             GameObject go = Instantiate(bubblePrefab) as GameObject;
             //座標を設定する
             go.transform.position = GameObject.Find("Player").transform.position;
-            //大きくなる限度を設定する
-            go.GetComponent<BubbleController>().SetLimitScale(limit_scale);
             //色を設定する
             go.GetComponent<Renderer>().material.color = color;
             //作っていない状態にする
