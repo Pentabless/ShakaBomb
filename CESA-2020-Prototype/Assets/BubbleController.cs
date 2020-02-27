@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BubbleController : MonoBehaviour
 {
+    // プレイヤーの情報
+    GameObject playerObj;
+
+    BalloonGenerator balloonG;
+
     // 動く力の大きさ
     Vector2 move_force;
     // 左右に円運動するための角度
@@ -24,6 +29,11 @@ public class BubbleController : MonoBehaviour
     //目的の大きさ
     Vector3 target_scale;
 
+    // 泡の最大サイズ
+    readonly float biggest_scale = 1.3f;
+    // 保持状態か否か
+    bool ret_flag;
+
     //目的の大きさになるまでの時間(フレーム数)
     int target_scale_time;
 
@@ -41,11 +51,29 @@ public class BubbleController : MonoBehaviour
         now_scale = transform.localScale;
         target_scale = now_scale;
 
+        ret_flag = false;
+
         target_scale_time = 60;
+
+        playerObj = GameObject.Find("Player");
+        balloonG = GameObject.Find("BalloonGenerator").GetComponent<BalloonGenerator>();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        if (!ret_flag)
+        {
+            NormalUpdate();
+        }
+        else
+        {
+            RetUpdate();
+        }
+    }
+
+    // 通常時の泡の動き
+    void NormalUpdate()
     {
         // 移動する
         transform.Translate(Mathf.Sin(angle) * move_force.x, move_force.y, 0.0f);
@@ -88,7 +116,19 @@ public class BubbleController : MonoBehaviour
                 now_scale = target_scale;
             }
 
-            transform.localScale = now_scale;
+            if (biggest_scale > now_scale.x)
+            {
+                transform.localScale = now_scale;
+                Debug.Log("MaxScale");
+            }
+        }
+
+        // 保持状態に切り替え
+        if (transform.localScale.x >= biggest_scale * 0.9f && Data.num_balloon < Data.maxBalloon)
+        {
+            ret_flag = true;
+            balloonG.CreateBalloon(this.transform.position);
+            isDestroy = true;
         }
 
         //消えようとしていたら
@@ -97,6 +137,34 @@ public class BubbleController : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    // 保持状態の泡の動き
+    void RetUpdate()
+    {
+        Vector3 playerPos = playerObj.transform.position;
+
+        playerPos.x += 0.5f;
+        playerPos.y += 0.8f;
+
+        transform.position = Vector3.Lerp(transform.position, playerPos, 0.03f);
+
+        //// 移動する
+        //transform.Translate(Mathf.Sin(angle) * move_force.x, 0.0f, 0.0f);
+        //angle += 0.1f;
+
+        //大きさを変更する
+        if (now_scale != target_scale) //今の大きさと目的の大きさが違っていたら
+        {
+            now_scale += (target_scale - now_scale) / target_scale_time;
+
+            //目的の大きさより大きくなったら
+            if (now_scale.x >= target_scale.x)
+            {
+                now_scale = target_scale;
+            }
+        }
+    }
+
 
     public bool GetDestroy()
     {
@@ -108,7 +176,7 @@ public class BubbleController : MonoBehaviour
     {
         if (collision.tag == "Bubble")
         {
-            Debug.Log("ParentHit");
+            //Debug.Log("ParentHit");
             isTouchBubble = true;
         }
     }
@@ -125,7 +193,7 @@ public class BubbleController : MonoBehaviour
     //粘着範囲が当たった瞬間
     public void StickyTriggerEnter(Collider2D collision)
     {
-        Debug.Log("StickyHit");
+        //Debug.Log("StickyHit");
 
         isTouchSticky = true;
 

@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
         {
-            rig.AddForce(new Vector2(0, 650.0f));
+            rig.AddForce(new Vector2(0, 680.0f));
             isGround = false;
             Debug.Log("");
         }
