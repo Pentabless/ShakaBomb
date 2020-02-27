@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BubbleController : MonoBehaviour
 {
+    // プレイヤーの情報
+    GameObject playerObj;
+
+    BalloonGenerator balloonG;
+
     // 動く力の大きさ
     Vector2 move_force;
     // 左右に円運動するための角度
@@ -24,13 +29,13 @@ public class BubbleController : MonoBehaviour
     //目的の大きさ
     Vector3 target_scale;
 
+    // 泡の最大サイズ
+    readonly float biggest_scale = 1.3f;
+    // 保持状態か否か
+    bool ret_flag;
+
     //目的の大きさになるまでの時間(フレーム数)
     int target_scale_time;
-
-    //大きくなる限度
-    Vector3 limit_scale;
-    //限度を達成したか
-    bool limit_check;
 
     // Start is called before the first frame update
     void Start()
@@ -46,13 +51,29 @@ public class BubbleController : MonoBehaviour
         now_scale = transform.localScale;
         target_scale = now_scale;
 
+        ret_flag = false;
+
         target_scale_time = 60;
 
-        limit_check = false;
+        playerObj = GameObject.Find("Player");
+        balloonG = GameObject.Find("BalloonGenerator").GetComponent<BalloonGenerator>();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        if (!ret_flag)
+        {
+            NormalUpdate();
+        }
+        else
+        {
+            RetUpdate();
+        }
+    }
+
+    // 通常時の泡の動き
+    void NormalUpdate()
     {
         // 移動する
         transform.Translate(Mathf.Sin(angle) * move_force.x, move_force.y, 0.0f);
@@ -74,7 +95,7 @@ public class BubbleController : MonoBehaviour
         }
         else
         {
-            if (isTouchSticky)   //本体の粘着範囲と相手の粘着範囲が当たっていたら
+            if (isTouchSticky)   //本体の粘着範囲と相手の本体が当たっていたら
             {
                 GetComponent<Renderer>().material.color = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
             }
@@ -89,20 +110,25 @@ public class BubbleController : MonoBehaviour
         {
             now_scale += (target_scale - now_scale) / target_scale_time;
 
-            //目的の大きさに近づいたら
-            if (Mathf.Abs(target_scale.x-now_scale.x)<=0.1f)
+            //目的の大きさより大きくなったら
+            if (now_scale.x >= target_scale.x)
             {
-                //目的の大きさにする
                 now_scale = target_scale;
             }
 
-            transform.localScale = now_scale;
+            if (biggest_scale > now_scale.x)
+            {
+                transform.localScale = now_scale;
+                Debug.Log("MaxScale");
+            }
         }
 
-        //今の大きさが限度を超えていたら
-        if((limit_check==false)&&(now_scale.x>=limit_scale.x))
+        // 保持状態に切り替え
+        if (transform.localScale.x >= biggest_scale * 0.9f && Data.num_balloon < Data.maxBalloon)
         {
-            limit_check = true;
+            ret_flag = true;
+            balloonG.CreateBalloon(this.transform.position);
+            isDestroy = true;
         }
 
         //消えようとしていたら
@@ -112,20 +138,34 @@ public class BubbleController : MonoBehaviour
         }
     }
 
-    //<自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    //大きくなる限度を設定する
-    public void SetLimitScale(Vector3 scale)
+    // 保持状態の泡の動き
+    void RetUpdate()
     {
-        limit_scale = scale;
+        Vector3 playerPos = playerObj.transform.position;
+
+        playerPos.x += 0.5f;
+        playerPos.y += 0.8f;
+
+        transform.position = Vector3.Lerp(transform.position, playerPos, 0.03f);
+
+        //// 移動する
+        //transform.Translate(Mathf.Sin(angle) * move_force.x, 0.0f, 0.0f);
+        //angle += 0.1f;
+
+        //大きさを変更する
+        if (now_scale != target_scale) //今の大きさと目的の大きさが違っていたら
+        {
+            now_scale += (target_scale - now_scale) / target_scale_time;
+
+            //目的の大きさより大きくなったら
+            if (now_scale.x >= target_scale.x)
+            {
+                now_scale = target_scale;
+            }
+        }
     }
 
-    //大きくなる限度を渡す
-    public Vector3 GetLimitScale()
-    {
-        return limit_scale;
-    }
 
-    //相手が消えようとしているかをもらう
     public bool GetDestroy()
     {
         return isDestroy;
@@ -136,15 +176,7 @@ public class BubbleController : MonoBehaviour
     {
         if (collision.tag == "Bubble")
         {
-            Debug.Log("ParentHit");
-            isTouchBubble = true;
-        }
-    }
-
-    public void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == "Bubble")
-        {
+            //Debug.Log("ParentHit");
             isTouchBubble = true;
         }
     }
@@ -161,40 +193,20 @@ public class BubbleController : MonoBehaviour
     //粘着範囲が当たった瞬間
     public void StickyTriggerEnter(Collider2D collision)
     {
-        Debug.Log("StickyHit");
+        //Debug.Log("StickyHit");
 
         isTouchSticky = true;
 
-        //当たった泡
-        BubbleController Hit_object = collision.GetComponentInParent<BubbleController>();
-
-        //自身　かつ　当たった泡の　目標の大きさが　限度の大きさより小さかったら
-        if ((target_scale.x < limit_scale.x) && (Hit_object.target_scale.x < Hit_object.limit_scale.x))
+        //当たった泡が消えようとしていたら
+        if (collision.GetComponentInParent<BubbleController>().GetDestroy())
         {
-            //自身より相手の泡が大きかったら
-            if(transform.localScale.x<Hit_object.transform.localScale.x)
-            {
-                //自身が消えるようにする
-                isDestroy = true;
-            }
-            //当たった泡が消えようとしていたら
-            else if (Hit_object.GetDestroy())
-            {
-                //「自身の大きさ」に「当たった泡の目的の大きさ」分を「目的の大きさ」に設定する
-                target_scale += collision.transform.localScale;
-
-                //目的の大きさが限度の大きさより大きくなったら
-                if (target_scale.x >= limit_scale.x)
-                {
-                    //目的の大きさを限度の大きさに設定しなおす
-                    target_scale = limit_scale;
-                }
-            }
-            else
-            {
-                //自身が消えるようにする
-                isDestroy = true;
-            }
+            //自身の大きさに当たった泡の大きさ分を目的の大きさに設定する
+            target_scale += collision.transform.localScale;
+        }
+        else
+        {
+            //自身が消えるようにする
+            isDestroy = true;
         }
     }
 

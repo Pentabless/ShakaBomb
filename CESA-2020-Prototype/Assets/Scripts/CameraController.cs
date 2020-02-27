@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
         // プレイヤーのポジションとカメラのポジションを調べる
         Vector3 playerPos = player.transform.position;
         // ジャンプでは動かさない
-        if (yRange <= Mathf.Abs(camera.transform.position.y) || yRange >= camera.transform.position.y)
+        if (Mathf.Abs(playerPos.y) <= yRange)
         {
             playerPos.y = camera.transform.position.y;
         }
