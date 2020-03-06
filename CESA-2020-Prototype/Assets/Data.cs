@@ -5,7 +5,7 @@ using UnityEngine;
 public class Data : MonoBehaviour
 {
     public static int num_balloon;
-    public readonly static int maxBalloon = 7;
+    public readonly static int maxBalloon = 3;
 
 
     // Start is called before the first frame update

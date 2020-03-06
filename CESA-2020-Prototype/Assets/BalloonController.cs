@@ -36,7 +36,7 @@ public class BalloonController : MonoBehaviour
         playerPos.y += 1.7f;
 
         Vector3 move_force = playerPos - this.transform.position;
-        rig.velocity = move_force;
+        rig.velocity = move_force * 2.0f;
 
         Vector3 thisPos = this.transform.position;
 
