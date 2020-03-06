@@ -66,7 +66,7 @@ public class WaterWaver : MonoBehaviour
     {
         // メッシュを初期化する
         // オブジェクトの横幅と係数からメッシュの分割数を計算する
-        bufferLength = Mathf.RoundToInt(transform.localScale.x * resolution);
+        bufferLength = Mathf.RoundToInt(transform.lossyScale.x * resolution);
         // メッシュの生成
         mesh = BuildMesh(bufferLength - 1);
         // メッシュを割り当てる
@@ -157,10 +157,10 @@ public class WaterWaver : MonoBehaviour
                 if (otherRigidbody == null) continue;
                 var otherTransform = hit.transform;
                 var width = hit.collider.bounds.size.x * 0.5f;
-                float otherHeight = hit.collider.bounds.size.y;
-                float otherCenterHeight = hit.collider.bounds.center.y - (transform.position.y + 0.5f * transform.lossyScale.y + surface.y);
-                float upperLength = otherHeight * 0.5f + otherCenterHeight;
-                float lowerLength = otherHeight * 0.5f - otherCenterHeight;
+                //float otherHeight = hit.collider.bounds.size.y;
+                //float otherCenterHeight = hit.collider.bounds.center.y - (transform.position.y + 0.5f * transform.lossyScale.y + surface.y);
+                //float upperLength = otherHeight * 0.5f + otherCenterHeight;
+                //float lowerLength = otherHeight * 0.5f - otherCenterHeight;
 
                 var center = hit.collider.bounds.min.x + width;
 
@@ -183,9 +183,11 @@ public class WaterWaver : MonoBehaviour
                     {
                         waveBuffer[currentBuffer][b] += interactHorizontalMultiplier * (otherRigidbody.velocity.x);
                     }
+                    // スケールで揺れ幅を調整する
+                    waveBuffer[currentBuffer][b] /= transform.lossyScale.y;
                     //Debug.Log("low:" + lowerLength + "  " + "up:" + upperLength);
-                    Debug.Log("power:" + waveBuffer[currentBuffer][b]);
-                   // waveBuffer[currentBuffer][b] = Mathf.Clamp(waveBuffer[currentBuffer][b], -lowerLength * 0.5f, upperLength * 0.5f);
+                    //Debug.Log("power:" + waveBuffer[currentBuffer][b]);
+                    //waveBuffer[currentBuffer][b] = Mathf.Clamp(waveBuffer[currentBuffer][b], -lowerLength * 0.5f, upperLength * 0.5f);
                 }
             }
         }
