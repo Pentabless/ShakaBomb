@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     float lastDir;      // 前フレーム
     int dirCount;       // 切り替えし用向き保持カウント
 
-    // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
@@ -33,7 +32,6 @@ public class PlayerController : MonoBehaviour
         dirCount = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // 速さ制限

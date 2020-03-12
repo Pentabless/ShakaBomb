@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common;
 
 public class BalloonGenerator : MonoBehaviour
 {
@@ -9,31 +10,39 @@ public class BalloonGenerator : MonoBehaviour
 
     bool isCreate;
 
-    readonly int maxBalloon = 5;
-
     Vector3 createPosition;
 
-    // Start is called before the first frame update
-    void Start()
+    // 所持バルーン
+    private GameObject[] m_balloons = new GameObject[Balloon.MAX];
+    //private List<GameObject> m_balloonList = new List<GameObject>();
+
+    void Awake()
     {
         isCreate = false;
+
+        for (int i = 0; i < m_balloons.Length; i++)
+            m_balloons[i] = null;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isCreate)
         {
-            Data.num_balloon++;
-            //プレファブと同じオブジェクトを作る
-            GameObject go = Instantiate(balloonPrefab) as GameObject;
-            //座標を設定する
-            go.transform.position = createPosition;
-            //作っていない状態にする
+            if (m_balloons[Data.num_balloon] == null)
+            {
+                // プレファブと同じオブジェクトを作る
+                m_balloons[Data.num_balloon] = Instantiate(balloonPrefab) as GameObject;
+                // 座標を設定する
+                m_balloons[Data.num_balloon].transform.position = createPosition;
+                // 所持バルーンをカウント
+                Data.num_balloon++;
+
+                // デバッグ
+                Debug.Log("所持しているバルーン " + Data.num_balloon + " / " + Balloon.MAX + "個");
+            }
+            // 作っていない状態にする
             isCreate = false;
         }
-        // デバッグ用
-        Debug.Log("Balloon = " + Data.num_balloon);
     }
 
     public void CreateBalloon(Vector3 create_pos)
