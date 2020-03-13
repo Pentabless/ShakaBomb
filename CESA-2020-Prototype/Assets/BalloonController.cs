@@ -15,7 +15,6 @@ public class BalloonController : MonoBehaviour
     // 消えるかどうか
     bool isDestroy;
 
-    // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
@@ -28,7 +27,6 @@ public class BalloonController : MonoBehaviour
         //line.SetColors(Color.white, Color.white);
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 playerPos = playerObj.transform.position;
@@ -42,5 +40,10 @@ public class BalloonController : MonoBehaviour
 
         line.SetPosition(0, thisPos);
         line.SetPosition(1, playerObj.transform.position);
+    }
+
+    void Destroy()
+    {
+        Destroy(this.gameObject);
     }
 }

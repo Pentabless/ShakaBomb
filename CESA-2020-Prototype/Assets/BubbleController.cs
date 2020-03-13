@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common;
 
 public class BubbleController : MonoBehaviour
 {
@@ -37,7 +38,6 @@ public class BubbleController : MonoBehaviour
     //目的の大きさになるまでの時間(フレーム数)
     int target_scale_time;
 
-    // Start is called before the first frame update
     void Start()
     {
         move_force = new Vector2(0.05f, Random.Range(1.0f, 3.0f) * 0.025f);
@@ -59,7 +59,7 @@ public class BubbleController : MonoBehaviour
         balloonG = GameObject.Find("BalloonGenerator").GetComponent<BalloonGenerator>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (!ret_flag)
@@ -124,7 +124,7 @@ public class BubbleController : MonoBehaviour
         }
 
         // 保持状態に切り替え
-        if (transform.localScale.x >= biggest_scale * 0.9f && Data.num_balloon < Data.maxBalloon)
+        if (transform.localScale.x >= biggest_scale * 0.9f && Data.num_balloon < Balloon.MAX)
         {
             ret_flag = true;
             balloonG.CreateBalloon(this.transform.position);
