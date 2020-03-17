@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     BubbleGenerator bubbleG;
 
+    [SerializeField]
+    float playerSpeed;
+    [SerializeField]
+    float jumpForce;
+
     // 切り替えし猶予フレーム
     [SerializeField]
     int turnCount;
@@ -34,16 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // 速さ制限
-        if (dir >= 1.0f && rig.velocity.x >= 5.0f)
-        {
-            rig.velocity = new Vector2(5.0f, rig.velocity.y);
-        }
-        else if (dir <= -1.0f && rig.velocity.x <= -5.0f)
-        {
-            rig.velocity = new Vector2(-5.0f, rig.velocity.y);
-        }
-        // Velocity最小化
+        // Velocity最小化(一定数以下で0)
         if (Mathf.Abs(rig.velocity.x) <= 0.001f)
         {
             rig.velocity = new Vector2(0.0f, rig.velocity.y);
@@ -90,17 +86,28 @@ public class PlayerController : MonoBehaviour
         // 移動
         if (isGround)
         {
-            rig.AddForce(new Vector2(160.0f * dir, 0));
+            rig.AddForce(new Vector2(playerSpeed * dir, 0));
         }
         else
         {
-            rig.AddForce(new Vector2(40.0f * dir, 0));
+            rig.AddForce(new Vector2(playerSpeed / 3.0f * dir, 0));
         }
+
+        // 速さ制限
+        if (dir >= 1.0f && rig.velocity.x >= 5.0f)
+        {
+            rig.velocity = new Vector2(5.0f, rig.velocity.y);
+        }
+        else if (dir <= -1.0f && rig.velocity.x <= -5.0f)
+        {
+            rig.velocity = new Vector2(-5.0f, rig.velocity.y);
+        }
+
 
         // ジャンプ
         if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
         {
-            rig.AddForce(new Vector2(0, 680.0f));
+            rig.AddForce(new Vector2(0, jumpForce));
             isGround = false;
             Debug.Log("");
         }
@@ -108,10 +115,20 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Ground")
+
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //if (collision.tag == "Ground")
         {
             isGround = true;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isGround = false;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
