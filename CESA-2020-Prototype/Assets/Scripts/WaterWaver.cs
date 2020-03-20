@@ -136,8 +136,8 @@ public class WaterWaver : MonoBehaviour
         // メッシュの上辺で当たり判定を行う
         Vector2 surface = new Vector2(0f, surfaceHeight);
         int hitCount = Physics2D.LinecastNonAlloc(
-            (Vector2)transform.position + transform.lossyScale * new Vector2(-0.5f, 0.5f) + surface,
-            (Vector2)transform.position + transform.lossyScale * new Vector2(0.5f, 0.5f) + surface,
+            (Vector2)transform.position + transform.lossyScale * new Vector2(-0.498f, 0.5f) + surface,
+            (Vector2)transform.position + transform.lossyScale * new Vector2(0.498f, 0.5f) + surface,
             hits, layersToInteract);
 
         // 1回のUpdateで処理する波の処理を計算する回数（おそらくシミュレーション速度）
