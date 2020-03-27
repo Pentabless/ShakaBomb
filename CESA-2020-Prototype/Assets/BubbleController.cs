@@ -35,6 +35,13 @@ public class BubbleController : MonoBehaviour
     // 保持状態か否か
     bool ret_flag;
 
+    // 保持できるか否か
+    bool test_flag;
+
+    // 泡のカウント
+    private int catchCount = 0;
+
+
     //目的の大きさになるまでの時間(フレーム数)
     int target_scale_time;
 
@@ -52,6 +59,7 @@ public class BubbleController : MonoBehaviour
         target_scale = now_scale;
 
         ret_flag = false;
+        test_flag = true;
 
         target_scale_time = 60;
 
@@ -62,6 +70,8 @@ public class BubbleController : MonoBehaviour
 
     void Update()
     {
+        catchCount++;
+
         if (!ret_flag)
         {
             NormalUpdate();
@@ -123,15 +133,26 @@ public class BubbleController : MonoBehaviour
             }
         }
 
+        
+        if(Data.num_balloon >= Balloon.MAX)
+        {
+            test_flag = false;
+        }
+
+        if (catchCount > 60)
+        {
+            test_flag = false;
+        }
+
         // 保持状態に切り替え
-        if (transform.localScale.x >= biggest_scale * 0.9f && Data.num_balloon < Balloon.MAX)
+        if (transform.localScale.x >= biggest_scale * 0.9f && Data.num_balloon < Balloon.MAX && test_flag)
         {
             ret_flag = true;
             balloonG.CreateBalloon(this.transform.position);
             isDestroy = true;
         }
 
-        //消えようとしていたら
+        // 消えようとしていたら
         if (isDestroy)
         {
             Destroy(this.gameObject);

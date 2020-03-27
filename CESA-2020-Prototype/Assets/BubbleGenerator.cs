@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class BubbleGenerator : MonoBehaviour
 {
-    //プレファブ
+    // プレファブ
     public GameObject bubblePrefab;
-    //作っているか
+    // 作っているか
     bool isCreate;
-    //限度の大きさ
+    // 限度の大きさ
     Vector3 limit_scale;
-    //色
+    // 色
     Vector4 color;
 
-    // Start is called before the first frame update
     void Start()
     {
         isCreate = false;
@@ -21,7 +20,6 @@ public class BubbleGenerator : MonoBehaviour
         color = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))

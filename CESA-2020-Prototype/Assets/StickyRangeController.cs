@@ -4,18 +4,6 @@ using UnityEngine;
 
 public class StickyRangeController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void OnTriggerEnter2D(Collider2D collision)
     {
         //本体でない別の泡だったら
