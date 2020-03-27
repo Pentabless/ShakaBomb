@@ -148,6 +148,7 @@ MonoBehaviour:
   playerSpeed: 160
   jumpForce: 680
   turnCount: 10
+  m_sound: {fileID: 8300000, guid: 146b397ef2b57774290f85e38c9f443f, type: 3}
 --- !u!61 &5612301726086490100
 BoxCollider2D:
   m_ObjectHideFlags: 0

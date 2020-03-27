@@ -30,5 +30,7 @@ namespace Common
     {
         // 最大バルーン所持数
         public const int MAX = (3);
+        // 生成したシャボン玉の所持できる状態の最大時間
+        public const int COUNT = (80);
     }
 }

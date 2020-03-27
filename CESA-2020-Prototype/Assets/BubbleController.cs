@@ -139,7 +139,7 @@ public class BubbleController : MonoBehaviour
             test_flag = false;
         }
 
-        if (catchCount > 60)
+        if (catchCount > Balloon.COUNT)
         {
             test_flag = false;
         }
