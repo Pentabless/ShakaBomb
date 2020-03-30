@@ -424,6 +424,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0763232c0b78af94c9c6c5a3ab695d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy_move_force: {x: 0.5, y: 0}
+  attacks_move_force: {x: 0.025, y: 0.025}
 --- !u!114 &5625534135324029432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,6 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c766952898963b148b11e7a70eb852b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attacks_color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &5625534135910104923
 GameObject:
   m_ObjectHideFlags: 0
