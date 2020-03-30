@@ -21,7 +21,7 @@ public class FallCheckerController : MonoBehaviour
         //床だったら
         if (collision.tag == "Ground")
         {
-            transform.GetComponentInParent<EnemyController>().SetFallChecker(true);
+            transform.GetComponentInParent<EnemyController>().SetFloorChecker(true);
         }
     }
 
@@ -30,7 +30,7 @@ public class FallCheckerController : MonoBehaviour
         //床だったら
         if (collision.tag == "Ground")
         {
-            transform.GetComponentInParent<EnemyController>().SetFallChecker(false);
+            transform.GetComponentInParent<EnemyController>().SetFloorChecker(false);
         }
     }
 

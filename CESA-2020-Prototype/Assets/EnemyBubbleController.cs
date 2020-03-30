@@ -10,12 +10,13 @@ public class EnemyBubbleController : MonoBehaviour
     Vector2 move_force;
     //円運動するための角度
     float angle;
+    //円運動する設定  [0]…x　[1]…y
+    bool[] circular_motion_check = new bool[2] { false, false };
 
     // Start is called before the first frame update
     void Start()
     {
         isBlow = false;
-        move_force = new Vector2(0.025f, 0.025f * Random.Range(0.1f, 3.0f));
         angle = Random.Range(0.0f, 180.0f);
     }
 
@@ -26,11 +27,24 @@ public class EnemyBubbleController : MonoBehaviour
         if (isBlow)
         {
             angle += 0.1f;
+
+            Vector3 move = move_force;
+
+            //x軸が円運動するように設定されていたら
+            if(circular_motion_check[0])
+            {
+                move.x *= Mathf.Sin(angle);
+            }
+            //y軸が円運動するように設定されていたら
+            if(circular_motion_check[1])
+            {
+                move.y *= Mathf.Sin(angle);
+            }
             //上下に揺れながら進む
-            transform.Translate(move_force.x, Mathf.Sin(angle) * move_force.y, 0.0f);
+            transform.Translate(move);
 
             //画面外に出たら
-            if(!GetComponent<Renderer>().isVisible)
+            if (!GetComponent<Renderer>().isVisible)
             {
                 //消える
                 Destroy(this.gameObject);
@@ -46,8 +60,14 @@ public class EnemyBubbleController : MonoBehaviour
         }
     }
 
-    public void SetDir(int dir)
+    public void SetMoveFroce(Vector2 force)
     {
-        move_force.x *= dir;
-    } 
+        move_force = force;
+    }
+
+    public void SetCircularMotionCheck(bool x,bool y)
+    {
+        circular_motion_check[0] = x;
+        circular_motion_check[1] = y;
+    }
 }
