@@ -16,12 +16,12 @@ public class EnemyFindRangeController : MonoBehaviour
         
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         //プレイヤーだったら
         if(collision.tag=="Player")
         {
-            transform.GetComponentInParent<EnemyController>().FindPlayer(true);
+            transform.GetComponentInParent<EnemyController>().SetFindPlayer(true);
         }
     }
 
@@ -30,7 +30,7 @@ public class EnemyFindRangeController : MonoBehaviour
         //プレイヤーだったら
         if (collision.tag == "Player")
         {
-            transform.GetComponentInParent<EnemyController>().FindPlayer(false);
+            transform.GetComponentInParent<EnemyController>().SetFindPlayer(false);
         }
     }
 }
