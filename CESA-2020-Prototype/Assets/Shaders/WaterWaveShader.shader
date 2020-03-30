@@ -57,7 +57,8 @@
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-				float t = smootherstep(1.0/(1.0+_WaterHeight), 1.0, i.uv.y);
+				float h = lerp(1.0 / (1.0 + _WaterHeight), 1.0 + _WaterHeight, step(_WaterHeight, 0.0));
+				float t = smootherstep(h, 1.0, i.uv.y);
 				col *= lerp(_MainColor, _LightColor, t);
 
 				//float t3 = smoothstep(1.0/(1.0+_WaterHeight), 1.0, i.uv.y);
