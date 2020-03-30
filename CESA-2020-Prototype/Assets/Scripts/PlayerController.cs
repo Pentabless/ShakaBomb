@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     BubbleGenerator bubbleG;
 
+    // バレットジェネレータ
+    [SerializeField]
+    BulletGenerator bulletG;
+
     [SerializeField]
     float playerSpeed;
     [SerializeField]
@@ -25,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     // プレイヤーの向き
     int dir;            // 現在
-    float lastDir;      // 前フレーム
+    int lastDir;      // 前フレーム
     int dirCount;       // 切り替えし用向き保持カウント
 
     void Start()
@@ -33,7 +37,7 @@ public class PlayerController : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
         dir = 0;
-        lastDir = 0.0f;
+        lastDir = 0;
         dirCount = 0;
     }
 
@@ -83,6 +87,12 @@ public class PlayerController : MonoBehaviour
             lastDir = dir;
         }
 
+        // プレイヤーの向き保持
+        if (dir != 0)
+        {
+            Data.playerDir = dir;
+        }
+
         // 移動
         if (isGround)
         {
@@ -94,11 +104,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // 速さ制限
-        if (dir >= 1.0f && rig.velocity.x >= 5.0f)
+        if (dir >= 1.0f && rig.velocity.x >= 5.0f)  // 右側
         {
             rig.velocity = new Vector2(5.0f, rig.velocity.y);
         }
-        else if (dir <= -1.0f && rig.velocity.x <= -5.0f)
+        else if (dir <= -1.0f && rig.velocity.x <= -5.0f)   // 左側
         {
             rig.velocity = new Vector2(-5.0f, rig.velocity.y);
         }
@@ -111,6 +121,13 @@ public class PlayerController : MonoBehaviour
             isGround = false;
             Debug.Log("");
         }
+
+        // バレットの発射
+        if (Input.GetKeyDown(KeyCode.C) && Data.num_balloon >= 1)
+        {
+            bulletG.BulletCreate(this.transform.position);
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
