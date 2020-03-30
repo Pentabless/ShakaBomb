@@ -137,10 +137,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        //if (collision.tag == "Ground")
-        {
-            isGround = true;
-        }
+        isGround = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        isGround = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
