@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6307002393926612942}
   - component: {fileID: 2450640228208443990}
   - component: {fileID: 5911310591856593633}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BubblePrefab
   m_TagString: Bubble
   m_Icon: {fileID: 0}
@@ -95,7 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3ad895e76ecf140bbb6f7bb2c614db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObj: {fileID: 0}
 --- !u!58 &2450640228208443990
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -145,7 +144,7 @@ GameObject:
   - component: {fileID: 9098381618887752147}
   - component: {fileID: 1912138154271365721}
   - component: {fileID: 6340471870357203807}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: StickyRange
   m_TagString: Sticky
   m_Icon: {fileID: 0}
