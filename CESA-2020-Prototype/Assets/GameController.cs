@@ -4,19 +4,30 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField]
-    private Canvas m_menu = null;
+    // ゲームパッドの接続確認
+    private bool m_checkGamepad = false;
 
     private void Awake()
-    {
-        m_menu.gameObject.SetActive(false);
+    {   
+        // 接続されているゲームパッドの名前を調べる
+        var gamepadNames = Input.GetJoystickNames();
+
+        // ゲームパッドが接続されているかどうか
+        if (gamepadNames[0] == "")
+        {
+            m_checkGamepad = false;
+            Debug.Log("ゲームパッドが接続されていません");
+        }
+        else
+        {
+            m_checkGamepad = true;
+            Debug.Log("「" + gamepadNames[0] + "」が接続されました");
+        }
     }
 
-    private void Update()
+    // ゲームパッドの接続確認
+    public bool GetCheckGamepad()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            m_menu.gameObject.SetActive(true);
-        }
+        return m_checkGamepad;
     }
 }
