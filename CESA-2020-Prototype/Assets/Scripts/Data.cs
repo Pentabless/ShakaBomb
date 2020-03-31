@@ -5,6 +5,5 @@ using UnityEngine;
 public class Data : MonoBehaviour
 {
     public static int num_balloon = 0;
-
     public static int playerDir = 0;
 }
