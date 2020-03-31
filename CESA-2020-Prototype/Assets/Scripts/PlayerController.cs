@@ -19,7 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameController gameController;
 
+    // 移動力
     [SerializeField]
+    float defaultPlayerSpeed;
     float playerSpeed;
 
     // ジャンプ力
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
         lastDir = 0;
         dirCount = 0;
         jumpForce = defaultJumpForce;
+        playerSpeed = defaultPlayerSpeed;
     }
 
     void Update()
@@ -113,6 +116,54 @@ public class PlayerController : MonoBehaviour
             this.transform.localRotation = new Quaternion(0, 0, 0, 0);
         }
 
+        // ジャンプ
+        if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
+        {
+            rig.AddForce(new Vector2(0, jumpForce));
+            isGround = false;
+            Debug.Log("");
+        }
+
+        // バレットの発射
+        if (Input.GetKeyDown(KeyCode.C) && Data.num_balloon >= 1)
+        {
+            bulletG.BulletCreate(this.transform.position);
+        }
+
+        // 重力の変更(バブルの個数に応じて)
+        switch (Data.num_balloon)
+        {
+            case 0:
+                this.rig.gravityScale = 5.0f;
+                jumpForce = defaultJumpForce * 1.0f;
+                playerSpeed = defaultPlayerSpeed * 1.0f;
+                break;
+
+            case 1:
+                this.rig.gravityScale = 3.0f;
+                jumpForce = defaultJumpForce * 0.9f;
+                playerSpeed = defaultPlayerSpeed * 0.9f;
+                break;
+
+            case 2:
+                this.rig.gravityScale = 2.0f;
+                jumpForce = defaultJumpForce * 0.7f;
+                playerSpeed = defaultPlayerSpeed * 0.85f;
+                break;
+
+            case 3:
+                this.rig.gravityScale = 1.5f;
+                jumpForce = defaultJumpForce * 0.6f;
+                playerSpeed = defaultPlayerSpeed * 0.8f;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void FixedUpdate()
+    {
         // 移動
         if (isGround)
         {
@@ -132,51 +183,6 @@ public class PlayerController : MonoBehaviour
         {
             rig.velocity = new Vector2(-5.0f, rig.velocity.y);
         }
-
-
-        // ジャンプ
-        if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
-        {
-            rig.AddForce(new Vector2(0, jumpForce));
-            isGround = false;
-            Debug.Log("");
-        }
-
-        // バレットの発射
-        if (Input.GetKeyDown(KeyCode.C) && Data.num_balloon >= 1)
-        {
-            bulletG.BulletCreate(this.transform.position);
-        }
-
-        // 重力の変更
-        switch (Data.num_balloon)
-        {
-            case 0:
-                this.rig.gravityScale = 5.0f;
-                jumpForce = defaultJumpForce * 1.0f;
-                break;
-
-            case 1:
-                this.rig.gravityScale = 3.0f;
-                jumpForce = defaultJumpForce * 0.9f;
-                break;
-
-            case 2:
-                this.rig.gravityScale = 2.0f;
-                jumpForce = defaultJumpForce * 0.7f;
-                break;
-
-            case 3:
-                this.rig.gravityScale = 1.5f;
-                jumpForce = defaultJumpForce * 0.6f;
-                break;
-
-            default:
-                break;
-        }
-
-
-
 
     }
 
