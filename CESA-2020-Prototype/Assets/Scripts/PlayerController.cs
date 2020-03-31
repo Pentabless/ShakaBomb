@@ -15,10 +15,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     BulletGenerator bulletG;
 
+    // コントローラ
+    [SerializeField]
+    GameController gameController;
+
     [SerializeField]
     float playerSpeed;
+
+    // ジャンプ力
     [SerializeField]
+    float defaultJumpForce;
     float jumpForce;
+
+
 
     // 切り替えし猶予フレーム
     [SerializeField]
@@ -39,6 +48,7 @@ public class PlayerController : MonoBehaviour
         dir = 0;
         lastDir = 0;
         dirCount = 0;
+        jumpForce = defaultJumpForce;
     }
 
     void Update()
@@ -93,6 +103,16 @@ public class PlayerController : MonoBehaviour
             Data.playerDir = dir;
         }
 
+        // プレイヤーの向き変更
+        if (Data.playerDir != 1)
+        {
+            this.transform.localRotation = new Quaternion(0, 180, 0, 0);
+        }
+        else
+        {
+            this.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        }
+
         // 移動
         if (isGround)
         {
@@ -127,6 +147,36 @@ public class PlayerController : MonoBehaviour
         {
             bulletG.BulletCreate(this.transform.position);
         }
+
+        // 重力の変更
+        switch (Data.num_balloon)
+        {
+            case 0:
+                this.rig.gravityScale = 5.0f;
+                jumpForce = defaultJumpForce * 1.0f;
+                break;
+
+            case 1:
+                this.rig.gravityScale = 3.0f;
+                jumpForce = defaultJumpForce * 0.9f;
+                break;
+
+            case 2:
+                this.rig.gravityScale = 2.0f;
+                jumpForce = defaultJumpForce * 0.7f;
+                break;
+
+            case 3:
+                this.rig.gravityScale = 1.5f;
+                jumpForce = defaultJumpForce * 0.6f;
+                break;
+
+            default:
+                break;
+        }
+
+
+
 
     }
 
