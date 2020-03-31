@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
     // 接地フラグ
     bool isGround;
+    bool bubbleGround;
 
     // プレイヤーの向き
     int dir;            // 現在
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
+        bubbleGround = false;
         dir = 0;
         lastDir = 0;
         dirCount = 0;
@@ -81,15 +83,18 @@ public class PlayerController : MonoBehaviour
         // 切り替えし(地上にいるときのみ)
         if (isGround)
         {
-            if (lastDir > 0.0f && dir == -1)
+            if(bubbleGround)
             {
-                //Debug.Log("RtoL");
-                bubbleG.BubbleCreate();
-            }
-            if (lastDir < 0.0f && dir == 1)
-            {
-                //Debug.Log("LtoR");
-                bubbleG.BubbleCreate();
+                if (lastDir > 0.0f && dir == -1)
+                {
+                    //Debug.Log("RtoL");
+                    bubbleG.BubbleCreate();
+                }
+                if (lastDir < 0.0f && dir == 1)
+                {
+                    //Debug.Log("LtoR");
+                    bubbleG.BubbleCreate();
+                }
             }
         }
 
@@ -194,6 +199,11 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         isGround = true;
+
+        if (collision.tag == "GroundBubble")
+        {
+            bubbleGround = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -204,6 +214,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         isGround = false;
+        bubbleGround = false;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
