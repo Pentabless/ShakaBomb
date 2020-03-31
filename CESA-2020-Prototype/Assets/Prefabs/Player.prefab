@@ -128,8 +128,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -2.55}
-  m_Size: {x: 2.08, y: 0.48}
+  m_Offset: {x: 0.000000022125407, y: -2.6715422}
+  m_Size: {x: 2.08, y: 0.23}
   m_Direction: 1
 --- !u!61 &1870395021
 BoxCollider2D:
@@ -181,7 +181,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.43, y: 0.26}
+  m_Size: {x: 0.43, y: 0.45}
   m_EdgeRadius: 0
 --- !u!61 &638449996
 BoxCollider2D:
@@ -207,7 +207,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.43, y: 0.26}
+  m_Size: {x: 0.43, y: 0.45}
   m_EdgeRadius: 0
 --- !u!1 &1354774276
 GameObject:
@@ -385,6 +385,6 @@ MonoBehaviour:
   bubbleG: {fileID: 0}
   bulletG: {fileID: 0}
   gameController: {fileID: 0}
-  playerSpeed: 160
-  defaultJumpForce: 980
+  defaultPlayerSpeed: 220
+  defaultJumpForce: 1100
   turnCount: 10
