@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour
     float defaultJumpForce;
     float jumpForce;
 
-
-
     // 切り替えし猶予フレーム
     [SerializeField]
     int turnCount;
@@ -83,16 +81,14 @@ public class PlayerController : MonoBehaviour
         // 切り替えし(地上にいるときのみ)
         if (isGround)
         {
-            if(bubbleGround)
+            if (bubbleGround)
             {
                 if (lastDir > 0.0f && dir == -1)
                 {
-                    //Debug.Log("RtoL");
                     bubbleG.BubbleCreate();
                 }
                 if (lastDir < 0.0f && dir == 1)
                 {
-                    //Debug.Log("LtoR");
                     bubbleG.BubbleCreate();
                 }
             }
@@ -126,7 +122,6 @@ public class PlayerController : MonoBehaviour
         {
             rig.AddForce(new Vector2(0, jumpForce));
             isGround = false;
-            Debug.Log("");
         }
 
         // バレットの発射
