@@ -17,18 +17,18 @@ public class PauseMenu : MonoBehaviour
     {
         // ポーズメニューを非表示
         m_menu.gameObject.SetActive(false);
-        // ゲームパッドの接続状況確認
-        m_checkGamepad = m_gamepadState.GetCheckGamepad();
     }
 
     private void Update()
     {
+        // ゲームパッドの接続状況確認
+        m_checkGamepad = m_gamepadState.GetCheckGamepad();
+
         // ポーズメニューの表示（ゲームパッド未接続時）
         if (Input.GetKeyDown(KeyCode.Escape) && !m_checkGamepad)
         {
             m_menu.gameObject.SetActive(true);
         }
-
         // ポーズメニューの表示（ゲームパッド接続時）
         if (Input.GetKeyDown(KeyCode.Joystick1Button7) && m_checkGamepad)
         {
