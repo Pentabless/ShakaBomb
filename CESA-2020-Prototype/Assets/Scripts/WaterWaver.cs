@@ -132,17 +132,18 @@ public class WaterWaver : MonoBehaviour
 
     private RaycastHit2D[] hits = new RaycastHit2D[20];
     //private Collider2D[] hits = new Collider2D[20];
-    private void Update()
+    private void LateUpdate()
     {
         // メッシュの上辺で当たり判定を行う
         Vector2 surface = new Vector2(0f, surfaceHeight);
-        Vector2 c = (Vector2)transform.position + Vector2.up * (transform.lossyScale.y * 1.0f - 0.125f);
-        Vector2 s = new Vector2(transform.lossyScale.x * 0.498f, 0.125f);
+        //Vector2 c = (Vector2)transform.position + Vector2.up * (transform.lossyScale.y * 1.0f - 0.125f);
+        Vector2 s = new Vector2(transform.lossyScale.x, 0.25f);
         //int hitCount = Physics2D.OverlapBoxNonAlloc(c, s, 0.0f, hits);
-        int hitCount = Physics2D.BoxCastNonAlloc(transform.position-Vector3.up*-0.125f, s, 0.0f, new Vector2(0, 1), hits, 0.5f);
+        int hitCount = Physics2D.BoxCastNonAlloc(transform.position-Vector3.up*0.125f, s, 0.0f, new Vector2(0, 1),
+            hits, transform.lossyScale.y*0.5f, layersToInteract);
         //int hitCount = Physics2D.LinecastNonAlloc(
-        //    (Vector2)transform.position + transform.lossyScale * new Vector2(-0.498f, 0.5f) + surface,
-        //    (Vector2)transform.position + transform.lossyScale * new Vector2(0.498f, 0.5f) + surface,
+        //    (Vector2)transform.position + transform.lossyScale * new Vector2(-0.5f, 0.5f) + surface,
+        //    (Vector2)transform.position + transform.lossyScale * new Vector2(0.5f, 0.5f) + surface,
         //    hits, layersToInteract);
 
         // 1回のUpdateで処理する波の処理を計算する回数（おそらくシミュレーション速度）
@@ -158,16 +159,9 @@ public class WaterWaver : MonoBehaviour
             for (int i = 0; i < hitCount; i++)
             {
                 var hit = hits[i];
-                if(!hit.transform.CompareTag("Player"))
-                {
-                    continue;
-                }
-                //if (hit.bounds.size.x < 0.4)
-                //{
-                //    continue;
-                //}
-                var otherRigidbody = hit.rigidbody;
-                if (otherRigidbody == null) continue;
+               // var otherRigidbody = hit.rigidbody;
+               // if (otherRigidbody == null) continue;
+                var otherVelocity = hit.transform.GetComponentInChildren<WaterColliderScript>().GetFasterVelocity();
                 var otherTransform = hit.transform;
                 var width = hit.collider.bounds.size.x * 0.5f;
                 //float otherHeight = hit.collider.bounds.size.y;
@@ -183,26 +177,20 @@ public class WaterWaver : MonoBehaviour
                 int bufferCenter = Mathf.FloorToInt(bufferLength * (centerLocal * 0.5f + 0.5f));
                 // バッファ上での衝突した当たり判定の大きさ
                 int bufferWidth = Mathf.FloorToInt(width / transform.lossyScale.x * bufferLength);
-                //Debug.Log(hit.gameObject);
-                //Debug.Log("bx:" + hit.bounds.size.x+" by:"+ hit.collider.bounds.size.y);
-               // Debug.Log("w:" + width + " x:" + transform.lossyScale.x + " l:" + bufferLength);
                 for (int b = bufferCenter - bufferWidth; b <= bufferCenter + bufferWidth; b++)
                 {
                     if (b < 0 || b >= bufferLength) continue;
-                    waveBuffer[currentBuffer][b] = otherRigidbody.velocity.y * interactMultiplier / width;
+                    waveBuffer[currentBuffer][b] = otherVelocity.y * interactMultiplier / width;
                     if (b < bufferCenter)
                     {
-                        waveBuffer[currentBuffer][b] += interactHorizontalMultiplier * (-otherRigidbody.velocity.x) * 2.0f;
+                        waveBuffer[currentBuffer][b] += interactHorizontalMultiplier * (-otherVelocity.x) * 2.0f;
                     }
                     else if (b > bufferCenter)
                     {
-                        waveBuffer[currentBuffer][b] += interactHorizontalMultiplier * (otherRigidbody.velocity.x);
+                        waveBuffer[currentBuffer][b] += interactHorizontalMultiplier * (otherVelocity.x);
                     }
                     // スケールで揺れ幅を調整する
                     waveBuffer[currentBuffer][b] /= transform.lossyScale.y;
-                   
-                    //Debug.Log("low:" + lowerLength + "  " + "up:" + upperLength);
-                    //Debug.Log("power:" + waveBuffer[currentBuffer][b]);
                     //waveBuffer[currentBuffer][b] = Mathf.Clamp(waveBuffer[currentBuffer][b], -lowerLength * 0.5f, upperLength * 0.5f);
                 }
             }
