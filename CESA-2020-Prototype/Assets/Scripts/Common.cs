@@ -13,6 +13,13 @@ using System.Collections;
 //======================================================
 namespace Common
 {
+    // ゲームパッド関連
+    public static class GamePad
+    {
+        // ゲームパッドの検出間隔
+        public const float CHECK_INTERVAL = (2.0f);
+    }
+
     // プレイヤー関連の定数
     public static class Player
     {

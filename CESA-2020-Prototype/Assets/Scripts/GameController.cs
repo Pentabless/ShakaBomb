@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common;
 
 public class GameController : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class GameController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(2f);
+            yield return new WaitForSecondsRealtime(GamePad.CHECK_INTERVAL);
 
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {
