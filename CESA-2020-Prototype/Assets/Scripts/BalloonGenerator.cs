@@ -40,9 +40,6 @@ public class BalloonGenerator : MonoBehaviour
         {
             UsedBubble();
         }
-
-        // デバッグ
-        Debug.Log("所持しているバルーン " + m_balloonList.Count + " / " + Balloon.MAX + "個");
     }
 
     public void CreateBalloon(Vector3 create_pos)
