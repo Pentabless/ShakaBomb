@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     private bool m_checkGamepad = false;
 
     private void Awake()
-    {   
+    {
         // 接続されているゲームパッドの名前を調べる
         var gamepadNames = Input.GetJoystickNames();
 
