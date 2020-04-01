@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
         var gamepadNames = Input.GetJoystickNames();
 
         // ゲームパッドが接続されているかどうか
-        if (gamepadNames[0] == "")
+        if (gamepadNames == null || gamepadNames[0] == "")
         {
             m_checkGamepad = false;
             Debug.Log("ゲームパッドが接続されていません");
