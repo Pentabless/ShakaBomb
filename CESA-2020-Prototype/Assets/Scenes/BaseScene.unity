@@ -1338,6 +1338,11 @@ PrefabInstance:
     - target: {fileID: 5198826045784286578, guid: a569c3585e8be024aa105652b923a72c,
         type: 3}
       propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198826045784286578, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_RenderMode
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -58,8 +58,6 @@ public class GameController : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(GamePad.CHECK_INTERVAL);
 
-            Debug.Log(Input.GetJoystickNames());
-
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {
                 if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
