@@ -28,11 +28,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float defaultPlayerSpeed;
     float playerSpeed;
+    float stickSence;       // 入力感度
 
-    // ジャンプ力
+    // ジャンプ関連
     [SerializeField]
     float defaultJumpForce;
     float jumpForce;
+    int jumpCount;
+    bool jumpStopFlag;
 
     // 切り替えし猶予フレーム
     [SerializeField]
@@ -57,6 +60,8 @@ public class PlayerController : MonoBehaviour
         lastDir = 0;
         dirCount = 0;
         jumpForce = defaultJumpForce;
+        jumpCount = 0;
+        jumpStopFlag = false;
         playerSpeed = defaultPlayerSpeed;
     }
 
@@ -76,6 +81,9 @@ public class PlayerController : MonoBehaviour
         // コントローラ未接続時
         if (!checkController)
         {
+            // 入力感度初期化
+            stickSence = 1;
+
             // 左右移動
             if (Input.GetKey(KeyCode.LeftArrow))
             {
@@ -97,7 +105,14 @@ public class PlayerController : MonoBehaviour
             {
                 rig.AddForce(new Vector2(0, jumpForce));
                 isGround = false;
+                jumpStopFlag = false;
             }
+            if (Input.GetKeyUp(KeyCode.Z) && isGround == false && !jumpStopFlag)
+            {
+                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
+                jumpStopFlag = true;
+            }
+
 
             // バレットの発射
             if (Input.GetKeyDown(KeyCode.C) && Data.num_balloon >= 1)
@@ -111,15 +126,17 @@ public class PlayerController : MonoBehaviour
         else if (checkController)
         {
             // 左右移動
-            if (Input.GetAxisRaw("Horizontal") < 0)
+            if (Input.GetAxis("Horizontal") < 0)
             {
                 dir = -1;
                 dirCount = turnCount;
+                stickSence = Input.GetAxis("Horizontal");
             }
-            else if (Input.GetAxisRaw("Horizontal") > 0)
+            else if (Input.GetAxis("Horizontal") > 0)
             {
                 dir = 1;
                 dirCount = turnCount;
+                stickSence = Input.GetAxis("Horizontal");
             }
             else
             {
@@ -130,6 +147,12 @@ public class PlayerController : MonoBehaviour
             {
                 rig.AddForce(new Vector2(0, jumpForce));
                 isGround = false;
+                jumpStopFlag = false;
+            }
+            if (Input.GetKeyUp(KeyCode.Joystick1Button0) && isGround == false && !jumpStopFlag)
+            {
+                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
+                jumpStopFlag = true;
             }
 
             // バレットの発射
@@ -195,19 +218,19 @@ public class PlayerController : MonoBehaviour
 
             case 1:
                 this.rig.gravityScale = 3.0f;
-                jumpForce = defaultJumpForce * 0.9f;
+                jumpForce = defaultJumpForce * 0.77f;
                 playerSpeed = defaultPlayerSpeed * 0.9f;
                 break;
 
             case 2:
                 this.rig.gravityScale = 2.0f;
-                jumpForce = defaultJumpForce * 0.7f;
+                jumpForce = defaultJumpForce * 0.67f;
                 playerSpeed = defaultPlayerSpeed * 0.85f;
                 break;
 
             case 3:
                 this.rig.gravityScale = 1.5f;
-                jumpForce = defaultJumpForce * 0.6f;
+                jumpForce = defaultJumpForce * 0.57f;
                 playerSpeed = defaultPlayerSpeed * 0.8f;
                 break;
 
@@ -218,14 +241,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 入力感度 絶対値化
+        stickSence = Mathf.Abs(stickSence);
+
         // 移動
         if (isGround)
         {
-            rig.AddForce(new Vector2(playerSpeed * dir, 0));
+            rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
         }
         else
         {
-            rig.AddForce(new Vector2(playerSpeed / 3.0f * dir, 0));
+            rig.AddForce(new Vector2(playerSpeed / 3.0f * dir * stickSence, 0));
         }
 
         // 速さ制限
@@ -242,7 +268,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        //if (collision.gameObject.tag == "DamageTile")
+        //{
+        //    balloonG.UsedBubble();
+        //}
     }
 
     private void OnTriggerStay2D(Collider2D collision)
