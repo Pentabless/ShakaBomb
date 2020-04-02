@@ -400,6 +400,16 @@ PrefabInstance:
       propertyPath: bulletG
       value: 
       objectReference: {fileID: 1312865666}
+    - target: {fileID: 3524930649752458130, guid: eca9fe8788fa57044b4acb2daac0cbbb,
+        type: 3}
+      propertyPath: balloonG
+      value: 
+      objectReference: {fileID: 1781327072}
+    - target: {fileID: 3524930649752458130, guid: eca9fe8788fa57044b4acb2daac0cbbb,
+        type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 1008924121}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
 --- !u!1 &894075875
