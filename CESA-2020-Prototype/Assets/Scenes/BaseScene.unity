@@ -179,6 +179,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6885605775781964917, guid: c9b54b7f4df37a74795bd0cec35a1903,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885605775781964917, guid: c9b54b7f4df37a74795bd0cec35a1903,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 300468366}
+    - target: {fileID: 6885605775781964917, guid: c9b54b7f4df37a74795bd0cec35a1903,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885605775781964917, guid: c9b54b7f4df37a74795bd0cec35a1903,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9b54b7f4df37a74795bd0cec35a1903, type: 3}
 --- !u!1 &300468364
@@ -987,6 +1007,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a2fc3f87fea0324ea342ccfbf05b8e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &1011006045 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 5198826045784286578, guid: a569c3585e8be024aa105652b923a72c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1725761515}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1172622768 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3524930649752458141, guid: eca9fe8788fa57044b4acb2daac0cbbb,
@@ -1294,6 +1320,11 @@ PrefabInstance:
       propertyPath: m_gamepadState
       value: 
       objectReference: {fileID: 1008924121}
+    - target: {fileID: 5198826044935749514, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_pauseMenuCanvas
+      value: 
+      objectReference: {fileID: 1011006045}
     - target: {fileID: 5198826045784286578, guid: a569c3585e8be024aa105652b923a72c,
         type: 3}
       propertyPath: m_Camera
@@ -1302,6 +1333,11 @@ PrefabInstance:
     - target: {fileID: 5198826045784286578, guid: a569c3585e8be024aa105652b923a72c,
         type: 3}
       propertyPath: m_PlaneDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198826045784286578, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
