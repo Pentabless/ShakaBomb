@@ -9,7 +9,6 @@ public class StickyRangeController : MonoBehaviour
         //本体でない別の泡だったら
         if (collision.tag == "Sticky" && collision != GetComponentInParent<BubbleController>())
         {
-            Debug.Log("ChildHit");
             GetComponentInParent<BubbleController>().StickyTriggerEnter(collision);
         }
     }

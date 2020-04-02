@@ -36,9 +36,6 @@ public class SheepEnemyController : MonoBehaviour
         }
         //泡の数を覚える
         num_attacks = enemy_attacks.Count;
-
-        Debug.Log("NumAttack" + num_attacks);
-
         attack_count = 0;
 
         //左向き…-1　右向き…1
