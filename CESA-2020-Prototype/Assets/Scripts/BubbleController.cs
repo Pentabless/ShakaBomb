@@ -31,7 +31,7 @@ public class BubbleController : MonoBehaviour
     Vector3 target_scale;
 
     // 泡の最大サイズ
-    readonly float biggest_scale = 1.3f;
+    readonly float biggest_scale = 0.8f;
     // 保持状態か否か
     bool ret_flag;
 
