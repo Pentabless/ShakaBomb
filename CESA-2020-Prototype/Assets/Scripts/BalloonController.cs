@@ -12,6 +12,10 @@ public class BalloonController : MonoBehaviour
 
     // プレイヤーの情報
     GameObject playerObj;
+
+    // バルーンジェネレータ
+    BalloonGenerator balloonG;
+
     // 消えるかどうか
     bool isDestroy;
 
@@ -19,6 +23,7 @@ public class BalloonController : MonoBehaviour
     {
         rig = GetComponent<Rigidbody2D>();
         playerObj = GameObject.Find("Player");
+        balloonG = GameObject.Find("BalloonGenerator").GetComponent<BalloonGenerator>();
         line = GetComponent<LineRenderer>();
 
         line.startWidth = 0.05f;
@@ -40,6 +45,14 @@ public class BalloonController : MonoBehaviour
 
         line.SetPosition(0, thisPos);
         line.SetPosition(1, playerObj.transform.position);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "DamageTile")
+        {
+            balloonG.UsedBubble();
+        }
     }
 
     void Destroy()

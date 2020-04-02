@@ -8729,7 +8729,8 @@ GameObject:
   - component: {fileID: 748101913}
   - component: {fileID: 748101915}
   - component: {fileID: 748101914}
-  m_Layer: 0
+  - component: {fileID: 748101916}
+  m_Layer: 14
   m_Name: Tilemap_Damage
   m_TagString: DamageTile
   m_Icon: {fileID: 0}
@@ -8976,6 +8977,20 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &748101916
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748101912}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
 --- !u!1001 &847729378
 PrefabInstance:
   m_ObjectHideFlags: 0
