@@ -34,12 +34,6 @@ public class BalloonGenerator : MonoBehaviour
             // 作っていない状態にする
             isCreate = false;
         }
-
-        // デバッグ(泡を使用)
-        if (Input.GetKeyDown(KeyCode.C) && m_balloonList.Count >= 1)
-        {
-            UsedBubble();
-        }
     }
 
     public void CreateBalloon(Vector3 create_pos)

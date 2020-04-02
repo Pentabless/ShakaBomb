@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     private bool m_checkGamepad = false;
 
     private void Awake()
-    {   
+    {
         StartCoroutine(DelayCheck());
     }
 
@@ -21,12 +21,16 @@ public class GameController : MonoBehaviour
 
     IEnumerator DelayCheck()
     {
+        Debug.Log("check 3");
+
         while (true)
         {
             yield return new WaitForSecondsRealtime(GamePad.CHECK_INTERVAL);
+            Debug.Log("check 2");
 
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {
+                Debug.Log("check 1");
                 if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
                 {
                     Debug.Log("ゲームパッドが接続されました");

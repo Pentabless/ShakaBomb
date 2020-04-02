@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     BubbleGenerator bubbleG;
 
+    // バルーンジェネレータ
+    [SerializeField]
+    BalloonGenerator balloonG;
+
     // バレットジェネレータ
     [SerializeField]
     BulletGenerator bulletG;
@@ -18,6 +22,7 @@ public class PlayerController : MonoBehaviour
     // コントローラ
     [SerializeField]
     GameController gameController;
+    bool checkController;
 
     // 移動力
     [SerializeField]
@@ -47,6 +52,7 @@ public class PlayerController : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
         bubbleGround = false;
+        checkController = false;
         dir = 0;
         lastDir = 0;
         dirCount = 0;
@@ -62,21 +68,79 @@ public class PlayerController : MonoBehaviour
             rig.velocity = new Vector2(0.0f, rig.velocity.y);
         }
 
-        // 左右移動
-        if (Input.GetKey(KeyCode.LeftArrow))
+        // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
+
+        // コントローラの接続チェック
+        checkController = gameController.GetCheckGamepad();
+
+        // コントローラ未接続時
+        if (!checkController)
         {
-            dir = -1;
-            dirCount = turnCount;
+            // 左右移動
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                dir = -1;
+                dirCount = turnCount;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                dir = 1;
+                dirCount = turnCount;
+            }
+            else
+            {
+                dir = 0;
+            }
+
+            // ジャンプ
+            if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
+            {
+                rig.AddForce(new Vector2(0, jumpForce));
+                isGround = false;
+            }
+
+            // バレットの発射
+            if (Input.GetKeyDown(KeyCode.C) && Data.num_balloon >= 1)
+            {
+                bulletG.BulletCreate(this.transform.position);
+                balloonG.UsedBubble();
+            }
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+
+        // コントローラ接続時
+        else if (checkController)
         {
-            dir = 1;
-            dirCount = turnCount;
+            // 左右移動
+            if (Input.GetAxisRaw("Horizontal") < 0)
+            {
+                dir = -1;
+                dirCount = turnCount;
+            }
+            else if (Input.GetAxisRaw("Horizontal") > 0)
+            {
+                dir = 1;
+                dirCount = turnCount;
+            }
+            else
+            {
+                dir = 0;
+            }
+            // ジャンプ
+            if (Input.GetKeyDown(KeyCode.Joystick1Button0) && isGround == true)
+            {
+                rig.AddForce(new Vector2(0, jumpForce));
+                isGround = false;
+            }
+
+            // バレットの発射
+            if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Data.num_balloon >= 1)
+            {
+                bulletG.BulletCreate(this.transform.position);
+                balloonG.UsedBubble();
+            }
         }
-        else
-        {
-            dir = 0;
-        }
+
+        // ------------------------------------------------------------------------------
 
         // 切り替えし(地上にいるときのみ)
         if (isGround)
@@ -115,19 +179,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             this.transform.localRotation = new Quaternion(0, 0, 0, 0);
-        }
-
-        // ジャンプ
-        if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
-        {
-            rig.AddForce(new Vector2(0, jumpForce));
-            isGround = false;
-        }
-
-        // バレットの発射
-        if (Input.GetKeyDown(KeyCode.C) && Data.num_balloon >= 1)
-        {
-            bulletG.BulletCreate(this.transform.position);
         }
 
         // 重力の変更(バブルの個数に応じて)
