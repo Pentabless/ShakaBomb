@@ -134,7 +134,6 @@ public class BubbleController : MonoBehaviour
             if (biggest_scale > now_scale.x)
             {
                 transform.localScale = now_scale;
-                Debug.Log("MaxScale");
             }
         }
 
