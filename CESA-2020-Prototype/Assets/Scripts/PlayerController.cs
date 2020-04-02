@@ -45,6 +45,13 @@ public class PlayerController : MonoBehaviour
     bool isGround;
     bool bubbleGround;
 
+    // コヨーテタイム
+    [SerializeField]
+    int coyoteTime;
+
+    bool coyoteFlag = true;
+    int coyoteCount = 0;
+
     // プレイヤーの向き
     int dir;            // 現在
     int lastDir;      // 前フレーム
@@ -103,11 +110,16 @@ public class PlayerController : MonoBehaviour
             // ジャンプ
             if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
             {
+                if (!isGround)   // コヨーテ中
+                {
+                    this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
+                }
+
                 rig.AddForce(new Vector2(0, jumpForce));
                 isGround = false;
                 jumpStopFlag = false;
             }
-            if (Input.GetKeyUp(KeyCode.Z) && isGround == false && !jumpStopFlag)
+            if (Input.GetKeyUp(KeyCode.Z) && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
             {
                 rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
                 jumpStopFlag = true;
@@ -143,13 +155,18 @@ public class PlayerController : MonoBehaviour
                 dir = 0;
             }
             // ジャンプ
-            if (Input.GetKeyDown(KeyCode.Joystick1Button0) && isGround == true)
+            if (Input.GetKeyDown(KeyCode.Joystick1Button0) && coyoteFlag == true)
             {
+                if (!isGround)   // コヨーテ中
+                {
+                    this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
+                }
+
                 rig.AddForce(new Vector2(0, jumpForce));
                 isGround = false;
                 jumpStopFlag = false;
             }
-            if (Input.GetKeyUp(KeyCode.Joystick1Button0) && isGround == false && !jumpStopFlag)
+            if (Input.GetKeyUp(KeyCode.Joystick1Button0) && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
             {
                 rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
                 jumpStopFlag = true;
@@ -237,6 +254,21 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+
+        // コヨーテタイムによる接地判定
+        if (!isGround)
+        {
+            coyoteCount++;
+        }
+        else
+        {
+            coyoteCount = 0;
+            coyoteFlag = true;
+        }
+        if (coyoteCount >= coyoteTime)
+        {
+            coyoteFlag = false;
+        }
     }
 
     private void FixedUpdate()
@@ -277,7 +309,6 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         isGround = true;
-
         if (collision.tag == "GroundBubble")
         {
             bubbleGround = true;
