@@ -26,13 +26,13 @@ public class BulletController : MonoBehaviour
     {
         if (!isShot)
         {
-            if(Data.playerDir > 0)
+            if (Data.playerDir > 0)
             {
-                rig.AddForce(new Vector2(400, 200));
+                rig.AddForce(new Vector2(400 + Data.playerVelX * 30.0f, 200));
             }
             else
             {
-                rig.AddForce(new Vector2(-400, 200));
+                rig.AddForce(new Vector2(-400 + Data.playerVelX * 30.0f, 200));
             }
             isShot = true;
         }
@@ -40,7 +40,7 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag != "Player")
+        if (collision.gameObject.tag != "Player")
         {
             Destroy(this.gameObject);
         }

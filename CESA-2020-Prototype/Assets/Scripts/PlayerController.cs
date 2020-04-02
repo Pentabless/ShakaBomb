@@ -181,6 +181,9 @@ public class PlayerController : MonoBehaviour
             this.transform.localRotation = new Quaternion(0, 0, 0, 0);
         }
 
+        // プレイヤーのX方向速度取得
+        Data.playerVelX = this.rig.velocity.x;
+
         // 重力の変更(バブルの個数に応じて)
         switch (Data.num_balloon)
         {
