@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Common;
 
 public class GameController : MonoBehaviour
@@ -8,9 +9,16 @@ public class GameController : MonoBehaviour
     // ゲームパッドの接続確認
     private bool m_checkGamepad = false;
 
+    //private string[] m_cacheJoystickNames;
+
     private void Awake()
     {
         StartCoroutine(DelayCheck());
+    }
+
+    private void Update()
+    {
+
     }
 
     // ゲームパッドの接続確認
@@ -21,16 +29,14 @@ public class GameController : MonoBehaviour
 
     IEnumerator DelayCheck()
     {
-        Debug.Log("check 3");
-
         while (true)
         {
             yield return new WaitForSecondsRealtime(GamePad.CHECK_INTERVAL);
-            Debug.Log("check 2");
+
+            Debug.Log(Input.GetJoystickNames());
 
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {
-                Debug.Log("check 1");
                 if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
                 {
                     Debug.Log("ゲームパッドが接続されました");
