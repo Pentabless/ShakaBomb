@@ -41,6 +41,9 @@ public class BubbleController : MonoBehaviour
     // 泡のカウント
     private int catchCount = 0;
 
+    // 消滅までのカウント
+    private int deleteCount = 0;
+
 
     //目的の大きさになるまでの時間(フレーム数)
     int target_scale_time;
@@ -71,6 +74,7 @@ public class BubbleController : MonoBehaviour
     void Update()
     {
         catchCount++;
+        deleteCount++;
 
         if (!ret_flag)
         {
@@ -88,8 +92,9 @@ public class BubbleController : MonoBehaviour
         // 移動する
         transform.Translate(Mathf.Sin(angle) * move_force.x, move_force.y, 0.0f);
         angle += 0.1f;
-        //ある程度の高さまで来たら
-        if (transform.position.y >= 10.0f)
+
+        //バブルの消滅(カウント)
+        if (deleteCount >= 300)
         {
             //Vector3 position = new Vector3(transform.position.x, -0.25f, 0.0f);
             //transform.position = position;
@@ -133,8 +138,8 @@ public class BubbleController : MonoBehaviour
             }
         }
 
-        
-        if(Data.num_balloon >= Balloon.MAX)
+
+        if (Data.num_balloon >= Balloon.MAX)
         {
             test_flag = false;
         }
