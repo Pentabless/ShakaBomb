@@ -1,15 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 using Common;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField]
+    private Image m_connected = null;
+    [SerializeField]
+    private Image m_disconnected = null;
+
     // ゲームパッドの接続確認
     private bool m_checkGamepad = false;
 
-    //private string[] m_cacheJoystickNames;
+    private void Awake()
+    {
+        m_connected.gameObject.SetActive(false);
+        m_disconnected.gameObject.SetActive(false);
+    }
 
     private void Start()
     {
@@ -18,13 +28,28 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-
+        DebugCheckGamepad();
     }
 
     // ゲームパッドの接続確認
     public bool GetCheckGamepad()
     {
         return m_checkGamepad;
+    }
+
+    // デバッグ用
+    private void DebugCheckGamepad()
+    {
+        if (m_checkGamepad)
+        {
+            m_connected.gameObject.SetActive(true);
+            m_disconnected.gameObject.SetActive(false);
+        }
+        else
+        {
+            m_connected.gameObject.SetActive(false);
+            m_disconnected.gameObject.SetActive(true);
+        }
     }
 
     IEnumerator DelayCheck()
@@ -39,13 +64,13 @@ public class GameController : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
                 {
-                    Debug.Log("ゲームパッドが接続されました");
+                    //Debug.Log("ゲームパッドが接続されました");
                     i = Input.GetJoystickNames().Length;
                     m_checkGamepad = true;
                 }
                 else
                 {
-                    Debug.Log("ゲームパッドが接続されていません");
+                    //Debug.Log("ゲームパッドが接続されていません");
                     i = Input.GetJoystickNames().Length;
                     m_checkGamepad = false;
                 }

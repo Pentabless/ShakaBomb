@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour
 
     // ポーズメニューの取得
     [SerializeField]
-    private Canvas m_menu = null;
+    private Canvas m_pauseMenuCanvas = null;
 
     private bool m_checkGamepad = false;
     private bool m_activeCheck = false;
@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         // ポーズメニューを非表示
-        m_menu.gameObject.SetActive(false);
+        m_pauseMenuCanvas.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -32,7 +32,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         // ゲームを再開する
-        m_menu.gameObject.SetActive(false);
+        m_pauseMenuCanvas.gameObject.SetActive(false);
     }
 
     private void SwitchMenu(bool active)
@@ -49,13 +49,13 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && !m_checkGamepad)
         {
             m_activeCheck = true;
-            m_menu.gameObject.SetActive(true);
+            m_pauseMenuCanvas.gameObject.SetActive(true);
         }
         // ポーズメニューの表示（ゲームパッド接続時）
         if (Input.GetKeyDown(KeyCode.Joystick1Button7) && m_checkGamepad)
         {
             m_activeCheck = true;
-            m_menu.gameObject.SetActive(true);
+            m_pauseMenuCanvas.gameObject.SetActive(true);
         }
     }
 
@@ -65,13 +65,13 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && !m_checkGamepad)
         {
             m_activeCheck = false;
-            m_menu.gameObject.SetActive(false);
+            m_pauseMenuCanvas.gameObject.SetActive(false);
         }
         // ポーズメニューの非表示（ゲームパッド接続時）
         if (Input.GetKeyDown(KeyCode.Joystick1Button7) && m_checkGamepad)
         {
             m_activeCheck = false;
-            m_menu.gameObject.SetActive(false);
+            m_pauseMenuCanvas.gameObject.SetActive(false);
         }
     }
 }

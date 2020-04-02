@@ -603,7 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gamepadState: {fileID: 0}
-  m_menu: {fileID: 5198826045784286578}
+  m_pauseMenuCanvas: {fileID: 5198826045784286578}
 --- !u!1 &5198826045784286582
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +665,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &5198826045784286579
 MonoBehaviour:
