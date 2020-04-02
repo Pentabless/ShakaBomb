@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
 
     //private string[] m_cacheJoystickNames;
 
-    private void Awake()
+    private void Start()
     {
         StartCoroutine(DelayCheck());
     }
