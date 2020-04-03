@@ -8922,6 +8922,38 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 1008924121}
+    - target: {fileID: 1269467506, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269467506, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
+      propertyPath: m_Offset.x
+      value: 1.021054
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269467506, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
+      propertyPath: m_Size.x
+      value: 0.08632469
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269467506, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
+      propertyPath: m_Size.y
+      value: 0.11485314
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269467506, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
+      propertyPath: m_Offset.y
+      value: -2.299038
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269467513, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.5441562
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269467513, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
+      propertyPath: m_Radius
+      value: 0.51947916
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269467513, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
+      propertyPath: m_Offset.y
+      value: -2.3010204
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
 --- !u!1 &859791121
