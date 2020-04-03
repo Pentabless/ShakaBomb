@@ -49,11 +49,18 @@ public class WaterWaver : MonoBehaviour
         Setup();
     }
 
-    // 終了処理
+    
+    // 無効化処理
     private void OnDisable()
     {
         // タスクを終了させる
         deformWaveJobHandles.Complete();
+        
+    }
+
+    // 破棄処理
+    private void OnDestroy()
+    {
         // 配列を開放する
         Vertices.Dispose();
         for (int i = 0; i < waveBuffer.Length; i++)
