@@ -7,6 +7,8 @@ public class StageSelectDirector : MonoBehaviour
 {
     //選択するスピード
     public float speed;
+    //選択するステージの名前(※build settingにシーンを登録しておく事)
+    public string[] stage_names;
     //カメラオブジェクト
     GameObject go_camera;
     //ステージの画像
@@ -145,8 +147,8 @@ public class StageSelectDirector : MonoBehaviour
                 //タイトルを選択していなかったら
                 if (select_title == false)
                 {
-                    //プレイシーンをロードする
-                    SceneManager.LoadScene("PlayScene");
+                    //登録した名前のステージのプレイシーンをロードする
+                    SceneManager.LoadScene(stage_names[stage_number]);
                 }
                 else
                 {
