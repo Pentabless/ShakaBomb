@@ -75,7 +75,8 @@ public class PauseManager : MonoBehaviour
         pauseCanvas.sortingOrder = 50;
 
         //ポーズ用のImage生成
-        pauseImage = new GameObject("ImagePause").AddComponent<Image>();
+        GameObject imagePauseObject = new GameObject("ImagePause");
+        pauseImage = imagePauseObject.AddComponent<Image>();
         pauseImage.transform.SetParent(pauseCanvas.transform, false);
         pauseImage.rectTransform.anchoredPosition = Vector3.zero;
 
@@ -83,6 +84,9 @@ public class PauseManager : MonoBehaviour
 
         //色の設定
         pauseImage.color = new Color(0f, 0f, 0f, 0f);
+
+        // ポーズ用オブジェクトとフェード用オブジェクト、影響を受けないオブジェクトの配列に追加する
+        ignoreGameObjects = ignoreGameObjects.Concat(new GameObject[] { FadeCanvasObject, FadeManager.GetCanvas().gameObject }).ToArray();
     }
 
     private void Start()
@@ -95,7 +99,7 @@ public class PauseManager : MonoBehaviour
         //ボタンが押されたら状態を変更する
         //if (Input.GetButtonDown("Pause2") && gameManager.CanPause() && !FadeManager.isFadeOut)
         bool pressPause = (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button7));
-        if (pressPause)
+        if (pressPause && !FadeManager.isFadeOut)
         {
             ChangePauseState();
         }
@@ -171,7 +175,7 @@ public class PauseManager : MonoBehaviour
             pauseImage.color = new Color(0f, 0f, 0f, 0.6f);
 
             //ポーズメニューを起動する
-            //pauseMenu.SetActive(true);
+            pauseMenu.SetActive(true);
         }
 
         //Rigidbodyの停止
@@ -259,7 +263,7 @@ public class PauseManager : MonoBehaviour
         pauseImage.color = new Color(0f, 0f, 0f, 0f);
 
         //ポーズメニューを終了する
-        //pauseMenu.SetActive(false);
+        pauseMenu.SetActive(false);
 
         //Rigidbodyの再開
         for (int i = 0; i < pausingRigidbodies.Length; i++)
