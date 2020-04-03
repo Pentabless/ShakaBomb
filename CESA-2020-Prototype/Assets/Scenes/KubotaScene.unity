@@ -8922,6 +8922,11 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 1008924121}
+    - target: {fileID: 3524930649752458130, guid: eca9fe8788fa57044b4acb2daac0cbbb,
+        type: 3}
+      propertyPath: coyoteTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1269467506, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
       propertyPath: m_Enabled
       value: 0
