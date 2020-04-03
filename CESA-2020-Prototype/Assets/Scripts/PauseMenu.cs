@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class PauseMenu : MonoBehaviour
     // ポーズメニューの取得
     [SerializeField]
     private Canvas m_pauseMenuCanvas = null;
+
+    //[SerializeField]
+    //private Button 
 
     private bool m_checkGamepad = false;
     private bool m_activeCheck = false;

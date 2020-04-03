@@ -251,7 +251,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 50
+  far clip plane: 10
   field of view: 60
   orthographic: 1
   orthographic size: 5
@@ -1344,6 +1344,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RenderMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754496071895111777, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.7813847
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754496071895111777, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754496071895111777, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.6933962
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198826044076591168, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.7813847
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198826044076591168, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198826044076591168, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.6933962
+      objectReference: {fileID: 0}
+    - target: {fileID: 7244377357208877361, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.7813847
+      objectReference: {fileID: 0}
+    - target: {fileID: 7244377357208877361, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7244377357208877361, guid: a569c3585e8be024aa105652b923a72c,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.6933962
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a569c3585e8be024aa105652b923a72c, type: 3}
