@@ -57,6 +57,13 @@ public class PlayerController : MonoBehaviour
     int lastDir;      // 前フレーム
     int dirCount;       // 切り替えし用向き保持カウント
 
+    // キー入力の情報保持
+    float jumpButton = 0;
+    float jumpButtonTrigger = 0;
+
+    float attackButton = 0;
+    float attackButtonTrigger = 0;
+
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
@@ -81,106 +88,58 @@ public class PlayerController : MonoBehaviour
         }
 
         // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
-
         // コントローラの接続チェック
         checkController = gameController.GetCheckGamepad();
-
-        // コントローラ未接続時
-        if (!checkController)
+        // 左右移動
+        if (Input.GetAxis("Horizontal") < 0)
         {
-            // 入力感度初期化
-            stickSence = 1;
-
-            // 左右移動
-            if (Input.GetKey(KeyCode.LeftArrow))
+            dir = -1;
+            dirCount = turnCount;
+            stickSence = Input.GetAxis("Horizontal");
+        }
+        else if (Input.GetAxis("Horizontal") > 0)
+        {
+            dir = 1;
+            dirCount = turnCount;
+            stickSence = Input.GetAxis("Horizontal");
+        }
+        else
+        {
+            dir = 0;
+        }
+        // ジャンプ
+        jumpButton = Input.GetAxis("Jump");
+        if (jumpButton > 0 && jumpButtonTrigger == 0.0f && coyoteFlag == true)
+        {
+            if (!isGround)   // コヨーテ中
             {
-                dir = -1;
-                dirCount = turnCount;
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                dir = 1;
-                dirCount = turnCount;
-            }
-            else
-            {
-                dir = 0;
-            }
-
-            // ジャンプ
-            if (Input.GetKeyDown(KeyCode.Z) && isGround == true)
-            {
-                if (!isGround)   // コヨーテ中
-                {
-                    this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
-                }
-
-                rig.AddForce(new Vector2(0, jumpForce));
-                isGround = false;
-                jumpStopFlag = false;
-            }
-            if (Input.GetKeyUp(KeyCode.Z) && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
-            {
-                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
-                jumpStopFlag = true;
+                this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
             }
 
-
-            // バレットの発射
-            if (Input.GetKeyDown(KeyCode.C) && Data.num_balloon >= 1)
-            {
-                bulletG.BulletCreate(this.transform.position);
-                balloonG.UsedBubble();
-            }
+            rig.AddForce(new Vector2(0, jumpForce));
+            isGround = false;
+            jumpStopFlag = false;
+        }
+        if (Input.GetKeyUp(KeyCode.Joystick1Button0) && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
+        {
+            rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
+            jumpStopFlag = true;
+        }
+        // バレットの発射
+        attackButton = Input.GetAxis("Attack");
+        if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.num_balloon >= 1)
+        {
+            bulletG.BulletCreate(this.transform.position);
+            balloonG.UsedBubble();
         }
 
-        // コントローラ接続時
-        else if (checkController)
-        {
-            // 左右移動
-            if (Input.GetAxis("Horizontal") < 0)
-            {
-                dir = -1;
-                dirCount = turnCount;
-                stickSence = Input.GetAxis("Horizontal");
-            }
-            else if (Input.GetAxis("Horizontal") > 0)
-            {
-                dir = 1;
-                dirCount = turnCount;
-                stickSence = Input.GetAxis("Horizontal");
-            }
-            else
-            {
-                dir = 0;
-            }
-            // ジャンプ
-            if (Input.GetKeyDown(KeyCode.Joystick1Button0) && coyoteFlag == true)
-            {
-                if (!isGround)   // コヨーテ中
-                {
-                    this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
-                }
-
-                rig.AddForce(new Vector2(0, jumpForce));
-                isGround = false;
-                jumpStopFlag = false;
-            }
-            if (Input.GetKeyUp(KeyCode.Joystick1Button0) && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
-            {
-                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
-                jumpStopFlag = true;
-            }
-
-            // バレットの発射
-            if (Input.GetKeyDown(KeyCode.Joystick1Button1) && Data.num_balloon >= 1)
-            {
-                bulletG.BulletCreate(this.transform.position);
-                balloonG.UsedBubble();
-            }
-        }
-
+        // 前フレームのキー入力の情報保持
+        // Jump
+        jumpButtonTrigger = jumpButton;
+        // Attack
+        attackButtonTrigger = attackButton;
         // ------------------------------------------------------------------------------
+
 
         // 切り替えし(地上にいるときのみ)
         if (isGround)
@@ -280,10 +239,12 @@ public class PlayerController : MonoBehaviour
         if (isGround)
         {
             rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
+            //this.rig.velocity = new Vector2(7.0f * dir * stickSence, this.rig.velocity.y);
         }
         else
         {
             rig.AddForce(new Vector2(playerSpeed / 3.0f * dir * stickSence, 0));
+            //this.rig.velocity = new Vector2(7.0f * 0.8f * dir * stickSence, this.rig.velocity.y);
         }
 
         // 速さ制限
