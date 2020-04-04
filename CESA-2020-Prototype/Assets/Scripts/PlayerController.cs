@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     // コントローラ
     [SerializeField]
-    GameController gameController;
+    GamepadManager gamepadManager;
     bool checkController;
 
     // 移動力
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
         // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
         // コントローラの接続チェック
-        checkController = gameController.GetCheckGamepad();
+        checkController = gamepadManager.GetCheckGamepad();
         // 左右移動
         if (Input.GetAxis("Horizontal") < 0)
         {

@@ -7,7 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     // ゲームパッド情報の取得
     [SerializeField]
-    private GameController m_gamepadState = null;
+    private GamepadManager m_gamepadState = null;
 
     // ポーズメニューの取得
     [SerializeField]
