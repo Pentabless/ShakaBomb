@@ -19,6 +19,9 @@ public class GameController : MonoBehaviour
     {
         m_connected.gameObject.SetActive(false);
         m_disconnected.gameObject.SetActive(false);
+
+        // シーン開始時にフェードインする
+        FadeManager.FadeIn();
     }
 
     private void Start()
