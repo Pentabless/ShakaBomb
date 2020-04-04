@@ -16,6 +16,9 @@ public class BalloonController : MonoBehaviour
     // バルーンジェネレータ
     BalloonGenerator balloonG;
 
+    // 所持バルーン
+    private List<GameObject> m_balloonList = new List<GameObject>();
+
     // 消えるかどうか
     bool isDestroy;
 
@@ -51,7 +54,7 @@ public class BalloonController : MonoBehaviour
     {
         if (collision.tag == "DamageTile")
         {
-            balloonG.UsedBubble();
+            balloonG.UsedBalloon();
         }
     }
 

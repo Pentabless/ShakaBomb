@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
         if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.num_balloon >= 1)
         {
             bulletG.BulletCreate(this.transform.position);
-            balloonG.UsedBubble();
+            balloonG.UsedBalloon();
         }
 
         // 前フレームのキー入力の情報保持
