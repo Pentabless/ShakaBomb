@@ -81,12 +81,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Velocity最小化(一定数以下で0)
-        if (Mathf.Abs(rig.velocity.x) <= 0.001f)
-        {
-            rig.velocity = new Vector2(0.0f, rig.velocity.y);
-        }
-
         // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
         // コントローラの接続チェック
         checkController = gamepadManager.GetCheckGamepad();
@@ -120,7 +114,7 @@ public class PlayerController : MonoBehaviour
             isGround = false;
             jumpStopFlag = false;
         }
-        if (Input.GetKeyUp(KeyCode.Joystick1Button0) && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
+        if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
         {
             rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
             jumpStopFlag = true;
@@ -239,12 +233,12 @@ public class PlayerController : MonoBehaviour
         if (isGround)
         {
             rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
-            //this.rig.velocity = new Vector2(7.0f * dir * stickSence, this.rig.velocity.y);
+            //this.rig.velocity = new Vector2(playerSpeed * dir * stickSence, this.rig.velocity.y);
         }
         else
         {
-            rig.AddForce(new Vector2(playerSpeed / 3.0f * dir * stickSence, 0));
-            //this.rig.velocity = new Vector2(7.0f * 0.8f * dir * stickSence, this.rig.velocity.y);
+            rig.AddForce(new Vector2(playerSpeed / 4.0f * dir * stickSence, 0));
+            //this.rig.velocity = new Vector2(playerSpeed * 0.8f * dir * stickSence, this.rig.velocity.y);
         }
 
         // 速さ制限
@@ -257,6 +251,11 @@ public class PlayerController : MonoBehaviour
             rig.velocity = new Vector2(-5.0f, rig.velocity.y);
         }
 
+        // 接地時慣性消滅
+        if (isGround && dir == 0)
+        {
+            this.rig.velocity = new Vector2(0, this.rig.velocity.y);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
