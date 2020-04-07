@@ -16,8 +16,7 @@ public class BalloonController : MonoBehaviour
     // バルーンジェネレータ
     BalloonGenerator balloonG;
 
-    // 所持バルーン
-    private List<GameObject> m_balloonList = new List<GameObject>();
+    private int m_balloonCount = -1;
 
     // 消えるかどうか
     bool isDestroy;
@@ -33,6 +32,19 @@ public class BalloonController : MonoBehaviour
         line.endWidth = 0.05f;
         line.positionCount = 2;
         //line.SetColors(Color.white, Color.white);
+
+        if (balloonG.GetMaxBalloons() == 1)
+        {
+            m_balloonCount = 1;
+        }
+        if (balloonG.GetMaxBalloons() == 2)
+        {
+            m_balloonCount = 2;
+        }
+        if (balloonG.GetMaxBalloons() == 3)
+        {
+            m_balloonCount = 3;
+        }
     }
 
     void Update()
@@ -54,7 +66,20 @@ public class BalloonController : MonoBehaviour
     {
         if (collision.tag == "DamageTile")
         {
-            balloonG.UsedBalloon();
+            balloonG.BrokenBalloon(m_balloonCount);
+
+            //if (balloonG.GetMaxBalloons() == 1&& m_balloonCount<=2)
+            //{
+            //    m_balloonCount = 1;
+            //}
+            //if (balloonG.GetMaxBalloons() == 2 && m_balloonCount <= 3)
+            //{
+            //    m_balloonCount = 2;
+            //}
+            //if (balloonG.GetMaxBalloons() == 3)
+            //{
+            //    m_balloonCount = 3;
+            //}
         }
     }
 
