@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     GamepadManager gamepadManager;
     bool checkController;
 
+    // 所持しているバルーン
+    private List<GameObject> m_balloonList = new List<GameObject>();
+
     // 移動力
     [SerializeField]
     float defaultPlayerSpeed;
@@ -288,6 +291,39 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+    }
+
+    //======================================================
+    // バルーン関連
+    //======================================================
+    public void AddBalloon(GameObject go)
+    {
+        // 所持バルーンリストに追加
+        m_balloonList.Add(go);
+        // 所持バルーンをカウント
+        Data.num_balloon++;
+    }
+
+    // バルーンを使用する(古いバルーンから消費する)
+    public void UsedBalloon()
+    {
+        Destroy(m_balloonList[0]);
+        m_balloonList.RemoveAt(0);
+        Data.num_balloon--;
+    }
+
+    // バルーンが壊された時
+    public void BrokenBalloon(int count)
+    {
+        Destroy(m_balloonList[count - 1]);
+        m_balloonList.RemoveAt(count - 1);
+        Data.num_balloon--;
+    }
+
+    // バルーンの現在の所持数を取得
+    public int GetMaxBalloons()
+    {
+        return m_balloonList.Count;
     }
 }
 
