@@ -21,7 +21,9 @@ public class BalloonController : MonoBehaviour
     BalloonGenerator balloonG;
 
     // 消えるかどうか
-    bool isDestroy;
+    private bool m_isDestroy = false;
+
+    private int m_balloonNum = 0;
 
     void Start()
     {
@@ -55,11 +57,12 @@ public class BalloonController : MonoBehaviour
     {
         if (collision.tag == Stage.DAMAGE_TILE)
         {
-
+            Destroy();
+            balloonG.BrokenBalloon();
         }
     }
 
-    void Destroy()
+    private void Destroy()
     {
         Destroy(this.gameObject);
     }

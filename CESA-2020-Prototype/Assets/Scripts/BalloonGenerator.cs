@@ -10,7 +10,7 @@ public class BalloonGenerator : MonoBehaviour
     private PlayerController m_playerController = null;
     // バルーンの取得
     [SerializeField]
-    private GameObject m_balloonPrefab = null;
+    private GameObject m_balloon = null;
 
     private bool m_isCreate = false;
     private Vector3 createPosition;
@@ -49,7 +49,7 @@ public class BalloonGenerator : MonoBehaviour
     public void CreateOneBalloon()
     {
         // バルーンを生成する
-        GameObject go = Instantiate(m_balloonPrefab) as GameObject;
+        GameObject go = Instantiate(m_balloon) as GameObject;
         // 生成したバルーンを子オブジェクトに登録する
         go.transform.parent = this.transform;
         // 座標を設定する
@@ -65,9 +65,9 @@ public class BalloonGenerator : MonoBehaviour
     }
 
     // バルーンが壊された時
-    public void BrokenBalloon(int count)
+    public void BrokenBalloon()
     {
-        m_playerController.BrokenBalloon(count);
+        m_playerController.BrokenBalloon();
     }
 
     // バルーンの現在の所持数を取得
