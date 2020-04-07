@@ -1,8 +1,12 @@
-﻿using System.Collections;
+﻿//======================================================
+/// File Name	: BalloonGenerator.cs
+/// Summary		: バルーン生成管理
+//======================================================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Common;
-
+//======================================================
 public class BalloonGenerator : MonoBehaviour
 {
     // プレイヤーの取得

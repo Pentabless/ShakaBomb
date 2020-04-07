@@ -23,8 +23,6 @@ public class BalloonController : MonoBehaviour
     // 消えるかどうか
     private bool m_isDestroy = false;
 
-    private int m_balloonNum = 0;
-
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();

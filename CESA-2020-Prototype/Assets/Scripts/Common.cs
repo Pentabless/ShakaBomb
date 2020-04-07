@@ -48,4 +48,10 @@ namespace Common
         public const float DISTANCE_X = (1.2f);
         public const float DISTANCE_Y = (1.7f);
     }
+
+    // 数字
+    public static class Num
+    {
+        public const int ZERO = (0);
+    }
 }

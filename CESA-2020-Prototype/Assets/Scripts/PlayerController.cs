@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common;
 
 public class PlayerController : MonoBehaviour
 {
@@ -366,15 +367,15 @@ public class PlayerController : MonoBehaviour
     // バルーンを使用する(古いバルーンから消費する)
     public void UsedBalloon()
     {
-        Destroy(m_balloonList[0]);
-        m_balloonList.RemoveAt(0);
+        Destroy(m_balloonList[Num.ZERO]);
+        m_balloonList.RemoveAt(Num.ZERO);
         Data.num_balloon--;
     }
 
     // バルーンが壊された時
     public void BrokenBalloon()
     {
-        var count = (m_balloonList.Count - 1);
+        int count = (m_balloonList.Count - 1);
         m_balloonList.RemoveAt(count);
         Data.num_balloon--;
     }
