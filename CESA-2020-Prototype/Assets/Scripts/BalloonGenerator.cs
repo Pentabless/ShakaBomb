@@ -9,6 +9,9 @@ using Common;
 //======================================================
 public class BalloonGenerator : MonoBehaviour
 {
+    //======================================================
+    // メンバ変数
+    //======================================================
     // プレイヤーの取得
     [SerializeField]
     private PlayerController m_playerController = null;
@@ -19,12 +22,18 @@ public class BalloonGenerator : MonoBehaviour
     private bool m_isCreate = false;
     private Vector3 createPosition;
 
-    void Awake()
+    //======================================================
+    // Awake
+    //======================================================
+    private void Awake()
     {
         Init();
     }
 
-    void Update()
+    //======================================================
+    // Update
+    //======================================================
+    private void Update()
     {
         if (m_isCreate)
         {
@@ -36,20 +45,26 @@ public class BalloonGenerator : MonoBehaviour
         }
     }
 
+    //======================================================
     // 初期化
+    //======================================================
     private void Init()
     {
         m_isCreate = false;
     }
 
-    // バルーンを生成できるようにする
+    //======================================================
+    // バルーンが生成できるように
+    //======================================================
     public void CreateBalloon(Vector3 create_pos)
     {
         createPosition = create_pos;
         m_isCreate = true;
     }
 
+    //======================================================
     // バルーンをひとつ生成する
+    //======================================================
     public void CreateOneBalloon()
     {
         // バルーンを生成する
@@ -62,19 +77,25 @@ public class BalloonGenerator : MonoBehaviour
         m_playerController.AddBalloon(go);
     }
 
+    //======================================================
     // バルーンを使用する(古い順に消費する)
+    //======================================================
     public void UsedBalloon()
     {
         m_playerController.UsedBalloon();
     }
 
-    // バルーンが壊された時
+    //======================================================
+    // バルーンが壊れる
+    //======================================================
     public void BrokenBalloon()
     {
         m_playerController.BrokenBalloon();
     }
 
+    //======================================================
     // バルーンの現在の所持数を取得
+    //======================================================
     public int GetMaxBalloons()
     {
         return m_playerController.GetMaxBalloons(); ;
