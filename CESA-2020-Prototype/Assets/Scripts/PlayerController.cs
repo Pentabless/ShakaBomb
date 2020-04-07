@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
     float attackButton = 0;
     float attackButtonTrigger = 0;
 
+    float boostButton = 0;
+    float boostButtonTrigger = 0;
+
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
@@ -130,11 +133,41 @@ public class PlayerController : MonoBehaviour
             balloonG.UsedBalloon();
         }
 
+        //// ExplosionTest
+        //if (Input.GetKeyDown(KeyCode.B) && Data.num_balloon > 0)
+        //{
+        //    Vector3 vel = this.transform.position;
+        //    if (Data.playerDir > 0)
+        //    {
+        //        vel.x -= 5;
+        //    }
+        //    else
+        //    {
+        //        vel.x += 5;
+        //    }
+        //    vel.y -= 3;
+        //    ExplosionForce(vel, 500.0f, 800.0f);
+        //    UsedBalloon();
+        //}
+
+        // 空中ブースト Test
+        boostButton = Input.GetAxis("BombBoost");
+        if (boostButton > 0 && boostButtonTrigger == 0.0f && Data.num_balloon > 0 && !isGround)
+        {
+            rig.velocity = new Vector2(0, 0);
+
+            rig.AddForce(new Vector2(500.0f * Data.playerDir, 500.0f));
+
+            UsedBalloon();
+        }
+
         // 前フレームのキー入力の情報保持
         // Jump
         jumpButtonTrigger = jumpButton;
         // Attack
         attackButtonTrigger = attackButton;
+        // Boost
+        boostButtonTrigger = boostButton;
         // ------------------------------------------------------------------------------
 
 
@@ -235,38 +268,46 @@ public class PlayerController : MonoBehaviour
         // 移動
         if (isGround)
         {
-            rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
+            if (Mathf.Abs(rig.velocity.x) <= 5.0f)
+                rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
             //this.rig.velocity = new Vector2(playerSpeed * dir * stickSence, this.rig.velocity.y);
         }
         else
         {
-            rig.AddForce(new Vector2(playerSpeed / 4.0f * dir * stickSence, 0));
+            if (Mathf.Abs(rig.velocity.x) <= 5.0f)
+                rig.AddForce(new Vector2(playerSpeed / 4.0f * dir * stickSence, 0));
             //this.rig.velocity = new Vector2(playerSpeed * 0.8f * dir * stickSence, this.rig.velocity.y);
         }
 
-        // 速さ制限
-        if (dir >= 1.0f && rig.velocity.x >= 5.0f)  // 右側
-        {
-            rig.velocity = new Vector2(5.0f, rig.velocity.y);
-        }
-        else if (dir <= -1.0f && rig.velocity.x <= -5.0f)   // 左側
-        {
-            rig.velocity = new Vector2(-5.0f, rig.velocity.y);
-        }
+        //// 速さ制限
+        //if (dir >= 1.0f && rig.velocity.x >= 5.0f)  // 右側
+        //{
+        //    rig.velocity = new Vector2(5.0f, rig.velocity.y);
+        //}
+        //else if (dir <= -1.0f && rig.velocity.x <= -5.0f)   // 左側
+        //{
+        //    rig.velocity = new Vector2(-5.0f, rig.velocity.y);
+        //}
 
         // 接地時慣性消滅
         if (isGround && dir == 0)
         {
             this.rig.velocity = new Vector2(0, this.rig.velocity.y);
         }
+
+        // 爆風加速対処
+        if (isGround && Mathf.Abs(rig.velocity.x) >= 5.0f)
+        {
+            rig.velocity = new Vector2(5.0f * dir, rig.velocity.y);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if (collision.gameObject.tag == "DamageTile")
-        //{
-        //    balloonG.UsedBubble();
-        //}
+        if (collision.gameObject.tag == "BombTest")
+        {
+            ExplosionForce(collision.transform.position, 500.0f, 800.0f);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -324,6 +365,19 @@ public class PlayerController : MonoBehaviour
     public int GetMaxBalloons()
     {
         return m_balloonList.Count;
+    }
+
+    //======================================================
+    // 爆発
+    //======================================================
+    public void ExplosionForce(Vector3 expPos, float xPow, float yPow)
+    {
+        Vector3 vel = this.transform.position - expPos;
+        vel.Normalize();
+        // 縦横で吹っ飛び倍率変更
+        vel.x = vel.x * xPow;
+        vel.y = vel.y * yPow;
+        this.rig.AddForce(vel);
     }
 }
 
