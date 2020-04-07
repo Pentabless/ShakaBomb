@@ -29,7 +29,9 @@ public class PlayerController : MonoBehaviour
 
     // 移動力
     [SerializeField]
-    float defaultPlayerSpeed;
+    float accelForce;
+    [SerializeField]
+    float maxSpeed;
     float playerSpeed;
     float stickSence;       // 入力感度
 
@@ -54,6 +56,10 @@ public class PlayerController : MonoBehaviour
 
     bool coyoteFlag = true;
     int coyoteCount = 0;
+
+    // 空中ブーストの強さ
+    [SerializeField]
+    Vector2 boostForce;
 
     // プレイヤーの向き
     int dir;            // 現在
@@ -82,7 +88,7 @@ public class PlayerController : MonoBehaviour
         jumpForce = defaultJumpForce;
         jumpCount = 0;
         jumpStopFlag = false;
-        playerSpeed = defaultPlayerSpeed;
+        playerSpeed = accelForce;
     }
 
     void Update()
@@ -122,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
         if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
         {
-            rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.4f);
+            rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.6f);
             jumpStopFlag = true;
         }
         // バレットの発射
@@ -155,9 +161,7 @@ public class PlayerController : MonoBehaviour
         if (boostButton > 0 && boostButtonTrigger == 0.0f && Data.num_balloon > 0 && !isGround)
         {
             rig.velocity = new Vector2(0, 0);
-
-            rig.AddForce(new Vector2(500.0f * Data.playerDir, 500.0f));
-
+            rig.AddForce(new Vector2(boostForce.x * Data.playerDir, boostForce.y));
             UsedBalloon();
         }
 
@@ -219,25 +223,25 @@ public class PlayerController : MonoBehaviour
             case 0:
                 this.rig.gravityScale = 5.0f;
                 jumpForce = defaultJumpForce * 1.0f;
-                playerSpeed = defaultPlayerSpeed * 1.0f;
+                playerSpeed = accelForce * 1.0f;
                 break;
 
             case 1:
                 this.rig.gravityScale = 3.0f;
                 jumpForce = defaultJumpForce * 0.77f;
-                playerSpeed = defaultPlayerSpeed * 0.9f;
+                playerSpeed = accelForce * 0.9f;
                 break;
 
             case 2:
                 this.rig.gravityScale = 2.0f;
                 jumpForce = defaultJumpForce * 0.67f;
-                playerSpeed = defaultPlayerSpeed * 0.85f;
+                playerSpeed = accelForce * 0.85f;
                 break;
 
             case 3:
                 this.rig.gravityScale = 1.5f;
                 jumpForce = defaultJumpForce * 0.57f;
-                playerSpeed = defaultPlayerSpeed * 0.8f;
+                playerSpeed = accelForce * 0.8f;
                 break;
 
             default:
@@ -268,25 +272,39 @@ public class PlayerController : MonoBehaviour
         // 移動
         if (isGround)
         {
-            if (Mathf.Abs(rig.velocity.x) <= 5.0f)
+            if (dir >= 1.0f && rig.velocity.x <= maxSpeed)  // 右側
+            {
                 rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
-            //this.rig.velocity = new Vector2(playerSpeed * dir * stickSence, this.rig.velocity.y);
+            }
+            else if (dir <= -1.0f && rig.velocity.x >= -maxSpeed)   // 左側
+            {
+                rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
+            }
+
+            //rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
         }
         else
         {
-            if (Mathf.Abs(rig.velocity.x) <= 5.0f)
-                rig.AddForce(new Vector2(playerSpeed / 4.0f * dir * stickSence, 0));
-            //this.rig.velocity = new Vector2(playerSpeed * 0.8f * dir * stickSence, this.rig.velocity.y);
+            if (dir >= 1.0f && rig.velocity.x <= maxSpeed)  // 右側
+            {
+                rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
+            }
+            else if (dir <= -1.0f && rig.velocity.x >= -maxSpeed)   // 左側
+            {
+                rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
+            }
+
+            //rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
         }
 
         //// 速さ制限
-        //if (dir >= 1.0f && rig.velocity.x >= 5.0f)  // 右側
+        //if (dir >= 1.0f && rig.velocity.x >= maxSpeed)  // 右側
         //{
-        //    rig.velocity = new Vector2(5.0f, rig.velocity.y);
+        //    rig.velocity = new Vector2(maxSpeed, rig.velocity.y);
         //}
-        //else if (dir <= -1.0f && rig.velocity.x <= -5.0f)   // 左側
+        //else if (dir <= -1.0f && rig.velocity.x <= -maxSpeed)   // 左側
         //{
-        //    rig.velocity = new Vector2(-5.0f, rig.velocity.y);
+        //    rig.velocity = new Vector2(-maxSpeed, rig.velocity.y);
         //}
 
         // 接地時慣性消滅
