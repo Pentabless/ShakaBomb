@@ -372,10 +372,10 @@ public class PlayerController : MonoBehaviour
     }
 
     // バルーンが壊された時
-    public void BrokenBalloon(int count)
+    public void BrokenBalloon()
     {
-        Destroy(m_balloonList[count - 1]);
-        m_balloonList.RemoveAt(count - 1);
+        var count = (m_balloonList.Count - 1);
+        m_balloonList.RemoveAt(count);
         Data.num_balloon--;
     }
 
