@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common;
+
+[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
 
 public class BalloonController : MonoBehaviour
 {
@@ -16,42 +20,27 @@ public class BalloonController : MonoBehaviour
     // バルーンジェネレータ
     BalloonGenerator balloonG;
 
-    private int m_balloonCount = -1;
-
     // 消えるかどうか
     bool isDestroy;
 
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
-        playerObj = GameObject.Find("Player");
-        balloonG = GameObject.Find("BalloonGenerator").GetComponent<BalloonGenerator>();
+        playerObj = GameObject.Find(Player.NAME);
+        balloonG = GameObject.Find(Balloon.NAME).GetComponent<BalloonGenerator>();
         line = GetComponent<LineRenderer>();
 
         line.startWidth = 0.05f;
         line.endWidth = 0.05f;
         line.positionCount = 2;
         //line.SetColors(Color.white, Color.white);
-
-        if (balloonG.GetMaxBalloons() == 1)
-        {
-            m_balloonCount = 1;
-        }
-        if (balloonG.GetMaxBalloons() == 2)
-        {
-            m_balloonCount = 2;
-        }
-        if (balloonG.GetMaxBalloons() == 3)
-        {
-            m_balloonCount = 3;
-        }
     }
 
     void Update()
     {
         Vector3 playerPos = playerObj.transform.position;
-        playerPos.x += 1.2f;
-        playerPos.y += 1.7f;
+        playerPos.x += Balloon.DISTANCE_X;
+        playerPos.y += Balloon.DISTANCE_Y;
 
         Vector3 move_force = playerPos - this.transform.position;
         rig.velocity = move_force * 2.0f;
@@ -64,22 +53,9 @@ public class BalloonController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "DamageTile")
+        if (collision.tag == Stage.DAMAGE_TILE)
         {
-            balloonG.BrokenBalloon(m_balloonCount);
 
-            //if (balloonG.GetMaxBalloons() == 1&& m_balloonCount<=2)
-            //{
-            //    m_balloonCount = 1;
-            //}
-            //if (balloonG.GetMaxBalloons() == 2 && m_balloonCount <= 3)
-            //{
-            //    m_balloonCount = 2;
-            //}
-            //if (balloonG.GetMaxBalloons() == 3)
-            //{
-            //    m_balloonCount = 3;
-            //}
         }
     }
 

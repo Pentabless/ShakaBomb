@@ -6,11 +6,6 @@
 using UnityEngine;
 using System.Collections;
 //======================================================
-//【使用方法】
-// ① 使いたいスクリプト内で「using Common;」
-// ② 使いたい箇所で任意のクラス、定数を入力
-// 　 例：バルーンの最大所持数なら「Balloon.MAX」
-//======================================================
 namespace Common
 {
     // ゲームパッド関連
@@ -23,7 +18,8 @@ namespace Common
     // プレイヤー関連の定数
     public static class Player
     {
-
+        // オブジェクト名
+        public const string NAME = ("Player");
     }
 
     // エネミー関連の定数
@@ -32,12 +28,24 @@ namespace Common
 
     }
 
+    // ステージ関連
+    public static class Stage
+    {
+        // タイル
+        public const string DAMAGE_TILE = ("DamageTile");
+    }
+
     // バルーン関連の定数
     public static class Balloon
     {
+        // オブジェクト名
+        public const string NAME = ("BalloonGenerator");
         // 最大バルーン所持数
         public const int MAX = (3);
         // 生成したシャボン玉の所持できる状態の最大時間
         public const int COUNT = (80);
+        // プレイヤーとの距離
+        public const float DISTANCE_X = (1.2f);
+        public const float DISTANCE_Y = (1.7f);
     }
 }
