@@ -11,17 +11,11 @@ public class BalloonGenerator : MonoBehaviour
 
     // バルーンの取得
     [SerializeField]
-    private GameObject m_balloonPrefab;
+    private GameObject m_balloonPrefab = null;
 
-    private bool m_isCreate;
+    private bool m_isCreate = false;
 
     Vector3 createPosition;
-
-    // 初期化
-    private void Init()
-    {
-        m_isCreate = false;
-    }
 
     void Awake()
     {
@@ -32,8 +26,10 @@ public class BalloonGenerator : MonoBehaviour
     {
         if (m_isCreate)
         {
-            // プレファブと同じオブジェクトを作る
+            // バルーンを生成する
             GameObject go = Instantiate(m_balloonPrefab) as GameObject;
+            // 生成したバルーンを子オブジェクトに登録する
+            go.transform.parent = this.transform;
             // 座標を設定する
             go.transform.position = createPosition;
             // プレイヤーのバルーン所持リストに追加
@@ -41,6 +37,12 @@ public class BalloonGenerator : MonoBehaviour
             // 作っていない状態にする
             m_isCreate = false;
         }
+    }
+
+    // 初期化
+    private void Init()
+    {
+        m_isCreate = false;
     }
 
     // バルーンを生成

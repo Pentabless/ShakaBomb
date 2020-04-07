@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class BubbleGenerator : MonoBehaviour
 {
     // プレファブ
@@ -41,6 +42,8 @@ public class BubbleGenerator : MonoBehaviour
             GameObject go = Instantiate(bubblePrefab) as GameObject;
             //座標を設定する
             go.transform.position = GameObject.Find("Player").transform.position;
+            //生成した泡を子オブジェクトに登録する
+            go.transform.parent = this.transform;
             //色を設定する
             go.GetComponent<Renderer>().material.color = color;
             //作っていない状態にする
