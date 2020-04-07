@@ -345,7 +345,9 @@ MonoBehaviour:
   balloonG: {fileID: 0}
   bulletG: {fileID: 0}
   gamepadManager: {fileID: 0}
-  defaultPlayerSpeed: 80
+  accelForce: 80
+  maxSpeed: 6
   defaultJumpForce: 1100
   turnCount: 10
   coyoteTime: 5
+  boostForce: {x: 500, y: 400}

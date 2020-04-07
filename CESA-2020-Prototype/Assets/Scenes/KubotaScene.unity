@@ -9008,27 +9008,6 @@ PrefabInstance:
       propertyPath: gamepadManager
       value: 
       objectReference: {fileID: 499759475}
-    - target: {fileID: 3524930649752458128, guid: eca9fe8788fa57044b4acb2daac0cbbb,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: fcd0fad81330cc547aa351349024f563, type: 2}
-    - target: {fileID: 1317584704, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1317584707, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1317584706, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1269467507, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
 --- !u!1 &859791121
