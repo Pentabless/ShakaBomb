@@ -234,9 +234,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3524930649752458143}
+  - component: {fileID: 3524930649752458130}
   - component: {fileID: 3524930649752458142}
   - component: {fileID: 3524930649752458128}
-  - component: {fileID: 3524930649752458130}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -260,6 +260,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3524930649752458130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3524930649752458141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c920b2f66b1ff16429d19bafa5e95ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleG: {fileID: 0}
+  balloonG: {fileID: 0}
+  bulletG: {fileID: 0}
+  gamepadManager: {fileID: 0}
+  accelForce: 80
+  maxSpeed: 6
+  defaultJumpForce: 1100
+  turnCount: 10
+  coyoteTime: 5
+  boostForce: {x: 500, y: 400}
 --- !u!212 &3524930649752458142
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -329,25 +351,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &3524930649752458130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3524930649752458141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c920b2f66b1ff16429d19bafa5e95ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bubbleG: {fileID: 0}
-  balloonG: {fileID: 0}
-  bulletG: {fileID: 0}
-  gamepadManager: {fileID: 0}
-  accelForce: 80
-  maxSpeed: 6
-  defaultJumpForce: 1100
-  turnCount: 10
-  coyoteTime: 5
-  boostForce: {x: 500, y: 400}
