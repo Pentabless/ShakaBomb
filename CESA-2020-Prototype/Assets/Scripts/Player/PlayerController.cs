@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GamepadManager gamepadManager;
     bool checkController;
+    // 入力を受け付けるかのフラグ
+    bool canControl = true;
 
     // 所持しているバルーン
     private List<GameObject> m_balloonList = new List<GameObject>();
@@ -94,6 +96,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!canControl)
+        {
+            dir = 0;
+            return;
+        }
+
         // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
         // コントローラの接続チェック
         checkController = gamepadManager.GetCheckGamepad();
@@ -352,6 +360,16 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
     }
+
+    //======================================================
+    // イベント関連
+    //======================================================
+    // 入力を受け付けるか設定する
+    public void EnableControl(bool enable)
+    {
+        canControl = enable;
+    }
+
 
     //======================================================
     // バルーン関連
