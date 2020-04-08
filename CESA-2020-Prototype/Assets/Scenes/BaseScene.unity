@@ -236,10 +236,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54437d1cea1698a43aaa6224cccd16d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 300468366}
+  mainCamera: {fileID: 300468366}
   player: {fileID: 1172622768}
-  yRange: 5
-  behaviorRange: {x: 0, y: 1}
+  cameraViewRange: 10
+  cameraRange:
+    serializedVersion: 2
+    x: -5
+    y: 0
+    width: 25
+    height: 25
+  moveCameraAmount: []
 --- !u!4 &409297162
 Transform:
   m_ObjectHideFlags: 0
