@@ -86,7 +86,11 @@ public class PauseManager : MonoBehaviour
         pauseImage.color = new Color(0f, 0f, 0f, 0f);
 
         // ポーズ用オブジェクトとフェード用オブジェクト、影響を受けないオブジェクトの配列に追加する
-        ignoreGameObjects = ignoreGameObjects.Concat(new GameObject[] { FadeCanvasObject, FadeManager.GetCanvas().gameObject }).ToArray();
+        ignoreGameObjects = ignoreGameObjects.Concat(new GameObject[] {
+            FadeCanvasObject,
+            FadeManager.GetCanvas().gameObject,
+            SoundPlayer.GetAudioSource().gameObject
+        }).ToArray();
     }
 
     private void Start()

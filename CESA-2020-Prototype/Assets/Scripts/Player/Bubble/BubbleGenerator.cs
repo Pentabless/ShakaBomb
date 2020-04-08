@@ -17,7 +17,7 @@ public class BubbleGenerator : MonoBehaviour
 
     // SE
     public AudioClip m_sound;
-    AudioSource m_audioSource;
+    //AudioSource m_audioSource;
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class BubbleGenerator : MonoBehaviour
         color = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
         //Componentを取得
-        m_audioSource = GetComponent<AudioSource>();
+        //m_audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -61,7 +61,8 @@ public class BubbleGenerator : MonoBehaviour
 
     public void BubbleCreate()
     {
-        m_audioSource.PlayOneShot(m_sound);
+        //m_audioSource.PlayOneShot(m_sound);
+        SoundPlayer.Play(m_sound);
         limit_scale = new Vector3(5.0f, 5.0f, 5.0f);
         color = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
         isCreate = true;
