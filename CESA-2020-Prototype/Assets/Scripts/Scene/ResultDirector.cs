@@ -17,6 +17,8 @@ public class ResultDirector : MonoBehaviour
     GameObject go_result_frame;
     //評価の星
     GameObject[] go_rank_star = new GameObject[3];
+    //画面フェード
+    Image image_screen_fade;
     //…ステージクリア！
     Text text_stage_clear;
     //スコア(テキスト)
@@ -38,15 +40,14 @@ public class ResultDirector : MonoBehaviour
         go_result_frame = GameObject.Find("ResultFrame");
         text_stage_clear = GameObject.Find("StageClear").GetComponent<Text>();
         text_score = GameObject.Find("Score").GetComponent<Text>();
-
+        image_screen_fade = GameObject.Find("ScreenFade").GetComponent<Image>();
         //座標変更
         go_result_frame.transform.position = new Vector3(-30.0f, 2.0f, 0.0f);
         text_stage_clear.rectTransform.anchoredPosition = new Vector3(-Screen.width - 300.0f, 200.0f, 0.0f);
         //○○ステージクリア！　のテキストを設定する
-        SetClearStageNumberEnglish();
+        SetClearStageNameEnglish();
         //スコア　のテキストを設定する
         text_score.text = "Score:" + score.ToString();
-        
         //評価の星の数を決める
         SetNumRankStar(score);
         //評価する星の数から評価する星の設定をする
@@ -123,13 +124,20 @@ public class ResultDirector : MonoBehaviour
         //ステージ選択画面をロードする
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //フェードを始める
+            image_screen_fade.GetComponent<FadeController>().SetFadeType(true);
+        }
+
+        //フェードアウトが終わったら
+        if (image_screen_fade.color.a >= 1.0f)
+        {
+            //ステージ選択画面に移る
             SceneManager.LoadScene("StageSelectScene");
         }
     }
 
-    //<自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    //英語の何番目の表記設定
-    void SetClearStageNumberEnglish()
+    //英語の何番目の表記設定 <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    void SetClearStageNameEnglish()
     {
         string number = "";
 
@@ -166,7 +174,7 @@ public class ResultDirector : MonoBehaviour
         text_stage_clear.text = number + " Stage クリア!";
     }
 
-    //評価の星の数を決める
+    //評価の星の数を決める <自作関数> -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     void SetNumRankStar(int check_score)
     {
         //スコアから評価の星の数を求める(仮)
@@ -188,7 +196,7 @@ public class ResultDirector : MonoBehaviour
         }
     }
 
-    //評価する星の数から評価する星の設定をする
+    //評価する星の数から評価する星の設定をする -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     void SetRankStar(int num)
     {
         for (int i = 0; i < go_rank_star.Length; i++)
