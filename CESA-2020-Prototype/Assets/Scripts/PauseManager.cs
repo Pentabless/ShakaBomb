@@ -45,6 +45,8 @@ public class PauseManager : MonoBehaviour
     private GameObject objectsWrapper;      // ポーズを適用するオブジェクトの範囲
 
     [SerializeField]
+    private PlayDirector playDirector;     // プレイディレクター
+    [SerializeField]
     private GameObject pauseMenu;            // ポーズメニューオブジェクト
     [SerializeField]
     private GameObject[] ignoreGameObjects;  // ポーズの影響を受けないオブジェクト
@@ -97,9 +99,8 @@ public class PauseManager : MonoBehaviour
     private void Update()
     {
         //ボタンが押されたら状態を変更する
-        //if (Input.GetButtonDown("Pause2") && gameManager.CanPause() && !FadeManager.isFadeOut)
         bool pressPause = (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button7));
-        if (pressPause && !FadeManager.isFadeOut)
+        if (pressPause && !FadeManager.isFadeOut && playDirector.canPause)
         {
             ChangePauseState();
         }
