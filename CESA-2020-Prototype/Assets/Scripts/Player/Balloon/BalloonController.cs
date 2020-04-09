@@ -41,10 +41,23 @@ public class BalloonController : MonoBehaviour
     private void Update()
     {
         Vector3 playerPos = m_player.transform.position;
-        playerPos.x += Balloon.DISTANCE_X;
+        if (Data.playerDir > 0)
+        {
+            playerPos.x -= Balloon.DISTANCE_X;
+        }
+        else
+        {
+            playerPos.x += Balloon.DISTANCE_X;
+        }
+
         playerPos.y += Balloon.DISTANCE_Y;
 
         Vector3 move_force = playerPos - this.transform.position;
+
+        if(Vector3.Distance(playerPos,this.transform.position) >= 4)
+        {
+            m_rigid2D.velocity = move_force * 4.0f;
+        }
         m_rigid2D.velocity = move_force * 2.0f;
 
         Vector3 thisPos = this.transform.position;
