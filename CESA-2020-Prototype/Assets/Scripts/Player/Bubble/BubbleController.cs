@@ -30,8 +30,6 @@ public class BubbleController : MonoBehaviour
     //目的の大きさ
     Vector3 target_scale;
 
-    // 泡の最大サイズ
-    readonly float biggest_scale = 0.8f;
     // 保持状態か否か
     bool ret_flag;
 
@@ -66,8 +64,8 @@ public class BubbleController : MonoBehaviour
 
         target_scale_time = 60;
 
-        playerObj = GameObject.Find("Player");
-        balloonG = GameObject.Find("BalloonGenerator").GetComponent<BalloonGenerator>();
+        playerObj = GameObject.Find(Player.NAME);
+        balloonG = GameObject.Find(Balloon.GENERATOR_NAME).GetComponent<BalloonGenerator>();
     }
 
 
@@ -94,7 +92,7 @@ public class BubbleController : MonoBehaviour
         angle += 0.1f;
 
         //バブルの消滅(カウント)
-        if (deleteCount >= 300)
+        if (deleteCount >= Bubble.EXTINCTION_TIME)
         {
             //Vector3 position = new Vector3(transform.position.x, -0.25f, 0.0f);
             //transform.position = position;
@@ -133,7 +131,7 @@ public class BubbleController : MonoBehaviour
                 now_scale = target_scale;
             }
 
-            if (biggest_scale > now_scale.x)
+            if (Bubble.MAX_SIZE > now_scale.x)
             {
                 transform.localScale = now_scale;
             }
@@ -151,7 +149,7 @@ public class BubbleController : MonoBehaviour
         }
 
         // 保持状態に切り替え
-        if (transform.localScale.x >= biggest_scale * 0.9f && Data.num_balloon < Balloon.MAX && test_flag)
+        if (transform.localScale.x >= Bubble.MAX_SIZE * 0.9f && Data.num_balloon < Balloon.MAX && test_flag)
         {
             ret_flag = true;
             balloonG.CreateBalloon(this.transform.position);
@@ -201,7 +199,7 @@ public class BubbleController : MonoBehaviour
     //本体が当たった瞬間
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Bubble")
+        if (collision.tag == Bubble.NAME)
         {
             //Debug.Log("ParentHit");
             isTouchBubble = true;
@@ -211,7 +209,7 @@ public class BubbleController : MonoBehaviour
     //本体が当たり終わった瞬間
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Bubble")
+        if (collision.tag == Bubble.NAME)
         {
             isTouchBubble = false;
         }

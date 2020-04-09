@@ -8,12 +8,22 @@ using System.Collections;
 namespace Common
 {
     //------------------------------------------------------------------------------------------
+    // カメラ関連
+    //------------------------------------------------------------------------------------------
+    public static class Camera
+    {
+        // オブジェクト名・タグ名
+        public const string NAME                = ("Camera");
+        public const string CONTROLLER_NAME     = ("CameraController");
+    }
+
+    //------------------------------------------------------------------------------------------
     // ゲームパッド関連
     //------------------------------------------------------------------------------------------
     public static class GamePad
     {
         // ゲームパッドの検出間隔
-        public const float CHECK_INTERVAL = (2.0f);
+        public const float CHECK_INTERVAL       = (2.0f);
     }
 
     //------------------------------------------------------------------------------------------
@@ -21,8 +31,13 @@ namespace Common
     //------------------------------------------------------------------------------------------
     public static class Player
     {
-        // オブジェクト名
-        public const string NAME = ("Player");
+        // オブジェクト名・タグ名
+        public const string NAME                = ("Player");
+        public const string CONTROLLER_NAME     = ("PlayerController");
+        // 操作
+        public const string ATTACK              = ("Attack");
+        public const string JUMP                = ("Jump");
+        public const string HORIZONTAL          = ("Horizontal");
     }
 
     //------------------------------------------------------------------------------------------
@@ -30,7 +45,8 @@ namespace Common
     //------------------------------------------------------------------------------------------
     public static class Enemy
     {
-
+        // オブジェクト名・タグ名
+        public const string NAME                = ("Enemy");
     }
 
     //------------------------------------------------------------------------------------------
@@ -38,8 +54,33 @@ namespace Common
     //------------------------------------------------------------------------------------------
     public static class Stage
     {
-        // タイル
-        public const string DAMAGE_TILE = ("DamageTile");
+        // オブジェクト名・タグ名
+        public const string SRAGE               = ("Stage");
+        public const string GROUND              = ("Ground");
+        public const string DAMAGE_TILE         = ("DamageTile");
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 床関連
+    //------------------------------------------------------------------------------------------
+    public static class Floor
+    {
+        // オブジェクト名・タグ名
+        public const string NAME                = ("Floor");
+    }
+
+    //------------------------------------------------------------------------------------------
+    // バブル関連の定数
+    //------------------------------------------------------------------------------------------
+    public static class Bubble
+    {
+        // オブジェクト名・タグ名
+        public const string NAME                = ("Bubble");
+        public const string CONTROLLER_NAME     = ("BubbleController");
+        // 消滅時間
+        public const int EXTINCTION_TIME        = (160);
+        // 泡の最大サイズ
+        public const float MAX_SIZE             = (0.8f);
     }
 
     //------------------------------------------------------------------------------------------
@@ -47,22 +88,32 @@ namespace Common
     //------------------------------------------------------------------------------------------
     public static class Balloon
     {
-        // オブジェクト名
-        public const string NAME = ("BalloonGenerator");
+        // オブジェクト名・タグ名
+        public const string NAME                = ("Balloon");
+        public const string GENERATOR_NAME      = ("BalloonGenerator");
+        public const string CONTROLLER_NAME     = ("BalloonController");
         // 最大バルーン所持数
-        public const int MAX = (3);
+        public const int MAX                    = (3);
         // 生成したシャボン玉の所持できる状態の最大時間
-        public const int COUNT = (80);
+        public const int COUNT                  = (80);
         // プレイヤーとの距離
-        public const float DISTANCE_X = (1.2f);
-        public const float DISTANCE_Y = (1.7f);
+        public const float DISTANCE_X           = (1.2f);
+        public const float DISTANCE_Y           = (1.7f);
     }
 
     //------------------------------------------------------------------------------------------
     // 整数
     //------------------------------------------------------------------------------------------
-    public static class Num
+    public static class Integer
     {
-        public const int ZERO = (0);
+        public const int ZERO                   = (0);
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 小数
+    //------------------------------------------------------------------------------------------
+    public static class Decimal
+    {
+        public const float ZERO                 = (0.0f);
     }
 }

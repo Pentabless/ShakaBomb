@@ -17,9 +17,10 @@ public class BalloonGenerator : MonoBehaviour
     private PlayerController m_playerController = null;
     // バルーンの取得
     [SerializeField]
-    private GameObject m_balloon = null;
-
-    private bool m_isCreate = false;
+    private GameObject m_balloon                = null;
+    // 生成できるかどうか
+    private bool m_isCreate                     = false;
+    // 生成する位置
     private Vector3 createPosition;
 
     //------------------------------------------------------------------------------------------
@@ -88,9 +89,9 @@ public class BalloonGenerator : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // バルーンが壊れる
     //------------------------------------------------------------------------------------------
-    public void BrokenBalloon(GameObject baloon)
+    public void BrokenBalloon(GameObject balloon)
     {
-        m_playerController.BrokenBalloon(baloon);
+        m_playerController.BrokenBalloon(balloon);
     }
 
     //------------------------------------------------------------------------------------------

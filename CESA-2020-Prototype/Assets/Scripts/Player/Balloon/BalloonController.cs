@@ -85,13 +85,12 @@ public class BalloonController : MonoBehaviour
     {
         m_rigid2D = GetComponent<Rigidbody2D>();
         m_player = GameObject.Find(Player.NAME);
-        m_balloonG = GameObject.Find(Balloon.NAME).GetComponent<BalloonGenerator>();
+        m_balloonG = GameObject.Find(Balloon.GENERATOR_NAME).GetComponent<BalloonGenerator>();
         m_line = GetComponent<LineRenderer>();
 
         m_line.startWidth = 0.05f;
         m_line.endWidth = 0.05f;
         m_line.positionCount = 2;
-        //line.SetColors(Color.white, Color.white);
     }
 
     //------------------------------------------------------------------------------------------
