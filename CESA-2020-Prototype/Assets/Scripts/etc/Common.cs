@@ -14,7 +14,7 @@ namespace Common
     {
         // オブジェクト名・タグ名
         public const string NAME                = ("Camera");
-        public const string CONTROLLER_NAME     = ("CameraController");
+        public const string CONTROLLER          = ("CameraController");
     }
 
     //------------------------------------------------------------------------------------------
@@ -27,13 +27,13 @@ namespace Common
     }
 
     //------------------------------------------------------------------------------------------
-    // プレイヤー関連の定数
+    // プレイヤー関連
     //------------------------------------------------------------------------------------------
     public static class Player
     {
         // オブジェクト名・タグ名
         public const string NAME                = ("Player");
-        public const string CONTROLLER_NAME     = ("PlayerController");
+        public const string CONTROLLER          = ("PlayerController");
         // 操作
         public const string ATTACK              = ("Attack");
         public const string JUMP                = ("Jump");
@@ -41,7 +41,7 @@ namespace Common
     }
 
     //------------------------------------------------------------------------------------------
-    // エネミー関連の定数
+    // エネミー関連
     //------------------------------------------------------------------------------------------
     public static class Enemy
     {
@@ -70,13 +70,13 @@ namespace Common
     }
 
     //------------------------------------------------------------------------------------------
-    // バブル関連の定数
+    // バブル関連
     //------------------------------------------------------------------------------------------
     public static class Bubble
     {
         // オブジェクト名・タグ名
         public const string NAME                = ("Bubble");
-        public const string CONTROLLER_NAME     = ("BubbleController");
+        public const string CONTROLLER          = ("BubbleController");
         // 消滅時間
         public const int EXTINCTION_TIME        = (160);
         // 泡の最大サイズ
@@ -84,14 +84,14 @@ namespace Common
     }
 
     //------------------------------------------------------------------------------------------
-    // バルーン関連の定数
+    // バルーン関連
     //------------------------------------------------------------------------------------------
     public static class Balloon
     {
         // オブジェクト名・タグ名
         public const string NAME                = ("Balloon");
-        public const string GENERATOR_NAME      = ("BalloonGenerator");
-        public const string CONTROLLER_NAME     = ("BalloonController");
+        public const string GENERATOR           = ("BalloonGenerator");
+        public const string CONTROLLER          = ("BalloonController");
         // 最大バルーン所持数
         public const int MAX                    = (3);
         // 生成したシャボン玉の所持できる状態の最大時間
@@ -99,6 +99,8 @@ namespace Common
         // プレイヤーとの距離
         public const float DISTANCE_X           = (1.2f);
         public const float DISTANCE_Y           = (1.7f);
+        // ラインレンダラー
+        public const float LINE_WIDTH           = (0.05f);
     }
 
     //------------------------------------------------------------------------------------------

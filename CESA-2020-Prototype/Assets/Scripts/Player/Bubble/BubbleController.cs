@@ -65,7 +65,7 @@ public class BubbleController : MonoBehaviour
         target_scale_time = 60;
 
         playerObj = GameObject.Find(Player.NAME);
-        balloonG = GameObject.Find(Balloon.GENERATOR_NAME).GetComponent<BalloonGenerator>();
+        balloonG = GameObject.Find(Balloon.GENERATOR).GetComponent<BalloonGenerator>();
     }
 
 
