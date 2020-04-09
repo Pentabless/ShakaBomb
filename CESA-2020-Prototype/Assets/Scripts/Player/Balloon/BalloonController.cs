@@ -60,8 +60,8 @@ public class BalloonController : MonoBehaviour
     {
         if (collision.tag == Stage.DAMAGE_TILE)
         {
-            Destroy();
-            m_balloonG.BrokenBalloon();
+            m_balloonG.BrokenBalloon(gameObject);
+            //Destroy();
         }
     }
 
