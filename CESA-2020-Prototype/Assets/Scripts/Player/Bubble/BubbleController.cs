@@ -100,6 +100,8 @@ public class BubbleController : MonoBehaviour
             //transform.position = position;
             //angle = 0.0f;
 
+            GenerateBurstEffect();
+
             isDestroy = true;
         }
 
@@ -239,5 +241,16 @@ public class BubbleController : MonoBehaviour
     public void StickyTriggerExit(Collider2D collision)
     {
         isTouchSticky = false;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 破裂エフェクトの生成
+    //------------------------------------------------------------------------------------------
+    private void GenerateBurstEffect()
+    {
+        EffectGenerator.BubbleBurstFX(
+            new BubbleBurstFX.Param(GetComponent<SpriteRenderer>().color, transform.localScale),
+            transform.localPosition,
+            null);
     }
 }

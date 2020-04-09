@@ -91,7 +91,6 @@ public class BalloonGenerator : MonoBehaviour
     public void BrokenBalloon(GameObject baloon)
     {
         m_playerController.BrokenBalloon(baloon);
-        Destroy(baloon);
     }
 
     //------------------------------------------------------------------------------------------
