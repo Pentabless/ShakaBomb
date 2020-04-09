@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
     bool coyoteFlag = true;
     int coyoteCount = 0;
 
+    // 敵接触時
+    int hitCount = 0;
+
     // 空中ブーストの強さ
     [SerializeField]
     Vector2 boostForce;
@@ -271,6 +274,12 @@ public class PlayerController : MonoBehaviour
         {
             coyoteFlag = false;
         }
+
+        // 敵接触カウント
+        if (hitCount > 0)
+        {
+            hitCount--;
+        }
     }
 
     private void FixedUpdate()
@@ -279,31 +288,34 @@ public class PlayerController : MonoBehaviour
         stickSence = Mathf.Abs(stickSence);
 
         // 移動
-        if (isGround)
+        if (hitCount == 0)
         {
-            if (dir >= 1.0f && rig.velocity.x <= maxSpeed)  // 右側
+            if (isGround)
             {
-                rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
-            }
-            else if (dir <= -1.0f && rig.velocity.x >= -maxSpeed)   // 左側
-            {
-                rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
-            }
+                if (dir >= 1.0f && rig.velocity.x <= maxSpeed)  // 右側
+                {
+                    rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
+                }
+                else if (dir <= -1.0f && rig.velocity.x >= -maxSpeed)   // 左側
+                {
+                    rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
+                }
 
-            //rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
-        }
-        else
-        {
-            if (dir >= 1.0f && rig.velocity.x <= maxSpeed)  // 右側
-            {
-                rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
+                //rig.AddForce(new Vector2(playerSpeed * dir * stickSence, 0));
             }
-            else if (dir <= -1.0f && rig.velocity.x >= -maxSpeed)   // 左側
+            else
             {
-                rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
-            }
+                if (dir >= 1.0f && rig.velocity.x <= maxSpeed)  // 右側
+                {
+                    rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
+                }
+                else if (dir <= -1.0f && rig.velocity.x >= -maxSpeed)   // 左側
+                {
+                    rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
+                }
 
-            //rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
+                //rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
+            }
         }
 
         //// 速さ制限
@@ -316,16 +328,19 @@ public class PlayerController : MonoBehaviour
         //    rig.velocity = new Vector2(-maxSpeed, rig.velocity.y);
         //}
 
-        // 接地時慣性消滅
-        if (isGround && dir == 0)
-        {
-            this.rig.velocity = new Vector2(0, this.rig.velocity.y);
-        }
 
-        // 爆風加速対処
-        if (isGround && Mathf.Abs(rig.velocity.x) >= 5.0f)
+        if (hitCount == 0)
         {
-            rig.velocity = new Vector2(5.0f * dir, rig.velocity.y);
+            // 接地時慣性消滅
+            if (isGround && dir == 0)
+            {
+                this.rig.velocity = new Vector2(0, this.rig.velocity.y);
+            }
+            // 爆風加速対処
+            if (isGround && Mathf.Abs(rig.velocity.x) >= 5.0f)
+            {
+                rig.velocity = new Vector2(5.0f * dir, rig.velocity.y);
+            }
         }
     }
 
@@ -334,6 +349,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "BombTest")
         {
             ExplosionForce(collision.transform.position, 500.0f, 800.0f);
+        }
+
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyAttack")
+        {
+            KnockBack(collision.transform.position);
         }
     }
 
@@ -415,6 +435,22 @@ public class PlayerController : MonoBehaviour
         vel.x = vel.x * xPow;
         vel.y = vel.y * yPow;
         this.rig.AddForce(vel);
+    }
+
+    //======================================================
+    // ノックバック
+    //======================================================
+    public void KnockBack(Vector3 hitPos)
+    {
+        hitCount = 15;
+        Vector2 hitVel = this.transform.position - hitPos;
+        Vector2 addVel = new Vector2(400.0f, 400.0f);
+        hitVel.Normalize();
+        if (hitVel.x < 0)
+        {
+            addVel.x *= -1;
+        }
+        this.rig.AddForce(addVel);
     }
 }
 
