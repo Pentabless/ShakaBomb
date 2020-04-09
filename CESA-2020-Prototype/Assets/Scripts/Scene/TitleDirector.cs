@@ -14,6 +14,8 @@ public class TitleDirector : MonoBehaviour
     GameObject go_exit_button;
     //選択フレーム
     GameObject go_select_tex;
+    //背景の飾りジェネレーター
+    GameObject go_decoration_generator;
     //画面フェード
     Image image_screen_fade;
     //ゲームをやめるかどうか
@@ -34,6 +36,7 @@ public class TitleDirector : MonoBehaviour
         go_start_button = GameObject.Find("StartButton");
         go_exit_button = GameObject.Find("ExitButton");
         go_select_tex = GameObject.Find("SelectTex");
+        go_decoration_generator = GameObject.Find("BackGroundDecorationGenerator");
         image_screen_fade = GameObject.Find("ScreenFade").GetComponent<Image>();
         //座標変更
         go_select_tex.transform.position = go_start_button.transform.position;
@@ -53,6 +56,10 @@ public class TitleDirector : MonoBehaviour
         //フェードアウトを始めていなかったら
         if (image_screen_fade.color.a == 0.0f)
         {
+            //背景の飾りを作成する
+            float decoration_scale = Random.Range(0.3f, 3.0f);
+            go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -5);
+
             //選択している画像が動いていなかったら
             if (select_frame_angle == 0.0f)
             {
@@ -138,6 +145,10 @@ public class TitleDirector : MonoBehaviour
         //フェードアウトを始めていたら
         else
         {
+            //前景の飾りを作成する
+            float decoration_scale = Random.Range(0.1f, 3.0f);
+            go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), 1.0f), 5);
+
             //フェードアウトを終わったら
             if (image_screen_fade.color.a >= 1.0f)
             {

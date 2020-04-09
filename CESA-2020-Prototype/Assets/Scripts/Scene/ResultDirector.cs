@@ -109,7 +109,7 @@ public class ResultDirector : MonoBehaviour
                     go_rank_star[i].GetComponent<SpriteRenderer>().color = Color.red;
                 }
 
-                //角度が180°超えていて(マイナスになる)　回転を止めていなかったら
+                //角度が170°超えていて　回転を止めていなかったら
                 if ((go_rank_star[i].transform.localEulerAngles.y > 170.0f) &&
                     (rotate_star[i] == false))
                 {
@@ -202,6 +202,7 @@ public class ResultDirector : MonoBehaviour
         for (int i = 0; i < go_rank_star.Length; i++)
         {
             go_rank_star[i] = GameObject.Find("Star" + i.ToString());
+            //回転済みにする
             rotate_star[i] = true;
 
             //評価する星の数より小さかったら回転していない事にする

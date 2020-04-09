@@ -11,6 +11,8 @@ public class StageSelectDirector : MonoBehaviour
     public string[] stage_names;
     //タイトル画面に戻るための無操作時間(単位：分)
     public float to_title_not_operate_minute;
+    //左右キーを長押しした時に次のステージに選択するためのフレーム数
+    public int select_next_stage_frame;
     //カメラオブジェクト
     GameObject go_camera;
     //選択フレーム
@@ -18,7 +20,9 @@ public class StageSelectDirector : MonoBehaviour
     //タイトルボタン
     GameObject go_title_button;
     //ステージの画像
-    GameObject[] go_stage_tex;
+    GameObject[] go_stage;
+    //背景
+    GameObject go_background;
     //選んでいるステージ番号
     int stage_number;
     //選んでいたステージ番号
@@ -35,7 +39,8 @@ public class StageSelectDirector : MonoBehaviour
     bool select_stage;
     //何も操作しなくなった時の時間
     float not_operate_time;
-
+    //次のステージに選択するためのカウント
+    int select_next_stage_count;
 
     // Start is called before the first frame update
     void Start()
@@ -44,20 +49,14 @@ public class StageSelectDirector : MonoBehaviour
         go_camera = GameObject.Find("Main Camera");
         go_select_tex = GameObject.Find("SelectTex");
         go_title_button = GameObject.Find("TitleButton");
-        //ステージ画像を探して数える
-        int num_tex = GameObject.FindGameObjectsWithTag("StageTex").Length;
-        //ステージ画像を記憶する配列のサイズを設定する
-        go_stage_tex = new GameObject[num_tex];
-        //並び替え
-        for (int i = 0; i < go_stage_tex.Length; i++)
-        {
-            //オブジェクトを探す
-            go_stage_tex[i] = GameObject.Find("StageTex (" + i.ToString() + ")");
-        }
+        go_background = GameObject.Find("ProvisionalBackGround");
+        //ステージ
+        FindStageObject();
+
         //座標変更
-        go_select_tex.transform.position = go_stage_tex[0].transform.position;
+        go_select_tex.transform.position = go_stage[0].transform.position;
         //拡大率変更
-        go_select_tex.transform.localScale = go_stage_tex[0].transform.localScale + new Vector3(0.5f, 0.5f, 0.0f);
+        go_select_tex.transform.localScale = (go_stage[stage_number].transform.localScale.x * go_stage[0].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f);
         //初期化
         stage_number = 0;
         last_number = 0;
@@ -66,6 +65,7 @@ public class StageSelectDirector : MonoBehaviour
         select_title = false;
         select_stage = true;
         not_operate_time = -1.0f;
+        select_next_stage_count = 0;
 
         //ステージフレームに選ばれている番号を教える
         SetSelectStage(false);
@@ -83,22 +83,34 @@ public class StageSelectDirector : MonoBehaviour
             if (select_title == false)
             {
                 //拡大率を変える
-                go_select_tex.transform.localScale = go_stage_tex[stage_number].transform.localScale + new Vector3(0.5f, 0.5f, 0.5f);
+                go_select_tex.transform.localScale = (go_stage[stage_number].transform.localScale.x * go_stage[stage_number].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f);
 
                 //左を押したら
-                if (Input.GetKeyDown(KeyCode.LeftArrow) && stage_number > 0)
+                if (Input.GetKey(KeyCode.LeftArrow) && stage_number > 0)
                 {
-                    //ステージ番号を変更する準備をする(ステージ番号を1減らす)
-                    PreparaChangeSelectStage(-1);
+                    //次のステージに選択するためのカウントが0以下になっていたら
+                    if (select_next_stage_count <= 0)
+                    {
+                        //カウントを設定する
+                        select_next_stage_count = select_next_stage_frame;
+                        //ステージ番号を変更する準備をする(ステージ番号を1減らす)
+                        PreparaChangeSelectStage(-1);
+                    }
                 }
                 //右を押したら
-                if (Input.GetKeyDown(KeyCode.RightArrow) && stage_number < go_stage_tex.Length - 1)
+                if (Input.GetKey(KeyCode.RightArrow) && stage_number < go_stage.Length - 1)
                 {
-                    //ステージ番号を変更する準備をする(ステージ番号を1増やす)
-                    PreparaChangeSelectStage(1);
+                    //次のステージに選択するためのカウントが0以下になっていたら
+                    if (select_next_stage_count <= 0)
+                    {
+                        //カウントを設定する
+                        select_next_stage_count = select_next_stage_frame;
+                        //ステージ番号を変更する準備をする(ステージ番号を1増やす)
+                        PreparaChangeSelectStage(1);
+                    }
                 }
                 //下を押したら
-                if (Input.GetKeyDown(KeyCode.DownArrow))
+                if (Input.GetKey(KeyCode.DownArrow))
                 {
                     //タイトルを選択している状態にする
                     select_title = true;
@@ -110,7 +122,7 @@ public class StageSelectDirector : MonoBehaviour
             else
             {
                 //上を押したら
-                if (Input.GetKeyDown(KeyCode.UpArrow))
+                if (Input.GetKey(KeyCode.UpArrow))
                 {
                     //タイトルを選択していない状態にする
                     select_title = false;
@@ -151,7 +163,7 @@ public class StageSelectDirector : MonoBehaviour
                 if (select_title)
                 {
                     go_select_tex.transform.localScale = Vector3.Lerp(
-                    go_stage_tex[stage_number].transform.localScale,
+                    (go_stage[stage_number].transform.localScale.x * go_stage[stage_number].transform.Find("StageFrame").transform.localScale),
                     go_title_button.transform.localScale,
                     ((Mathf.Sin(Mathf.Deg2Rad * (angle - 90.0f)) + 1) * 0.5f));
                 }
@@ -159,7 +171,7 @@ public class StageSelectDirector : MonoBehaviour
                 {
                     go_select_tex.transform.localScale = Vector3.Lerp(
                     go_title_button.transform.localScale,
-                    go_stage_tex[stage_number].transform.localScale,
+                    (go_stage[stage_number].transform.localScale.x * go_stage[stage_number].transform.Find("StageFrame").transform.localScale),
                     ((Mathf.Sin(Mathf.Deg2Rad * (angle - 90.0f)) + 1) * 0.5f));
                 }
                 go_select_tex.transform.localScale += new Vector3(0.5f, 0.5f, 0.0f);
@@ -184,7 +196,7 @@ public class StageSelectDirector : MonoBehaviour
                         select_stage = true;
                     }
                     //微調整する
-                    go_select_tex.transform.position = go_stage_tex[stage_number].transform.position;
+                    go_select_tex.transform.position = go_stage[stage_number].transform.position;
                 }
                 else
                 {
@@ -195,6 +207,12 @@ public class StageSelectDirector : MonoBehaviour
             }
         }
 
+        //次のステージに選択するためのカウントが0より上だったら
+        if(select_next_stage_count>0)
+        {
+            select_next_stage_count--;
+        }
+
         //タイトルを選択していない状態で　ステージを選択できる状態
         if (select_title == false && select_stage == true)
         {
@@ -202,6 +220,8 @@ public class StageSelectDirector : MonoBehaviour
             go_title_button.transform.position = new Vector3(go_camera.transform.position.x + 6.5f, go_camera.transform.position.y + (-4.0f), 0.0f);
         }
 
+        //背景の座標をカメラの座標
+        go_background.transform.position = new Vector3(go_camera.transform.position.x,go_camera.transform.position.y,0.0f);
         //操作していない時間を計る
         CountNotOperateTime();
     }
@@ -210,7 +230,7 @@ public class StageSelectDirector : MonoBehaviour
     void PreparaChangeSelectStage(int number_difference)
     {
         //選択していたステージの座標を覚える
-        last_position = go_stage_tex[stage_number].transform.position;
+        last_position = go_stage[stage_number].transform.position;
         //選択していたステージ番号を覚える
         last_number = stage_number;
         //ステージ番号を変更する
@@ -218,7 +238,7 @@ public class StageSelectDirector : MonoBehaviour
         //円運動を始める
         angle += speed;
         //選択していたステージと選択するステージの距離を求める
-        stage_distance = go_stage_tex[stage_number].transform.position - go_stage_tex[last_number].transform.position;
+        stage_distance = go_stage[stage_number].transform.position - go_stage[last_number].transform.position;
         //ステージフレームに選ばれている番号を教える
         SetSelectStage(false);
     }
@@ -232,9 +252,9 @@ public class StageSelectDirector : MonoBehaviour
         if (select)
         {
             //選択していたステージの座標を覚える
-            last_position = go_stage_tex[stage_number].transform.position;
+            last_position = go_stage[stage_number].transform.position;
             //タイトルと選択するステージの距離を求める
-            stage_distance = go_title_button.transform.position - go_stage_tex[stage_number].transform.position;
+            stage_distance = go_title_button.transform.position - go_stage[stage_number].transform.position;
             //ステージフレームに選ばれている番号を教える
             SetSelectStage(true);
         }
@@ -243,7 +263,7 @@ public class StageSelectDirector : MonoBehaviour
             //選択していたタイトルの座標を覚える
             last_position = go_title_button.transform.position;
             //選択するステージとタイトルの距離を求める
-            stage_distance = go_stage_tex[stage_number].transform.position - go_title_button.transform.position;
+            stage_distance = go_stage[stage_number].transform.position - go_title_button.transform.position;
             //ステージフレームに選ばれている番号を教える
             SetSelectStage(false);
         }
@@ -253,7 +273,7 @@ public class StageSelectDirector : MonoBehaviour
     void SetSelectStage(bool select_title)
     {
         //ステージフレームに選ばれている番号を教える
-        for (int i = 0; i < go_stage_tex.Length; i++)
+        for (int i = 0; i < go_stage.Length; i++)
         {
             bool select = false;
             //タイトルが選ばれていなかったら
@@ -265,7 +285,7 @@ public class StageSelectDirector : MonoBehaviour
                     select = true;
                 }
             }
-            go_stage_tex[i].GetComponent<StageFrameController>().SetNowSelect(select);
+            go_stage[i].GetComponent<StageFrameController>().SetNowSelect(select);
         }
     }
 
@@ -300,18 +320,45 @@ public class StageSelectDirector : MonoBehaviour
         }
     }
 
+    //ステージの数を数えて配列に順番に入れる
+    void FindStageObject()
+    {
+        //ステージの数を初期化する
+        int num_stage = 0;
+        //オブジェクトの数を数える
+        while (true)
+        {
+            //オブジェクトがなかったら
+            if (GameObject.Find("StagePrefab (" + num_stage.ToString() + ")") == null)
+            {
+                //数えるのをやめる
+                break;
+            }
+            num_stage++;
+        }
+
+        //サイズを設定する
+        go_stage = new GameObject[num_stage];
+
+        for (int i = 0; i < num_stage; i++)
+        {
+            //オブジェクトを探す
+            go_stage[i] = GameObject.Find("StagePrefab (" + i.ToString() + ")");
+        }
+    }
+
     //ステージを全てLineで通す <自作関数> -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     void AllStageLinePass()
     {
         //ステージの数に対応して線を引く
-        if (go_stage_tex.Length > 1)
+        if (go_stage.Length > 1)
         {
             //Lineオブジェクトを探す
             GameObject go_line = GameObject.Find("StageLine");
             //コンポーネントを設定する
             LineRenderer renderer = go_line.GetComponent<LineRenderer>();
             //Lineの座標の数を設定する
-            renderer.positionCount = 1 + ((go_stage_tex.Length - 1) * 2);
+            renderer.positionCount = 1 + ((go_stage.Length - 1) * 2);
             //Lineの座標の数分処理する
             for (int i = 0; i < renderer.positionCount; i++)
             {
@@ -319,13 +366,13 @@ public class StageSelectDirector : MonoBehaviour
                 if (i % 2 == 0)
                 {
                     //ステージの座標に合わせる
-                    renderer.SetPosition(i, go_stage_tex[i / 2].transform.position);
+                    renderer.SetPosition(i, go_stage[i / 2].transform.position);
                 }
                 //奇数だったら
                 else
                 {
                     //xを前のステージの座標に　yを次のステージの座標にする
-                    renderer.SetPosition(i, new Vector3(go_stage_tex[i / 2].transform.position.x, go_stage_tex[(i / 2) + 1].transform.position.y, 0.0f));
+                    renderer.SetPosition(i, new Vector3(go_stage[i / 2].transform.position.x, go_stage[(i / 2) + 1].transform.position.y, 0.0f));
                 }
             }
             //マテリアル設定

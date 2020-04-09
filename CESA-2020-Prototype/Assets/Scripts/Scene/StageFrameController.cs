@@ -10,8 +10,16 @@ public class StageFrameController : MonoBehaviour
     public Vector3 max_scale;
     //拡大速度
     public float scale_speed;
+    //評価の星の数(仮)
+    public int provisional_num_rank_star;
+    //色のついた星のスプライト
+    public Sprite color_star;
     //カメラオブジェクト
     GameObject go_camera;
+    //ステージフレーム
+    GameObject go_stage_frame;
+    //評価の星
+    GameObject[] go_rank_star = new GameObject[3];
     //初期拡大率
     Vector3 start_scale;
     //初期色
@@ -20,29 +28,57 @@ public class StageFrameController : MonoBehaviour
     float scale_rate;
     //現在選ばれているか
     bool now_select;
+    //評価の星の数
+    int num_rank_star;
 
     // Start is called before the first frame update
     void Start()
     {
         //オブジェクトを探す
         go_camera = GameObject.Find("Main Camera");
+        go_stage_frame = transform.Find("StageFrame").gameObject;
+        //評価の星
+        for (int i = 0; i < go_rank_star.Length; i++)
+        {
+            go_rank_star[i] = transform.Find("Star" + i.ToString()).gameObject;
+        }
+
         //初期情報を覚える
         start_scale = transform.localScale;
-        start_color = GetComponent<SpriteRenderer>().color;
+        start_color = transform.Find("StageFrame").GetComponent<SpriteRenderer>().color;
         scale_rate = 0.0f;
-        //now_select = false;
+        num_rank_star = provisional_num_rank_star;
 
         //Textを確実に表示できるようにするための処理
 
-        //子オブジェクト(Canvas)を覚える
-        GameObject go_child = transform.GetChild(0).gameObject;
-        //子オブジェクトの初期化をする
-        InitializeChildObject(go_child);
+        //Canvasを覚える
+        GameObject go_canvas = transform.Find("Canvas").gameObject;
+        //Canvasの初期化をする
+        InitializeCanvas(go_canvas);
 
-        //孫オブジェクト(StageName)を覚える
-        GameObject go_grand_child = go_child.transform.GetChild(0).gameObject;
-        //孫オブジェクトの初期化をする
-        InitializeGrandChildObject(go_grand_child);
+        //Text(StageName)を覚える
+        GameObject go_stage_name = go_canvas.transform.Find("StageName").gameObject;
+        //Text(StageName)の初期化をする
+        InitializeStageName(go_stage_name);
+
+        //仮　ステージの画像の変更
+        transform.Find("StageTex").GetComponent<SpriteRenderer>().color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+        transform.Find("StageTex").GetComponent<SpriteRenderer>().color += new Color(0.1f, 0.1f, 0.1f);
+
+        for (int i = 0; i < go_rank_star.Length; i++)
+        {
+            //評価の星の数の方が大きかったら
+            if (i < num_rank_star)
+            {
+                go_rank_star[i].GetComponent<SpriteRenderer>().sprite = color_star;
+                go_rank_star[i].GetComponent<SpriteRenderer>().color = Color.red;
+            }
+            //小さかったらやめる
+            else
+            {
+                break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -89,11 +125,11 @@ public class StageFrameController : MonoBehaviour
             }
         }
     }
-    //子オブジェクトの初期化 <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    void InitializeChildObject(GameObject child)
+    //Canvasの初期化 <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    void InitializeCanvas(GameObject obj)
     {
         //Canvasの情報を設定する
-        Canvas canvas = child.GetComponent<Canvas>();
+        Canvas canvas = obj.GetComponent<Canvas>();
         //RenderModeをScreenSpace-Cameraにする  (カメラに追従する)
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         //TextとCameraの距離を50にする          (テキストが見えるようになる)
@@ -108,18 +144,20 @@ public class StageFrameController : MonoBehaviour
         //RectTransformの座標を原点にする
         rect_transform.localPosition = Vector3.zero;
         //RectTransformの拡大率を設定する
-        rect_transform.localScale = new Vector3(0.025f, 0.025f, 0.025f);
+        rect_transform.localScale = new Vector3(0.075f, 0.075f, 0.075f);
     }
 
-    //孫オブジェクトの初期化 <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    void InitializeGrandChildObject(GameObject grand_child)
+    //ステージ名の初期化 <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    void InitializeStageName(GameObject grand_child)
     {
         //テキストの情報を設定する
-        Text stage_name=grand_child.GetComponent<Text>();
+        Text stage_name = grand_child.GetComponent<Text>();
         //テキストの色を設定する
         stage_name.color = Color.black;
+        //テキストのフォントサイズを設定する
+        stage_name.fontSize = 9;
         //テキストの内容を設定する
-        stage_name.text= SetStageNameEnglish();
+        stage_name.text = SetStageNameEnglish();
         //RectTransformの座標を設定する
         grand_child.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, 10.0f, 0.0f);
     }
