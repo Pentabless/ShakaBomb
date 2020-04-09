@@ -238,14 +238,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 300468366}
   player: {fileID: 1172622768}
+  cameraStatus: 1
   cameraViewRange: 10
   cameraRange:
     serializedVersion: 2
-    x: -5
-    y: 0
-    width: 25
-    height: 25
-  moveCameraAmount: []
+    x: -10
+    y: -2
+    width: 10
+    height: 20
+  moveCameraAmount:
+  - 10
+  - -2
+  leftPos: 8
+  rightPos: 8
 --- !u!4 &409297162
 Transform:
   m_ObjectHideFlags: 0

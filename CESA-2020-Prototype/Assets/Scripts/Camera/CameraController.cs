@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    // 列挙隊
+    enum CameraStatus
+    {
+        None,
+        Left,
+        Right,
+        Middle
+    }
     // 定数
     // ラープの割合
     readonly float percentage = 0.05f;
+    // カメラの上のポジションから引くサイズ
+    readonly float difference = 2.0f;
 
     // シリアライズ変数
     // カメラ
     [SerializeField]
     Camera mainCamera;
-    // デバックカメラ揺れ
-    CameraShake cameraShake;
     // プレイヤー
     [SerializeField]
     GameObject player;
+    [SerializeField]
+    CameraStatus cameraStatus;
     // カメラの視野角
     [SerializeField]
     float cameraViewRange;
@@ -26,15 +36,25 @@ public class CameraController : MonoBehaviour
     // カメラの移動：要素数　Up(0):Down(1)
     [SerializeField]
     float[] moveCameraAmount;
+    // 左と右にするときの値
+    [SerializeField]
+    float leftPos;
+    [SerializeField]
+    float rightPos;
 
+    // デバックカメラ揺れ
+    CameraShake cameraShake;
+    Vector3 lastPlayerPos;
     // プレイヤーの追従On
     bool followCameraFlag = false;
+    bool followY = false;
 
     // Start is called before the first frame update
     void Start()
     {
         cameraShake = mainCamera.transform.GetComponent<CameraShake>();
         mainCamera.orthographicSize = cameraViewRange;
+        lastPlayerPos = player.transform.position;
     }
 
     private void FixedUpdate()
@@ -42,15 +62,22 @@ public class CameraController : MonoBehaviour
         // プレイヤーのポジションとカメラのポジションを調べる
         Vector3 playerPos = player.transform.position;
 
-        // ジャンプだけではカメラを追従しない
-        if (playerPos.y >= GetScreenTopLeft().y || playerPos.y <= GetScreenCenter().y)
+        if(!followCameraFlag)
         {
-            followCameraFlag = false;
+            // プレイヤーの落下判定
+            if (playerPos.y <= lastPlayerPos.y)
+                followY = false;
+
+            lastPlayerPos = playerPos;
+
+            // ジャンプだけではカメラを追従しない
+            if (playerPos.y >= GetScreenTopLeft().y - difference)
+                followY = false;
         }
 
-        if (!followCameraFlag)
+        if (!followY)
         {
-            followCameraFlag = FollowCameraY(playerPos.y);
+            followY = FollowCameraY(playerPos.y);
         }
         FollowCameraX(playerPos.x);
 
@@ -97,7 +124,7 @@ public class CameraController : MonoBehaviour
         followCameraFlag = true;
 
         cameraPos.y = moveCameraAmount[up ? 0 : 1];
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, cameraPos, 0.05f);
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, cameraPos, percentage);
 
         // 移動したらTrueを返す
         if (Mathf.Approximately(mainCamera.transform.position.y, cameraPos.y))
@@ -140,10 +167,11 @@ public class CameraController : MonoBehaviour
     private bool FollowCameraX(float x)
     {
         Vector3 cameraPos = mainCamera.transform.position;
+        var temp = PositionCorrection(x);
 
-        mainCamera.transform.position = new Vector3(Mathf.Lerp(cameraPos.x, x, 0.1f), cameraPos.y, cameraPos.z);
+        mainCamera.transform.position = new Vector3(Mathf.Lerp(cameraPos.x, temp, 0.1f), cameraPos.y, cameraPos.z);
         // 移動したらTrueを返す
-        if (CheckDifferences(mainCamera.transform.position.x, x, 0.01f))
+        if (CheckDifferences(mainCamera.transform.position.x, temp, 0.01f))
             return true;
 
         return false;
@@ -158,7 +186,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 cameraPos = mainCamera.transform.position;
 
-        mainCamera.transform.position = new Vector3(cameraPos.x, Mathf.Lerp(cameraPos.y, y, 0.05f), cameraPos.z);
+        mainCamera.transform.position = new Vector3(cameraPos.x, Mathf.Lerp(cameraPos.y, y, percentage), cameraPos.z);
 
         // 移動したらTrueを返す
         if (CheckDifferences(mainCamera.transform.position.y, cameraPos.y, 0.01f))
@@ -167,7 +195,17 @@ public class CameraController : MonoBehaviour
         return false;
     }
 
+    private float PositionCorrection(float x)
+    {
+        switch(cameraStatus)
+        {
+            case CameraStatus.Left: x += leftPos; break;
+            case CameraStatus.Right: x -= rightPos; break;
+            case CameraStatus.Middle:break;
+        }
 
+        return x;
+    }
 
     /// <summary>
     /// ラープ完了したかどうか
@@ -249,5 +287,10 @@ public class CameraController : MonoBehaviour
     {
         Vector3 center = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
         return center;
+    }
+
+    private Vector3 GetScreenPos(Vector3 pos)
+    {
+        return mainCamera.ScreenToViewportPoint(pos);
     }
 }
