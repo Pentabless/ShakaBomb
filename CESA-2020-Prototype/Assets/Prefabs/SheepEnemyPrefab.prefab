@@ -31,7 +31,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -80,7 +80,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -199,7 +199,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -248,7 +248,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 5625534135324029433}
   - component: {fileID: 7314695612727344878}
   - component: {fileID: 5625534135324029432}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: SheepEnemyPrefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -540,7 +540,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -589,7 +589,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -638,7 +638,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -663,6 +663,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5625534135324029435}
     m_Modifications:
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBubblePrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 7833215219887178384, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -728,11 +738,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyBubblePrefab (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 3023918593490567442, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_SortingOrder
@@ -759,6 +764,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5625534135324029435}
     m_Modifications:
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBubblePrefab (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 7833215219887178384, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -824,11 +839,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyBubblePrefab (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 3023918593490567442, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_SortingOrder
@@ -855,6 +865,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5625534135324029435}
     m_Modifications:
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBubblePrefab (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 7833215219887178384, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -920,11 +940,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyBubblePrefab (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 3023918593490567442, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_SortingOrder
@@ -951,6 +966,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5625534135324029435}
     m_Modifications:
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBubblePrefab (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 7833215219887178384, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1016,11 +1041,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyBubblePrefab (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 3023918593490567442, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_SortingOrder
@@ -1047,6 +1067,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5625534135324029435}
     m_Modifications:
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBubblePrefab (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 7833215219887178384, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1112,11 +1142,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyBubblePrefab (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 3023918593490567442, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_SortingOrder
@@ -1143,6 +1168,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5625534135324029435}
     m_Modifications:
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBubblePrefab (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 7833215219887178384, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1208,11 +1243,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyBubblePrefab (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 3023918593490567442, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_SortingOrder
@@ -1239,6 +1269,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5625534135324029435}
     m_Modifications:
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyBubblePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 7833215219887178384, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1303,11 +1343,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3445272308189032709, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyBubblePrefab
       objectReference: {fileID: 0}
     - target: {fileID: 3023918593490567442, guid: 947b5b3849f5bb04d84f6ed7abeaf5ee,
         type: 3}

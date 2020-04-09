@@ -70,4 +70,9 @@ public class EnemyBubbleController : MonoBehaviour
         circular_motion_check[0] = x;
         circular_motion_check[1] = y;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(this.gameObject);
+    }
 }
