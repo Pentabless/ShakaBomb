@@ -31,6 +31,9 @@ public class WaterWaver : MonoBehaviour
     [SerializeField]
     private float decay = 0.998f;
 
+    [SerializeField]
+    private AudioClip inoutSE;
+
     private int bufferLength;
     private readonly int bufferCount = 4;
     private NativeArray<float>[] waveBuffer;
@@ -206,6 +209,24 @@ public class WaterWaver : MonoBehaviour
         // メッシュを更新する
         DeformMesh();
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        HitCheck(col.gameObject.layer);
+    }
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        HitCheck(col.gameObject.layer);
+    }
+    // 出入りするときに音を鳴らす
+    private void HitCheck(int layer)
+    {
+        int layerValue = LayerMask.GetMask(LayerMask.LayerToName(layer));
+        if ((layerValue & layersToInteract.value) > 0)
+        {
+            SoundPlayer.Play(inoutSE);
+        }
     }
 
     // バッファを更新する
