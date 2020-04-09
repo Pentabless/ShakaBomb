@@ -444,13 +444,14 @@ public class PlayerController : MonoBehaviour
     {
         hitCount = 15;
         Vector2 hitVel = this.transform.position - hitPos;
-        Vector2 addVel = new Vector2(400.0f, 400.0f);
+        Vector2 addVel = new Vector2(8.0f, 8.0f);
         hitVel.Normalize();
         if (hitVel.x < 0)
         {
             addVel.x *= -1;
         }
-        this.rig.AddForce(addVel);
+        this.rig.velocity = Vector2.zero;
+        this.rig.AddForce(addVel, ForceMode2D.Impulse);
     }
 }
 
