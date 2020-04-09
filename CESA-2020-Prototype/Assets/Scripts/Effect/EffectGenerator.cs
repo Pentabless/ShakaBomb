@@ -22,8 +22,9 @@ public class EffectGenerator : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     static private void Init()
     {
+#if UNITY_EDITOR
         bubbleBurstFX = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/BubbleBurstFX.prefab");
-        
+#endif
     }
 
     //------------------------------------------------------------------------------------------
