@@ -411,11 +411,12 @@ public class PlayerController : MonoBehaviour
     }
 
     // バルーンが壊された時
-    public void BrokenBalloon()
+    public void BrokenBalloon(GameObject baloon)
     {
-        int count = (m_balloonList.Count - 1);
-        m_balloonList.RemoveAt(count);
-        Data.num_balloon--;
+        if (m_balloonList.Remove(baloon))
+        {
+            Data.num_balloon--;
+        }
     }
 
     // バルーンの現在の所持数を取得

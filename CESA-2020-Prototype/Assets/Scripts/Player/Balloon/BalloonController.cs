@@ -16,16 +16,16 @@ public class BalloonController : MonoBehaviour
     // member variable
     //------------------------------------------------------------------------------------------
     // リジッドボディ
-    private Rigidbody2D m_rigid2D = null;
+    private Rigidbody2D      m_rigid2D     = null;
     // ラインレンダラー 
-    private LineRenderer m_line = null;
+    private LineRenderer     m_line        = null;
     // プレイヤーの情報
-    private GameObject m_player = null;
+    private GameObject       m_player      = null;
     // バルーンジェネレータ
-    private BalloonGenerator m_balloonG = null;
+    private BalloonGenerator m_balloonG    = null;
 
     // 消えるかどうか
-    private bool m_isDestroy = false;
+    private bool             m_isDestroy   = false;
 
     //------------------------------------------------------------------------------------------
     // Start
@@ -73,8 +73,8 @@ public class BalloonController : MonoBehaviour
     {
         if (collision.tag == Stage.DAMAGE_TILE)
         {
+            m_balloonG.BrokenBalloon(gameObject);
             Destroy();
-            m_balloonG.BrokenBalloon();
         }
     }
 
@@ -99,6 +99,18 @@ public class BalloonController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Destroy()
     {
+        GenerateBurstEffect();
         Destroy(this.gameObject);
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 破裂エフェクトの生成
+    //------------------------------------------------------------------------------------------
+    private void GenerateBurstEffect()
+    {
+        EffectGenerator.BubbleBurstFX(
+            new BubbleBurstFX.Param(GetComponent<SpriteRenderer>().color, transform.localScale),
+            transform.localPosition,
+            null);
     }
 }
