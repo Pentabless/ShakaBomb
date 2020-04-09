@@ -15,6 +15,7 @@ TagManager:
   - DamageTile
   - Bullet
   - Balloon
+  - BombTest
   layers:
   - Default
   - TransparentFX
@@ -30,8 +31,8 @@ TagManager:
   - Bullet
   - Bubble
   - WaterCollider
-  - 
-  - 
+  - DamageTile
+  - BombTest
   - 
   - 
   - 

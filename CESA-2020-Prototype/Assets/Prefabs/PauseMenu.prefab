@@ -175,8 +175,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.6247775, g: 0.9811321, b: 0.9610202, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.70988464, b: 1, a: 1}
+    m_NormalColor: {r: 0.7125569, g: 1, b: 0.6273585, a: 1}
+    m_HighlightedColor: {r: 0.22050092, g: 0.84705883, b: 0.15574935, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -372,8 +372,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.7311321, g: 0.9757644, b: 1, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.70988464, b: 1, a: 1}
+    m_NormalColor: {r: 0.7125569, g: 1, b: 0.6273585, a: 1}
+    m_HighlightedColor: {r: 0.22050092, g: 0.84705883, b: 0.15574935, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -603,7 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gamepadState: {fileID: 0}
-  m_menu: {fileID: 5198826045784286578}
+  m_pauseMenuCanvas: {fileID: 5198826045784286578}
 --- !u!1 &5198826045784286582
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +665,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &5198826045784286579
 MonoBehaviour:
@@ -802,8 +802,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.6247775, g: 0.9811321, b: 0.9610202, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.70988464, b: 1, a: 1}
+    m_NormalColor: {r: 0.7125569, g: 1, b: 0.6273585, a: 1}
+    m_HighlightedColor: {r: 0.22050092, g: 0.84705883, b: 0.15574935, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
