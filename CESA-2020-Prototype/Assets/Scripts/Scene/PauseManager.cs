@@ -22,29 +22,12 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    private static T[] GetComponentsInActiveScene<T>(bool includeInactive = true)
-    {
-        // ActiveなSceneのRootにあるGameObject[]を取得する
-        var rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
-
-        // 空の IEnumerable<T>
-        IEnumerable<T> resultComponents = (T[])Enumerable.Empty<T>();
-        foreach (var item in rootGameObjects)
-        {
-            // includeInactive = true を指定するとGameObjectが非活性なものからも取得する
-            var components = item.GetComponentsInChildren<T>(includeInactive);
-            resultComponents = resultComponents.Concat(components);
-        }
-        return resultComponents.ToArray();
-    }
-
 
     [SerializeField]
     [Header("(全てを対象にする場合は空でいい)")]
     [Header("ポーズを適用するオブジェクトのrootオブジェクト")]
     private GameObject objectsWrapper;      // ポーズを適用するオブジェクトの範囲
-
-    [SerializeField]
+    
     private PlayDirector playDirector;     // プレイディレクター
     [SerializeField]
     private GameObject pauseMenu;            // ポーズメニューオブジェクト
@@ -97,6 +80,7 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
+        playDirector = GameObject.Find(PlayDirector.NAME).GetComponent<PlayDirector>();
         CreatePauseFilter();
     }
 
@@ -191,7 +175,7 @@ public class PauseManager : MonoBehaviour
         pausingRigidbodies = Array.FindAll(
                 (objectsWrapper
                 ? objectsWrapper.GetComponentsInChildren<Rigidbody2D>()
-                : GetComponentsInActiveScene<Rigidbody2D>()),
+                : Utility.GetComponentsInActiveScene<Rigidbody2D>()),
                 rigidbodyPredicate);
         rigidbodyVelocities = new RigidbodyVelocity[pausingRigidbodies.Length];
         for (int i = 0; i < pausingRigidbodies.Length; ++i)
@@ -212,7 +196,7 @@ public class PauseManager : MonoBehaviour
         pausingMonoBehaviours = Array.FindAll(
             (objectsWrapper
             ? objectsWrapper.GetComponentsInChildren<MonoBehaviour>()
-            : GetComponentsInActiveScene<MonoBehaviour>()),
+            : Utility.GetComponentsInActiveScene<MonoBehaviour>()),
             monoBehaviourPredicate);
         foreach (var monoBehaviour in pausingMonoBehaviours)
         {
@@ -228,7 +212,7 @@ public class PauseManager : MonoBehaviour
         pausingAnimators = Array.FindAll(
             (objectsWrapper
             ? objectsWrapper.GetComponentsInChildren<Animator>()
-            : GetComponentsInActiveScene<Animator>()),
+            : Utility.GetComponentsInActiveScene<Animator>()),
             animatorPredicate);
         animatorSpeeds = new float[pausingAnimators.Length];
         for (int i = 0; i < pausingAnimators.Length; ++i)
@@ -247,7 +231,7 @@ public class PauseManager : MonoBehaviour
         pausingParticleSystems = Array.FindAll(
             (objectsWrapper
             ? objectsWrapper.GetComponentsInChildren<ParticleSystem>()
-             :GetComponentsInActiveScene<ParticleSystem>()),
+            : Utility.GetComponentsInActiveScene<ParticleSystem>()),
             particleSystemPredicate);
         particleEmittings = new bool[pausingParticleSystems.Length];
         for (int i = 0; i < pausingParticleSystems.Length; ++i)

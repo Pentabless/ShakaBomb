@@ -11,18 +11,20 @@ using Common;
 //==============================================================================================
 public class PlayDirector : MonoBehaviour
 {
+    public const string NAME = "PlayDirector";
+
+    // プレイシーンの状態
     enum PlayState
     {
-        Start,
-        Playing,
-        Goal,
-        Result,
+        Start,      // 開始演出
+        Playing,    // プレイ中
+        Goal,       // ゴール演出
+        Result,     // リザルト演出
     }
 
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    [SerializeField]
     private GameObject player;
     private PlayerController playerController;
 
@@ -48,6 +50,7 @@ public class PlayDirector : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
+        player = GameObject.Find(Player.NAME);
         playerController = player.GetComponent<PlayerController>();
     }
 
@@ -77,20 +80,26 @@ public class PlayDirector : MonoBehaviour
         }
     }
 
+    //------------------------------------------------------------------------------------------
     // スタート中処理
+    //------------------------------------------------------------------------------------------
     private void UpdateStart()
     {
         state = PlayState.Playing;
         canPause = true;
     }
 
+    //------------------------------------------------------------------------------------------
     // プレイ中処理
+    //------------------------------------------------------------------------------------------
     private void UpdatePlaying()
     {
 
     }
 
+    //------------------------------------------------------------------------------------------
     // ゴール処理
+    //------------------------------------------------------------------------------------------
     private void UpdateGoal()
     {
         waitTime -= Time.deltaTime;
@@ -101,7 +110,9 @@ public class PlayDirector : MonoBehaviour
         }
     }
 
+    //------------------------------------------------------------------------------------------
     // リザルト処理
+    //------------------------------------------------------------------------------------------
     private void UpdateResult()
     {
         waitTime -= Time.deltaTime;
@@ -112,7 +123,9 @@ public class PlayDirector : MonoBehaviour
         }
     }
 
+    //------------------------------------------------------------------------------------------
     // ゴールイベント
+    //------------------------------------------------------------------------------------------
     public void Goal()
     {
         state = PlayState.Goal;
@@ -124,9 +137,11 @@ public class PlayDirector : MonoBehaviour
         // UIをフェードアウトさせる
         StartCoroutine(FadeOutUICoroutine());
     }
-    
 
+
+    //------------------------------------------------------------------------------------------
     // UIのフェードアウト処理
+    //------------------------------------------------------------------------------------------
     private IEnumerator FadeOutUICoroutine()
     {
         var texts = Utility.GetAllComponents<Text>(uiObjects, true);

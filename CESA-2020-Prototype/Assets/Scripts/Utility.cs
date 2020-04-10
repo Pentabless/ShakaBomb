@@ -4,11 +4,37 @@
 //==============================================================================================
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 //==============================================================================================
 public static class Utility
 {
+    /// <summary>
+    /// シーン内の特定のコンポーネントを全て取得する
+    /// </summary>
+    /// <typeparam name="T">コンポーネント</typeparam>
+    /// <param name="includeInactive">非アクティブなObjectを含むかどうか</param>
+    /// <returns>
+    /// コンポーネント
+    /// </returns>
+    public static T[] GetComponentsInActiveScene<T>(bool includeInactive = true)
+    {
+        // ActiveなSceneのRootにあるGameObject[]を取得する
+        var rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+
+        // 空の IEnumerable<T>
+        IEnumerable<T> resultComponents = (T[])Enumerable.Empty<T>();
+        foreach (var item in rootGameObjects)
+        {
+            // includeInactive = true を指定するとGameObjectが非活性なものからも取得する
+            var components = item.GetComponentsInChildren<T>(includeInactive);
+            resultComponents = resultComponents.Concat(components);
+        }
+        return resultComponents.ToArray();
+    }
+
     /// <summary>
     /// 自身と子の特定のコンポーネントを全て取得する
     /// </summary>

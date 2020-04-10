@@ -14,29 +14,29 @@ public class EffectGenerator : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    // 泡の破裂エフェクト
-    static GameObject bubbleBurstFX;
+    // エフェクトプレハブ保持用オブジェクト
+    static EffectPrefabHolder prefabHolder = null;
+    
 
 	//------------------------------------------------------------------------------------------
     // 初期化
 	//------------------------------------------------------------------------------------------
     static private void Init()
     {
-        bubbleBurstFX = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/BubbleBurstFX.prefab");
-        
+        prefabHolder = GameObject.Find(EffectPrefabHolder.NAME).GetComponent<EffectPrefabHolder>();
     }
 
     //------------------------------------------------------------------------------------------
     // 泡の破裂エフェクトの生成
     //------------------------------------------------------------------------------------------
-    static public GameObject BubbleBurstFX(BubbleBurstFX.Param param, in Vector3 pos, Transform parent)
+    static public GameObject BubbleBurstFX(BubbleBurstFX.Param param, in Vector3 pos, Transform parent = null)
     {
-        if (!bubbleBurstFX)
+        if (!prefabHolder)
         {
             Init();
         }
         
-        var go = Instantiate(bubbleBurstFX, pos, Quaternion.identity, parent);
+        var go = Instantiate(prefabHolder.bubbleBurstFX, pos, Quaternion.identity, parent);
         var fx = go.GetComponent<BubbleBurstFX>();
         fx.SetParam(param);
         fx.Play();
