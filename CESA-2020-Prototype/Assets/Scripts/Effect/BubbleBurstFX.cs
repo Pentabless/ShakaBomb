@@ -33,6 +33,7 @@ public class BubbleBurstFX : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    private bool                          isPlaying = false;    // 再生中かどうか
     private float                         lifeTime = 2.0f;      // オブジェクトを破棄するまでの時間
     private ParticleSystem                system = null;        // パーティクルシステム
     private ParticleSystem.MainModule     mainModule;           // メインモジュール
@@ -67,6 +68,11 @@ public class BubbleBurstFX : MonoBehaviour
 	//------------------------------------------------------------------------------------------
 	private void Update()
     {
+        if (!isPlaying)
+        {
+            return;
+        }
+
         lifeTime -= Time.deltaTime;
 
         if (lifeTime <= 0.0f)
@@ -82,6 +88,7 @@ public class BubbleBurstFX : MonoBehaviour
     {
         ApplyParam();
         system.Play();
+        isPlaying = true;
     }
 
     //------------------------------------------------------------------------------------------
