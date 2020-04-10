@@ -24,6 +24,11 @@ public class EffectGenerator : MonoBehaviour
     static private void Init()
     {
         prefabHolder = GameObject.Find(EffectPrefabHolder.NAME).GetComponent<EffectPrefabHolder>();
+
+        if (!prefabHolder)
+        {
+            Debug.Log("EffectPrefabHolder.prefabをシーンに追加してください");
+        }
     }
 
     //------------------------------------------------------------------------------------------
