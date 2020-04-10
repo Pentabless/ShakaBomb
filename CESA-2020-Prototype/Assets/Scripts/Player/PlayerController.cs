@@ -125,24 +125,33 @@ public class PlayerController : MonoBehaviour
         {
             dir = 0;
         }
-        // ジャンプ
-        jumpButton = Input.GetAxis("Jump");
-        if (jumpButton > 0 && jumpButtonTrigger == 0.0f && coyoteFlag == true)
-        {
-            if (!isGround)   // コヨーテ中
-            {
-                this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
-            }
 
-            rig.AddForce(new Vector2(0, jumpForce));
-            isGround = false;
-            jumpStopFlag = false;
-        }
-        if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
+        // ジャンプ
+        if (hitCount == 0)
         {
-            rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.6f);
-            jumpStopFlag = true;
+            jumpButton = Input.GetAxis("Jump");
+            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && coyoteFlag == true)
+            {
+                if (this.rig.velocity.y <= 0)
+                {
+                    if (!isGround)   // コヨーテ中
+                    {
+                        this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
+                    }
+
+                    rig.AddForce(new Vector2(0, jumpForce));
+                    isGround = false;
+                    jumpStopFlag = false;
+                }
+            }
+            // ジャンプ中にボタンを離す
+            if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
+            {
+                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.6f);
+                jumpStopFlag = true;
+            }
         }
+
         // バレットの発射
         attackButton = Input.GetAxis("Attack");
         if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.num_balloon >= 1)
@@ -368,7 +377,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        isGround = true;
+        if (collision.tag == "Ground" || collision.tag == "GroundBubble")
+        {
+            isGround = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -442,6 +454,7 @@ public class PlayerController : MonoBehaviour
     //======================================================
     public void KnockBack(Vector3 hitPos)
     {
+        isGround = false;
         hitCount = 15;
         Vector2 hitVel = this.transform.position - hitPos;
         Vector2 addVel = new Vector2(8.0f, 8.0f);
