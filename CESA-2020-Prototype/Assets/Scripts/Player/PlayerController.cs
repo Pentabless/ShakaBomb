@@ -417,17 +417,16 @@ public class PlayerController : MonoBehaviour
     // バルーンを使用する(古いバルーンから消費する)
     public void UsedBalloon()
     {
-        Destroy(m_balloonList[Num.ZERO]);
-        m_balloonList.RemoveAt(Num.ZERO);
+        Destroy(m_balloonList[Integer.ZERO]);
+        m_balloonList.RemoveAt(Integer.ZERO);
         Data.num_balloon--;
     }
 
     // バルーンが壊された時
-    public void BrokenBalloon()
+    public void BrokenBalloon(GameObject balloon)
     {
-        int count = (m_balloonList.Count - 1);
-        m_balloonList.RemoveAt(count);
-        Data.num_balloon--;
+        if(m_balloonList.Remove(balloon))
+            Data.num_balloon--;
     }
 
     // バルーンの現在の所持数を取得
