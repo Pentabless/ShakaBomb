@@ -24,6 +24,10 @@ public class BalloonController : MonoBehaviour
     // バルーンジェネレータ
     private BalloonGenerator m_balloonG    = null;
 
+    // 時間経過で消えるまでの時間
+    [SerializeField]
+    private float            m_lifeTime    = 10.0f;
+
     // 消えるかどうか
     private bool             m_isDestroy   = false;
 
@@ -40,6 +44,13 @@ public class BalloonController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
+        m_lifeTime -= Time.deltaTime;
+        if (m_lifeTime <= 0.0f)
+        {
+            Destroy();
+            return;
+        }
+
         Vector3 playerPos = m_player.transform.position;
         if (Data.playerDir > 0)
         {
@@ -73,7 +84,6 @@ public class BalloonController : MonoBehaviour
     {
         if (collision.tag == Stage.DAMAGE_TILE)
         {
-            m_balloonG.BrokenBalloon(gameObject);
             Destroy();
         }
     }
@@ -98,6 +108,7 @@ public class BalloonController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Destroy()
     {
+        m_balloonG.BrokenBalloon(gameObject);
         GenerateBurstEffect();
         Destroy(this.gameObject);
     }

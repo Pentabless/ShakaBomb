@@ -42,7 +42,27 @@ public class BulletController : MonoBehaviour
     {
         if (collision.gameObject.tag != "Player")
         {
-            Destroy(this.gameObject);
+            Destroy();
         }
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 破裂処理
+    //------------------------------------------------------------------------------------------
+    private void Destroy()
+    {
+        GenerateBurstEffect();
+        Destroy(this.gameObject);
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 破裂エフェクトの生成
+    //------------------------------------------------------------------------------------------
+    private void GenerateBurstEffect()
+    {
+        EffectGenerator.BubbleBurstFX(
+            new BubbleBurstFX.Param(GetComponent<SpriteRenderer>().color, transform.localScale),
+            transform.localPosition,
+            null);
     }
 }
