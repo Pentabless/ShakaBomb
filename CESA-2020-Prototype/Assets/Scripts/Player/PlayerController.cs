@@ -1,10 +1,20 @@
-﻿using System.Collections;
+﻿//==============================================================================================
+/// File Name	: PlayerController.cs
+/// Summary		: プレイヤー管理
+//==============================================================================================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Common;
-
+//==============================================================================================
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
+//==============================================================================================
 public class PlayerController : MonoBehaviour
 {
+    //------------------------------------------------------------------------------------------
+    // member variable
+    //------------------------------------------------------------------------------------------
     // リジッドボディ
     Rigidbody2D rig;
 
@@ -58,10 +68,10 @@ public class PlayerController : MonoBehaviour
     int coyoteTime;
 
     bool coyoteFlag = true;
-    int coyoteCount = 0;
+    int coyoteCount = Integer.ZERO;
 
     // 敵接触時
-    int hitCount = 0;
+    int hitCount = Integer.ZERO;
 
     // 空中ブーストの強さ
     [SerializeField]
@@ -73,35 +83,41 @@ public class PlayerController : MonoBehaviour
     int dirCount;       // 切り替えし用向き保持カウント
 
     // キー入力の情報保持
-    float jumpButton = 0;
-    float jumpButtonTrigger = 0;
+    float jumpButton = Decimal.ZERO;
+    float jumpButtonTrigger = Decimal.ZERO;
 
-    float attackButton = 0;
-    float attackButtonTrigger = 0;
+    float attackButton = Decimal.ZERO;
+    float attackButtonTrigger = Decimal.ZERO;
 
-    float boostButton = 0;
-    float boostButtonTrigger = 0;
+    float boostButton = Decimal.ZERO;
+    float boostButtonTrigger = Decimal.ZERO;
 
+    //------------------------------------------------------------------------------------------
+    // Start
+    //------------------------------------------------------------------------------------------
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
         bubbleGround = false;
         checkController = false;
-        dir = 0;
-        lastDir = 0;
-        dirCount = 0;
+        dir = Integer.ZERO;
+        lastDir = Integer.ZERO;
+        dirCount = Integer.ZERO;
         jumpForce = defaultJumpForce;
-        jumpCount = 0;
+        jumpCount = Integer.ZERO;
         jumpStopFlag = false;
         playerSpeed = accelForce;
     }
 
+    //------------------------------------------------------------------------------------------
+    // Update
+    //------------------------------------------------------------------------------------------
     void Update()
     {
         if (!canControl)
         {
-            dir = 0;
+            dir = Integer.ZERO;
             return;
         }
 
@@ -109,17 +125,17 @@ public class PlayerController : MonoBehaviour
         // コントローラの接続チェック
         checkController = gamepadManager.GetCheckGamepad();
         // 左右移動
-        if (Input.GetAxis("Horizontal") < 0)
+        if (Input.GetAxis(Player.HORIZONTAL) < Integer.ZERO)
         {
             dir = -1;
             dirCount = turnCount;
-            stickSence = Input.GetAxis("Horizontal");
+            stickSence = Input.GetAxis(Player.HORIZONTAL);
         }
-        else if (Input.GetAxis("Horizontal") > 0)
+        else if (Input.GetAxis(Player.HORIZONTAL) > Integer.ZERO)
         {
             dir = 1;
             dirCount = turnCount;
-            stickSence = Input.GetAxis("Horizontal");
+            stickSence = Input.GetAxis(Player.HORIZONTAL);
         }
         else
         {
@@ -129,7 +145,7 @@ public class PlayerController : MonoBehaviour
         // ジャンプ
         if (hitCount == 0)
         {
-            jumpButton = Input.GetAxis("Jump");
+            jumpButton = Input.GetAxis(Player.JUMP);
             if (jumpButton > 0 && jumpButtonTrigger == 0.0f && coyoteFlag == true)
             {
                 if (this.rig.velocity.y <= 0)
@@ -153,7 +169,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // バレットの発射
-        attackButton = Input.GetAxis("Attack");
+        attackButton = Input.GetAxis(Player.ATTACK);
         if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.num_balloon >= 1)
         {
             bulletG.BulletCreate(this.transform.position);
@@ -291,6 +307,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //------------------------------------------------------------------------------------------
+    // FixedUpdate
+    //------------------------------------------------------------------------------------------
     private void FixedUpdate()
     {
         // 入力感度 絶対値化
@@ -353,6 +372,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //------------------------------------------------------------------------------------------
+    // OnCollision
+    //------------------------------------------------------------------------------------------
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "BombTest")
@@ -360,16 +382,19 @@ public class PlayerController : MonoBehaviour
             ExplosionForce(collision.transform.position, 500.0f, 800.0f);
         }
 
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyAttack")
+        if (collision.gameObject.tag == Enemy.NAME || collision.gameObject.tag == Enemy.ATTACK)
         {
             KnockBack(collision.transform.position);
         }
     }
 
+    //------------------------------------------------------------------------------------------
+    // OnTrigger
+    //------------------------------------------------------------------------------------------
     private void OnTriggerStay2D(Collider2D collision)
     {
         isGround = true;
-        if (collision.tag == "GroundBubble")
+        if (collision.tag == Bubble.GROUND)
         {
             bubbleGround = true;
         }
@@ -377,7 +402,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Ground" || collision.tag == "GroundBubble")
+        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND)
         {
             isGround = true;
         }
@@ -389,23 +414,18 @@ public class PlayerController : MonoBehaviour
         bubbleGround = false;
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-    }
-
-    //======================================================
-    // イベント関連
-    //======================================================
+    //------------------------------------------------------------------------------------------
+    // イベント
+    //------------------------------------------------------------------------------------------
     // 入力を受け付けるか設定する
     public void EnableControl(bool enable)
     {
         canControl = enable;
     }
 
-
-    //======================================================
-    // バルーン関連
-    //======================================================
+    //------------------------------------------------------------------------------------------
+    // バルーン追加
+    //------------------------------------------------------------------------------------------
     public void AddBalloon(GameObject go)
     {
         // 所持バルーンリストに追加
@@ -414,7 +434,9 @@ public class PlayerController : MonoBehaviour
         Data.num_balloon++;
     }
 
-    // バルーンを使用する(古いバルーンから消費する)
+    //------------------------------------------------------------------------------------------
+    // バルーンを使用する(古い順に消費する)
+    //------------------------------------------------------------------------------------------
     public void UsedBalloon()
     {
         Destroy(m_balloonList[Integer.ZERO]);
@@ -422,22 +444,26 @@ public class PlayerController : MonoBehaviour
         Data.num_balloon--;
     }
 
-    // バルーンが壊された時
+    //------------------------------------------------------------------------------------------
+    // バルーンが壊れる
+    //------------------------------------------------------------------------------------------
     public void BrokenBalloon(GameObject balloon)
     {
         if(m_balloonList.Remove(balloon))
             Data.num_balloon--;
     }
 
+    //------------------------------------------------------------------------------------------
     // バルーンの現在の所持数を取得
+    //------------------------------------------------------------------------------------------
     public int GetMaxBalloons()
     {
         return m_balloonList.Count;
     }
 
-    //======================================================
+    //------------------------------------------------------------------------------------------
     // 爆発
-    //======================================================
+    //------------------------------------------------------------------------------------------
     public void ExplosionForce(Vector3 expPos, float xPow, float yPow)
     {
         Vector3 vel = this.transform.position - expPos;
@@ -448,9 +474,9 @@ public class PlayerController : MonoBehaviour
         this.rig.AddForce(vel);
     }
 
-    //======================================================
+    //------------------------------------------------------------------------------------------
     // ノックバック
-    //======================================================
+    //------------------------------------------------------------------------------------------
     public void KnockBack(Vector3 hitPos)
     {
         isGround = false;

@@ -47,6 +47,7 @@ namespace Common
     {
         // オブジェクト名・タグ名
         public const string NAME                = ("Enemy");
+        public const string ATTACK              = ("EnemyAttack");
     }
 
     //------------------------------------------------------------------------------------------
@@ -77,6 +78,7 @@ namespace Common
         // オブジェクト名・タグ名
         public const string NAME                = ("Bubble");
         public const string CONTROLLER          = ("BubbleController");
+        public const string GROUND              = ("GroundBubble");
         // 消滅時間
         public const int EXTINCTION_TIME        = (160);
         // 泡の最大サイズ
