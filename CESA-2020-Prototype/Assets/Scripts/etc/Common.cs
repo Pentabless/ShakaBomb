@@ -35,8 +35,9 @@ namespace Common
         public const string NAME                = ("Player");
         public const string CONTROLLER          = ("PlayerController");
         // 操作
-        public const string ATTACK              = ("Attack");
-        public const string JUMP                = ("Jump");
+        public const string ATTACK              = ("Button B");
+        public const string JUMP                = ("Button A");
+        public const string BOOST               = ("Button X");
         public const string HORIZONTAL          = ("Horizontal");
     }
 

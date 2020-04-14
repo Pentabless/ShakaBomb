@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour
         //}
 
         // 空中ブースト Test
-        boostButton = Input.GetAxis("BombBoost");
+        boostButton = Input.GetAxis(Player.BOOST);
         if (boostButton > 0 && boostButtonTrigger == 0.0f && Data.num_balloon > 0 && !isGround)
         {
             rig.velocity = new Vector2(0, 0);
@@ -449,7 +449,7 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void BrokenBalloon(GameObject balloon)
     {
-        if(m_balloonList.Remove(balloon))
+        if (m_balloonList.Remove(balloon))
             Data.num_balloon--;
     }
 
