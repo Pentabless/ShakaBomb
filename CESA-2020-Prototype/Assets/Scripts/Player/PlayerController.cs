@@ -377,7 +377,7 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "BombTest")
+        if (collision.gameObject.tag == "BreakObject")
         {
             ExplosionForce(collision.transform.position, 500.0f, 800.0f);
         }
