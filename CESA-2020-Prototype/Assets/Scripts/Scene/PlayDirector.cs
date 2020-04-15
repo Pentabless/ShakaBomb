@@ -19,6 +19,7 @@ public class PlayDirector : MonoBehaviour
         Start,      // 開始演出
         Playing,    // プレイ中
         Goal,       // ゴール演出
+        Failed,     // クリア失敗演出
         Result,     // リザルト演出
     }
 
@@ -50,6 +51,11 @@ public class PlayDirector : MonoBehaviour
     private GameObject player;
     private PlayerController playerController;
 
+    // ポーズマネージャー
+    private PauseManager pauseManager;
+    // クリア失敗用フレーム
+    private FailedFrameController failedFrameController;
+
     // ゲームの進行状況
     private PlayState state;
     // 待ち時間用タイマー
@@ -76,6 +82,18 @@ public class PlayDirector : MonoBehaviour
     {
         player = GameObject.Find(Player.NAME);
         playerController = player.GetComponent<PlayerController>();
+        GameObject go = GameObject.Find(PauseManager.NAME);
+        if (!go)
+        {
+            Debug.Log("PauseManagerをシーンに追加してください");
+        }
+        pauseManager = go.GetComponent<PauseManager>();
+        go = GameObject.Find(FailedFrame.NAME);
+        if (!go)
+        {
+            Debug.Log("FailedFrameをシーンに追加してください\nPauseManagerのignoreObjectsにFailedFrameを追加してください");
+        }
+        failedFrameController = go.GetComponent<FailedFrameController>();
     }
 
 	//------------------------------------------------------------------------------------------
@@ -86,18 +104,11 @@ public class PlayDirector : MonoBehaviour
         // ステートで処理を分岐する
         switch (state)
         {
-            case PlayState.Start:
-                UpdateStart();
-                break;
-            case PlayState.Playing:
-                UpdatePlaying();
-                break;
-            case PlayState.Goal:
-                UpdateGoal();
-                break;
-            case PlayState.Result:
-                UpdateResult();
-                break;
+            case PlayState.Start:   UpdateStart();      break;
+            case PlayState.Playing: UpdatePlaying();    break;
+            case PlayState.Goal:    UpdateGoal();       break;
+            case PlayState.Failed:  UpdateFailed();     break;
+            case PlayState.Result:  UpdateResult();     break;
             default:
                 Debug.Log("PlayDirecotr:StateError");
                 break;
@@ -119,7 +130,17 @@ public class PlayDirector : MonoBehaviour
     private void UpdatePlaying()
     {
         time -= Time.deltaTime;
+
+        // 時間切れになったらクリア失敗になる
+        if (time <= 0.0f)
+        {
+            time = 0.0f;
+            TimeUp();
+        }
+
         Data.time = time;
+
+
     }
 
     //------------------------------------------------------------------------------------------
@@ -132,6 +153,20 @@ public class PlayDirector : MonoBehaviour
         {
             state = PlayState.Result;
             waitTime = 0.0f;
+        }
+    }
+    
+    //------------------------------------------------------------------------------------------
+    // クリア失敗処理
+    //------------------------------------------------------------------------------------------
+    private void UpdateFailed()
+    {
+        waitTime -= Time.deltaTime;
+        if (waitTime <= 0.0f)
+        {
+            waitTime = 999.0f;
+            failedFrameController.EnableFrame(FailedFrameController.FailedType.TimeUp);
+            pauseManager.Pause(1.0f);
         }
     }
 
@@ -155,6 +190,21 @@ public class PlayDirector : MonoBehaviour
     public void Goal()
     {
         state = PlayState.Goal;
+        waitTime = 2.0f;
+        canPause = false;
+
+        // プレイヤーの入力を停止する
+        playerController.EnableControl(false);
+        // UIをフェードアウトさせる
+        StartCoroutine(FadeOutUICoroutine());
+    }
+    
+    //------------------------------------------------------------------------------------------
+    // タイムアップイベント
+    //------------------------------------------------------------------------------------------
+    public void TimeUp()
+    {
+        state = PlayState.Failed;
         waitTime = 2.0f;
         canPause = false;
 
