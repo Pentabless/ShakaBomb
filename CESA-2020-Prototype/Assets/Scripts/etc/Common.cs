@@ -24,6 +24,13 @@ namespace Common
     {
         // ゲームパッドの検出間隔
         public const float CHECK_INTERVAL       = (2.0f);
+        // 操作
+        public const string BUTTON_A            = ("Button A");
+        public const string BUTTON_B            = ("Button B");
+        public const string BUTTON_X            = ("Button X");
+        public const string BUTTON_Y            = ("Button Y");
+        public const string HORIZONTAL          = ("Horizontal");
+        public const string VERTICAL            = ("Vertical");
     }
 
     //------------------------------------------------------------------------------------------
