@@ -49,9 +49,10 @@ public class ResultDirector : MonoBehaviour
         //スコア　のテキストを設定する
         text_score.text = "Score:" + score.ToString();
         //評価の星の数を決める
-        SetNumRankStar(score);
+        //SetNumRankStar(score);
         //評価する星の数から評価する星の設定をする
-        SetRankStar(num_rank_star);
+        //SetRankStar(num_rank_star);
+        SetRankStar(Data.star_num);
     }
 
     // Update is called once per frame

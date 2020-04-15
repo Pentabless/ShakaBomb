@@ -22,16 +22,37 @@ public class PlayDirector : MonoBehaviour
         Result,     // リザルト演出
     }
 
+    // タイムデータ
+    [System.Serializable]
+    public struct TimeData
+    {
+        public float timeLimit; // 制限時間
+        public float star3Time; // 星3のタイム
+        public float star2Time; // 星2のタイム
+        public float star1Time; // 星1のタイム
+    }
+
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    // ステージのタイムデータ
+    [SerializeField]
+    private TimeData timeData;
+    // 残り時間
+    [SerializeField]
+    private float time = 0.0f;
+
+    // イベント時にフェードアウトを適用させるオブジェクト
+    [SerializeField]
+    private List<GameObject> uiObjects;
+
+    // プレイヤー
     private GameObject player;
     private PlayerController playerController;
 
-    [SerializeField]
-    private List<GameObject> uiObjects; // イベント時にフェードアウトを適用させるオブジェクト
-
+    // ゲームの進行状況
     private PlayState state;
+    // 待ち時間用タイマー
     private float waitTime = 0.0f;
 
     // ポーズ可能かどうか
@@ -43,6 +64,9 @@ public class PlayDirector : MonoBehaviour
     private void Awake()
     {
         state = PlayState.Start;
+        Data.time = time = timeData.timeLimit;
+        Data.timeLimit = timeData.timeLimit;
+        Data.star_num = 0;
     }
 
 	//------------------------------------------------------------------------------------------
@@ -94,7 +118,8 @@ public class PlayDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void UpdatePlaying()
     {
-
+        time -= Time.deltaTime;
+        Data.time = time;
     }
 
     //------------------------------------------------------------------------------------------
@@ -118,6 +143,7 @@ public class PlayDirector : MonoBehaviour
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
+            CalculateStarNum();
             FadeManager.FadeOut("ResultScene");
             waitTime = 99.0f;
         }
@@ -167,6 +193,29 @@ public class PlayDirector : MonoBehaviour
             }
            
             yield return null;
+        }
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 星の数を計算する
+    //------------------------------------------------------------------------------------------
+    private void CalculateStarNum()
+    {
+        if (time >= timeData.star3Time)
+        {
+            Data.star_num = 3;
+        }
+        else if(time >= timeData.star2Time)
+        {
+            Data.star_num = 2;
+        }
+        else if (time >= timeData.star1Time)
+        {
+            Data.star_num = 1;
+        }
+        else
+        {
+            Data.star_num = 0;
         }
     }
 }
