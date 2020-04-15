@@ -9,4 +9,5 @@ public class Data : MonoBehaviour
     public static float playerVelX;
     public static float timeLimit = 0.0f;
     public static float time = 0.0f;
+    public static int star_num = 0;
 }

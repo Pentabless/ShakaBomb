@@ -66,6 +66,7 @@ public class PlayDirector : MonoBehaviour
         state = PlayState.Start;
         Data.time = time = timeData.timeLimit;
         Data.timeLimit = timeData.timeLimit;
+        Data.star_num = 0;
     }
 
 	//------------------------------------------------------------------------------------------
@@ -142,6 +143,7 @@ public class PlayDirector : MonoBehaviour
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
+            CalculateStarNum();
             FadeManager.FadeOut("ResultScene");
             waitTime = 99.0f;
         }
@@ -191,6 +193,29 @@ public class PlayDirector : MonoBehaviour
             }
            
             yield return null;
+        }
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 星の数を計算する
+    //------------------------------------------------------------------------------------------
+    private void CalculateStarNum()
+    {
+        if (time >= timeData.star3Time)
+        {
+            Data.star_num = 3;
+        }
+        else if(time >= timeData.star2Time)
+        {
+            Data.star_num = 2;
+        }
+        else if (time >= timeData.star1Time)
+        {
+            Data.star_num = 1;
+        }
+        else
+        {
+            Data.star_num = 0;
         }
     }
 }
