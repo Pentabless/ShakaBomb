@@ -111,8 +111,7 @@ public class PauseManager : MonoBehaviour
     //ポーズ状態を変更する
     public void ChangePauseState()
     {
-        isPausing = !isPausing;
-        if (isPausing)
+        if (!isPausing)
         {
             //ポーズメニューを起動する
             pauseMenu.SetActive(true);
