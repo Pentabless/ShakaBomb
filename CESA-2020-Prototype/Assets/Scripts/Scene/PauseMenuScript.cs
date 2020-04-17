@@ -23,7 +23,7 @@ public class PauseMenuScript : MonoBehaviour
     private void Init()
     {
         choice = 1;
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < choices.Length; ++i)
         {
             if (i == choice)
             {
@@ -37,7 +37,7 @@ public class PauseMenuScript : MonoBehaviour
         wasDecided = false;
     }
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }
@@ -77,8 +77,7 @@ public class PauseMenuScript : MonoBehaviour
         {
             pressDelay -= Time.deltaTime;
         }
-
-        //入力している時間のカウント
+        
         //カーソル移動
         if (pressDelay <= 0f)
         {

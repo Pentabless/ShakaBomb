@@ -43,5 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4daea5fbd7823a443b2d2932dbf1deb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  uiObjects: []
+  timeData:
+    timeLimit: 300
+    star3Time: 200
+    star2Time: 100
+    star1Time: 0
+  time: 0
+  uiObjects:
+  - {fileID: 0}
+  - {fileID: 0}

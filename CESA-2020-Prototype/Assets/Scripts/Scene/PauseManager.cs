@@ -9,6 +9,10 @@ using System.Linq;
 // ポーズ管理クラス
 public class PauseManager : MonoBehaviour
 {
+    // オブジェクト名
+    public const string NAME = "PauseManager";
+
+
     // Rigidbodyの速度を保存するクラス
     public class RigidbodyVelocity
     {
@@ -45,6 +49,9 @@ public class PauseManager : MonoBehaviour
 
     private static Canvas pauseCanvas;   //ポーズ用Canvas
     private static Image pauseImage;     //ポーズ用Image
+    private Color filterColor = new Color(0.0f, 0.0f, 0.0f, 0.6f);   //ポーズ用Imageのカラー
+    private float fadeTime = 0.0f;
+    private float time = 0.0f;
 
     //ポーズ用のCanvasとImage生成
     private void CreatePauseFilter()
@@ -93,15 +100,22 @@ public class PauseManager : MonoBehaviour
             ChangePauseState();
         }
 
+        if (isPausing && time < fadeTime)
+        {
+            time += Time.deltaTime;
+            float t = Mathf.Min((fadeTime > 0.0f ? time / fadeTime : 0.0f), 1.0f);
+            pauseImage.color = Color.Lerp(new Color(0, 0, 0, 0), filterColor, t);
+        }
     }
 
     //ポーズ状態を変更する
     public void ChangePauseState()
     {
-        isPausing = !isPausing;
-        if (isPausing)
+        if (!isPausing)
         {
-            Pause();
+            //ポーズメニューを起動する
+            pauseMenu.SetActive(true);
+            Pause(0.0f);
         }
         else
         {
@@ -155,17 +169,15 @@ public class PauseManager : MonoBehaviour
     //}
 
     //中断処理
-
-    private void Pause()
+    public void Pause(float time)
     {
         if (isPausing)
         {
-            //画面を暗くする
-            pauseImage.color = new Color(0f, 0f, 0f, 0.6f);
-
-            //ポーズメニューを起動する
-            pauseMenu.SetActive(true);
+            return;
         }
+        isPausing = true;
+        fadeTime = time;
+        this.time = 0.0f;
 
         //Rigidbodyの停止
         //子要素から、スリープ中でなく、IgnoreGameObjectsに含まれていないRigidbodyを抽出
@@ -246,8 +258,14 @@ public class PauseManager : MonoBehaviour
 
 
     //再開処理
-    private void Resume()
+    public void Resume()
     {
+        if (!isPausing)
+        {
+            return;
+        }
+        isPausing = false;
+
         //画面を元に戻す
         pauseImage.color = new Color(0f, 0f, 0f, 0f);
 
@@ -283,5 +301,10 @@ public class PauseManager : MonoBehaviour
                 pausingParticleSystems[i].Stop(true, ParticleSystemStopBehavior.StopEmitting);
             }
         }
+    }
+
+    public void SetFilterColor(in Color color)
+    {
+        filterColor = color;
     }
 }

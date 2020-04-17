@@ -24,6 +24,24 @@ namespace Common
     {
         // ゲームパッドの検出間隔
         public const float CHECK_INTERVAL       = (2.0f);
+        // 操作
+        public const string BUTTON_A            = ("Button A");
+        public const string BUTTON_B            = ("Button B");
+        public const string BUTTON_X            = ("Button X");
+        public const string BUTTON_Y            = ("Button Y");
+        public const string HORIZONTAL          = ("Horizontal");
+        public const string VERTICAL            = ("Vertical");
+    }
+
+    //------------------------------------------------------------------------------------------
+    // クリア失敗用フレーム関連
+    //------------------------------------------------------------------------------------------
+    public static class FailedFrame
+    {
+        // オブジェクト名
+        public const string NAME = "FailedFrame";
+        // フェード時間
+        public const float FADE_TIME = 1.0f;
     }
 
     //------------------------------------------------------------------------------------------
