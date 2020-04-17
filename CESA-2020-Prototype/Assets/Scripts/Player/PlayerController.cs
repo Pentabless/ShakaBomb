@@ -393,7 +393,11 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void OnTriggerStay2D(Collider2D collision)
     {
-        isGround = true;
+        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND)
+        {
+            isGround = true;
+        }
+
         if (collision.tag == Bubble.GROUND)
         {
             bubbleGround = true;
@@ -410,8 +414,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isGround = false;
-        bubbleGround = false;
+        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND)
+        {
+            isGround = false;
+            bubbleGround = false;
+        }
     }
 
     //------------------------------------------------------------------------------------------
