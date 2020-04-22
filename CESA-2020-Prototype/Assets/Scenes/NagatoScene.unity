@@ -491,7 +491,8 @@ GameObject:
   - component: {fileID: 398088241}
   - component: {fileID: 398088240}
   - component: {fileID: 398088239}
-  m_Layer: 21
+  - component: {fileID: 398088242}
+  m_Layer: 26
   m_Name: BubbleFadeFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +537,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 30
+  m_SortingOrder: 120
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -576,7 +577,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -643,7 +644,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 6
+      scalar: 3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5246,6 +5247,24 @@ Transform:
   m_Father: {fileID: 813660667}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &398088242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398088238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27acf093881a6a4d9fb21c79f8f2e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &418990214 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7255300771659844468, guid: 1320e5284a91137498f18bebb99bdd46,
+    type: 3}
+  m_PrefabInstance: {fileID: 7255300771907775548}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &569799225 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5454663761963855899, guid: 5566c4c9e771f764096b8c8e56fe0823,
@@ -5335,7 +5354,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 705033069}
-  m_Layer: 21
+  m_Layer: 26
   m_Name: Plane Transform 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5366,13 +5385,27 @@ GameObject:
   m_Component:
   - component: {fileID: 813660667}
   - component: {fileID: 813660666}
-  m_Layer: 21
+  - component: {fileID: 813660665}
+  m_Layer: 26
   m_Name: SceneEffecter
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &813660665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813660664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8e506152a835c24da0af4c476de5caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleFadeFX: {fileID: 398088242}
 --- !u!20 &813660666
 Camera:
   m_ObjectHideFlags: 0
@@ -5403,7 +5436,7 @@ Camera:
   m_Depth: 5
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2097152
+    m_Bits: 67108864
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -24848,8 +24881,7 @@ PrefabInstance:
         type: 3}
       propertyPath: uiObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 7255300771659844468, guid: 1320e5284a91137498f18bebb99bdd46,
-        type: 3}
+      objectReference: {fileID: 418990214}
     - target: {fileID: 1829446914161035647, guid: b191f3c7f120eec45beae71f6c5b34f0,
         type: 3}
       propertyPath: m_LocalPosition.x
