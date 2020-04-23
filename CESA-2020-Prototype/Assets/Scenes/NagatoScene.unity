@@ -480,6 +480,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d20207fd12446b4c9e1e8ee45d9c9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &396583889
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4639341928193536853, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_Name
+      value: BubbleBurstFX2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536853, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639341928193536850, guid: ded216a4c2252c744a63bca533fdda3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ded216a4c2252c744a63bca533fdda3f, type: 3}
 --- !u!1 &398088238
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,9 +563,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 398088241}
+  - component: {fileID: 398088242}
   - component: {fileID: 398088240}
   - component: {fileID: 398088239}
-  - component: {fileID: 398088242}
   m_Layer: 26
   m_Name: BubbleFadeFX
   m_TagString: Untagged
@@ -1196,7 +1270,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 20, y: 1, z: 1}
+    m_Scale: {x: 20, y: 1, z: 0}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -5259,6 +5333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27acf093881a6a4d9fb21c79f8f2e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubbleBurstFX2: {fileID: 4639341928193536853, guid: ded216a4c2252c744a63bca533fdda3f,
+    type: 3}
 --- !u!1 &418990214 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7255300771659844468, guid: 1320e5284a91137498f18bebb99bdd46,
@@ -24482,6 +24558,30 @@ CompositeCollider2D:
         Y: 30000000
       - X: -70000000
         Y: 30000000
+    - - X: -110000000
+        Y: -30000000
+      - X: -115000000
+        Y: -32500000
+      - X: -135624992
+        Y: -32500000
+      - X: -140000000
+        Y: -30000000
+      - X: -140000000
+        Y: -40000000
+      - X: -110000000
+        Y: -40000000
+    - - X: -50000000
+        Y: -30000000
+      - X: -55000000
+        Y: -32500000
+      - X: -85625000
+        Y: -32500000
+      - X: -90000000
+        Y: -30000000
+      - X: -90000000
+        Y: -40000000
+      - X: -50000000
+        Y: -40000000
     - - X: 40000000
         Y: -30000000
       - X: 35000000
@@ -24504,30 +24604,6 @@ CompositeCollider2D:
         Y: -40000000
       - X: 90000000
         Y: -40000000
-    - - X: -50000000
-        Y: -30000000
-      - X: -55000000
-        Y: -32500000
-      - X: -85625000
-        Y: -32500000
-      - X: -90000000
-        Y: -30000000
-      - X: -90000000
-        Y: -40000000
-      - X: -50000000
-        Y: -40000000
-    - - X: -110000000
-        Y: -30000000
-      - X: -115000000
-        Y: -32500000
-      - X: -135624992
-        Y: -32500000
-      - X: -140000000
-        Y: -30000000
-      - X: -140000000
-        Y: -40000000
-      - X: -110000000
-        Y: -40000000
   m_CompositePaths:
     m_Paths:
     - - {x: -10, y: 14}
@@ -24541,6 +24617,18 @@ CompositeCollider2D:
       - {x: -10, y: 4}
       - {x: -10, y: 3}
       - {x: -7, y: 3}
+    - - {x: -11, y: -3}
+      - {x: -11.5, y: -3.25}
+      - {x: -13.562499, y: -3.25}
+      - {x: -14, y: -3}
+      - {x: -14, y: -4}
+      - {x: -11, y: -4}
+    - - {x: -5, y: -3}
+      - {x: -5.5, y: -3.25}
+      - {x: -8.5625, y: -3.25}
+      - {x: -9, y: -3}
+      - {x: -9, y: -4}
+      - {x: -5, y: -4}
     - - {x: 4, y: -3}
       - {x: 3.5, y: -3.25}
       - {x: 0.4375, y: -3.25}
@@ -24552,18 +24640,6 @@ CompositeCollider2D:
       - {x: 7, y: -3}
       - {x: 7, y: -4}
       - {x: 9, y: -4}
-    - - {x: -5, y: -3}
-      - {x: -5.5, y: -3.25}
-      - {x: -8.5625, y: -3.25}
-      - {x: -9, y: -3}
-      - {x: -9, y: -4}
-      - {x: -5, y: -4}
-    - - {x: -11, y: -3}
-      - {x: -11.5, y: -3.25}
-      - {x: -13.562499, y: -3.25}
-      - {x: -14, y: -3}
-      - {x: -14, y: -4}
-      - {x: -11, y: -4}
   m_VertexDistance: 0.0005
 --- !u!50 &2122506204
 Rigidbody2D:

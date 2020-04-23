@@ -38,11 +38,14 @@ public class BubbleBurstFX : MonoBehaviour
     private ParticleSystem                system = null;        // パーティクルシステム
     private ParticleSystem.MainModule     mainModule;           // メインモジュール
     private ParticleSystem.EmissionModule emissionModule;       // エミッションモジュール
+    private ParticleSystem.ShapeModule    shapeModule;          // シェイプモジュール
     private Param                         param;                // 設定パラメータ
     [SerializeField]                                            
     private int                           baseBurstCount = 15;  // サイズ1時のパーティクルの発生量
     [SerializeField]                                                  
     private float                         baseSizeRate = 0.75f; // サイズ1時のパーティクル初期サイズ
+    [SerializeField]
+    private float                         baseRadius = 0.7f;    // サイズ1時のエミット半径
 
 	//------------------------------------------------------------------------------------------
     // Awake
@@ -53,6 +56,7 @@ public class BubbleBurstFX : MonoBehaviour
         system = GetComponent<ParticleSystem>();
         mainModule = system.main;
         emissionModule = system.emission;
+        shapeModule = system.shape;
     }
 
 	//------------------------------------------------------------------------------------------
@@ -92,6 +96,16 @@ public class BubbleBurstFX : MonoBehaviour
     }
 
     //------------------------------------------------------------------------------------------
+    // パーティクルの発生
+    //------------------------------------------------------------------------------------------
+    public void Emit(in Vector3 pos)
+    {
+        transform.position = pos;
+        ApplyParam();
+        system.Emit((int)emissionModule.GetBurst(0).count.constant);
+    }
+
+    //------------------------------------------------------------------------------------------
     // パラメータの設定
     //------------------------------------------------------------------------------------------
     public void SetParam(Param setParam)
@@ -106,10 +120,14 @@ public class BubbleBurstFX : MonoBehaviour
     {
         mainModule.startColor = param.color;
 
-        mainModule.startSize = baseSizeRate * param.scale.magnitude;
+        float rate = param.scale.magnitude;
+
+        mainModule.startSize = baseSizeRate * rate;
 
         var burst = emissionModule.GetBurst(0);
-        burst.count = baseBurstCount * param.scale.magnitude;
+        burst.count = baseBurstCount * rate;
         emissionModule.SetBurst(0, burst);
+
+        shapeModule.radius = baseRadius * rate;
     }
 }
