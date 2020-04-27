@@ -71,6 +71,9 @@ public class StageSelectDirector : MonoBehaviour
         SetSelectStage(false);
         //ステージ全てをLineで通す
         AllStageLinePass();
+
+        //フェードインさせる
+        FadeManager.FadeIn(1.5f);
     }
 
     // Update is called once per frame

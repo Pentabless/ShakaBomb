@@ -77,11 +77,12 @@ public class PauseManager : MonoBehaviour
         //色の設定
         pauseImage.color = new Color(0f, 0f, 0f, 0f);
 
-        // ポーズ用オブジェクトとフェード用オブジェクト、影響を受けないオブジェクトの配列に追加する
+        // ポーズの影響を受けないオブジェクトを追加する
         ignoreGameObjects = ignoreGameObjects.Concat(new GameObject[] {
             FadeCanvasObject,
             FadeManager.GetCanvas().gameObject,
-            SoundPlayer.GetAudioSource().gameObject
+            SoundPlayer.GetAudioSource().gameObject,
+            SceneEffecterController.instance.gameObject
         }).ToArray();
     }
 
@@ -115,7 +116,7 @@ public class PauseManager : MonoBehaviour
         {
             //ポーズメニューを起動する
             pauseMenu.SetActive(true);
-            Pause(0.0f);
+            Pause(0.001f);
         }
         else
         {

@@ -94,6 +94,9 @@ public class PlayDirector : MonoBehaviour
             Debug.Log("FailedFrameをシーンに追加してください\nPauseManagerのignoreObjectsにFailedFrameを追加してください");
         }
         failedFrameController = go.GetComponent<FailedFrameController>();
+
+        // シーン開始時にフェードインする
+        FadeManager.FadeIn();
     }
 
 	//------------------------------------------------------------------------------------------
@@ -179,7 +182,9 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             CalculateStarNum();
-            FadeManager.FadeOut("ResultScene");
+            FadeManager.fadeColor = Color.white;
+            FadeManager.FadeOut("ResultScene", 1.5f);
+            SceneEffecterController.StartEffect();
             waitTime = 99.0f;
         }
     }
@@ -229,15 +234,16 @@ public class PlayDirector : MonoBehaviour
         for (int i = 1; i <= 90; ++i)
         {
             float alpha = (90 - i) / 90.0f;
+            Color color;
             for(int j = 0; j < texts.Count; j++)
             {
-                Color color = textColor[j];
+                color = textColor[j];
                 color.a *= alpha;
                 texts[j].color = color;
             }
             for (int j = 0; j < images.Count; j++)
             {
-                Color color = imageColor[j];
+                color = imageColor[j];
                 color.a *= alpha;
                 images[j].color = color;
             }

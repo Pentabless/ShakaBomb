@@ -53,6 +53,9 @@ public class ResultDirector : MonoBehaviour
         //評価する星の数から評価する星の設定をする
         //SetRankStar(num_rank_star);
         SetRankStar(Data.star_num);
+
+        //フェードインさせる
+        //FadeManager.FadeIn(1.5f);
     }
 
     // Update is called once per frame

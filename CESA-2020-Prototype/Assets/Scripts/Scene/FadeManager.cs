@@ -10,28 +10,33 @@ public class FadeManager : MonoBehaviour
     private static Canvas fadeCanvas;           // フェード用Canvas
     private static Image fadeImage;             // フェード用Image
                                                    
-    private static float alpha = 0f;            // フェード用Imageの透明度
+    private static float alpha = 0.0f;            // フェード用Imageの透明度
                                                    
     public static bool isFadeIn = false;        // フェード処理のフラグ
     public static bool isFadeOut = false;          
                                                    
-    private static float fadeTime = 1f;         // フェードにかかる時間
+    private static float fadeTime = 1.0f;         // フェードにかかる時間
                                                    
-    private static int nextSceneID = -1;        // 遷移先のシーンID
+    private static int nextSceneId = -1;        // 遷移先のシーンID
     private static string nextSceneName = "";   // 遷移先のシーン名
+
+    public static Color fadeColor { get; set; } = new Color(0, 0, 0, 1); // フェード用カラー
 
     // フェード用のCanvasとImage生成
     private static void Init()
     {
         // フェード用のCanvas生成
-        GameObject FadeCanvasObject = new GameObject("CanvasFade");
-        fadeCanvas = FadeCanvasObject.AddComponent<Canvas>();
-        FadeCanvasObject.AddComponent<GraphicRaycaster>();
-        fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        FadeCanvasObject.AddComponent<FadeManager>();
+        GameObject fadeCanvasObject = new GameObject("CanvasFade");
+        fadeCanvas = fadeCanvasObject.AddComponent<Canvas>();
+        fadeCanvasObject.AddComponent<GraphicRaycaster>();
+        fadeCanvasObject.AddComponent<FadeManager>();
 
         // 最前面になるよう適当なソートオーダー設定
-        fadeCanvas.sortingOrder = 100;
+        fadeCanvas.sortingOrder = 110;
+        // カメラの割り当て
+        fadeCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+        fadeCanvas.worldCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        fadeCanvas.planeDistance = 10;
 
         // フェード用のImage生成
         fadeImage = new GameObject("ImageFade").AddComponent<Image>();
@@ -53,40 +58,29 @@ public class FadeManager : MonoBehaviour
     }
 
     // フェードイン開始
-    public static void FadeIn()
+    public static void FadeIn(float fadeTime = 1.0f)
     {
         // 生成済みか確認
         if (fadeImage == null)
         {
             Init();
         }
-        // 画面を黒くする
-        fadeImage.color = Color.black;
+        FadeManager.fadeTime = Mathf.Max(fadeTime, 0.001f);
+        fadeImage.color = fadeColor;
         isFadeIn = true;
         isFadeOut = false;
         alpha = 1f;
     }
 
-    // フェードアウト開始
-    public static void FadeOut()
+    // フェードアウト開始（シーン遷移）
+    public static void FadeOut(string nextSceneName, float fadeTime = 1.0f)
     {
-        // 生成済みか確認
-        if (fadeImage == null)
-        {
-            Init();
-        }
-        // シーン遷移を行わないようにする
-        nextSceneID = -1;
-        // 画面の色を透明にする
-        fadeImage.color = Color.clear;
-        fadeCanvas.enabled = true;
-        isFadeOut = true;
-        isFadeIn = false;
-        alpha = 0f;
+        FadeManager.nextSceneName = nextSceneName;
+        FadeOut(-2, fadeTime);
     }
 
     // フェードアウト開始（シーン遷移）
-    public static void FadeOut(int next_scene_id)
+    public static void FadeOut(int nextSceneId, float fadeTime = 1.0f)
     {
         // 生成済みか確認
         if (fadeImage == null)
@@ -94,7 +88,8 @@ public class FadeManager : MonoBehaviour
             Init();
         }
         // 遷移先のシーンIDの登録
-        nextSceneID = next_scene_id;
+        FadeManager.nextSceneId = nextSceneId;
+        FadeManager.fadeTime = Mathf.Max(fadeTime, 0.001f);
         // 画面の色を透明にする
         fadeImage.color = Color.clear;
         fadeCanvas.enabled = true;
@@ -103,24 +98,13 @@ public class FadeManager : MonoBehaviour
         alpha = 0f;
     }
 
-    // フェードアウト開始（シーン遷移）
-    public static void FadeOut(string next_scene_name)
+    // フェードアウト開始
+    public static void FadeOut(float fadeTime = 1.0f)
     {
-        // 生成済みか確認
-        if (fadeImage == null)
-        {
-            Init();
-        }
-        // シーン名でのシーン遷移を行う
-        nextSceneName = next_scene_name;
-        nextSceneID = -2;
-        // 画面の色を透明にする
-        fadeImage.color = Color.clear;
-        fadeCanvas.enabled = true;
-        isFadeOut = true;
-        isFadeIn = false;
-        alpha = 0f;
+        FadeOut(-1, fadeTime);
     }
+
+    
 
     void Update()
     {
@@ -139,7 +123,7 @@ public class FadeManager : MonoBehaviour
             }
 
             // フェード用Imageの透明度設定
-            fadeImage.color = new Color(0f, 0f, 0f, alpha);
+            fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, fadeColor.a * alpha);
         }
         else if (isFadeOut)
         {
@@ -153,25 +137,24 @@ public class FadeManager : MonoBehaviour
                 alpha = 1f;
 
                 // シーン遷移判定
-                if (nextSceneID != -1)
+                if (nextSceneId == -2)
                 {
-                    // シーン名を使うか判定
-                    if (nextSceneID == -2)
-                    {
-                        // 次のシーンへ遷移
-                        SceneManager.LoadScene(nextSceneName);
-
-                    }
-                    else
-                    {
-                        // 次のシーンへ遷移
-                        SceneManager.LoadScene(nextSceneID);
-                    }
+                    // 次のシーンへ遷移
+                    SceneManager.LoadScene(nextSceneName);
+                }
+                else if(nextSceneId != -1)
+                {
+                    // 次のシーンへ遷移
+                    SceneManager.LoadScene(nextSceneId);
+                }
+                else
+                {
+                    Debug.Log("FadeManger:BuildIndexError");
                 }
             }
 
             // フェード用Imageの透明度設定
-            fadeImage.color = new Color(0f, 0f, 0f, alpha);
+            fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, fadeColor.a * alpha);
         }
     }
 }
