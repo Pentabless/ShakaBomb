@@ -28,6 +28,8 @@ public class TitleDirector : MonoBehaviour
     Vector3 button_distance;
     //覚える座標
     Vector3 last_position;
+    //フェードアウトが始まっているか
+    bool start_fade_out;
 
     // Start is called before the first frame update
     void Start()
@@ -48,18 +50,25 @@ public class TitleDirector : MonoBehaviour
         fade_angle = 0.0f;
         button_distance = Vector3.zero;
         last_position = Vector3.zero;
+        start_fade_out = false;
+
+        //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
+        SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
+
+        //飾りを作成する(背景と前景)
+        SharedData.instance.CreatePreviousSceneDecoration(go_decoration_generator.GetComponent<BackGroundDecorationGenerator>());
     }
 
     // Update is called once per frame
     void Update()
     {
-        //フェードアウトを始めていなかったら
-        if (image_screen_fade.color.a == 0.0f)
-        {
-            //背景の飾りを作成する
-            float decoration_scale = Random.Range(0.3f, 3.0f);
-            go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -5);
+        //背景の飾りを作成する
+        float decoration_scale = Random.Range(0.3f, 3.0f);
+        go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
 
+        //フェードアウトを始めていなかったら
+        if (start_fade_out==false)
+        {
             //選択している画像が動いていなかったら
             if (select_frame_angle == 0.0f)
             {
@@ -83,6 +92,9 @@ public class TitleDirector : MonoBehaviour
                     {
                         //フェードアウトを始める
                         image_screen_fade.GetComponent<FadeController>().SetFadeType(true);
+                        image_screen_fade.GetComponent<FadeController>().SetFadeValue(0.0f);
+                        //フェードアウトが始まった事にする
+                        start_fade_out = true;
                     }
                     else
                     {
@@ -146,12 +158,14 @@ public class TitleDirector : MonoBehaviour
         else
         {
             //前景の飾りを作成する
-            float decoration_scale = Random.Range(0.1f, 3.0f);
-            go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), 1.0f), 5);
+            decoration_scale = Random.Range(0.3f, 3.0f);
+            go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), 1.0f), 10);
 
             //フェードアウトを終わったら
             if (image_screen_fade.color.a >= 1.0f)
             {
+                //SharedDataにあるリストに飾りを入れる
+                SharedData.instance.SetDecorationList();
                 //ステージ選択画面に移る
                 SceneManager.LoadScene("StageSelectScene");
             }

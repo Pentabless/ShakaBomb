@@ -11,6 +11,17 @@ public class BackGroundDecorationController : MonoBehaviour
     //移動量
     Vector3 move_force;
 
+    //座標を記憶する
+    Vector3 remember_position;
+    //回転を記憶する
+    Quaternion remember_rotation;
+    //拡大率を記憶する
+    Vector3 remember_scale;
+    //色を記憶する
+    Color remember_color;
+    //レイヤーを記憶する
+    int remember_layer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,4 +55,41 @@ public class BackGroundDecorationController : MonoBehaviour
     {
         angle_force = angle;
     }
+
+    //前のシーンと同じオブジェクトを作成するために情報を覚える
+    public void RememberInformation()
+    {
+        remember_position = transform.position;
+        remember_rotation = transform.rotation;
+        remember_scale = transform.localScale;
+        remember_color = GetComponent<SpriteRenderer>().color;
+        remember_layer = GetComponent<SpriteRenderer>().sortingOrder;
+    }
+
+
+    public Vector3 GetPosition()
+    {
+        return remember_position;
+    }
+
+    public Quaternion GetRotation()
+    {
+        return remember_rotation;
+    }
+
+    public Vector3 GetScale()
+    {
+        return remember_scale;
+    }
+
+    public Color GetColor()
+    {
+        return remember_color;
+    }
+
+    public int GetLayer()
+    {
+        return remember_layer;
+    }
+
 }

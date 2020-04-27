@@ -19,13 +19,11 @@ public class BackGroundDecorationGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-    }
+     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
     //飾りを作る
@@ -104,5 +102,17 @@ public class BackGroundDecorationGenerator : MonoBehaviour
                 back_decoration_count--;
             }
         }
+    }
+
+    //背景の泡の数を渡す
+    public int GetNumBackDecoration()
+    {
+        return num_back_decoration;
+    }
+
+    //前景の泡の数を渡す
+    public int GetNumFrontDecoration()
+    {
+        return num_front_decoration;
     }
 }

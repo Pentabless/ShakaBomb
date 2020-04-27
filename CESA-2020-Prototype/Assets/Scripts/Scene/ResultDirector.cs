@@ -11,12 +11,12 @@ public class ResultDirector : MonoBehaviour
     public float angle_speed;
     //色のついた星のスプライト
     public Sprite color_star;
-    //クリアしたステージ番号(仮)
-    public int clear_stage_number;
     //リザルトフレーム
     GameObject go_result_frame;
     //評価の星
     GameObject[] go_rank_star = new GameObject[3];
+    //背景の飾りジェネレーター
+    GameObject go_decoration_generator;
     //画面フェード
     Image image_screen_fade;
     //…ステージクリア！
@@ -40,12 +40,13 @@ public class ResultDirector : MonoBehaviour
         go_result_frame = GameObject.Find("ResultFrame");
         text_stage_clear = GameObject.Find("StageClear").GetComponent<Text>();
         text_score = GameObject.Find("Score").GetComponent<Text>();
+        go_decoration_generator = GameObject.Find("BackGroundDecorationGenerator");
         image_screen_fade = GameObject.Find("ScreenFade").GetComponent<Image>();
         //座標変更
         go_result_frame.transform.position = new Vector3(-30.0f, 2.0f, 0.0f);
         text_stage_clear.rectTransform.anchoredPosition = new Vector3(-Screen.width - 300.0f, 200.0f, 0.0f);
         //○○ステージクリア！　のテキストを設定する
-        SetClearStageNameEnglish();
+        text_stage_clear.text = SharedData.instance.SetStageNameEnglish(SharedData.instance.play_stage_number) + " クリア!";
         //スコア　のテキストを設定する
         text_score.text = "Score:" + score.ToString();
         //評価の星の数を決める
@@ -61,6 +62,18 @@ public class ResultDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //背景の飾りを作成する
+        float decoration_scale = Random.Range(0.3f, 3.0f);
+        go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -5);
+
+        //フェードアウトしていたら
+        if(image_screen_fade.color.a != 0.0f)
+        {
+            //前景の飾りを作成する
+            decoration_scale = Random.Range(0.3f, 3.0f);
+            go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), 5);
+        }
+
         //リザルトフレーム(ステージクリアの後ろにある旗みたいなもの)
         if (go_result_frame.transform.position.x != 0.0f)
         {
@@ -125,11 +138,13 @@ public class ResultDirector : MonoBehaviour
             }
         }
 
-        //ステージ選択画面をロードする
+        //決定キーを押したら
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //フェードを始める
             image_screen_fade.GetComponent<FadeController>().SetFadeType(true);
+            //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
+            SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
         }
 
         //フェードアウトが終わったら
@@ -138,44 +153,6 @@ public class ResultDirector : MonoBehaviour
             //ステージ選択画面に移る
             SceneManager.LoadScene("StageSelectScene");
         }
-    }
-
-    //英語の何番目の表記設定 <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    void SetClearStageNameEnglish()
-    {
-        string number = "";
-
-        switch (clear_stage_number % 10)
-        {
-            //「st」を付ける
-            case 1:
-                if (clear_stage_number != 11)
-                {
-                    number = clear_stage_number.ToString() + "st";
-                }
-                break;
-            //「nd」を付ける
-            case 2:
-                if (clear_stage_number != 12)
-                {
-                    number = clear_stage_number.ToString() + "nd";
-                }
-                break;
-            //「rd」を付ける
-            case 3:
-                if (clear_stage_number != 13)
-                {
-                    number = clear_stage_number.ToString() + "rd";
-                }
-                break;
-        }
-        //まだ何も設定されていなかったら
-        if (number == "")
-        {
-            //「th」を付ける
-            number = clear_stage_number.ToString() + "th";
-        }
-        text_stage_clear.text = number + " Stage クリア!";
     }
 
     //評価の星の数を決める <自作関数> -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

@@ -15,10 +15,8 @@ TagManager:
   - DamageTile
   - Bullet
   - Balloon
-  - Water
-  - BreakObject
   - BombTest
-  - CollectObject
+  - Decoration
   layers:
   - Default
   - TransparentFX
@@ -36,9 +34,6 @@ TagManager:
   - WaterCollider
   - DamageTile
   - BombTest
-  - Enemy
-  - EnemyAttack
-  - CollectObject
   - 
   - 
   - 
@@ -46,7 +41,10 @@ TagManager:
   - 
   - 
   - 
-  - SceneEffect
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
