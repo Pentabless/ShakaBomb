@@ -10,8 +10,6 @@ public class StageFrameController : MonoBehaviour
     public Vector3 max_scale;
     //拡大速度
     public float scale_speed;
-    //評価の星の数(仮)
-    public int provisional_num_rank_star;
     //色のついた星のスプライト
     public Sprite color_star;
     //カメラオブジェクト
@@ -28,8 +26,8 @@ public class StageFrameController : MonoBehaviour
     float scale_rate;
     //現在選ばれているか
     bool now_select;
-    //評価の星の数
-    int num_rank_star;
+    //遊べるステージか(ロックがかかっているか)
+    bool can_play;
 
     // Start is called before the first frame update
     void Start()
@@ -43,16 +41,23 @@ public class StageFrameController : MonoBehaviour
             go_rank_star[i] = transform.Find("Star" + i.ToString()).gameObject;
         }
 
+
         //初期情報を覚える
         start_scale = transform.localScale;
         start_color = transform.Find("StageFrame").GetComponent<SpriteRenderer>().color;
         scale_rate = 0.0f;
-        num_rank_star = provisional_num_rank_star;
+
+        //何番目のステージフレームかを覚える
+        //int number_stage_frame = GameObject.Find("StageSelectDirection").GetComponent<StageSelectDirector>().GetNumberStageFrame(this.gameObject.name);
+
+        //オブジェクト名から0～9以外を""にした数値だけの文字列にして数値化する
+        int number = int.Parse(Regex.Replace(this.name, @"[^0-9]", ""));
+
 
         //Textを確実に表示できるようにするための処理
 
         //Canvasを覚える
-        GameObject go_canvas = transform.Find("Canvas").gameObject;
+        GameObject go_canvas = transform.Find("FrameCanvas").gameObject;
         //Canvasの初期化をする
         InitializeCanvas(go_canvas);
 
@@ -61,24 +66,22 @@ public class StageFrameController : MonoBehaviour
         //Text(StageName)の初期化をする
         InitializeStageName(go_stage_name);
 
-        //仮　ステージの画像の変更
-        transform.Find("StageTex").GetComponent<SpriteRenderer>().color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
-        transform.Find("StageTex").GetComponent<SpriteRenderer>().color += new Color(0.1f, 0.1f, 0.1f);
-
-        for (int i = 0; i < go_rank_star.Length; i++)
-        {
-            //評価の星の数の方が大きかったら
-            if (i < num_rank_star)
-            {
-                go_rank_star[i].GetComponent<SpriteRenderer>().sprite = color_star;
-                go_rank_star[i].GetComponent<SpriteRenderer>().color = Color.red;
-            }
-            //小さかったらやめる
-            else
-            {
-                break;
-            }
-        }
+        ////評価する星の数をもらう
+        //int num_rank_star = SharedData.instance.GetNumRankStar(number);
+        //for (int i = 0; i < go_rank_star.Length; i++)
+        //{
+        //    //評価の星の数の方が大きかったら
+        //    if (i < num_rank_star)
+        //    {
+        //        go_rank_star[i].GetComponent<SpriteRenderer>().sprite = color_star;
+        //        go_rank_star[i].GetComponent<SpriteRenderer>().color = Color.red;
+        //    }
+        //    //小さかったらやめる
+        //    else
+        //    {
+        //        break;
+        //    }
+        //}
     }
 
     // Update is called once per frame
@@ -138,6 +141,8 @@ public class StageFrameController : MonoBehaviour
         canvas.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
         //DynamicPixelsPerUnitを10にする        (文字の輪郭が鮮明になる)
         canvas.GetComponent<CanvasScaler>().dynamicPixelsPerUnit = 10;
+        //SortOrderを4にする(シーン全体のCanvasは5になっている)
+        canvas.sortingOrder = 4;
 
         //RectTransformの情報を設定する
         RectTransform rect_transform = GetComponentInChildren<RectTransform>();
@@ -156,56 +161,40 @@ public class StageFrameController : MonoBehaviour
         stage_name.color = Color.black;
         //テキストのフォントサイズを設定する
         stage_name.fontSize = 9;
-        //テキストの内容を設定する
-        stage_name.text = SetStageNameEnglish();
-        //RectTransformの座標を設定する
-        grand_child.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, 10.0f, 0.0f);
-    }
-
-    //英語の何番目の表記設定 <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    string SetStageNameEnglish()
-    {
         //オブジェクト名から0～9以外を""にした数値だけの文字列にして数値化する
         int number = int.Parse(Regex.Replace(this.name, @"[^0-9]", ""));
-        string str_number = "";
-
-        switch (number % 10)
-        {
-            //「st」を付ける
-            case 1:
-                if (number != 11)
-                {
-                    str_number = number.ToString() + "st";
-                }
-                break;
-            //「nd」を付ける
-            case 2:
-                if (number != 12)
-                {
-                    str_number = number.ToString() + "nd";
-                }
-                break;
-            //「rd」を付ける
-            case 3:
-                if (number != 13)
-                {
-                    str_number = number.ToString() + "rd";
-                }
-                break;
-        }
-        //まだ何も設定されていなかったら
-        if (str_number == "")
-        {
-            //「th」を付ける
-            str_number = number.ToString() + "th";
-        }
-
-        return str_number + " Stage";
+        //テキストの内容を設定する
+        stage_name.text = SharedData.instance.SetStageNameEnglish(number);
+        //RectTransformの座標を設定する
+        grand_child.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, 10.0f, 0.0f);
     }
 
     //選ばれているかを設定する
     public void SetNowSelect(bool select)
     {
         now_select = select;
+    }
+
+    //遊べる状態を設定する
+    public void SetCanPlay(bool play)
+    {
+        can_play = play;
+
+        //仮　ステージの画像の変更
+        if (can_play)
+        {
+            transform.Find("StageTex").GetComponent<SpriteRenderer>().color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+            transform.Find("StageTex").GetComponent<SpriteRenderer>().color += new Color(0.1f, 0.1f, 0.1f);
+        }
+        else
+        {
+            transform.Find("StageTex").GetComponent<SpriteRenderer>().color = new Color(0.1f, 0.1f, 0.1f);
+        }
+    }
+
+    //遊べる状態を教える
+    public bool SetCanPlay()
+    {
+        return can_play;
     }
 }

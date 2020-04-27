@@ -13,12 +13,16 @@ public class StageSelectDirector : MonoBehaviour
     public float to_title_not_operate_minute;
     //左右キーを長押しした時に次のステージに選択するためのフレーム数
     public int select_next_stage_frame;
+    //仮　クリアしたステージ番号
+    public int clear_stage_number;
     //カメラオブジェクト
     GameObject go_camera;
     //選択フレーム
     GameObject go_select_tex;
     //タイトルボタン
     GameObject go_title_button;
+    //背景の飾りジェネレーター
+    GameObject go_decoration_generator;
     //ステージの画像
     GameObject[] go_stage;
     //背景
@@ -50,6 +54,7 @@ public class StageSelectDirector : MonoBehaviour
         go_select_tex = GameObject.Find("SelectTex");
         go_title_button = GameObject.Find("TitleButton");
         go_background = GameObject.Find("ProvisionalBackGround");
+        go_decoration_generator = GameObject.Find("BackGroundDecorationGenerator");
         //ステージ
         FindStageObject();
 
@@ -67,15 +72,38 @@ public class StageSelectDirector : MonoBehaviour
         not_operate_time = -1.0f;
         select_next_stage_count = 0;
 
+        for (int i = 0; i < go_stage.Length; i++)
+        {
+            //クリアしているステージ番号に1足したステージ番号までを遊べる状態にする
+            if (i <= clear_stage_number + 1)
+            {
+                go_stage[i].GetComponent<StageFrameController>().SetCanPlay(true);
+            }
+            else
+            {
+                go_stage[i].GetComponent<StageFrameController>().SetCanPlay(false);
+            }
+        }
+
         //ステージフレームに選ばれている番号を教える
         SetSelectStage(false);
         //ステージ全てをLineで通す
         AllStageLinePass();
+
+        //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
+        SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
+
+        //飾りを作成する(背景と前景)
+        SharedData.instance.CreatePreviousSceneDecoration(go_decoration_generator.GetComponent<BackGroundDecorationGenerator>());
     }
 
     // Update is called once per frame
     void Update()
     {
+        //背景の飾りを作成する
+        float decoration_scale = Random.Range(0.3f, 3.0f);
+        go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
+
         //選択している画像が動いていなかったら
         if (angle == 0.0f)
         {
@@ -85,23 +113,19 @@ public class StageSelectDirector : MonoBehaviour
                 //拡大率を変える
                 go_select_tex.transform.localScale = (go_stage[stage_number].transform.localScale.x * go_stage[stage_number].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f);
 
-                //左を押したら
-                if (Input.GetKey(KeyCode.LeftArrow) && stage_number > 0)
+                //次のステージに選択するためのカウントが0以下になっていたら
+                if (select_next_stage_count <= 0)
                 {
-                    //次のステージに選択するためのカウントが0以下になっていたら
-                    if (select_next_stage_count <= 0)
+                    //左を押したら　ステージ番号が0より大きかったら
+                    if (Input.GetKey(KeyCode.LeftArrow) && stage_number > 0)
                     {
                         //カウントを設定する
                         select_next_stage_count = select_next_stage_frame;
                         //ステージ番号を変更する準備をする(ステージ番号を1減らす)
                         PreparaChangeSelectStage(-1);
                     }
-                }
-                //右を押したら
-                if (Input.GetKey(KeyCode.RightArrow) && stage_number < go_stage.Length - 1)
-                {
-                    //次のステージに選択するためのカウントが0以下になっていたら
-                    if (select_next_stage_count <= 0)
+                    //右を押したら　ステージ番号がクリアしているステージ番号+1より小さかったら
+                    if (Input.GetKey(KeyCode.RightArrow) && stage_number < clear_stage_number + 1/*stage_number < go_stage.Length - 1*/)
                     {
                         //カウントを設定する
                         select_next_stage_count = select_next_stage_frame;
@@ -129,6 +153,7 @@ public class StageSelectDirector : MonoBehaviour
                     PreparaChangeTitle(select_title);
                 }
             }
+
             //Space(決定)を押したら
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -137,6 +162,8 @@ public class StageSelectDirector : MonoBehaviour
                 {
                     //登録した名前のステージのプレイシーンをロードする
                     SceneManager.LoadScene(stage_names[stage_number]);
+                    //プレイするステージ番号を覚える
+                    SharedData.instance.play_stage_number = stage_number;
                 }
                 else
                 {
@@ -208,7 +235,7 @@ public class StageSelectDirector : MonoBehaviour
         }
 
         //次のステージに選択するためのカウントが0より上だったら
-        if(select_next_stage_count>0)
+        if (select_next_stage_count > 0)
         {
             select_next_stage_count--;
         }
@@ -221,7 +248,7 @@ public class StageSelectDirector : MonoBehaviour
         }
 
         //背景の座標をカメラの座標
-        go_background.transform.position = new Vector3(go_camera.transform.position.x,go_camera.transform.position.y,0.0f);
+        go_background.transform.position = new Vector3(go_camera.transform.position.x, go_camera.transform.position.y, 0.0f);
         //操作していない時間を計る
         CountNotOperateTime();
     }
@@ -269,7 +296,7 @@ public class StageSelectDirector : MonoBehaviour
         }
     }
 
-    //選ばれているステージをステージフレーム側に知らせる
+    //選ばれているステージをステージフレーム側に知らせる <自作関数> -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     void SetSelectStage(bool select_title)
     {
         //ステージフレームに選ばれている番号を教える
@@ -298,7 +325,7 @@ public class StageSelectDirector : MonoBehaviour
             //操作していない時間を覚えていたら
             if (not_operate_time != -1.0f)
             {
-                Debug.Log(Time.time - not_operate_time);
+                //***//Debug.Log(Time.time - not_operate_time);
                 //操作していない時間がタイトル画面に戻るための無操作時間以上経ったら
                 if (Time.time - not_operate_time >= (to_title_not_operate_minute * 60.0f))
                 {
@@ -387,4 +414,21 @@ public class StageSelectDirector : MonoBehaviour
         }
     }
 
+    //何番目のゲームフレームかを渡す
+    public int GetNumberStageFrame(string object_name)
+    {
+        int number = 0;
+
+        for (int i = 0; i < go_stage.Length; i++)
+        {
+            //同じオブジェクトだったら
+            if (object_name == go_stage[i].name)
+            {
+                number = i;
+                break;
+            }
+        }
+
+        return number;
+    }
 }

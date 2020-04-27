@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 4233090134003034529}
   - component: {fileID: 4233090134003034528}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: FrameCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 4233090135185994436}
   - component: {fileID: 4233090135185994435}
   m_Layer: 0
-  m_Name: Stage
+  m_Name: StagePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,7 +466,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_scale: {x: 2, y: 2, z: 1}
   scale_speed: 0.05
-  provisional_num_rank_star: 0
   color_star: {fileID: 21300000, guid: b81e433182c2aef4cb27f5bd757effb2, type: 3}
 --- !u!1 &5374193322571664286
 GameObject:

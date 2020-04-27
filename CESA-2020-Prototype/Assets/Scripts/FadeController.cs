@@ -72,12 +72,12 @@ public class FadeController : MonoBehaviour
                 //完全に不透明でなかったら
                 if (alpha < 1.0f)
                 {
-                    alpha = obj_color.a + fade_value;
+                    alpha = fade_value;
                     //フェードに必要な値を足していく
                     fade_value += start_fade_value;
 
                     //透明度が1.0f以上になったら
-                    if(alpha>=1.0f)
+                    if (alpha >= 1.0f)
                     {
                         //微調整する
                         alpha = 1.0f;
@@ -90,12 +90,11 @@ public class FadeController : MonoBehaviour
                 //完全に透明でなかったら
                 if (alpha > 0.0f)
                 {
-                    alpha = obj_color.a - fade_value;
+                    alpha = 1.0f - fade_value;
                     //フェードに必要な値を足していく
                     fade_value += start_fade_value;
-
                     //透明度が0.0f以下になったら
-                    if(alpha<=0.0f)
+                    if (alpha <= 0.0f)
                     {
                         //微調整する
                         alpha = 0.0f;
@@ -119,7 +118,7 @@ public class FadeController : MonoBehaviour
     //フェードに必要な値を設定する <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     public void SetFadeValue(float value)
     {
-        start_fade_value = value;
+        fade_value = value;
     }
 
     //繰り返しフェードするかを設定する <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -133,4 +132,11 @@ public class FadeController : MonoBehaviour
     {
         fade_type = type;
     }
+
+    //フェードイン・フェードアウトの状態を渡す <自作関数>-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    public bool GetFadeType()
+    {
+        return fade_type;
+    }
+
 }
