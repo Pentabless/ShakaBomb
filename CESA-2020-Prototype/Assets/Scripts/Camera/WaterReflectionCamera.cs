@@ -18,6 +18,9 @@ public class WaterReflectionCamera : MonoBehaviour
     private GameObject refCameraObject = null;     // 反射用カメラオブジェクト
     private UnityEngine.Camera refCamera = null;   // 反射用カメラ
 
+    [SerializeField]
+    private bool autoDestroy = true;
+
     private string globalTextureName = "_SSWaterReflectionsTex";    // シェーダーでテクスチャを扱う時の名前
 
     //------------------------------------------------------------------------------------------
@@ -33,7 +36,8 @@ public class WaterReflectionCamera : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
-        mainCamera = GetComponent<UnityEngine.Camera>();
+        //mainCamera = GetComponent<UnityEngine.Camera>();
+        mainCamera = UnityEngine.Camera.main;
         InitRefCamera();
     }
 
@@ -56,10 +60,25 @@ public class WaterReflectionCamera : MonoBehaviour
     //------------------------------------------------------------------------------------------
     void InitRefCamera()
     {
-        // オブジェクトの生成
-        if (refCameraObject)
+        foreach(var child in GetComponentsInChildren<Transform>())
         {
-            Destroy(refCameraObject);
+            if (child.name == "RefCamera")
+            {
+                refCameraObject = child.gameObject;
+                refCamera = refCameraObject.GetComponent<UnityEngine.Camera>();
+                break;
+            }
+        }
+
+        if(!autoDestroy && refCameraObject)
+        {
+            return;
+        }
+
+        // オブジェクトの生成
+        if (autoDestroy && refCameraObject)
+        {
+            DestroyImmediate(refCameraObject);
         }
         refCameraObject = new GameObject("RefCamera");
         refCameraObject.transform.parent = transform;
