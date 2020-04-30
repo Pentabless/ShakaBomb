@@ -25,6 +25,7 @@ public partial class Floor
     {
         if (collision.transform.tag == "Player")
         {
+            Debug.Log("Stay");
             collision.transform.parent = this.transform;
             currentObj.OnRideFloor();
         }
@@ -73,6 +74,17 @@ public partial class Floor
 
         return false;
     }
+
+    protected bool CheckDifferences(float x, float y, float differences)
+    {
+        float temp = Mathf.Abs(x) - Mathf.Abs(y);
+
+        if (temp <= differences)
+            return true;
+        else
+            return false;
+    }
+
 
     protected virtual void OnRideFloor()
     {
@@ -218,47 +230,117 @@ class GenerateFloor : Floor
 
 class RideOnFloor : Floor
 {
-    public float Percentage { get; set; }
+    enum RideOnStatus
+    {
+        Stay,
+        Move,
+        Return
+    }
 
-    float distance;
-    bool startFlag = false;
-    bool direction = true;
+    RideOnStatus status = RideOnStatus.Stay;
+    float waitCount = 0.0f;
+    float count = 0.0f;
 
-    public RideOnFloor(GameObject obj, Vector3 start, Vector3 end)
+    public RideOnFloor(GameObject obj, Vector3 start, Vector3 end, float second)
     {
         thisObj = obj;
         startPosition = start;
         endPosition = end;
-        thisObj.transform.position = start;
-        Percentage = 0.0f;
-        distance = Vector3.Distance(start, end);
+        waitCount = second;
     }
 
     protected override void Execute()
     {
-        // trueが行き：falseが戻る
-        if (!direction)
+        if (thisObj.transform.childCount != 0)
         {
-            thisObj.transform.position = Vector3.Lerp(thisObj.transform.position, startPosition, Percentage);
+            count += Time.deltaTime;
+            if (count >= waitCount)
+            {
+                status = RideOnStatus.Move;
+            }
+        }
+        else
+        {
+            count = 0.0f;
+            status = RideOnStatus.Return;
+        }
+
+        if(status == RideOnStatus.Move)
+        {
+            thisObj.transform.position = Vector3.Lerp(thisObj.transform.position, endPosition, 0.05f);
             if (CheckMove(thisObj.transform.position, endPosition))
             {
-                direction = true;
+                status = RideOnStatus.Return;
+            }
+        }
+
+        if(status == RideOnStatus.Return)
+        {
+            thisObj.transform.position = Vector3.Lerp(thisObj.transform.position, startPosition, 0.05f);
+            if (CheckMove(thisObj.transform.position, startPosition))
+            {
+                status = RideOnStatus.Stay;
+            }
+        }
+    }
+}
+
+class FallFloor:Floor
+{
+    enum FallStatus
+    {
+        Stay,
+        Up,
+        Down
+    }
+
+    float waitCount = 0.0f;
+    float count = 0.0f;
+    FallStatus status = FallStatus.Stay;
+
+    public FallFloor(GameObject obj, Vector3 start, Vector3 end,float second)
+    {
+        thisObj = obj;
+        startPosition = start;
+        endPosition = end;
+        waitCount = second;
+    }
+
+    protected override void Execute()
+    {
+        // 時間経過を見る
+        if (thisObj.transform.childCount != 0)
+        {
+            count += Time.deltaTime;
+            if (count >= waitCount)
+            {
+                status = FallStatus.Down;
+            }
+        }
+        else
+        {
+            count = 0.0f;
+        }
+
+        // 時間が経ったら落下開始
+        if(status == FallStatus.Down)
+        { 
+            thisObj.transform.position = Vector3.Lerp(thisObj.transform.position, endPosition, 0.08f);
+            if(CheckMove(thisObj.transform.position, endPosition))
+            {
+                status = FallStatus.Up;
+            }
+        }
+
+        // 落下後上昇
+        if(status == FallStatus.Up)
+        {
+            thisObj.transform.position = Vector3.Lerp(thisObj.transform.position, startPosition, 0.03f);
+            if (CheckMove(thisObj.transform.position, startPosition))
+            {
+                status = FallStatus.Stay;
             }
 
         }
-    }
-
-    protected override void OnRideFloor()
-    {
-        thisObj.transform.position = Vector3.Lerp(thisObj.transform.position, endPosition, Percentage);
-        if (CheckMove(thisObj.transform.position, endPosition))
-        {
-            direction = false;
-        }
-    }
-
-    protected override void OnDownFloor()
-    {
-        direction = false;
     }
 }

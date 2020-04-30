@@ -41,6 +41,7 @@ public partial class Floor : MonoBehaviour
     private CircleRotationFloor circleRotationFloor;
     private GenerateFloor generateFloor;
     private RideOnFloor rideOnFloor;
+    private FallFloor fallFloor;
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -68,8 +69,7 @@ public partial class Floor : MonoBehaviour
                 currentObj = moveFloor;
                 break;
             case FloorStatus.RidoOn:
-                rideOnFloor = new RideOnFloor(this.gameObject, startPosition, endPosition);
-                rideOnFloor.Percentage = speed;
+                rideOnFloor = new RideOnFloor(this.gameObject, startPosition, endPosition,second);
                 currentObj = rideOnFloor;
                 break;
             case FloorStatus.CircleRotation:
@@ -77,9 +77,8 @@ public partial class Floor : MonoBehaviour
                 currentObj = circleRotationFloor;
                 break;
             case FloorStatus.Fall:
-                rideOnFloor = new RideOnFloor(this.gameObject, startPosition, endPosition);
-                rideOnFloor.Percentage = this.speed;
-                currentObj = rideOnFloor;
+                fallFloor = new FallFloor(this.gameObject, startPosition, endPosition,second);
+                currentObj = fallFloor;
                 break;
             case FloorStatus.Rotation:
                 rotationFloor = new RotationFloor(this.gameObject, second);
@@ -100,20 +99,5 @@ public partial class Floor : MonoBehaviour
     private void Update()
     {
         currentObj.Execute();
-
-        var passing = false;
-        if (this.transform.childCount != 0)
-        {
-            if (this.transform.GetChild(0).tag == "Player")
-            {
-                passing = true;
-                currentObj.OnRideFloor();
-            }
-        }
-        else if(passing)
-        {
-            currentObj.OnDownFloor();
-        }
-
     }
 }
