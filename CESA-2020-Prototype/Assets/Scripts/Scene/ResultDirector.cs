@@ -15,14 +15,14 @@ public class ResultDirector : MonoBehaviour
     GameObject go_result_frame;
     //評価の星
     GameObject[] go_rank_star = new GameObject[3];
-    //背景の飾りジェネレーター
-    GameObject go_decoration_generator;
-    //画面フェード
-    Image image_screen_fade;
     //…ステージクリア！
     Text text_stage_clear;
     //スコア(テキスト)
     Text text_score;
+    //画面フェード
+    FadeController sc_screen_fade;
+    //背景の飾りジェネレーター
+    BackGroundDecorationGenerator sc_decoration_generator;
     //スコア
     int score;
     //評価の星の数
@@ -37,11 +37,13 @@ public class ResultDirector : MonoBehaviour
         score = 700;
 
         //オブジェクトを探す
-        go_result_frame = GameObject.Find("ResultFrame");
+        go_result_frame = GameObject.Find("ResultFrame");      
+        //コンポーネントを探す
         text_stage_clear = GameObject.Find("StageClear").GetComponent<Text>();
         text_score = GameObject.Find("Score").GetComponent<Text>();
-        go_decoration_generator = GameObject.Find("BackGroundDecorationGenerator");
-        image_screen_fade = GameObject.Find("ScreenFade").GetComponent<Image>();
+        sc_screen_fade = GameObject.Find("ScreenFade").GetComponent<FadeController>();
+        sc_decoration_generator = GameObject.Find("BackGroundDecorationGenerator").GetComponent<BackGroundDecorationGenerator>();
+        
         //座標変更
         go_result_frame.transform.position = new Vector3(-30.0f, 2.0f, 0.0f);
         text_stage_clear.rectTransform.anchoredPosition = new Vector3(-Screen.width - 300.0f, 200.0f, 0.0f);
@@ -64,14 +66,14 @@ public class ResultDirector : MonoBehaviour
     {
         //背景の飾りを作成する
         float decoration_scale = Random.Range(0.3f, 3.0f);
-        go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -5);
+        sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -5);
 
         //フェードアウトしていたら
-        if(image_screen_fade.color.a != 0.0f)
+        if((sc_screen_fade.GetFadeType()==true) && sc_screen_fade.GetFadeValue() > 0.0f)
         {
             //前景の飾りを作成する
             decoration_scale = Random.Range(0.3f, 3.0f);
-            go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), 5);
+            sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), 5);
         }
 
         //リザルトフレーム(ステージクリアの後ろにある旗みたいなもの)
@@ -138,18 +140,22 @@ public class ResultDirector : MonoBehaviour
             }
         }
 
-        //決定キーを押したら
-        if (Input.GetKeyDown(KeyCode.Space))
+        //Spaceキーを押したら
+        if (Input.GetKeyDown(KeyCode.Space)||
+            //Aボタンを押したら
+            (Input.GetAxis(Common.GamePad.BUTTON_A)>0))
         {
             //フェードを始める
-            image_screen_fade.GetComponent<FadeController>().SetFadeType(true);
+            sc_screen_fade.SetFadeType(true);
             //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
             SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
         }
 
         //フェードアウトが終わったら
-        if (image_screen_fade.color.a >= 1.0f)
+        if (sc_screen_fade.GetFadeValue() == 1.0f)
         {
+            //SharedDataにあるリストに飾りを入れる
+            SharedData.instance.SetDecorationList();
             //ステージ選択画面に移る
             SceneManager.LoadScene("StageSelectScene");
         }

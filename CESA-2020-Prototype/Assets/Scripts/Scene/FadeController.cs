@@ -139,4 +139,9 @@ public class FadeController : MonoBehaviour
         return fade_type;
     }
 
+    //フェードに必要な値を渡す(0～1までで返す)
+    public float GetFadeValue()
+    {
+        return Mathf.Clamp(fade_value, 0.0f, 1.0f);
+    }
 }
