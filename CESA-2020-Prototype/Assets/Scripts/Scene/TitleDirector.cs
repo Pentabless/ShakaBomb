@@ -14,20 +14,20 @@ public class TitleDirector : MonoBehaviour
     GameObject go_exit_button;
     //選択フレーム
     GameObject go_select_tex;
-    //背景の飾りジェネレーター
-    GameObject go_decoration_generator;
     //画面フェード
-    Image image_screen_fade;
-    //ゲームをやめるかどうか
-    bool select_eixt;
-    //選択フレーム用角度
-    float select_frame_angle;
-    //フェード用角度
-    float fade_angle;
+    FadeController sc_screen_fade;
+    //背景の飾りジェネレーター
+    BackGroundDecorationGenerator sc_decoration_generator;
     //距離
     Vector3 button_distance;
     //覚える座標
     Vector3 last_position;
+    //選択フレーム用角度
+    float select_frame_angle;
+    //フェード用角度
+    float fade_angle;
+    //ゲームをやめるかどうか
+    bool select_eixt;
     //フェードアウトが始まっているか
     bool start_fade_out;
 
@@ -38,25 +38,27 @@ public class TitleDirector : MonoBehaviour
         go_start_button = GameObject.Find("StartButton");
         go_exit_button = GameObject.Find("ExitButton");
         go_select_tex = GameObject.Find("SelectTex");
-        go_decoration_generator = GameObject.Find("BackGroundDecorationGenerator");
-        image_screen_fade = GameObject.Find("ScreenFade").GetComponent<Image>();
+        //コンポーネントを探す
+        sc_screen_fade = GameObject.Find("ScreenFade").GetComponent<FadeController>();
+        sc_decoration_generator = GameObject.Find("BackGroundDecorationGenerator").GetComponent<BackGroundDecorationGenerator>();
+
         //座標変更
         go_select_tex.transform.position = go_start_button.transform.position;
         //拡大率変更
         go_select_tex.transform.localScale = go_start_button.transform.localScale + new Vector3(0.5f, 0.5f, 0.0f);
         //初期化
-        select_eixt = false;
-        select_frame_angle = 0.0f;
-        fade_angle = 0.0f;
         button_distance = Vector3.zero;
         last_position = Vector3.zero;
+        select_frame_angle = 0.0f;
+        fade_angle = 0.0f;
+        select_eixt = false;
         start_fade_out = false;
 
         //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
         SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
 
         //飾りを作成する(背景と前景)
-        SharedData.instance.CreatePreviousSceneDecoration(go_decoration_generator.GetComponent<BackGroundDecorationGenerator>());
+        SharedData.instance.CreatePreviousSceneDecoration(sc_decoration_generator);
     }
 
     // Update is called once per frame
@@ -64,41 +66,66 @@ public class TitleDirector : MonoBehaviour
     {
         //背景の飾りを作成する
         float decoration_scale = Random.Range(0.3f, 3.0f);
-        go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
+        sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
 
         //フェードアウトを始めていなかったら
-        if (start_fade_out==false)
+        if (start_fade_out == false)
         {
             //選択している画像が動いていなかったら
             if (select_frame_angle == 0.0f)
             {
-                //上を押したら
-                if (Input.GetKeyDown(KeyCode.UpArrow) && select_eixt == true)
+                //上矢印キーを押したら
+                if ((Input.GetKeyDown(KeyCode.UpArrow)) ||
+                    //十字上ボタンを押したら
+                    (Input.GetAxis("cross Y") < 0) ||
+                    //左スティックを上に傾けたら
+                    (Input.GetAxis(Common.GamePad.VERTICAL) > 0))
                 {
-                    select_eixt = false;
-                    PreparaChangeButton(select_eixt);
+                    //EXIT GAMEを選択していたら
+                    if (select_eixt == true)
+                    {
+                        //EXIT GAMEを選択していない事にする
+                        select_eixt = false;
+                        PreparaChangeButton(select_eixt);
+                    }
                 }
-                //下を押したら
-                if (Input.GetKeyDown(KeyCode.DownArrow) && select_eixt == false)
+                //下矢印キーを押したら
+                if ((Input.GetKeyDown(KeyCode.DownArrow)) ||
+                    //十字下ボタンを押したら
+                    (Input.GetAxis("cross Y") > 0) ||
+                    //左スティックを下に傾けたら
+                    (Input.GetAxis(Common.GamePad.VERTICAL) < 0))
                 {
-                    select_eixt = true;
-                    PreparaChangeButton(select_eixt);
-                }
-                //Space(決定)を押したら
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    //ExitGameを選択していなかったら
+                    //EXIT GAMEを選択していなかったら
                     if (select_eixt == false)
                     {
-                        //フェードアウトを始める
-                        image_screen_fade.GetComponent<FadeController>().SetFadeType(true);
-                        image_screen_fade.GetComponent<FadeController>().SetFadeValue(0.0f);
-                        //フェードアウトが始まった事にする
-                        start_fade_out = true;
+                        //EXIT GAMEを選択している事にする
+                        select_eixt = true;
+                        PreparaChangeButton(select_eixt);
                     }
-                    else
+                }
+
+                //フェードインしている途中でなかったら
+                if ((sc_screen_fade.GetFadeType() == false) && (sc_screen_fade.GetFadeValue() == 1.0f))
+                {
+                    //Spaceキーを押したら
+                    if ((Input.GetKeyDown(KeyCode.Space)) ||
+                        //Aボタンを押したら
+                        (Input.GetAxis(Common.GamePad.BUTTON_A) > 0))
                     {
-                        //ゲームを閉じる
+                        //ExitGameを選択していなかったら
+                        if (select_eixt == false)
+                        {
+                            //フェードアウトを始める
+                            sc_screen_fade.SetFadeType(true);
+                            sc_screen_fade.SetFadeValue(0.0f);
+                            //フェードアウトが始まった事にする
+                            start_fade_out = true;
+                        }
+                        else
+                        {
+                            //ゲームを閉じる
+                        }
                     }
                 }
             }
@@ -159,10 +186,10 @@ public class TitleDirector : MonoBehaviour
         {
             //前景の飾りを作成する
             decoration_scale = Random.Range(0.3f, 3.0f);
-            go_decoration_generator.GetComponent<BackGroundDecorationGenerator>().CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), 1.0f), 10);
+            sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(-15.0f, 15.0f), -7.5f, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), 1.0f), 10);
 
-            //フェードアウトを終わったら
-            if (image_screen_fade.color.a >= 1.0f)
+            //フェードアウトが終わったら
+            if (sc_screen_fade.GetFadeValue() == 1.0f)
             {
                 //SharedDataにあるリストに飾りを入れる
                 SharedData.instance.SetDecorationList();
@@ -172,6 +199,8 @@ public class TitleDirector : MonoBehaviour
         }
     }
 
+
+    //選択しているボタンを変更する準備 <自作関数> -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     void PreparaChangeButton(bool select)
     {
         //円運動を始める
