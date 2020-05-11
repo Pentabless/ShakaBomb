@@ -18,7 +18,8 @@ public partial class Floor
         CircleRotation,
         Fall,
         Rotation,
-        Generate
+        Generate,
+        FloatFloor
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -345,6 +346,77 @@ class FallFloor:Floor
                 status = FallStatus.Stay;
             }
 
+        }
+    }
+}
+
+class FloatFloor : Floor
+{
+    enum FloatStatus
+    {
+        Stay,
+        Up,
+        Down,
+        Float
+    }
+
+    readonly float difference = 0.5f;
+    readonly float upSecond = 0.3f;
+
+    FloatStatus status = FloatStatus.Stay;
+    float waitCount = 0.0f;
+    float count = 0.0f;
+    float downSecond = 0.0f;
+    Vector3 velocity = Vector3.zero;
+
+    bool fristDown = false;
+
+    public FloatFloor(GameObject obj, float second)
+    {
+        thisObj = obj;
+        waitCount = second;
+        startPosition = thisObj.transform.position;
+        downSecond = second;
+        endPosition = thisObj.transform.position;
+        endPosition.y -= difference;
+    }
+
+    protected override void Execute()
+    {
+        // 時間経過を見る
+        if (thisObj.transform.childCount != 0)
+        {
+            Debug.Log(status);
+            if (!fristDown)
+            {
+                status = FloatStatus.Down;
+                fristDown = true;
+            }
+        }
+        else
+        {
+            fristDown = false;
+            status = FloatStatus.Up;
+        }
+
+
+        if(status == FloatStatus.Down)
+        {
+            thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, endPosition, ref velocity, downSecond);
+            if (CheckMove(thisObj.transform.position, endPosition))
+            {
+                status = FloatStatus.Stay;
+            }
+        }
+
+        if(status == FloatStatus.Up)
+        {
+            thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, startPosition, ref velocity, upSecond);
+            if (CheckMove(thisObj.transform.position, startPosition))
+            {
+                Debug.Log("yes");
+                status = FloatStatus.Stay;
+            }
         }
     }
 }
