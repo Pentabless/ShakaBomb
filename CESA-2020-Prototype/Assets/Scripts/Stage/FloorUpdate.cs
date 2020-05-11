@@ -85,7 +85,8 @@ public partial class Floor : MonoBehaviour
                 currentObj = rotationFloor;
                 break;
             case FloorStatus.Generate:
-                generateFloor = new GenerateFloor(this.gameObject);
+                generateFloor = new GenerateFloor(this.gameObject,(int)second);
+                generateFloor.ActiveFlag = true;
                 currentObj = generateFloor;
                 break;
             default:

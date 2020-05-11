@@ -200,15 +200,17 @@ class RotationFloor : Floor
 class GenerateFloor : Floor
 {
     // ToDo:後で定数に返る
-    private int time = 60;
+    private int time;
     private SpriteRenderer spriteRenderer;
     public bool ActiveFlag { get; set; }
 
-    public GenerateFloor(GameObject obj)
+    public GenerateFloor(GameObject obj,int time)
     {
         thisObj = obj;
         spriteRenderer = obj.GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color(1,1,1,0);
+        thisObj.layer = 22;
+        this.time = time;
     }
 
     protected override void Execute()
@@ -217,12 +219,14 @@ class GenerateFloor : Floor
             return;
 
         time--;
+        thisObj.layer = 0;
         spriteRenderer.color = new Color(1, 1, 1, 1);
 
         if (time == 0)
         {
             ActiveFlag = false;
             spriteRenderer.color = new Color(1, 1, 1, 0);
+            thisObj.layer = 22;
             time = 60;
         }
     }
