@@ -36,7 +36,7 @@ public class FadeManager : MonoBehaviour
         // カメラの割り当て
         fadeCanvas.renderMode = RenderMode.ScreenSpaceCamera;
         fadeCanvas.worldCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        fadeCanvas.planeDistance = 10;
+        fadeCanvas.planeDistance = 8;
 
         // フェード用のImage生成
         fadeImage = new GameObject("ImageFade").AddComponent<Image>();
@@ -146,10 +146,6 @@ public class FadeManager : MonoBehaviour
                 {
                     // 次のシーンへ遷移
                     SceneManager.LoadScene(nextSceneId);
-                }
-                else
-                {
-                    Debug.Log("FadeManger:BuildIndexError");
                 }
             }
 

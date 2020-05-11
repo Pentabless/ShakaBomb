@@ -169,6 +169,7 @@ public class PlayDirector : MonoBehaviour
         {
             waitTime = 999.0f;
             failedFrameController.EnableFrame(FailedFrameController.FailedType.TimeUp);
+            pauseManager.ResetFilterColor();
             pauseManager.Pause(1.0f);
         }
     }
