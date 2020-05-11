@@ -42,6 +42,7 @@ public partial class Floor : MonoBehaviour
     private GenerateFloor generateFloor;
     private RideOnFloor rideOnFloor;
     private FallFloor fallFloor;
+    private FloatFloor floatFloor;
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -85,8 +86,13 @@ public partial class Floor : MonoBehaviour
                 currentObj = rotationFloor;
                 break;
             case FloorStatus.Generate:
-                generateFloor = new GenerateFloor(this.gameObject);
+                generateFloor = new GenerateFloor(this.gameObject,(int)second);
+                generateFloor.ActiveFlag = true;
                 currentObj = generateFloor;
+                break;
+            case FloorStatus.FloatFloor:
+                floatFloor = new FloatFloor(this.gameObject, second);
+                currentObj = floatFloor;
                 break;
             default:
                 break;
