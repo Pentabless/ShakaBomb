@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     BulletGenerator bulletG;
 
+    // フロア
+    Floor floor;
+    float balloonFloorCount = Player.PUSH_INTERVAL;
+
     // コントローラ
     [SerializeField]
     GamepadManager gamepadManager;
@@ -170,10 +174,26 @@ public class PlayerController : MonoBehaviour
 
         // バレットの発射
         attackButton = Input.GetAxis(Player.ATTACK);
-        if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.num_balloon >= 1)
+        var balloonFloor = Input.GetAxis(GamePad.BUTTON_B);
+        if (floor == null)
         {
-            bulletG.BulletCreate(this.transform.position);
-            balloonG.UsedBalloon();
+            if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.num_balloon >= 1)
+            {
+                bulletG.BulletCreate(this.transform.position);
+                balloonG.UsedBalloon();
+            }
+        }
+        // バルーンフロアの使用
+        else
+        {
+            balloonFloorCount -= Time.deltaTime;
+            if(balloonFloorCount <= 0 && balloonFloor > 0 && Data.num_balloon >= 1)
+            {
+                Debug.Log("yes");
+                balloonFloorCount = Player.PUSH_INTERVAL;
+                balloonG.UsedBalloon();
+                floor.UpFloor();
+            }
         }
 
         //// ExplosionTest
@@ -393,7 +413,7 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND)
+        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME)
         {
             isGround = true;
         }
@@ -406,18 +426,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND)
+        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME)
         {
             isGround = true;
+        }
+
+        if (collision.transform.tag == Common.Floor.NAME)
+        {
+            floor = collision.gameObject.GetComponent<Floor>();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND)
+        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME)
         {
             isGround = false;
             bubbleGround = false;
+        }
+
+        if (collision.transform.tag == Common.Floor.NAME)
+        {
+            floor = null;
         }
     }
 

@@ -91,7 +91,7 @@ public partial class Floor : MonoBehaviour
                 currentObj = generateFloor;
                 break;
             case FloorStatus.FloatFloor:
-                floatFloor = new FloatFloor(this.gameObject, second);
+                floatFloor = new FloatFloor(this.gameObject,startPosition,endPosition, second);
                 currentObj = floatFloor;
                 break;
             default:

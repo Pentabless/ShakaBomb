@@ -62,6 +62,11 @@ public partial class Floor
         generateFloor.ActiveFlag = true;
     }
 
+    public void UpFloor()
+    {
+        floatFloor.OnFloat();
+    }
+
     /// <summary>
     /// ラープ完了したかどうか
     /// </summary>
@@ -352,71 +357,63 @@ class FallFloor:Floor
 
 class FloatFloor : Floor
 {
-    enum FloatStatus
+    public enum FloatStatus
     {
         Stay,
         Up,
-        Down,
-        Float
+        Down
     }
 
-    readonly float difference = 0.5f;
     readonly float upSecond = 0.3f;
+    readonly int LimitCount = 3;
+    readonly int UpCount = 6;
 
-    FloatStatus status = FloatStatus.Stay;
-    float waitCount = 0.0f;
-    float count = 0.0f;
+    public FloatStatus Status { get; set; }
+
+    int balloonCount = 0;
     float downSecond = 0.0f;
+    float difference;
     Vector3 velocity = Vector3.zero;
 
     bool fristDown = false;
 
-    public FloatFloor(GameObject obj, float second)
+    public FloatFloor(GameObject obj, Vector3 start, Vector3 end, float second)
     {
         thisObj = obj;
-        waitCount = second;
-        startPosition = thisObj.transform.position;
+        startPosition = start;
         downSecond = second;
-        endPosition = thisObj.transform.position;
-        endPosition.y -= difference;
+        endPosition = end;
     }
 
     protected override void Execute()
     {
-        // 時間経過を見る
-        if (thisObj.transform.childCount != 0)
-        {
-            Debug.Log(status);
-            if (!fristDown)
-            {
-                status = FloatStatus.Down;
-                fristDown = true;
-            }
-        }
-        else
-        {
-            fristDown = false;
-            status = FloatStatus.Up;
-        }
+        //if (thisObj.transform.childCount == 0)
+        //    balloonCount = 0;
 
-
-        if(status == FloatStatus.Down)
+        if(Status == FloatStatus.Down)
         {
-            thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, endPosition, ref velocity, downSecond);
-            if (CheckMove(thisObj.transform.position, endPosition))
-            {
-                status = FloatStatus.Stay;
-            }
-        }
-
-        if(status == FloatStatus.Up)
-        {
-            thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, startPosition, ref velocity, upSecond);
+            thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, startPosition, ref velocity, downSecond);
             if (CheckMove(thisObj.transform.position, startPosition))
             {
-                Debug.Log("yes");
-                status = FloatStatus.Stay;
+                Status = FloatStatus.Stay;
             }
         }
+
+        if(Status == FloatStatus.Up)
+        {
+            thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, endPosition, ref velocity, upSecond);
+            if (CheckMove(thisObj.transform.position, endPosition))
+            {
+                balloonCount = 0;
+                Status = FloatStatus.Down;
+            }
+        }
+    }
+
+    public void OnFloat()
+    {
+        balloonCount++;
+        if (balloonCount == UpCount)
+            Status = FloatStatus.Up;
     }
 }
