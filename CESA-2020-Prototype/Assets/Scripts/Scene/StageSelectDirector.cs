@@ -460,7 +460,7 @@ public class StageSelectDirector : MonoBehaviour
             {
                 //***//Debug.Log(Time.time - not_operate_time);
                 //操作していない時間がタイトル画面に戻るための無操作時間以上経ったら
-                if (Time.time - not_operate_time >= (to_title_not_operate_minute * 60.0f))
+                if (Time.time - not_operate_time >= (to_title_not_operate_minute * Application.targetFrameRate))
                 {
                     //フェードアウトを始める
                     sc_screen_fade.SetFadeType(true);

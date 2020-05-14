@@ -79,7 +79,7 @@ public class TitleDirector : MonoBehaviour
         //Cameraの映る範囲をもらう
         camera_range = SharedData.instance.GetCameraRange(GameObject.Find("Main Camera").GetComponent<Camera>());
         //飾りを作成する(背景と前景)
-        SharedData.instance.CreatePreviousSceneDecoration(sc_decoration_generator,GameObject.Find("Main Camera").transform.position);
+        SharedData.instance.CreatePreviousSceneDecoration(sc_decoration_generator, GameObject.Find("Main Camera").transform.position);
     }
     /*--終わり：Start--*/
 
@@ -93,7 +93,7 @@ public class TitleDirector : MonoBehaviour
     {
         //背景の飾りを作成する
         float decoration_scale = Random.Range(0.3f, 3.0f);
-        sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y-decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
+        sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
 
         //フェードアウトを始めていなかったら
         if (start_fade_out == false)
