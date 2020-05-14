@@ -258,5 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31157fba18e267743bef17931723098b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collider: {fileID: 824629121111084186}
   power: 0.03
   attenuation: 0.97
+  isTriggerTime: 0.1

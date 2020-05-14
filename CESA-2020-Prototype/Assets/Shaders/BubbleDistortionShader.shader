@@ -53,6 +53,7 @@
 				v2f vert(appdata v)
 				{
 					v2f o;
+					v.vertex.xy *= _ScaleRate.x;
 					o.vertex = UnityObjectToClipPos(v.vertex);
 					o.color = v.color;
 					o.uv = TRANSFORM_TEX(v.uv, _MainTex);
