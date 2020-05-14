@@ -80,6 +80,9 @@ public class PlayerController : MonoBehaviour
     // 空中ブーストの強さ
     [SerializeField]
     Vector2 boostForce;
+    // ブースト時のエフェクトの位置オフセット
+    [SerializeField]
+    Vector2 boostFXOffset;
 
     // プレイヤーの向き
     int dir;            // 現在
@@ -219,7 +222,7 @@ public class PlayerController : MonoBehaviour
         {
             rig.velocity = new Vector2(0, 0);
             rig.AddForce(new Vector2(boostForce.x * Data.playerDir, boostForce.y));
-            UsedBalloon();
+            GenerateBoostFX();
         }
 
         // 前フレームのキー入力の情報保持
@@ -479,6 +482,16 @@ public class PlayerController : MonoBehaviour
         Destroy(m_balloonList[Integer.ZERO]);
         m_balloonList.RemoveAt(Integer.ZERO);
         Data.num_balloon--;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // ブーストエフェクトを生成する
+    //------------------------------------------------------------------------------------------
+    private void GenerateBoostFX()
+    {
+        var offset = new Vector3(boostFXOffset.x * -dir, boostFXOffset.y, 0);
+        m_balloonList[Integer.ZERO].transform.position = transform.position + offset;
+        m_balloonList[Integer.ZERO].GetComponent<BalloonController>().Destroy();
     }
 
     //------------------------------------------------------------------------------------------
