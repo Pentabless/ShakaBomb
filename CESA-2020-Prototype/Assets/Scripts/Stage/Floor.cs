@@ -18,7 +18,8 @@ public partial class Floor
         CircleRotation,
         Fall,
         Rotation,
-        Generate
+        Generate,
+        FloatFloor
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -59,6 +60,11 @@ public partial class Floor
     public void ActiveObject()
     {
         generateFloor.ActiveFlag = true;
+    }
+
+    public void UpFloor()
+    {
+        floatFloor.OnFloat();
     }
 
     /// <summary>
@@ -200,15 +206,17 @@ class RotationFloor : Floor
 class GenerateFloor : Floor
 {
     // ToDo:後で定数に返る
-    private int time = 60;
+    private int time;
     private SpriteRenderer spriteRenderer;
     public bool ActiveFlag { get; set; }
 
-    public GenerateFloor(GameObject obj)
+    public GenerateFloor(GameObject obj,int time)
     {
         thisObj = obj;
         spriteRenderer = obj.GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color(1,1,1,0);
+        thisObj.layer = 22;
+        this.time = time;
     }
 
     protected override void Execute()
@@ -217,12 +225,14 @@ class GenerateFloor : Floor
             return;
 
         time--;
+        thisObj.layer = 0;
         spriteRenderer.color = new Color(1, 1, 1, 1);
 
         if (time == 0)
         {
             ActiveFlag = false;
             spriteRenderer.color = new Color(1, 1, 1, 0);
+            thisObj.layer = 22;
             time = 60;
         }
     }
@@ -342,5 +352,68 @@ class FallFloor:Floor
             }
 
         }
+    }
+}
+
+class FloatFloor : Floor
+{
+    public enum FloatStatus
+    {
+        Stay,
+        Up,
+        Down
+    }
+
+    readonly float upSecond = 0.3f;
+    readonly int LimitCount = 3;
+    readonly int UpCount = 6;
+
+    public FloatStatus Status { get; set; }
+
+    int balloonCount = 0;
+    float downSecond = 0.0f;
+    float difference;
+    Vector3 velocity = Vector3.zero;
+
+    bool fristDown = false;
+
+    public FloatFloor(GameObject obj, Vector3 start, Vector3 end, float second)
+    {
+        thisObj = obj;
+        startPosition = start;
+        downSecond = second;
+        endPosition = end;
+    }
+
+    protected override void Execute()
+    {
+        //if (thisObj.transform.childCount == 0)
+        //    balloonCount = 0;
+
+        if(Status == FloatStatus.Down)
+        {
+            thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, startPosition, ref velocity, downSecond);
+            if (CheckMove(thisObj.transform.position, startPosition))
+            {
+                Status = FloatStatus.Stay;
+            }
+        }
+
+        if(Status == FloatStatus.Up)
+        {
+            thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, endPosition, ref velocity, upSecond);
+            if (CheckMove(thisObj.transform.position, endPosition))
+            {
+                balloonCount = 0;
+                Status = FloatStatus.Down;
+            }
+        }
+    }
+
+    public void OnFloat()
+    {
+        balloonCount++;
+        if (balloonCount == UpCount)
+            Status = FloatStatus.Up;
     }
 }

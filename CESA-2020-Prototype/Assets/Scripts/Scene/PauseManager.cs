@@ -50,6 +50,7 @@ public class PauseManager : MonoBehaviour
     private static Canvas pauseCanvas;   //ポーズ用Canvas
     private static Image pauseImage;     //ポーズ用Image
     private Color filterColor = new Color(0.0f, 0.0f, 0.0f, 0.6f);   //ポーズ用Imageのカラー
+    private Color defaultFilterColor = Color.black;                  //デフォルトのポーズ用Imageのカラー
     private float fadeTime = 0.0f;
     private float time = 0.0f;
 
@@ -89,6 +90,7 @@ public class PauseManager : MonoBehaviour
     private void Start()
     {
         playDirector = GameObject.Find(PlayDirector.NAME).GetComponent<PlayDirector>();
+        defaultFilterColor = filterColor;
         CreatePauseFilter();
     }
 
@@ -98,6 +100,7 @@ public class PauseManager : MonoBehaviour
         bool pressPause = (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button7));
         if (pressPause && !FadeManager.isFadeOut && playDirector.canPause)
         {
+            filterColor = defaultFilterColor;
             ChangePauseState();
         }
 
@@ -307,5 +310,10 @@ public class PauseManager : MonoBehaviour
     public void SetFilterColor(in Color color)
     {
         filterColor = color;
+    }
+
+    public void ResetFilterColor()
+    {
+        filterColor = defaultFilterColor;
     }
 }

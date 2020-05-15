@@ -282,6 +282,7 @@ MonoBehaviour:
   turnCount: 10
   coyoteTime: 5
   boostForce: {x: 500, y: 400}
+  boostFXOffset: {x: 1, y: -0.75}
 --- !u!212 &3524930649752458142
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ namespace Common
     {
         // オブジェクト名・タグ名
         public const string NAME                = ("Camera");
+        public const string MAIN_CAMERA         = ("Main Camera");
         public const string CONTROLLER          = ("CameraController");
     }
 
@@ -49,9 +50,9 @@ namespace Common
     public static class FailedFrame
     {
         // オブジェクト名
-        public const string NAME = "FailedFrame";
+        public const string NAME                = "FailedFrame";
         // フェード時間
-        public const float FADE_TIME = 1.0f;
+        public const float FADE_TIME            = (1.0f);
     }
 
     //------------------------------------------------------------------------------------------
@@ -67,6 +68,8 @@ namespace Common
         public const string JUMP                = ("Button A");
         public const string BOOST               = ("Button X");
         public const string HORIZONTAL          = ("Horizontal");
+        // 長押しのインターバル
+        public const float PUSH_INTERVAL        = 2.0f;
     }
 
     //------------------------------------------------------------------------------------------
