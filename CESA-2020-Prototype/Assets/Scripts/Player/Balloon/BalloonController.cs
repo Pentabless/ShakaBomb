@@ -106,7 +106,7 @@ public class BalloonController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // Destroy
     //------------------------------------------------------------------------------------------
-    private void Destroy()
+    public void Destroy()
     {
         m_balloonG.BrokenBalloon(gameObject);
         GenerateBurstEffect();
@@ -119,8 +119,8 @@ public class BalloonController : MonoBehaviour
     private void GenerateBurstEffect()
     {
         EffectGenerator.BubbleBurstFX(
-            new BubbleBurstFX.Param(GetComponent<SpriteRenderer>().color, transform.localScale),
-            transform.localPosition,
+            new BubbleBurstFX.Param(GetComponent<SpriteRenderer>().color, transform.lossyScale),
+            transform.position,
             null);
     }
 }
