@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6307002393926612942}
   - component: {fileID: 2450640228208443990}
   - component: {fileID: 5911310591856593633}
+  - component: {fileID: 5845179925951225862}
   m_Layer: 12
   m_Name: BubblePrefab
   m_TagString: Bubble
@@ -52,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4bf5afe8c33b136459193e62ba540c0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,6 +133,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5845179925951225862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4598119267281020467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31157fba18e267743bef17931723098b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collider: {fileID: 0}
+  warpPower: 0.01
+  attenuation: 0.99
+  reflectPower: 50
+  isTriggerTime: 0.1
 --- !u!1 &4741358826528517606
 GameObject:
   m_ObjectHideFlags: 0
