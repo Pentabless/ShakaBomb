@@ -666,6 +666,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   next_scene_second_time: 2
+  logo_fade_out_time_rate: 0.25
+  screen_fade_out_time_rate: 0.5
 --- !u!4 &1538867719
 Transform:
   m_ObjectHideFlags: 0
