@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             balloonFloorCount -= Time.deltaTime;
-            if(balloonFloorCount <= 0 && balloonFloor > 0 && Data.num_balloon >= 1)
+            if (balloonFloorCount <= 0 && balloonFloor > 0 && Data.num_balloon >= 1)
             {
                 Debug.Log("yes");
                 balloonFloorCount = Player.PUSH_INTERVAL;
@@ -288,24 +288,31 @@ public class PlayerController : MonoBehaviour
 
             case 1:
                 this.rig.gravityScale = 3.0f;
-                jumpForce = defaultJumpForce * 0.77f;
+                jumpForce = defaultJumpForce * 0.9f;
                 playerSpeed = accelForce * 0.9f;
                 break;
 
             case 2:
                 this.rig.gravityScale = 2.0f;
-                jumpForce = defaultJumpForce * 0.67f;
+                jumpForce = defaultJumpForce * 0.8f;
                 playerSpeed = accelForce * 0.85f;
                 break;
 
             case 3:
                 this.rig.gravityScale = 1.5f;
-                jumpForce = defaultJumpForce * 0.57f;
+                jumpForce = defaultJumpForce * 0.77f;
                 playerSpeed = accelForce * 0.8f;
                 break;
 
             default:
                 break;
+        }
+        //接地時であれば Gravity Speed は 変化しない
+        if (coyoteFlag)
+        {
+            this.rig.gravityScale = 5.0f;
+            //jumpForce = defaultJumpForce * 1.0f;
+            //playerSpeed = accelForce * 1.0f;
         }
 
         // コヨーテタイムによる接地判定
