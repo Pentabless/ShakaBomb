@@ -387,10 +387,7 @@ class FloatFloor : Floor
 
     protected override void Execute()
     {
-        //if (thisObj.transform.childCount == 0)
-        //    balloonCount = 0;
-
-        if(Status == FloatStatus.Down)
+        if (Status == FloatStatus.Down)
         {
             thisObj.transform.position = Vector3.SmoothDamp(thisObj.transform.position, startPosition, ref velocity, downSecond);
             if (CheckMove(thisObj.transform.position, startPosition))
