@@ -22,12 +22,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     BubbleGenerator bubbleG;
 
-    // バルーンジェネレータ
+    // バルーンコントローラ
     [SerializeField]
-    BalloonGenerator balloonG;
+    BackBalloonController balloonController = null;
     // 回転を無視するオブジェクト
     [SerializeField]
-    GameObject antiRotationWrapper;
+    GameObject antiRotationWrapper = null;
 
     // バレットジェネレータ
     [SerializeField]
@@ -101,6 +101,13 @@ public class PlayerController : MonoBehaviour
 
     float boostButton = Decimal.ZERO;
     float boostButtonTrigger = Decimal.ZERO;
+
+    // 浮力が最高になるバルーンサイズ
+    [SerializeField]
+    float maxPowerBalloonSize = 2.5f;
+    // バレットの発射コスト
+    [SerializeField]
+    float bulletCost = 1.0f;
 
     //------------------------------------------------------------------------------------------
     // Start
@@ -183,21 +190,21 @@ public class PlayerController : MonoBehaviour
         var balloonFloor = Input.GetAxis(GamePad.BUTTON_B);
         if (floor == null)
         {
-            if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.num_balloon >= 1)
+            if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.balloonSize >= bulletCost)
             {
                 bulletG.BulletCreate(this.transform.position);
-                balloonG.UsedBalloon();
+                balloonController.UseBalloon(bulletCost);
             }
         }
         // バルーンフロアの使用
         else
         {
             balloonFloorCount -= Time.deltaTime;
-            if (balloonFloorCount <= 0 && balloonFloor > 0 && Data.num_balloon >= 1)
+            if (balloonFloorCount <= 0 && balloonFloor > 0 && Data.balloonSize >= bulletCost)
             {
                 Debug.Log("yes");
                 balloonFloorCount = Player.PUSH_INTERVAL;
-                balloonG.UsedBalloon();
+                balloonController.UseBalloon(bulletCost);
                 floor.UpFloor();
             }
         }
@@ -283,35 +290,42 @@ public class PlayerController : MonoBehaviour
         Data.playerVelX = this.rig.velocity.x;
 
         // 重力の変更(バブルの個数に応じて)
-        switch (Data.num_balloon)
-        {
-            case 0:
-                this.rig.gravityScale = 5.0f;
-                jumpForce = defaultJumpForce * 1.0f;
-                playerSpeed = accelForce * 1.0f;
-                break;
+        float buoyancy = Mathf.Min(maxPowerBalloonSize, Data.balloonSize) / maxPowerBalloonSize;
+        float t = buoyancy*buoyancy;
+        rig.gravityScale = Mathf.Lerp(5.0f, 1.5f, t);
+        jumpForce = defaultJumpForce * Mathf.Lerp(1.0f, 0.9f, t);
+        playerSpeed = accelForce * Mathf.Lerp(1.0f, 0.85f, t);
 
-            case 1:
-                this.rig.gravityScale = 3.0f;
-                jumpForce = defaultJumpForce * 0.9f;
-                playerSpeed = accelForce * 0.9f;
-                break;
+        //switch (Data.num_balloon)
+        //{
+        //    case 0:
+        //        this.rig.gravityScale = 5.0f;
+        //        jumpForce = defaultJumpForce * 1.0f;
+        //        playerSpeed = accelForce * 1.0f;
+        //        break;
 
-            case 2:
-                this.rig.gravityScale = 2.0f;
-                jumpForce = defaultJumpForce * 0.8f;
-                playerSpeed = accelForce * 0.85f;
-                break;
+        //    case 1:
+        //        this.rig.gravityScale = 3.0f;
+        //        jumpForce = defaultJumpForce * 0.9f;
+        //        playerSpeed = accelForce * 0.9f;
+        //        break;
 
-            case 3:
-                this.rig.gravityScale = 1.5f;
-                jumpForce = defaultJumpForce * 0.77f;
-                playerSpeed = accelForce * 0.8f;
-                break;
+        //    case 2:
+        //        this.rig.gravityScale = 2.0f;
+        //        jumpForce = defaultJumpForce * 0.8f;
+        //        playerSpeed = accelForce * 0.85f;
+        //        break;
 
-            default:
-                break;
-        }
+        //    case 3:
+        //        this.rig.gravityScale = 1.5f;
+        //        jumpForce = defaultJumpForce * 0.77f;
+        //        playerSpeed = accelForce * 0.8f;
+        //        break;
+
+        //    default:
+        //        break;
+        //}
+
         //接地時であれば Gravity Speed は 変化しない
         if (coyoteFlag)
         {

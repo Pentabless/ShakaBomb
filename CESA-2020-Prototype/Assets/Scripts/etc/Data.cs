@@ -6,6 +6,7 @@ using System.Collections;
 //==============================================================================================
 public class Data
 {
+    public static float balloonSize = 0;
     public static int num_balloon = 0;
     public static int playerDir = 0;
     public static float playerVelX;

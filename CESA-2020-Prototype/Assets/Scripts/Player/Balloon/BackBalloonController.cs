@@ -89,7 +89,7 @@ public class BackBalloonController : MonoBehaviour
         // 移動判定を行う
         var targetVec = (targetPos - transform.position);
         float distance = targetVec.magnitude * balloonLerpRate;
-        int hitCount = Physics2D.CircleCastNonAlloc(transform.position, thisCollider.radius + 0.1f, targetVec.normalized,
+        int hitCount = Physics2D.CircleCastNonAlloc(transform.position, thisCollider.radius + 0.05f, targetVec.normalized,
             hits, distance, moveLayerMask);
 
         for (int i = 0; i < hitCount; i++)
@@ -99,17 +99,20 @@ public class BackBalloonController : MonoBehaviour
 
         transform.position += targetVec.normalized * distance;
 
-        //// 衝突するオブジェクトがないなら移動させる
-        //if (hitCount == 0)
-        //{
-        //    transform.position += targetVec.normalized * distance;
-        //}
-        //// 衝突していたなら、そこまで移動させる
-        //else
-        //{
-            
-        //}
     }
+
+    //------------------------------------------------------------------------------------------
+    // OnCollisionEnter2D
+    //------------------------------------------------------------------------------------------
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // ダメージタイルと衝突した時に破裂させる
+        if (collision.gameObject.tag == Stage.DAMAGE_TILE)
+        {
+            Burst();
+        }
+    }
+
 
     //------------------------------------------------------------------------------------------
     // OnTriggerEnter2D
@@ -120,29 +123,88 @@ public class BackBalloonController : MonoBehaviour
         {
             return;
         }
-
+        
+        // バルーンを所持していない場合は初期化する
         if (!hasBalloon)
         {
-            InitBalloon();
+            EnableBalloon(true);
         }
 
-        float size = collision.transform.localScale.x;
-        balloonSize += size*size;
-        size = Mathf.Min(Mathf.Sqrt(balloonSize), limitSize);
-        thisCollider.radius = size/2;
+        // サイズ変更
+        ChangeSize(Mathf.Abs(collision.transform.localScale.x));
 
-        renderObject.transform.localScale = Vector2.one * size;
-
+        // バブルの消滅
         collision.gameObject.GetComponent<BubbleController>().Destroy();
     }
 
     //------------------------------------------------------------------------------------------
-    // バルーンの初期化
+    // バルーンの有効無効化
     //------------------------------------------------------------------------------------------
-    private void InitBalloon()
+    private void EnableBalloon(bool enable)
     {
-        renderer.enabled = true;
-        thisCollider.isTrigger = false;
-        hasBalloon = true;
+        renderer.enabled = enable;
+        thisCollider.isTrigger = !enable;
+        hasBalloon = enable;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // バルーンのサイズ変更
+    //------------------------------------------------------------------------------------------
+    private void ChangeSize(float change_size)
+    {
+        // コライダーのサイズ変更
+        float size = change_size * Mathf.Abs(change_size);
+        balloonSize = Mathf.Clamp(balloonSize + size, 0, limitSize * limitSize);
+        size = Mathf.Sqrt(balloonSize);
+        thisCollider.radius = size / 2;
+
+        // 画像のサイズ変更
+        renderObject.transform.localScale = Vector2.one * size;
+
+        // 無くなったら無効化させる
+        if (size <= Mathf.Epsilon)
+        {
+            EnableBalloon(false);
+        }
+
+        // サイズを更新
+        Data.balloonSize = size;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // バルーンの消費
+    //------------------------------------------------------------------------------------------
+    public bool UseBalloon(float useSize)
+    {
+        // サイズチェック
+        if (balloonSize < useSize*useSize)
+        {
+            return false;
+        }
+
+        // バルーンを減らす
+        ChangeSize(-useSize);
+        
+        return true;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 破裂させる
+    //------------------------------------------------------------------------------------------
+    public void Burst()
+    {
+        GenerateBurstEffect();
+        ChangeSize(-Data.balloonSize);
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 破裂エフェクトの生成
+    //------------------------------------------------------------------------------------------
+    private void GenerateBurstEffect()
+    {
+        EffectGenerator.BubbleBurstFX(
+            new BubbleBurstFX.Param(renderObject.GetComponent<SpriteRenderer>().color, renderObject.transform.lossyScale),
+            transform.position,
+            null);
     }
 }
