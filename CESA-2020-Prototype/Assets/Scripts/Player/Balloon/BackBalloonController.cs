@@ -113,17 +113,24 @@ public class BackBalloonController : MonoBehaviour
         }
     }
 
-
+    
     //------------------------------------------------------------------------------------------
-    // OnTriggerEnter2D
+    // OnTriggerStay2D
     //------------------------------------------------------------------------------------------
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag != "Bubble")
+        if (collision.tag != "Bubble" || !collision.gameObject.GetComponent<BubbleController>().CanCatch())
         {
             return;
         }
-        
+        HitBubble(collision);
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 泡との接触処理
+    //------------------------------------------------------------------------------------------
+    private void HitBubble(Collider2D collision)
+    {
         // バルーンを所持していない場合は初期化する
         if (!hasBalloon)
         {
@@ -185,6 +192,25 @@ public class BackBalloonController : MonoBehaviour
         // バルーンを減らす
         ChangeSize(-useSize);
         
+        return true;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // ブースト移動
+    //------------------------------------------------------------------------------------------
+    public bool UseBoost(float useSize)
+    {
+        if (!UseBalloon(useSize))
+        {
+            return false;
+        }
+
+        Vector2 effectSize = Vector2.one * useSize;
+        EffectGenerator.BubbleBurstFX(
+            new BubbleBurstFX.Param(renderObject.GetComponent<SpriteRenderer>().color, effectSize),
+            transform.position,
+            null);
+
         return true;
     }
 

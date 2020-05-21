@@ -108,6 +108,10 @@ public class PlayerController : MonoBehaviour
     // バレットの発射コスト
     [SerializeField]
     float bulletCost = 1.0f;
+    // ブースト移動コスト
+    [SerializeField]
+    float boostCost = 1.5f;
+
 
     //------------------------------------------------------------------------------------------
     // Start
@@ -228,11 +232,13 @@ public class PlayerController : MonoBehaviour
 
         // 空中ブースト Test
         boostButton = Input.GetAxis(Player.BOOST);
-        if (boostButton > 0 && boostButtonTrigger == 0.0f && Data.num_balloon > 0 && !isGround)
+        if (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize && !isGround)
         {
+            float boostDir = (transform.position - balloonController.gameObject.transform.position).x;
+            boostDir = boostDir > 0 ? 1 : boostDir < 0 ? -1 : 0;
             rig.velocity = new Vector2(0, 0);
-            rig.AddForce(new Vector2(boostForce.x * Data.playerDir, boostForce.y));
-            GenerateBoostFX();
+            rig.AddForce(new Vector2(boostForce.x * boostDir, boostForce.y));
+            balloonController.UseBoost(boostCost);
         }
 
         // 前フレームのキー入力の情報保持
@@ -508,16 +514,6 @@ public class PlayerController : MonoBehaviour
         Destroy(m_balloonList[Integer.ZERO]);
         m_balloonList.RemoveAt(Integer.ZERO);
         Data.num_balloon--;
-    }
-
-    //------------------------------------------------------------------------------------------
-    // ブーストエフェクトを生成する
-    //------------------------------------------------------------------------------------------
-    private void GenerateBoostFX()
-    {
-        var offset = new Vector3(boostFXOffset.x * -dir, boostFXOffset.y, 0);
-        m_balloonList[Integer.ZERO].transform.position = transform.position + offset;
-        m_balloonList[Integer.ZERO].GetComponent<BalloonController>().Destroy();
     }
 
     //------------------------------------------------------------------------------------------
