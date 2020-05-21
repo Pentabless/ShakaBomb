@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     // バルーンジェネレータ
     [SerializeField]
     BalloonGenerator balloonG;
+    // 回転を無視するオブジェクト
+    [SerializeField]
+    GameObject antiRotationWrapper;
 
     // バレットジェネレータ
     [SerializeField]
@@ -268,10 +271,12 @@ public class PlayerController : MonoBehaviour
         if (Data.playerDir != 1)
         {
             this.transform.localRotation = new Quaternion(0, 180, 0, 0);
+            antiRotationWrapper.transform.rotation = Quaternion.identity;
         }
         else
         {
             this.transform.localRotation = new Quaternion(0, 0, 0, 0);
+            antiRotationWrapper.transform.rotation = Quaternion.identity;
         }
 
         // プレイヤーのX方向速度取得

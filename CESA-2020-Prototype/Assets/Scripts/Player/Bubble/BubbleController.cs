@@ -196,6 +196,11 @@ public class BubbleController : MonoBehaviour
         return isDestroy;
     }
 
+    public void Destroy()
+    {
+        isDestroy = true;
+    }
+
     //本体が当たった瞬間
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -218,6 +223,7 @@ public class BubbleController : MonoBehaviour
     //粘着範囲が当たった瞬間
     public void StickyTriggerEnter(Collider2D collision)
     {
+        return;
         //Debug.Log("StickyHit");
 
         isTouchSticky = true;
