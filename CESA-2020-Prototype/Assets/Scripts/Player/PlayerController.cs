@@ -249,11 +249,11 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
                 {
-                    rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), boostForce.y * Input.GetAxis(Player.VERTICAL)));
+                    rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), boostForce.y * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
                 }
                 else
                 {
-                    rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * Input.GetAxis(Player.VERTICAL)) + 500.0f));
+                    rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
                 }
 
                 balloonController.UseBoost(boostCost);
