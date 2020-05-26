@@ -100,19 +100,6 @@ public class BackBalloonController : MonoBehaviour
         transform.position += targetVec.normalized * distance;
 
     }
-
-    //------------------------------------------------------------------------------------------
-    // OnCollisionEnter2D
-    //------------------------------------------------------------------------------------------
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // ダメージタイルと衝突した時に破裂させる
-        if (collision.gameObject.tag == Stage.DAMAGE_TILE)
-        {
-            Burst();
-        }
-    }
-
     
     //------------------------------------------------------------------------------------------
     // OnTriggerStay2D
