@@ -43,8 +43,16 @@ public class BubbleController : MonoBehaviour
 
     // 出現してからの時間
     private float time = 0.0f;
-    // 触れられるようになるまでの時間
-    private float canCatchTime = 0.25f;
+    // バルーンと接触してからの時間
+    private float hitedTime = 0.0f;
+    [SerializeField]
+    // バルーンと合体できるようになるまでの時間
+    private float canCatchTime = 0.3f;
+    // 合体先のオブジェクト
+    private GameObject mergeTarget = null;
+    // 前回の移動速度
+    private float preVelovity = 0.0f;
+
 
     //目的の大きさになるまでの時間(フレーム数)
     int target_scale_time;
@@ -91,8 +99,25 @@ public class BubbleController : MonoBehaviour
     // 通常時の泡の動き
     void NormalUpdate()
     {
+        var velovity = new Vector3(Mathf.Sin(angle) * move_force.x, move_force.y, 0.0f);
         // 移動する
-        transform.Translate(Mathf.Sin(angle) * move_force.x, move_force.y, 0.0f);
+        if (!mergeTarget)
+        {
+            transform.Translate(velovity);
+        }
+        // 合体先のオブジェクトがある場合
+        else
+        {
+            hitedTime += Time.deltaTime;
+
+            var targetVec = Vector3.Lerp(transform.position, mergeTarget.transform.position, Mathf.Min(hitedTime / canCatchTime, 1.0f));
+            targetVec -= transform.position;
+            velovity = Vector3.Lerp(velovity, targetVec, Mathf.Min(time / canCatchTime, 1.0f));
+            float magnitude = Mathf.Clamp(velovity.magnitude, preVelovity - 0.05f, preVelovity + 0.05f);
+            velovity = velovity.normalized * magnitude;
+            transform.Translate(velovity);
+        }
+        preVelovity = velovity.magnitude;
         angle += 0.1f;
 
         //バブルの消滅(カウント)
@@ -107,58 +132,58 @@ public class BubbleController : MonoBehaviour
             isDestroy = true;
         }
 
-        //色の変更
-        if (isTouchBubble)   //本体同士が当たっていたら
-        {
-            GetComponent<Renderer>().material.color = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-        }
-        else
-        {
-            if (isTouchSticky)   //本体の粘着範囲と相手の本体が当たっていたら
-            {
-                GetComponent<Renderer>().material.color = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
-            }
-            else      //何も当たっていなかったら
-            {
-                GetComponent<Renderer>().material.color = start_color;
-            }
-        }
+        ////色の変更
+        //if (isTouchBubble)   //本体同士が当たっていたら
+        //{
+        //    GetComponent<Renderer>().material.color = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+        //}
+        //else
+        //{
+        //    if (isTouchSticky)   //本体の粘着範囲と相手の本体が当たっていたら
+        //    {
+        //        GetComponent<Renderer>().material.color = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+        //    }
+        //    else      //何も当たっていなかったら
+        //    {
+        //        GetComponent<Renderer>().material.color = start_color;
+        //    }
+        //}
 
-        //大きさを変更する
-        if (now_scale != target_scale) //今の大きさと目的の大きさが違っていたら
-        {
-            now_scale += (target_scale - now_scale) / target_scale_time;
+        ////大きさを変更する
+        //if (now_scale != target_scale) //今の大きさと目的の大きさが違っていたら
+        //{
+        //    now_scale += (target_scale - now_scale) / target_scale_time;
 
-            //目的の大きさより大きくなったら
-            if (now_scale.x >= target_scale.x)
-            {
-                now_scale = target_scale;
-            }
+        //    //目的の大きさより大きくなったら
+        //    if (now_scale.x >= target_scale.x)
+        //    {
+        //        now_scale = target_scale;
+        //    }
 
-            if (Bubble.MAX_SIZE > now_scale.x)
-            {
-                transform.localScale = now_scale;
-            }
-        }
+        //    if (Bubble.MAX_SIZE > now_scale.x)
+        //    {
+        //        transform.localScale = now_scale;
+        //    }
+        //}
 
 
-        if (Data.num_balloon >= Balloon.MAX)
-        {
-            test_flag = false;
-        }
+        //if (Data.num_balloon >= Balloon.MAX)
+        //{
+        //    test_flag = false;
+        //}
 
-        if (catchCount > Balloon.COUNT)
-        {
-            test_flag = false;
-        }
+        //if (catchCount > Balloon.COUNT)
+        //{
+        //    test_flag = false;
+        //}
 
-        // 保持状態に切り替え
-        if (transform.localScale.x >= Bubble.MAX_SIZE * 0.9f && Data.num_balloon < Balloon.MAX && test_flag)
-        {
-            ret_flag = true;
-            //balloonG.CreateBalloon(this.transform.position);
-            isDestroy = true;
-        }
+        //// 保持状態に切り替え
+        //if (transform.localScale.x >= Bubble.MAX_SIZE * 0.9f && Data.num_balloon < Balloon.MAX && test_flag)
+        //{
+        //    ret_flag = true;
+        //    //balloonG.CreateBalloon(this.transform.position);
+        //    isDestroy = true;
+        //}
 
         // 消えようとしていたら
         if (isDestroy)
@@ -208,41 +233,51 @@ public class BubbleController : MonoBehaviour
     //本体が当たった瞬間
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == Bubble.NAME)
-        {
-            //Debug.Log("ParentHit");
-            isTouchBubble = true;
-        }
+        //// バルーンに触れたら追従するようにする
+        //if(collision.tag == Balloon.NAME)
+        //{
+        //    mergeTarget = collision.gameObject;
+        //}
+
+        //if (collision.tag == Bubble.NAME)
+        //{
+        //    //Debug.Log("ParentHit");
+        //    isTouchBubble = true;
+        //}
     }
 
     //本体が当たり終わった瞬間
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == Bubble.NAME)
+        // バルーンから離れたら追従するようにする
+        if (collision.tag == Balloon.NAME)
         {
-            isTouchBubble = false;
+            mergeTarget = collision.gameObject;
         }
+        //if (collision.tag == Bubble.NAME)
+        //{
+        //    isTouchBubble = false;
+        //}
     }
 
     //粘着範囲が当たった瞬間
     public void StickyTriggerEnter(Collider2D collision)
     {
-        return;
-        //Debug.Log("StickyHit");
+        ////Debug.Log("StickyHit");
 
-        isTouchSticky = true;
+        //isTouchSticky = true;
 
-        //当たった泡が消えようとしていたら
-        if (collision.GetComponentInParent<BubbleController>().GetDestroy())
-        {
-            //自身の大きさに当たった泡の大きさ分を目的の大きさに設定する
-            target_scale += collision.transform.localScale;
-        }
-        else
-        {
-            //自身が消えるようにする
-            isDestroy = true;
-        }
+        ////当たった泡が消えようとしていたら
+        //if (collision.GetComponentInParent<BubbleController>().GetDestroy())
+        //{
+        //    //自身の大きさに当たった泡の大きさ分を目的の大きさに設定する
+        //    target_scale += collision.transform.localScale;
+        //}
+        //else
+        //{
+        //    //自身が消えるようにする
+        //    isDestroy = true;
+        //}
     }
 
     //粘着範囲が当たり終わった瞬間
