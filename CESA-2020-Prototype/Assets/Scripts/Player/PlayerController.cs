@@ -239,8 +239,9 @@ public class PlayerController : MonoBehaviour
 
         if (boostCount >= 1)
         {
-            if (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize && !isGround)
+            if (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize)
             {
+                isGround = false;
                 float boostDir = (transform.position - balloonController.gameObject.transform.position).x;
                 boostDir = boostDir > 0 ? 1 : boostDir < 0 ? -1 : 0;
                 //rig.velocity = new Vector2(0, 0);
@@ -484,7 +485,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME)
+        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME || collision.tag == "DamageTile")
         {
             isGround = true;
             boostCount = 2;

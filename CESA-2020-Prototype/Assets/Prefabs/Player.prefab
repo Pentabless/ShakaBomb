@@ -326,7 +326,7 @@ MonoBehaviour:
   balloonLerpRate: 0.1
   moveLayerMask:
     serializedVersion: 2
-    m_Bits: 4276225
+    m_Bits: 4276224
 --- !u!114 &1912286094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,14 +478,14 @@ MonoBehaviour:
   gamepadManager: {fileID: 0}
   accelForce: 80
   maxSpeed: 6
-  defaultJumpForce: 1100
+  defaultJumpForce: 760
   turnCount: 10
   coyoteTime: 8
-  boostForce: {x: 500, y: 400}
+  boostForce: {x: 14, y: 14}
   boostFXOffset: {x: 1, y: -0.75}
   maxPowerBalloonSize: 2.5
   bulletCost: 1
-  boostCost: 1.5
+  boostCost: 0.3
 --- !u!212 &3524930649752458142
 SpriteRenderer:
   m_ObjectHideFlags: 0
