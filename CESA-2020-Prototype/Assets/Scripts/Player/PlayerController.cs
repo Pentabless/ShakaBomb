@@ -86,6 +86,8 @@ public class PlayerController : MonoBehaviour
     // ブースト時のエフェクトの位置オフセット
     [SerializeField]
     Vector2 boostFXOffset;
+    // ブーストの回数制限 着地でリセット
+    int boostCount = 0;
 
     // プレイヤーの向き
     int dir;            // 現在
@@ -235,24 +237,28 @@ public class PlayerController : MonoBehaviour
         float sticV = Input.GetAxis(Player.VERTICAL);
         Mathf.Abs(sticV); // 入力の度合
 
-        if (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize && !isGround)
+        if (boostCount >= 1)
         {
-            float boostDir = (transform.position - balloonController.gameObject.transform.position).x;
-            boostDir = boostDir > 0 ? 1 : boostDir < 0 ? -1 : 0;
-            //rig.velocity = new Vector2(0, 0);
-            rig.velocity = rig.velocity * 0.4f;
-            //rig.AddForce(new Vector2(boostForce.x * boostDir, boostForce.y));
-
-            if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
+            if (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize && !isGround)
             {
-                rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), boostForce.y * Input.GetAxis(Player.VERTICAL)) * 1.2f);
-            }
-            else
-            {
-                rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * Input.GetAxis(Player.VERTICAL)) + 400.0f));
-            }
+                float boostDir = (transform.position - balloonController.gameObject.transform.position).x;
+                boostDir = boostDir > 0 ? 1 : boostDir < 0 ? -1 : 0;
+                //rig.velocity = new Vector2(0, 0);
+                rig.velocity = rig.velocity * 0.0f;
+                //rig.AddForce(new Vector2(boostForce.x * boostDir, boostForce.y));
 
-            balloonController.UseBoost(boostCost);
+                if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
+                {
+                    rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), boostForce.y * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
+                }
+                else
+                {
+                    rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
+                }
+
+                balloonController.UseBoost(boostCost);
+                boostCount--;
+            }
         }
 
         // Debug LOg
@@ -271,17 +277,17 @@ public class PlayerController : MonoBehaviour
         // 切り替えし(地上にいるときのみ)
         if (isGround)
         {
-            if (bubbleGround)
+            //if (bubbleGround)
+            //{
+            if (lastDir > 0.0f && dir == -1)
             {
-                if (lastDir > 0.0f && dir == -1)
-                {
-                    bubbleG.BubbleCreate();
-                }
-                if (lastDir < 0.0f && dir == 1)
-                {
-                    bubbleG.BubbleCreate();
-                }
+                bubbleG.BubbleCreate();
             }
+            if (lastDir < 0.0f && dir == 1)
+            {
+                bubbleG.BubbleCreate();
+            }
+            //}
         }
 
         // 最終入力方向
@@ -465,7 +471,7 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME)
+        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME || collision.tag == "DamageTile")
         {
             isGround = true;
         }
@@ -481,6 +487,7 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME)
         {
             isGround = true;
+            boostCount = 2;
         }
 
         if (collision.transform.tag == Common.Floor.NAME)
