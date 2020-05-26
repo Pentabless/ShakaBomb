@@ -1,6 +1,9 @@
 ﻿Shader "Custom/ReflectionWater" {
 	Properties{
 		_Tint("Tint", Color) = (1, 1, 1, 1)
+		_BlendColor("BlendColor", Color) = (0, 0, 0, 0)
+		_SaturationRate("SaturationRate", Float) = 1
+		_BrightnessRate("BrightnessRate", Float) = 1
 		_Displacement("Displacement", 2D) = "defaulttexture"
 		_Strength("Strength", Float) = 0.015
 		_LightGrid("LightGrid", Vector) = (35, 70, 0, 0)
@@ -17,6 +20,7 @@
 			#pragma fragment frag
 
 			#include "UnityCG.cginc"
+			#include "Common.cginc"
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -42,6 +46,9 @@
 			uniform float _TopEdgePosition;
 
 			fixed4 _Tint;
+			fixed4 _BlendColor;
+			float _SaturationRate;
+			float _BrightnessRate;
 			sampler2D _Displacement;
 			float4 _Displacement_ST;
 			float _Strength;
@@ -83,6 +90,9 @@
 				float sampleY = _TopEdgePosition + distanceToEdge;
 
 				float4 output = tex2D(_SSWaterReflectionsTex, float2(adjusted.x, sampleY)) * _Tint;
+
+				output.rgb = shift_col(output.rgb, float3(0, _SaturationRate, _BrightnessRate));
+				output.rgb = output.rgb*(1.0 - _BlendColor.a) + _BlendColor.rgb*_BlendColor.a;
 
 				float2 area = floor(frac(uv)*_LightGrid);
 				float2 seed = float2(80, 80);
