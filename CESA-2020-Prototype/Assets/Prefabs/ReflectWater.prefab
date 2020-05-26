@@ -105,4 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8877e436dc1304092be74516c49994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiling: {x: 2, y: 1}
   scrollSpeed: 0.1
+  filterColor: {r: 0.1462264, g: 0.6281676, b: 1, a: 1}
+  blendColor: {r: 0.100302614, g: 0.6901722, b: 0.9245283, a: 0.19607843}
+  saturationRate: 0.85
+  brightnessRate: 1.3
