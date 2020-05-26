@@ -476,8 +476,14 @@ public class PlayerController : MonoBehaviour
         {
             KnockBack(collision.transform.position);
         }
-    }
 
+        // ダメージタイルと衝突した時に破裂させる
+        if (collision.gameObject.tag == Stage.DAMAGE_TILE)
+        {
+            balloonController.Burst();
+        }
+    }
+    
     //------------------------------------------------------------------------------------------
     // OnTrigger
     //------------------------------------------------------------------------------------------
