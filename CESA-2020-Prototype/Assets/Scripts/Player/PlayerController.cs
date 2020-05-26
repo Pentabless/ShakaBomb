@@ -232,14 +232,31 @@ public class PlayerController : MonoBehaviour
 
         // 空中ブースト Test
         boostButton = Input.GetAxis(Player.BOOST);
+        float sticV = Input.GetAxis(Player.VERTICAL);
+        Mathf.Abs(sticV); // 入力の度合
+
         if (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize && !isGround)
         {
             float boostDir = (transform.position - balloonController.gameObject.transform.position).x;
             boostDir = boostDir > 0 ? 1 : boostDir < 0 ? -1 : 0;
-            rig.velocity = new Vector2(0, 0);
-            rig.AddForce(new Vector2(boostForce.x * boostDir, boostForce.y));
+            //rig.velocity = new Vector2(0, 0);
+            rig.velocity = rig.velocity * 0.4f;
+            //rig.AddForce(new Vector2(boostForce.x * boostDir, boostForce.y));
+
+            if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
+            {
+                rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), boostForce.y * Input.GetAxis(Player.VERTICAL)) * 1.2f);
+            }
+            else
+            {
+                rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * Input.GetAxis(Player.VERTICAL)) + 400.0f));
+            }
+
             balloonController.UseBoost(boostCost);
         }
+
+        // Debug LOg
+        Debug.Log(Input.GetAxis(Player.VERTICAL));
 
         // 前フレームのキー入力の情報保持
         // Jump
@@ -297,7 +314,7 @@ public class PlayerController : MonoBehaviour
 
         // 重力の変更(バブルの個数に応じて)
         float buoyancy = Mathf.Min(maxPowerBalloonSize, Data.balloonSize) / maxPowerBalloonSize;
-        float t = buoyancy*buoyancy;
+        float t = buoyancy * buoyancy;
         rig.gravityScale = Mathf.Lerp(5.0f, 1.5f, t);
         jumpForce = defaultJumpForce * Mathf.Lerp(1.0f, 0.9f, t);
         playerSpeed = accelForce * Mathf.Lerp(1.0f, 0.85f, t);

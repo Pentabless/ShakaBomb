@@ -68,6 +68,7 @@ namespace Common
         public const string JUMP                = ("Button A");
         public const string BOOST               = ("Button X");
         public const string HORIZONTAL          = ("Horizontal");
+        public const string VERTICAL            = ("Vertical");
         // 長押しのインターバル
         public const float PUSH_INTERVAL        = 2.0f;
     }
