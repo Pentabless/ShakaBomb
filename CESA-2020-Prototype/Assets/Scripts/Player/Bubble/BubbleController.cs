@@ -38,10 +38,13 @@ public class BubbleController : MonoBehaviour
 
     // 泡のカウント
     private int catchCount = 0;
-
     // 消滅までのカウント
     private int deleteCount = 0;
 
+    // 出現してからの時間
+    private float time = 0.0f;
+    // 触れられるようになるまでの時間
+    private float canCatchTime = 0.25f;
 
     //目的の大きさになるまでの時間(フレーム数)
     int target_scale_time;
@@ -65,7 +68,7 @@ public class BubbleController : MonoBehaviour
         target_scale_time = 60;
 
         playerObj = GameObject.Find(Player.NAME);
-        balloonG = GameObject.Find(Balloon.GENERATOR).GetComponent<BalloonGenerator>();
+        //balloonG = GameObject.Find(Balloon.GENERATOR).GetComponent<BalloonGenerator>();
     }
 
 
@@ -73,6 +76,7 @@ public class BubbleController : MonoBehaviour
     {
         catchCount++;
         deleteCount++;
+        time += Time.deltaTime;
 
         if (!ret_flag)
         {
@@ -152,7 +156,7 @@ public class BubbleController : MonoBehaviour
         if (transform.localScale.x >= Bubble.MAX_SIZE * 0.9f && Data.num_balloon < Balloon.MAX && test_flag)
         {
             ret_flag = true;
-            balloonG.CreateBalloon(this.transform.position);
+            //balloonG.CreateBalloon(this.transform.position);
             isDestroy = true;
         }
 
@@ -196,6 +200,11 @@ public class BubbleController : MonoBehaviour
         return isDestroy;
     }
 
+    public void Destroy()
+    {
+        isDestroy = true;
+    }
+
     //本体が当たった瞬間
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -218,6 +227,7 @@ public class BubbleController : MonoBehaviour
     //粘着範囲が当たった瞬間
     public void StickyTriggerEnter(Collider2D collision)
     {
+        return;
         //Debug.Log("StickyHit");
 
         isTouchSticky = true;
@@ -240,6 +250,15 @@ public class BubbleController : MonoBehaviour
     {
         isTouchSticky = false;
     }
+
+    //------------------------------------------------------------------------------------------
+    // 触れらるかどうか取得する
+    //------------------------------------------------------------------------------------------
+    public bool CanCatch()
+    {
+        return time >= canCatchTime;
+    }
+
 
     //------------------------------------------------------------------------------------------
     // 破裂エフェクトの生成

@@ -96,7 +96,6 @@ public class BubbleDistortionController : MonoBehaviour
         {
             collider.enabled = true;
         }
-
     }
 
     //------------------------------------------------------------------------------------------
