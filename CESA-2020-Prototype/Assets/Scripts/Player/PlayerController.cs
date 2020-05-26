@@ -196,8 +196,19 @@ public class PlayerController : MonoBehaviour
         {
             if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.balloonSize >= bulletCost)
             {
-                bulletG.BulletCreate(this.transform.position);
-                balloonController.UseBalloon(bulletCost);
+                float angle = 0.0f;
+                float v = Input.GetAxis(Player.VERTICAL);
+                if(Mathf.Abs(v) > 0.0f)
+                {
+                    angle = Mathf.PI * Mathf.Sign(v) * 0.5f;
+                }
+                else if (Data.playerDir < 0)
+                {
+                    angle = Mathf.PI;
+                }
+                if (bulletG.BulletCreate(transform.position, angle)) {
+                    balloonController.UseBalloon(bulletCost);
+                }
             }
         }
         // バルーンフロアの使用

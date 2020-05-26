@@ -4,37 +4,57 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    // 浮力の種類
+    enum FloatPowerType
+    {
+        None,       // 無し
+        Sin,        // サイン
+        AbsSin,     // サインの絶対値
+    }
+
     // リジッドボディ
-    Rigidbody2D rig;
+    Rigidbody2D rig = null;
 
     // 消えるかどうか
-    bool isDestroy;
+    bool isDestroy = false;
+    // 発射したかどうか
+    bool wasShoted = false;
 
-    // 発射フラグ
-    bool isShot;
-
-    float shotDir;
+    [SerializeField]
+    // 発射速度
+    float shotPower = 420.0f;
+    [SerializeField]
+    // 浮力の種類
+    FloatPowerType floatPowerType = FloatPowerType.AbsSin;
+    [SerializeField]
+    // 発射時の浮力
+    float floatPower = 200.0f;
+    // 発射方向
+    float shotAngle = 0.0f;
 
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         isDestroy = false;
-        isShot = false;
+        wasShoted = false;
     }
 
     void Update()
     {
-        if (!isShot)
+        if (!wasShoted)
         {
-            if (Data.playerDir > 0)
+            var force = new Vector2(Mathf.Cos(shotAngle), Mathf.Sin(shotAngle)) * shotPower;
+            switch (floatPowerType)
             {
-                rig.AddForce(new Vector2(400 + Data.playerVelX * 30.0f, 200));
+                case FloatPowerType.Sin:
+                    force.y += (Mathf.Sin(shotAngle) + 1.0f) * floatPower;
+                    break;
+                case FloatPowerType.AbsSin:
+                    force.y += (Mathf.Abs(Mathf.Sin(shotAngle)) + 1.0f) * floatPower;
+                    break;
             }
-            else
-            {
-                rig.AddForce(new Vector2(-400 + Data.playerVelX * 30.0f, 200));
-            }
-            isShot = true;
+            rig.AddForce(force);
+            wasShoted = true;
         }
     }
 
@@ -44,6 +64,14 @@ public class BulletController : MonoBehaviour
         {
             Destroy();
         }
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 発射方向を設定する
+    //------------------------------------------------------------------------------------------
+    public void SetAngle(float angle)
+    {
+        shotAngle = angle;
     }
 
     //------------------------------------------------------------------------------------------
