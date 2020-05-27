@@ -88,6 +88,8 @@ public class PlayerController : MonoBehaviour
     Vector2 boostFXOffset;
     // ブーストの回数制限 着地でリセット
     int boostCount = 0;
+    // エネミーを利用したブーストのフラグ
+    bool isEnemyBoost = false;
 
     // プレイヤーの向き
     int dir;            // 現在
@@ -200,15 +202,18 @@ public class PlayerController : MonoBehaviour
             {
                 float angle = 0.0f;
                 float v = Input.GetAxis(Player.VERTICAL);
-                if(Mathf.Abs(v) > 0.0f)
+                float h = Input.GetAxis(Player.HORIZONTAL);
+                //if (Mathf.Abs(v) > 0.0f)
+                //{
+                //    angle = Mathf.PI * Mathf.Sign(v) * 0.5f;
+                //}
+                //else if (Data.playerDir < 0)
+                //{
+                //    angle = Mathf.PI;
+                //}
+                angle = Mathf.Atan2(v,h);
+                if (bulletG.BulletCreate(transform.position, angle))
                 {
-                    angle = Mathf.PI * Mathf.Sign(v) * 0.5f;
-                }
-                else if (Data.playerDir < 0)
-                {
-                    angle = Mathf.PI;
-                }
-                if (bulletG.BulletCreate(transform.position, angle)) {
                     balloonController.UseBalloon(bulletCost);
                 }
             }
@@ -254,7 +259,7 @@ public class PlayerController : MonoBehaviour
             {
                 isGround = false;
                 float boostDir = (transform.position - balloonController.gameObject.transform.position).x;
-                boostDir = boostDir > 0 ? 1 : boostDir < 0 ? -1 : 0;
+                //boostDir = boostDir > 0 ? 1 : boostDir < 0 ? -1 : 0;
                 //rig.velocity = new Vector2(0, 0);
                 rig.velocity = rig.velocity * 0.0f;
                 //rig.AddForce(new Vector2(boostForce.x * boostDir, boostForce.y));
@@ -270,6 +275,20 @@ public class PlayerController : MonoBehaviour
 
                 balloonController.UseBoost(boostCost);
                 boostCount--;
+            }
+        }
+
+        // エネミーを利用したブースト(仮)
+        if (isEnemyBoost)
+        {
+            rig.velocity = rig.velocity * 0.0f;
+            if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
+            {
+                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
+            }
+            else
+            {
+                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
             }
         }
 
@@ -395,6 +414,9 @@ public class PlayerController : MonoBehaviour
         {
             hitCount--;
         }
+
+        // エネミーブーストのリセット
+        isEnemyBoost = false;
     }
 
     //------------------------------------------------------------------------------------------
@@ -482,8 +504,14 @@ public class PlayerController : MonoBehaviour
         {
             balloonController.Burst();
         }
+
+        // エネミーと接触したらぶっ飛ぶ(入力方向)
+        if (collision.gameObject.tag == "Enemy")
+        {
+            isEnemyBoost = true;
+        }
     }
-    
+
     //------------------------------------------------------------------------------------------
     // OnTrigger
     //------------------------------------------------------------------------------------------
