@@ -26,6 +26,9 @@ namespace Common
         public const string NAME                = ("Camera");
         public const string MAIN_CAMERA         = ("Main Camera");
         public const string CONTROLLER          = ("CameraController");
+        public const float  CELL_X              = 20.0f;
+        public const float  CELL_Y              = 14.0f;
+        public const float  SPEED_PERCENTAGE    = 0.05f;
     }
 
     //------------------------------------------------------------------------------------------
