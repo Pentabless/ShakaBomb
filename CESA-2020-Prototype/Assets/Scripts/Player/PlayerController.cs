@@ -191,6 +191,20 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
+        // テストコード
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            bulletG.EnableGuideLines(transform.position, (Data.playerDir > 0 ? 0 : Mathf.PI));
+        }
+        else
+        {
+            bulletG.DisableGuideLines();
+        }
+
+
+
+
         // バレットの発射
         attackButton = Input.GetAxis(Player.ATTACK);
         var balloonFloor = Input.GetAxis(GamePad.BUTTON_B);

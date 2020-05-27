@@ -39,27 +39,24 @@ public class BulletController : MonoBehaviour
         isDestroy = false;
         wasShoted = false;
     }
-
+    float t = 0;Vector3 f;Vector3 p;
     void Update()
     {
         if (!wasShoted)
         {
-            var force = new Vector2(Mathf.Cos(shotAngle), Mathf.Sin(shotAngle)) * shotPower;
-            switch (floatPowerType)
-            {
-                case FloatPowerType.Sin:
-                    force.y += (Mathf.Sin(shotAngle) + 1.0f) * floatPower;
-                    break;
-                case FloatPowerType.MinusSin:
-                    force.y += (-Mathf.Sin(shotAngle) + 1.0f) * floatPower;
-                    break;
-                case FloatPowerType.AbsSin:
-                    force.y += (Mathf.Abs(Mathf.Sin(shotAngle)) + 1.0f) * floatPower;
-                    break;
-            }
+            var force = CalcShotForce(shotAngle);
             rig.AddForce(force, ForceMode2D.Impulse);
             wasShoted = true;
+            f = force;
+            p = transform.position;
         }
+        else
+        {
+            t += Time.deltaTime;
+            Debug.Log("real:" + transform.position + " t:"+t);
+            Debug.Log("calc:" + (p + f * t + Vector3.up * 0.5f * rig.gravityScale*Physics2D.gravity.y * t * t) + " t:" + t);
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -76,6 +73,28 @@ public class BulletController : MonoBehaviour
     public void SetAngle(float angle)
     {
         shotAngle = angle;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 発射時の力を計算する
+    //------------------------------------------------------------------------------------------
+    public Vector2 CalcShotForce(float angle)
+    {
+        var force = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * shotPower;
+        switch (floatPowerType)
+        {
+            case FloatPowerType.Sin:
+                force.y += (Mathf.Sin(angle) + 1.0f) * floatPower;
+                break;
+            case FloatPowerType.MinusSin:
+                force.y += (-Mathf.Sin(angle) + 1.0f) * floatPower;
+                break;
+            case FloatPowerType.AbsSin:
+                force.y += (Mathf.Abs(Mathf.Sin(angle)) + 1.0f) * floatPower;
+                break;
+        }
+
+        return force;
     }
 
     //------------------------------------------------------------------------------------------
