@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
     {
         cameraShake = mainCamera.transform.GetComponent<CameraShake>();
         mainCamera.orthographicSize = cameraViewRange;
-        this.transform.position = initializePos;
+        mainCamera.transform.position = initializePos;
         nextPos = initializePos;
     }
 
