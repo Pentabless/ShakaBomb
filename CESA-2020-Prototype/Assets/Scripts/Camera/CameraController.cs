@@ -12,6 +12,16 @@ public class CameraController : MonoBehaviour
         Right,
         Middle
     }
+
+    // 背景情報
+    [System.Serializable]
+    public struct BGInfo
+    {
+        public GameObject obj;
+        public Vector2 size;
+    }
+
+
     // 定数
     // ラープの割合
     readonly float percentage = 0.05f;
@@ -48,6 +58,14 @@ public class CameraController : MonoBehaviour
     // プレイヤーの追従On
     bool followCameraFlag = false;
     bool followY = false;
+
+    // 視差背景
+    [Header("size=pixel/PixelPerUnit*scale")]
+    [SerializeField]
+    List<BGInfo> backGrounds = new List<BGInfo>();
+    // 背景の開始Y座標
+    [SerializeField]
+    float bgBottom = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -111,6 +129,9 @@ public class CameraController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.O))
             OriginCamera();
+
+        // 背景の移動
+        MoveBackGrounds();
     }
 
     /// <summary>
@@ -205,6 +226,41 @@ public class CameraController : MonoBehaviour
         }
 
         return x;
+    }
+
+    /// <summary>
+    /// 背景の移動
+    /// </summary>
+    private void MoveBackGrounds()
+    {
+        foreach (var bg in backGrounds)
+        {
+            // デフォルトのオフセット位置を設定
+            Vector3 offset = new Vector3(0, 0, bg.obj.transform.localPosition.z);
+            if (cameraRange.width - cameraRange.x > Mathf.Epsilon)
+            {
+                float t = (mainCamera.transform.position.x - cameraRange.x) / (cameraRange.width - cameraRange.x);
+                float width = Mathf.Max(bg.size.x - mainCamera.orthographicSize * mainCamera.aspect * 2.0f, 0.0f);
+                offset.x -= Mathf.Lerp(-width * 0.5f, width * 0.5f, t);
+            }
+            if (cameraRange.height - cameraRange.y > Mathf.Epsilon)
+            {
+                if (mainCamera.transform.position.y - bgBottom < mainCamera.orthographicSize)
+                {
+                    float lim = (bgBottom + bg.size.y * 0.5f) - mainCamera.transform.position.y;
+                    offset.y = lim;
+                }
+                else
+                {
+                    float rangeY = bgBottom + mainCamera.orthographicSize;
+                    float t = (mainCamera.transform.position.y - rangeY) / (cameraRange.height - rangeY);
+                    float height = Mathf.Max(bg.size.y - mainCamera.orthographicSize * 2.0f, 0.0f);
+                    offset.y -= Mathf.Lerp(-height * 0.5f, height * 0.5f, t);
+
+                }
+            }
+            bg.obj.transform.localPosition = offset;
+        }
     }
 
     /// <summary>
