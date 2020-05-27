@@ -131,5 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfa6814308174e46ab9de77e1646f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotPower: 420
-  floatPower: 200
+  shotPower: 14
+  floatPowerType: 1
+  floatPower: 3.5
