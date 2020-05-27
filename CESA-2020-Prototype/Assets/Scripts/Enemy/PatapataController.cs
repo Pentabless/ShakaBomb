@@ -59,12 +59,11 @@ public class PatapataController : MonoBehaviour
 
         if(currentStatus == Status.Hit)
         {
-            
+            this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * Enemy.BALLON_MOVEMENT + startPosition.y, startPosition.z);
         }
 
-        if(currentStatus == Status.Dead)
+        if (currentStatus == Status.Dead)
         {
-            Debug.Log("yes");
             Destroy(this.gameObject);
         }
     }
@@ -75,6 +74,9 @@ public class PatapataController : MonoBehaviour
             currentStatus = Status.Dead;
 
         if (collision.transform.tag == "Bullet")
+        {
+            startPosition = this.transform.position;
             currentStatus = Status.Hit;
+        }
     }
 }
