@@ -211,7 +211,14 @@ public class PlayerController : MonoBehaviour
                 //{
                 //    angle = Mathf.PI;
                 //}
-                angle = Mathf.Atan2(v,h);
+                if (Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f)
+                {
+                    angle = Mathf.Atan2(v, h);
+                }
+                else if (Data.playerDir < 0)
+                {
+                    angle = Mathf.PI;
+                }
                 if (bulletG.BulletCreate(transform.position, angle))
                 {
                     balloonController.UseBalloon(bulletCost);
