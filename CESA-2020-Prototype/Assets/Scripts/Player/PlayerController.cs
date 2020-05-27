@@ -541,6 +541,12 @@ public class PlayerController : MonoBehaviour
         {
             isGround = true;
             boostCount = 2;
+            // 着地エフェクト
+            Vector2 effectSize = Vector2.one * 0.4f;
+            EffectGenerator.BubbleBurstFX(
+                new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),
+                new Vector2(this.transform.position.x, this.transform.position.y - 1.0f),
+                null);
         }
 
         if (collision.transform.tag == Common.Floor.NAME)
