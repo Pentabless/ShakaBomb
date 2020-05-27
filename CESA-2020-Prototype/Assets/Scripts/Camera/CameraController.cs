@@ -19,6 +19,12 @@ public class CameraController : MonoBehaviour
     Rect cameraRange;
     [SerializeField]
     Vector3 initializePos;
+
+    [SerializeField]
+    float cellX;
+    [SerializeField]
+    float cellY;
+
     Vector3 nextPos;
 
     // デバックカメラ揺れ
@@ -30,6 +36,7 @@ public class CameraController : MonoBehaviour
     {
         cameraShake = mainCamera.transform.GetComponent<CameraShake>();
         mainCamera.orthographicSize = cameraViewRange;
+        this.transform.position = initializePos;
         nextPos = initializePos;
     }
 
@@ -37,29 +44,32 @@ public class CameraController : MonoBehaviour
     {
         var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y , GetScreenBottomRight().x, GetScreenTopLeft().y);
 
-        if(fourCorners.x >= player.transform.position.x)
+        if (fourCorners.x >= player.transform.position.x)
         {
             followOn = false;
-            nextPos.x -= Common.Camera.CELL_X;
+            nextPos.x -= cellX;
         }
         if (fourCorners.height <= player.transform.position.y)
         {
             followOn = false;
-            nextPos.y += Common.Camera.CELL_Y;
+            nextPos.y += cellY;
         }
         if (fourCorners.width <= player.transform.position.x)
         {
             followOn = false;
-            nextPos.x += Common.Camera.CELL_X;
+            nextPos.x += cellX;
         }
         if (fourCorners.y >= player.transform.position.y)
         {
             followOn = false;
-            nextPos.y -= Common.Camera.CELL_Y;
+            nextPos.y -= cellY;
         }
 
+
         if (!followOn)
+        {
             followOn = FollowCamera(nextPos);
+        }
 
         // カメラの範囲指定を適用
         mainCamera.transform.position = SetCameraRangePosition(mainCamera.transform.position.x, mainCamera.transform.position.y);
