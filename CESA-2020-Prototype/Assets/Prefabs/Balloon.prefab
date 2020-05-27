@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7825175e678135b47bbadbc26d7a6b92, type: 3}
   m_Color: {r: 0.5284354, g: 0.8962264, b: 0.8750734, a: 1}
   m_FlipX: 0
@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collider: {fileID: 824629121111084186}
-  power: 0.03
+  warpPower: 0.01
   attenuation: 0.97
+  reflectPower: 50
   isTriggerTime: 0.1
