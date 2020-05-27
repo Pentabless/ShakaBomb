@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // 列挙隊
-    enum CameraStatus
-    {
-        None,
-        Left,
-        Right,
-        Middle
-    }
 
     // 背景情報
     [System.Serializable]
@@ -21,13 +13,6 @@ public class CameraController : MonoBehaviour
         public Vector2 size;
     }
 
-
-    // 定数
-    // ラープの割合
-    readonly float percentage = 0.05f;
-    // カメラの上のポジションから引くサイズ
-    readonly float difference = 2.0f;
-
     // シリアライズ変数
     // カメラ
     [SerializeField]
@@ -35,29 +20,25 @@ public class CameraController : MonoBehaviour
     // プレイヤー
     [SerializeField]
     GameObject player;
-    [SerializeField]
-    CameraStatus cameraStatus;
     // カメラの視野角
     [SerializeField]
     float cameraViewRange;
     // カメラの挙動範囲
     [SerializeField]
     Rect cameraRange;
-    // カメラの移動：要素数　Up(0):Down(1)
     [SerializeField]
-    float[] moveCameraAmount;
-    // 左と右にするときの値
+    Vector3 initializePos;
+
     [SerializeField]
-    float leftPos;
+    float cellX;
     [SerializeField]
-    float rightPos;
+    float cellY;
+
+    Vector3 nextPos;
 
     // デバックカメラ揺れ
     CameraShake cameraShake;
-    Vector3 lastPlayerPos;
-    // プレイヤーの追従On
-    bool followCameraFlag = false;
-    bool followY = false;
+    bool followOn = true;
 
     // 視差背景
     [Header("size=pixel/PixelPerUnit*scale")]
@@ -72,32 +53,40 @@ public class CameraController : MonoBehaviour
     {
         cameraShake = mainCamera.transform.GetComponent<CameraShake>();
         mainCamera.orthographicSize = cameraViewRange;
-        lastPlayerPos = player.transform.position;
+        mainCamera.transform.position = initializePos;
+        nextPos = initializePos;
     }
 
     private void FixedUpdate()
     {
-        // プレイヤーのポジションとカメラのポジションを調べる
-        Vector3 playerPos = player.transform.position;
+        var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y, GetScreenBottomRight().x, GetScreenTopLeft().y);
 
-        if(!followCameraFlag)
+        if (fourCorners.x >= player.transform.position.x)
         {
-            // プレイヤーの落下判定
-            if (playerPos.y <= lastPlayerPos.y)
-                followY = false;
-
-            lastPlayerPos = playerPos;
-
-            // ジャンプだけではカメラを追従しない
-            if (playerPos.y >= GetScreenTopLeft().y - difference)
-                followY = false;
+            followOn = false;
+            nextPos.x -= cellX;
+        }
+        if (fourCorners.height <= player.transform.position.y)
+        {
+            followOn = false;
+            nextPos.y += cellY;
+        }
+        if (fourCorners.width <= player.transform.position.x)
+        {
+            followOn = false;
+            nextPos.x += cellX;
+        }
+        if (fourCorners.y >= player.transform.position.y)
+        {
+            followOn = false;
+            nextPos.y -= cellY;
         }
 
-        if (!followY)
+
+        if (!followOn)
         {
-            followY = FollowCameraY(playerPos.y);
+            followOn = FollowCamera(nextPos);
         }
-        FollowCameraX(playerPos.x);
 
         // カメラの範囲指定を適用
         mainCamera.transform.position = SetCameraRangePosition(mainCamera.transform.position.x, mainCamera.transform.position.y);
@@ -119,48 +108,10 @@ public class CameraController : MonoBehaviour
             Debug.Log("描画範囲(-)：" + cameraViewRange);
         }
 
-        if (Input.GetKey(KeyCode.E))
-        {
-            MoveCamera();
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            MoveCamera(false);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-            OriginCamera();
-
         // 背景の移動
         MoveBackGrounds();
     }
 
-    /// <summary>
-    /// カメラを上下に移動
-    /// </summary>
-    /// <param name="up">↑移動or↓移動</param>
-    /// <returns>Trueならば完了</returns>
-    public bool MoveCamera(bool up = true)
-    {
-        Vector3 cameraPos = mainCamera.transform.position;
-        followCameraFlag = true;
-
-        cameraPos.y = moveCameraAmount[up ? 0 : 1];
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, cameraPos, percentage);
-
-        // 移動したらTrueを返す
-        if (Mathf.Approximately(mainCamera.transform.position.y, cameraPos.y))
-            return true;
-
-        return false;
-    }
-
-    /// <summary>
-    /// カメラを原点に戻す
-    /// </summary>
-    public void OriginCamera()
-    {
-        followCameraFlag = false;
-    }
 
     /// <summary>
     /// カメラ追従
@@ -171,7 +122,7 @@ public class CameraController : MonoBehaviour
     private bool FollowCamera(Vector3 playerPos)
     {
         playerPos.z = mainCamera.transform.position.z;
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, playerPos, percentage);
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, playerPos, Common.Camera.SPEED_PERCENTAGE);
 
         // 移動したらTrueを返す
         if (CheckMove(mainCamera.transform.position, playerPos))
@@ -180,53 +131,6 @@ public class CameraController : MonoBehaviour
         return false;
     }
 
-    /// <summary>
-    /// 横方向にプレイヤーを追う
-    /// </summary>
-    /// <param name="x">目的位置</param>
-    /// <returns>完了しているかどうか</returns>
-    private bool FollowCameraX(float x)
-    {
-        Vector3 cameraPos = mainCamera.transform.position;
-        var temp = PositionCorrection(x);
-
-        mainCamera.transform.position = new Vector3(Mathf.Lerp(cameraPos.x, temp, 0.1f), cameraPos.y, cameraPos.z);
-        // 移動したらTrueを返す
-        if (CheckDifferences(mainCamera.transform.position.x, temp, 0.01f))
-            return true;
-
-        return false;
-    }
-
-    /// <summary>
-    /// 縦方向にカメラを追う
-    /// </summary>
-    /// <param name="y">目的位置</param>
-    /// <returns>完了したかどうか</returns>
-    private bool FollowCameraY(float y)
-    {
-        Vector3 cameraPos = mainCamera.transform.position;
-
-        mainCamera.transform.position = new Vector3(cameraPos.x, Mathf.Lerp(cameraPos.y, y, percentage), cameraPos.z);
-
-        // 移動したらTrueを返す
-        if (CheckDifferences(mainCamera.transform.position.y, cameraPos.y, 0.01f))
-            return true;
-
-        return false;
-    }
-
-    private float PositionCorrection(float x)
-    {
-        switch(cameraStatus)
-        {
-            case CameraStatus.Left: x += leftPos; break;
-            case CameraStatus.Right: x -= rightPos; break;
-            case CameraStatus.Middle:break;
-        }
-
-        return x;
-    }
 
     /// <summary>
     /// 背景の移動
@@ -271,7 +175,7 @@ public class CameraController : MonoBehaviour
     /// <returns>完了していればtrue</returns>
     private bool CheckMove(Vector3 start, Vector3 end)
     {
-        if (CheckDifferences(start.x, end.x, 0.1f) && CheckDifferences(start.y, end.y, 0.1f))
+        if (Mathf.Approximately(start.y, end.y) && Mathf.Approximately(start.x, end.x))
             return true;
 
         return false;
@@ -334,19 +238,5 @@ public class CameraController : MonoBehaviour
         //bottomRight.Scale(new Vector3(1f, -1f, 1f));
         return bottomRight;
     }
-
-    /// <summary>
-    /// 画面の中央を取る
-    /// </summary>
-    /// <returns></returns>
-    private Vector3 GetScreenCenter()
-    {
-        Vector3 center = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
-        return center;
-    }
-
-    private Vector3 GetScreenPos(Vector3 pos)
-    {
-        return mainCamera.ScreenToViewportPoint(pos);
-    }
 }
+
