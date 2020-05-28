@@ -85,6 +85,7 @@ namespace Common
     {
         // オブジェクト名・タグ名
         public const string NAME                = ("Enemy");
+        public const string HIT_STATE           = ("HitEnemy");
         public const string ATTACK              = ("EnemyAttack");
         public const float  BALLON_MOVEMENT      = 1.0f;
     }

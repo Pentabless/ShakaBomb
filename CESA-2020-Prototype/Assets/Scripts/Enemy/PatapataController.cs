@@ -83,6 +83,7 @@ public class PatapataController : MonoBehaviour
         if (collision.transform.tag == "Bullet")
         {
             startPosition = this.transform.position;
+            this.transform.tag = Enemy.HIT_STATE;
             currentStatus = Status.Hit;
         }
     }
