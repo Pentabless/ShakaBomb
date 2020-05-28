@@ -529,7 +529,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // エネミーと接触したらぶっ飛ぶ(入力方向)
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == Enemy.HIT_STATE)
         {
             isEnemyBoost = true;
         }

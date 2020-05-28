@@ -21,6 +21,8 @@ TagManager:
   - BreakObject
   - CollectObject
   - Floor
+  - HitEnemy
+  - UnHitEnemy
   layers:
   - Default
   - TransparentFX
