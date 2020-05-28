@@ -10,6 +10,7 @@ public class Data
     public static int num_balloon = 0;
     public static int playerDir = 0;
     public static float playerVelX;
+    public static UnityEngine.Vector3 initialPlayerPos;
     
     public static int colletcObject = 0;            // プレイ中のステージで獲得したCollectObjectの数
     

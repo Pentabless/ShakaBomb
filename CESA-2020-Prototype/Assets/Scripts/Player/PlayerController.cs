@@ -524,6 +524,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == Stage.DAMAGE_TILE)
         {
             balloonController.Burst();
+            this.transform.position = Data.initialPlayerPos;
         }
 
         // エネミーと接触したらぶっ飛ぶ(入力方向)
