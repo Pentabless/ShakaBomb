@@ -13,7 +13,6 @@ public class CameraController : MonoBehaviour
         public Vector2 size;
     }
 
-    // シリアライズ変数
     // カメラ
     [SerializeField]
     Camera mainCamera;
@@ -34,11 +33,16 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     float cellY;
 
-    Vector3 nextPos;
-
     // デバックカメラ揺れ
     CameraShake cameraShake;
+    // 次のブロックへのポジション
+    Vector3 nextPos;
+    // 追従フラグ
     bool followOn = true;
+    // リスポーン位置記憶フラグ
+    bool rememberPos = false;
+    // リスポーンを覚えるまでのカウント
+    float count;
 
     // 視差背景
     [Header("size=pixel/PixelPerUnit*scale")]
@@ -57,6 +61,8 @@ public class CameraController : MonoBehaviour
         initializePos.z = Common.Camera.POSITION_Z;
         mainCamera.transform.position = initializePos;
         nextPos = initializePos;
+        // プレイヤーのポジションを保存しておく
+        Data.initialPlayerPos = player.transform.position;
     }
 
     private void FixedUpdate()
@@ -66,21 +72,25 @@ public class CameraController : MonoBehaviour
         if (fourCorners.x >= player.transform.position.x)
         {
             followOn = false;
+            rememberPos = true;
             nextPos.x -= cellX;
         }
         if (fourCorners.height <= player.transform.position.y)
         {
             followOn = false;
+            rememberPos = true;
             nextPos.y += cellY;
         }
         if (fourCorners.width <= player.transform.position.x)
         {
             followOn = false;
+            rememberPos = true;
             nextPos.x += cellX;
         }
         if (fourCorners.y >= player.transform.position.y)
         {
             followOn = false;
+            rememberPos = true;
             nextPos.y -= cellY;
         }
 
@@ -88,6 +98,21 @@ public class CameraController : MonoBehaviour
         if (!followOn)
         {
             followOn = FollowCamera(nextPos);
+        }
+
+        if(rememberPos)
+        {
+            count += Time.deltaTime;
+            //　数フレームは記憶する
+            if (count >= Common.Camera.REMEMBER_FRAME)
+            {
+                Data.initialPlayerPos = player.transform.position;
+                rememberPos = false;
+            }
+        }
+        else
+        {
+            count = 0.0f;
         }
 
         // カメラの範囲指定を適用
