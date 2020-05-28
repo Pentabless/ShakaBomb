@@ -20,4 +20,9 @@ public class EffectPrefabHolder : MonoBehaviour
     private GameObject BubbleBurstFX = null;
     public GameObject bubbleBurstFX { get { return BubbleBurstFX; } private set { BubbleBurstFX = value; } }
 
+    // ブースト移動の軌跡エフェクト
+    [SerializeField]
+    private GameObject BoostTrailFX = null;
+    public GameObject boostTrailFX { get { return BoostTrailFX; } private set { BoostTrailFX = value; } }
+
 }

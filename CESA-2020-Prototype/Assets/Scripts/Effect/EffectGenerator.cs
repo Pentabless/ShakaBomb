@@ -34,7 +34,7 @@ public class EffectGenerator : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // 泡の破裂エフェクトの生成
     //------------------------------------------------------------------------------------------
-    static public GameObject BubbleBurstFX(BubbleBurstFX.Param param, in Vector3 pos, Transform parent = null)
+    static public GameObject BubbleBurstFX(BubbleBurstFX.Param param, Vector3 pos, Transform parent = null)
     {
         if (!prefabHolder)
         {
@@ -49,4 +49,23 @@ public class EffectGenerator : MonoBehaviour
         return go;
     }
 
+    //------------------------------------------------------------------------------------------
+    // ブースト移動の軌跡エフェクトの生成
+    //------------------------------------------------------------------------------------------
+    static public GameObject BoostTrailFX(BoostTrailFX.Param param, Vector3 pos, Transform parent = null)
+    {
+        if (!prefabHolder)
+        {
+            Init();
+        }
+
+        var go = Instantiate(prefabHolder.boostTrailFX);
+        go.transform.position = pos;
+        go.transform.parent = parent;
+        var fx = go.GetComponent<BoostTrailFX>();
+        fx.SetParam(param);
+        fx.Play();
+
+        return go;
+    }
 }

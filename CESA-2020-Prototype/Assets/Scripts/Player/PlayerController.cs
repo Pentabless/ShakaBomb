@@ -293,7 +293,8 @@ public class PlayerController : MonoBehaviour
                 {
                     rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
                 }
-
+                // エフェクトを生成する
+                EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
                 balloonController.UseBoost(boostCost);
                 boostCount--;
             }
