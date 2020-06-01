@@ -37,12 +37,17 @@ public class CameraController : MonoBehaviour
     CameraShake cameraShake;
     // 次のブロックへのポジション
     Vector3 nextPos;
+    Vector3 currentPos;
     // 追従フラグ
     bool followOn = true;
     // リスポーン位置記憶フラグ
     bool rememberPos = false;
     // リスポーンを覚えるまでのカウント
     float count;
+    // 移動距離
+    float distance;
+    // ラープの開始時間
+    float startTime;
 
     // 視差背景
     [Header("size=pixel/PixelPerUnit*scale")]
@@ -69,38 +74,46 @@ public class CameraController : MonoBehaviour
     {
         var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y, GetScreenBottomRight().x, GetScreenTopLeft().y);
 
-        if (fourCorners.x >= player.transform.position.x)
-        {
-            followOn = false;
-            rememberPos = true;
-            nextPos.x -= cellX;
-        }
-        if (fourCorners.height <= player.transform.position.y)
-        {
-            followOn = false;
-            rememberPos = true;
-            nextPos.y += cellY;
-        }
-        if (fourCorners.width <= player.transform.position.x)
-        {
-            followOn = false;
-            rememberPos = true;
-            nextPos.x += cellX;
-        }
-        if (fourCorners.y >= player.transform.position.y)
-        {
-            followOn = false;
-            rememberPos = true;
-            nextPos.y -= cellY;
-        }
-
-
         if (!followOn)
         {
-            followOn = FollowCamera(nextPos);
+            followOn = FollowCamera(currentPos, nextPos);
+            Debug.Log(followOn);
+            //Debug.Log("目的地" + nextPos.x);
+            //Debug.Log("現在位置" + currentPos.x);
+        }
+        else
+        {
+            if (fourCorners.x >= player.transform.position.x)
+            {
+                followOn = false;
+                rememberPos = true;
+                nextPos.x -= cellX;
+            }
+            if (fourCorners.height <= player.transform.position.y)
+            {
+                followOn = false;
+                rememberPos = true;
+                nextPos.y += cellY;
+            }
+            if (fourCorners.width <= player.transform.position.x)
+            {
+                followOn = false;
+                rememberPos = true;
+                nextPos.x += cellX;
+            }
+            if (fourCorners.y >= player.transform.position.y)
+            {
+                followOn = false;
+                rememberPos = true;
+                nextPos.y -= cellY;
+            }
+
+            startTime = Time.time;
+            currentPos = mainCamera.transform.position;
+            distance = Vector3.Distance(nextPos, currentPos);
         }
 
-        if(rememberPos)
+        if (rememberPos)
         {
             count += Time.deltaTime;
             //　数フレームは記憶する
@@ -146,13 +159,14 @@ public class CameraController : MonoBehaviour
     /// </summary>
     /// <param name="playerPos">プレイヤーポジション</param>
     /// <returns>完了していればtrue</returns>
-    private bool FollowCamera(Vector3 playerPos)
+    private bool FollowCamera(Vector3 start, Vector3 end)
     {
-        playerPos.z = mainCamera.transform.position.z;
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, playerPos, Common.Camera.SPEED_PERCENTAGE);
+        var percentage = ((Time.time - startTime) * Common.Camera.SPEED) / distance;
+
+        mainCamera.transform.position = Vector3.Lerp(start, end, percentage);
 
         // 移動したらTrueを返す
-        if (CheckMove(mainCamera.transform.position, playerPos))
+        if (CheckMove(mainCamera.transform.position, end))
             return true;
 
         return false;
@@ -203,7 +217,9 @@ public class CameraController : MonoBehaviour
     /// <returns>完了していればtrue</returns>
     private bool CheckMove(Vector3 start, Vector3 end)
     {
-        if (Mathf.Approximately(start.y, end.y) && Mathf.Approximately(start.x, end.x))
+        //if (Mathf.Approximately(start.y, end.y) && Mathf.Approximately(start.x, end.x))
+        //    return true;
+        if (CheckDifferences(start, end, 0.1f))
             return true;
 
         return false;
@@ -217,9 +233,9 @@ public class CameraController : MonoBehaviour
     /// <param name="y">比べる値</param>
     /// <param name="differences">許容値</param>
     /// <returns>近い値になったかどうか</returns>
-    private bool CheckDifferences(float x, float y, float differences)
+    private bool CheckDifferences(Vector3 start,Vector3 end, float differences)
     {
-        float temp = Mathf.Abs(x) - Mathf.Abs(y);
+        float temp = Vector3.Distance(start, end);
 
         if (temp <= differences)
             return true;
