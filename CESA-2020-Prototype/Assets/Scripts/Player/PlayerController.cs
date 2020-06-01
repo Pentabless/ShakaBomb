@@ -149,6 +149,7 @@ public class PlayerController : MonoBehaviour
         // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
         // コントローラの接続チェック
         checkController = gamepadManager.GetCheckGamepad();
+
         // 左右移動
         if (Input.GetAxis(Player.HORIZONTAL) < Integer.ZERO)
         {
