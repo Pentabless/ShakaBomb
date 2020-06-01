@@ -100,7 +100,6 @@ public class TitleDirector : MonoBehaviour
         //拡大率変更
         go_select_tex.transform.localScale = go_start_button.transform.localScale + new Vector3(0.5f, 0.5f, 0.0f);
         component_select_frame.localScale = go_select_tex.transform.localScale;
-
     }
     /*--終わり：Start--*/
 

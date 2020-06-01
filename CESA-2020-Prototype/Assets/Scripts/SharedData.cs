@@ -113,8 +113,6 @@ public class SharedData : MonoBehaviour
         }
     }
     /*--終わり：CreatePreviousSceneDecoration--*/
-
-
     /*--------------------------------------------*/
     /*--関数名：SetDecorationList(public)---------*/
     /*--概要：シーン内にある飾りをリストに入れる--*/

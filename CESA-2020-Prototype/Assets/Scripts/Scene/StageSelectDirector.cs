@@ -95,7 +95,10 @@ public class StageSelectDirector : MonoBehaviour
 
         //ステージ
         FindStageObject();
-
+        //座標変更
+        go_select_tex.transform.position = go_stage[SharedData.instance.play_stage_number].transform.position;
+        //拡大率変更
+        go_select_tex.transform.localScale = (go_stage[stage_number].transform.localScale.x * go_stage[0].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f);
         //初期化
         stage_distance = Vector2.zero;
         last_position = Vector2.zero;
@@ -153,7 +156,6 @@ public class StageSelectDirector : MonoBehaviour
         //拡大率変更
         go_select_tex.transform.position = (go_stage[SharedData.instance.play_stage_number].transform.localScale.x * go_stage[SharedData.instance.play_stage_number].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f); ;
         component_select_frame.localScale = go_select_tex.transform.localScale;
-
         Debug.Log(go_camera.transform.position);
         //カメラの移る幅を渡す
         camera_width = camera_range[1].x - camera_range[0].x;
@@ -171,7 +173,6 @@ public class StageSelectDirector : MonoBehaviour
         //背景の飾りを作成する
         float decoration_scale = Random.Range(0.3f, 3.0f);
         sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(go_stage[0].transform.position.x - (camera_width / 2), go_stage[go_stage.Length - 1].transform.position.x + (camera_width / 2)), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
-
         //フェードアウトを始めていなかったら
         if (start_fade_out == false)
         {
@@ -475,8 +476,6 @@ public class StageSelectDirector : MonoBehaviour
         }
     }
     /*--終わり：SetSelectStage--*/
-
-
     /*------------------------------------------------------------*/
     /*--関数名：CountNotOperateTime(private)----------------------*/
     /*--概要：操作していない時間を計ってタイトルに戻るようにする--*/
@@ -650,9 +649,7 @@ public class StageSelectDirector : MonoBehaviour
 
             //画面の大きさによって拡大率を変える
             //component_select_frame.localScale = new Vector3(component_select_frame.localScale.x * (making_screen_size.x / Screen.width), component_select_frame.localScale.y * (making_screen_size.y / Screen.height), 1.0f);
-
         }
     }
     /*--終わり：UpdateSelectFrame--*/
-
 }

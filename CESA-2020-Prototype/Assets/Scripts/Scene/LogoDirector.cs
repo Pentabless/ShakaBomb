@@ -52,10 +52,9 @@ public class LogoDirector : MonoBehaviour
 
         //初期化
         start_time = Time.time;
-        
         //フェードに必要な値を渡す
-        go_logo.GetComponent<FadeController>().start_fade_value = 1.0f / (next_scene_second_time * /*Application.targetFrameRate*/60 * logo_fade_out_time_rate);
-        sc_screen_fade.GetComponent<FadeController>().start_fade_value = 1.0f / (next_scene_second_time * /*Application.targetFrameRate*/60 * screen_fade_out_time_rate);
+        go_logo.GetComponent<FadeController>().start_fade_value = 1.0f / (next_scene_second_time * Application.targetFrameRate * logo_fade_out_time_rate);
+        sc_screen_fade.GetComponent<FadeController>().start_fade_value = 1.0f / (next_scene_second_time * Application.targetFrameRate * screen_fade_out_time_rate);
 
         //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
         SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
