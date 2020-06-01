@@ -38,13 +38,16 @@ public class CameraController : MonoBehaviour
     CameraShake cameraShake;
     // 次のブロックへのポジション
     Vector3 nextPos;
+    // 現在のポジション
     Vector3 currentPos;
     // 追従フラグ
     bool followOn = true;
     // リスポーン位置記憶フラグ
     bool rememberPos = false;
     // リスポーンを覚えるまでのカウント
-    float count;
+    float respawnCount;
+    // プレイヤーロックまでのカウント
+    float playerLockCount;
     // 移動距離
     float distance;
     // ラープの開始時間
@@ -77,34 +80,45 @@ public class CameraController : MonoBehaviour
     {
         var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y, GetScreenBottomRight().x, GetScreenTopLeft().y);
 
-        pController.EnableControl(followOn);
-
         if (!followOn)
         {
+            // カメラ移動中
             followOn = FollowCamera(currentPos, nextPos);
-            Debug.Log(followOn);
-            //Debug.Log("目的地" + nextPos.x);
-            //Debug.Log("現在位置" + currentPos.x);
+            playerLockCount += Time.deltaTime;
+            if (playerLockCount >= Common.Camera.CANNOT_FRAME)
+            {
+                Debug.Log("yes");
+                pController.EnableControl(false);
+                playerLockCount = 0.0f;
+            }
         }
         else
         {
-            if (fourCorners.x >= player.transform.position.x)
+            // プレイヤーの向きによって画面を切り替えるかどうかを判断
+            if (Data.playerDir < 0)
             {
-                followOn = false;
-                rememberPos = true;
-                nextPos.x -= cellX;
+                if (fourCorners.x > player.transform.position.x)
+                {
+                    followOn = false;
+                    rememberPos = true;
+                    nextPos.x -= cellX;
+                }
             }
+            else
+            {
+                if (fourCorners.width < player.transform.position.x)
+                {
+                    followOn = false;
+                    rememberPos = true;
+                    nextPos.x += cellX;
+                }
+            }
+
             if (fourCorners.height <= player.transform.position.y)
             {
                 followOn = false;
                 rememberPos = true;
                 nextPos.y += cellY;
-            }
-            if (fourCorners.width <= player.transform.position.x)
-            {
-                followOn = false;
-                rememberPos = true;
-                nextPos.x += cellX;
             }
             if (fourCorners.y >= player.transform.position.y)
             {
@@ -112,17 +126,19 @@ public class CameraController : MonoBehaviour
                 rememberPos = true;
                 nextPos.y -= cellY;
             }
-
+            // カメラが移動していないときの設定
+            pController.EnableControl(true);
             startTime = Time.time;
             currentPos = mainCamera.transform.position;
             distance = Vector3.Distance(nextPos, currentPos);
         }
 
+        // リスポーンポジションの記憶とカウント
         if (rememberPos)
         {
-            count += Time.deltaTime;
+            respawnCount += Time.deltaTime;
             //　数フレームは記憶する
-            if (count >= Common.Camera.REMEMBER_FRAME)
+            if (respawnCount >= Common.Camera.REMEMBER_FRAME)
             {
                 Data.initialPlayerPos = player.transform.position;
                 rememberPos = false;
@@ -130,7 +146,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            count = 0.0f;
+            respawnCount = 0.0f;
         }
 
         // カメラの範囲指定を適用
@@ -288,4 +304,3 @@ public class CameraController : MonoBehaviour
         return bottomRight;
     }
 }
-
