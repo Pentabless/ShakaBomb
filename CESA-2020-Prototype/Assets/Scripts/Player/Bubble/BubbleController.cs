@@ -50,6 +50,8 @@ public class BubbleController : MonoBehaviour
     private float canCatchTime = 0.3f;
     // 合体先のオブジェクト
     private GameObject mergeTarget = null;
+    // 追跡を止めるかどうか
+    private bool stopChaise = false;
     // 前回の移動速度
     private float preVelovity = 0.0f;
 
@@ -250,10 +252,11 @@ public class BubbleController : MonoBehaviour
     public void OnTriggerExit2D(Collider2D collision)
     {
         // バルーンから離れたら追従するようにする
-        if (collision.tag == Balloon.NAME)
+        if (collision.tag == Balloon.NAME && !stopChaise)
         {
             mergeTarget = collision.gameObject;
         }
+        stopChaise = false;
         //if (collision.tag == Bubble.NAME)
         //{
         //    isTouchBubble = false;
@@ -294,6 +297,14 @@ public class BubbleController : MonoBehaviour
         return time >= canCatchTime;
     }
 
+    //------------------------------------------------------------------------------------------
+    // ターゲットの追跡をやめる
+    //------------------------------------------------------------------------------------------
+    public void StopChase()
+    {
+        mergeTarget = null;
+        stopChaise = true;
+    }
 
     //------------------------------------------------------------------------------------------
     // 破裂エフェクトの生成

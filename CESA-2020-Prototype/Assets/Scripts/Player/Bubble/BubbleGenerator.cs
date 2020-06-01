@@ -81,4 +81,19 @@ public class BubbleGenerator : MonoBehaviour
         color = request_color;              //色
         isCreate = true;
     }
+
+    //------------------------------------------------------------------------------------------
+    // ターゲットの追跡をやめる
+    //------------------------------------------------------------------------------------------
+    public void StopChase()
+    {
+        var children = GetComponentsInChildren<BubbleController>();
+        int i = 0;
+        foreach(var child in children)
+        {
+            i++;
+            child.StopChase();
+        }
+        Debug.Log("count:" + i);
+    }
 }
