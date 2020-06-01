@@ -313,9 +313,7 @@ public class PlayerController : MonoBehaviour
                 rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
             }
         }
-
-        // Debug LOg
-        Debug.Log(Input.GetAxis(Player.VERTICAL));
+        
 
         // 前フレームのキー入力の情報保持
         // Jump
@@ -368,8 +366,9 @@ public class PlayerController : MonoBehaviour
             antiRotationWrapper.transform.rotation = Quaternion.identity;
         }
 
-        // プレイヤーのX方向速度取得
-        Data.playerVelX = this.rig.velocity.x;
+        // プレイヤーの速度取得
+        Data.prePlayerVel = Data.currentPlayerVel;
+        Data.currentPlayerVel = this.rig.velocity;
 
         // 重力の変更(バブルの個数に応じて)
         float buoyancy = Mathf.Min(maxPowerBalloonSize, Data.balloonSize) / maxPowerBalloonSize;
