@@ -524,6 +524,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == Stage.DAMAGE_TILE)
         {
             balloonController.Burst();
+            bubbleG.StopChase();
             this.transform.position = Data.initialPlayerPos;
         }
 
