@@ -39,6 +39,8 @@ public class PatapataController : IEnemy
     //------------------------------------------------------------------------------------------
     private void Update()
     {
+        DestructionConfirmation();
+
         if (currentStatus == Status.None)
         {
             // なみなみの動き
@@ -52,11 +54,6 @@ public class PatapataController : IEnemy
         //{
         //    this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * Enemy.BALLON_MOVEMENT + startPosition.y, startPosition.z);
         //}
-
-        if (currentStatus == Status.Dead)
-        {
-            Destroy(this.gameObject);
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

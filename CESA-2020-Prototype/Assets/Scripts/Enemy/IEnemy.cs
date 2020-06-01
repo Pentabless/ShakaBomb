@@ -22,6 +22,14 @@ public class IEnemy : MonoBehaviour
 
     public Status currentStatus = Status.None;
 
+    virtual protected void DestructionConfirmation()
+    {
+        if(currentStatus == Status.Dead)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     /// <summary>
     /// 当たり判定時に呼ぶ
     /// </summary>
