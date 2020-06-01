@@ -26,9 +26,26 @@ public partial class Floor
     {
         if (collision.transform.tag == "Player")
         {
-            Debug.Log("Stay");
             collision.transform.parent = this.transform;
             currentObj.OnRideFloor();
+        }
+
+        if(collision.transform.tag == "Player" || collision.transform.tag == "Balloon")
+        {
+            Rigidbody2D rig = collision.gameObject.GetComponent<Rigidbody2D>();
+            if (!rig)
+            {
+                rig = collision.gameObject.GetComponentInParent<Rigidbody2D>();
+            }
+           
+            // 中で止まったら通り抜けるようにする
+            if(Mathf.Abs(Data.currentPlayerVel.y) < 0.1f && Data.currentPlayerVel.y < Data.prePlayerVel.y)
+            {
+                Debug.Log("pass");
+                passable = true;
+            }
+            //Debug.Log("c:" + Data.currentPlayerVel.y + " p:" + Data.prePlayerVel.y);
+           
         }
     }
 

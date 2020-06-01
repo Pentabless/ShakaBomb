@@ -101,6 +101,9 @@ MonoBehaviour:
   rightOrLeft: 0
   second: 0.5
   floorStatus: 7
+  passLayerMask:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!61 &6108860973098658908
 BoxCollider2D:
   m_ObjectHideFlags: 0

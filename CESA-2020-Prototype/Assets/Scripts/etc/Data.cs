@@ -3,6 +3,7 @@
 /// Summary		: データ保持
 //==============================================================================================
 using System.Collections;
+using UnityEngine;
 //==============================================================================================
 public class Data
 {
@@ -10,6 +11,8 @@ public class Data
     public static int num_balloon = 0;
     public static int playerDir = 0;
     public static float playerVelX;
+    public static Vector2 currentPlayerVel = Vector2.zero;
+    public static Vector2 prePlayerVel = Vector2.zero;
     public static UnityEngine.Vector3 initialPlayerPos;
     
     public static int colletcObject = 0;            // プレイ中のステージで獲得したCollectObjectの数

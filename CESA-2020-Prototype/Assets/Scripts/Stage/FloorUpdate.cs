@@ -32,7 +32,17 @@ public partial class Floor : MonoBehaviour
     [SerializeField]
     FloorStatus floorStatus;
 
+    [SerializeField]
+    private LayerMask passLayerMask = 0;
+    private bool passable = false;
+    [SerializeField]
+    private float passSensitivity = 0.2f;
+    private RaycastHit2D[] result = new RaycastHit2D[10];
+
     protected GameObject thisObj;
+    protected BoxCollider2D thisCollider;
+    protected PlatformEffector2D platform;
+
 
     private Floor currentObj;
     private NormalFloor normalFloor;
@@ -49,6 +59,8 @@ public partial class Floor : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
+        thisCollider = GetComponent<BoxCollider2D>();
+        platform = GetComponent<PlatformEffector2D>();
     }
 
 	//------------------------------------------------------------------------------------------
@@ -105,5 +117,37 @@ public partial class Floor : MonoBehaviour
     private void Update()
     {
         currentObj.Execute();
+
+        Pass();
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 通り抜け処理
+    //------------------------------------------------------------------------------------------
+    private void Pass()
+    {
+        // めり込み対策
+        if (passable)
+        {
+            int hitCount = Physics2D.BoxCastNonAlloc(thisCollider.bounds.center, thisCollider.bounds.size,
+                0, Vector2.down, result, 0, passLayerMask.value);
+            if (hitCount > 0)
+            {
+                platform.colliderMask &= ~passLayerMask.value;
+                return;
+            }
+            passable = false;
+        }
+
+        // 下入力時に通り抜けるする
+        if (Input.GetAxis(Player.VERTICAL) < -passSensitivity)
+        {
+            platform.colliderMask &= ~passLayerMask.value;
+        }
+        else
+        {
+            platform.colliderMask |= passLayerMask.value;
+        }
+        
     }
 }
