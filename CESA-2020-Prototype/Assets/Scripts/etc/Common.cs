@@ -23,14 +23,15 @@ namespace Common
     public static class Camera
     {
         // オブジェクト名・タグ名
-        public const string NAME                = ("Camera");
-        public const string MAIN_CAMERA         = ("Main Camera");
-        public const string CONTROLLER          = ("CameraController");
-        public const float  CELL_X              = 50.0f;
-        public const float  CELL_Y              = 14.0f;
-        public const float  SPEED               = 60.0f;
-        public const float  POSITION_Z          = -10.0f;
-        public const float  REMEMBER_FRAME      = 1.0f;
+        public const string NAME           = ("Camera");
+        public const string MAIN_CAMERA    = ("Main Camera");
+        public const string CONTROLLER     = ("CameraController");
+        public const float  CELL_X         = 50.0f;
+        public const float  CELL_Y         = 14.0f;
+        public const float  SPEED          = 50.0f;
+        public const float  POSITION_Z     = -10.0f;
+        public const float  REMEMBER_FRAME = 1.0f;
+        public const float  CANNOT_FRAME   = 0.1f;
     }
 
     //------------------------------------------------------------------------------------------
