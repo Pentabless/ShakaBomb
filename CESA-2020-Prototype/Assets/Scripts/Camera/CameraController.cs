@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
     // プレイヤー
     [SerializeField]
     GameObject player;
+    PlayerController pController;
     // カメラの視野角
     [SerializeField]
     float cameraViewRange;
@@ -68,11 +69,15 @@ public class CameraController : MonoBehaviour
         nextPos = initializePos;
         // プレイヤーのポジションを保存しておく
         Data.initialPlayerPos = player.transform.position;
+
+        pController = player.GetComponent<PlayerController>();
     }
 
     private void FixedUpdate()
     {
         var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y, GetScreenBottomRight().x, GetScreenTopLeft().y);
+
+        pController.EnableControl(followOn);
 
         if (!followOn)
         {
@@ -185,7 +190,7 @@ public class CameraController : MonoBehaviour
             if (cameraRange.width - cameraRange.x > Mathf.Epsilon)
             {
                 float t = (mainCamera.transform.position.x - cameraRange.x) / (cameraRange.width - cameraRange.x);
-                float width = 
+                float width =
                     Mathf.Max(bg.size.x * bg.obj.transform.lossyScale.x - mainCamera.orthographicSize * mainCamera.aspect * 2.0f, 0.0f);
                 offset.x -= Mathf.Lerp(-width * 0.5f, width * 0.5f, t);
             }
@@ -233,7 +238,7 @@ public class CameraController : MonoBehaviour
     /// <param name="y">比べる値</param>
     /// <param name="differences">許容値</param>
     /// <returns>近い値になったかどうか</returns>
-    private bool CheckDifferences(Vector3 start,Vector3 end, float differences)
+    private bool CheckDifferences(Vector3 start, Vector3 end, float differences)
     {
         float temp = Vector3.Distance(start, end);
 
