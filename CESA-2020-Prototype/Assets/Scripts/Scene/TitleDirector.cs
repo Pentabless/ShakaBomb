@@ -93,6 +93,8 @@ public class TitleDirector : MonoBehaviour
         SharedData.instance.SetCanvasOption(go_select_frame.GetComponent<Canvas>());
         //CanvasScalerの設定を変える
         SharedData.instance.SetCanvasScaleOption(go_select_frame.GetComponent<CanvasScaler>());
+        //オブジェクト「Canvas」より前に設定する
+        GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
 
         //座標変更
         go_select_tex.transform.position = go_start_button.transform.position;

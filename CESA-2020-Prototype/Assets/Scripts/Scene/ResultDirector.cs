@@ -95,6 +95,8 @@ public class ResultDirector : MonoBehaviour
         SharedData.instance.SetCanvasOption(GameObject.Find("SelectFrame").GetComponent<Canvas>());
         //CanvasScalerの設定を変える
         SharedData.instance.SetCanvasScaleOption(GameObject.Find("SelectFrame").GetComponent<CanvasScaler>());
+        //オブジェクト「Canvas」より前に設定する
+        GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
 
     }
     /*--終わり：Start--*/

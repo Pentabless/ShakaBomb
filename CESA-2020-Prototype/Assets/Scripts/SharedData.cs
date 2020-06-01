@@ -113,6 +113,7 @@ public class SharedData : MonoBehaviour
         }
     }
     /*--終わり：CreatePreviousSceneDecoration--*/
+
     /*--------------------------------------------*/
     /*--関数名：SetDecorationList(public)---------*/
     /*--概要：シーン内にある飾りをリストに入れる--*/
@@ -136,7 +137,7 @@ public class SharedData : MonoBehaviour
             //情報を記録する前に座標を覚える
             Vector3 pos = decoration_array[i].transform.position;
             //カメラから見た座標に調整する
-            decoration_array[i].transform.position -= new Vector3(camera_position.x,camera_position.y,0.0f);
+            decoration_array[i].transform.position -= new Vector3(camera_position.x, camera_position.y, 0.0f);
             //リストに入る前に必要な情報を記憶する
             decoration_array[i].GetComponent<BackGroundDecorationController>().RememberInformation();
             //調整前の座標に戻す

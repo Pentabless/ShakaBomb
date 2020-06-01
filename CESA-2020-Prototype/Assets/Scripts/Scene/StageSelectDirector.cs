@@ -95,10 +95,7 @@ public class StageSelectDirector : MonoBehaviour
 
         //ステージ
         FindStageObject();
-        //座標変更
-        go_select_tex.transform.position = go_stage[SharedData.instance.play_stage_number].transform.position;
-        //拡大率変更
-        go_select_tex.transform.localScale = (go_stage[stage_number].transform.localScale.x * go_stage[0].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f);
+
         //初期化
         stage_distance = Vector2.zero;
         last_position = Vector2.zero;
@@ -149,10 +146,12 @@ public class StageSelectDirector : MonoBehaviour
         SharedData.instance.SetCanvasOption(go_select_frame.GetComponent<Canvas>());
         //CanvasScalerの設定を変える
         SharedData.instance.SetCanvasScaleOption(go_select_frame.GetComponent<CanvasScaler>());
+        //オブジェクト「Canvas」より前に設定する
+        GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
 
         //座標変更
         go_select_tex.transform.position = go_stage[SharedData.instance.play_stage_number].transform.position;
-        component_select_frame.position = new Vector3(go_select_tex.transform.position.x,go_select_tex.transform.position.y,component_select_frame.position.z);
+        component_select_frame.position = new Vector3(go_select_tex.transform.position.x, go_select_tex.transform.position.y, component_select_frame.position.z);
         //拡大率変更
         go_select_tex.transform.position = (go_stage[SharedData.instance.play_stage_number].transform.localScale.x * go_stage[SharedData.instance.play_stage_number].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f); ;
         component_select_frame.localScale = go_select_tex.transform.localScale;
