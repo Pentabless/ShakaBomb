@@ -194,17 +194,17 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        // テストコード
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            bulletG.EnableGuideLines(transform.position, (Data.playerDir > 0 ? 0 : Mathf.PI));
-        }
-        else
-        {
-            bulletG.DisableGuideLines();
-        }
-
-
+        //// テストコード
+        //if (Input.GetKey(KeyCode.LeftShift))
+        //{
+        //    bulletG.EnableGuideLines(transform.position, (Data.playerDir > 0 ? 0 : Mathf.PI));
+        //}
+        //else
+        //{
+        //    bulletG.DisableGuideLines();
+        //}
+        // ガイドライン
+        bulletG.EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
 
 
         // バレットの発射
@@ -313,7 +313,7 @@ public class PlayerController : MonoBehaviour
                 rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
             }
         }
-        
+
 
         // 前フレームのキー入力の情報保持
         // Jump
@@ -553,6 +553,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "CollectObject")
+        {
+            Data.initialPlayerPos = collision.gameObject.transform.position;
+        }
+
         if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME || collision.tag == "DamageTile")
         {
             isGround = true;

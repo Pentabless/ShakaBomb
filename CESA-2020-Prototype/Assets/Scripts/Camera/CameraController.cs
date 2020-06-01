@@ -171,21 +171,22 @@ public class CameraController : MonoBehaviour
             if (cameraRange.width - cameraRange.x > Mathf.Epsilon)
             {
                 float t = (mainCamera.transform.position.x - cameraRange.x) / (cameraRange.width - cameraRange.x);
-                float width = Mathf.Max(bg.size.x - mainCamera.orthographicSize * mainCamera.aspect * 2.0f, 0.0f);
+                float width = 
+                    Mathf.Max(bg.size.x * bg.obj.transform.lossyScale.x - mainCamera.orthographicSize * mainCamera.aspect * 2.0f, 0.0f);
                 offset.x -= Mathf.Lerp(-width * 0.5f, width * 0.5f, t);
             }
             if (cameraRange.height - cameraRange.y > Mathf.Epsilon)
             {
                 if (mainCamera.transform.position.y - bgBottom < mainCamera.orthographicSize)
                 {
-                    float lim = (bgBottom + bg.size.y * 0.5f) - mainCamera.transform.position.y;
+                    float lim = (bgBottom + bg.size.y * bg.obj.transform.lossyScale.y * 0.5f) - mainCamera.transform.position.y;
                     offset.y = lim;
                 }
                 else
                 {
                     float rangeY = bgBottom + mainCamera.orthographicSize;
                     float t = (mainCamera.transform.position.y - rangeY) / (cameraRange.height - rangeY);
-                    float height = Mathf.Max(bg.size.y - mainCamera.orthographicSize * 2.0f, 0.0f);
+                    float height = Mathf.Max(bg.size.y * bg.obj.transform.lossyScale.y - mainCamera.orthographicSize * 2.0f, 0.0f);
                     offset.y -= Mathf.Lerp(-height * 0.5f, height * 0.5f, t);
 
                 }
