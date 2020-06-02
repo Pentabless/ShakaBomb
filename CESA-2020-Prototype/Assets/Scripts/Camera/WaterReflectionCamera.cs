@@ -17,6 +17,8 @@ public class WaterReflectionCamera : MonoBehaviour
     private UnityEngine.Camera mainCamera = null;  // メインカメラ
     private GameObject refCameraObject = null;     // 反射用カメラオブジェクト
     private UnityEngine.Camera refCamera = null;   // 反射用カメラ
+    [SerializeField]
+    private LayerMask refCullingMask = 0;
 
     [SerializeField]
     private bool autoDestroy = true;
@@ -86,7 +88,7 @@ public class WaterReflectionCamera : MonoBehaviour
         refCamera = refCameraObject.AddComponent<UnityEngine.Camera>();
 
         // コンポーネントの複製
-        refCamera.cullingMask = mainCamera.cullingMask;
+        refCamera.cullingMask = refCullingMask.value;
         refCamera.orthographic = true;
         refCamera.orthographicSize = mainCamera.orthographicSize;
         refCamera.nearClipPlane = mainCamera.nearClipPlane;
