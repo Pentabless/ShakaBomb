@@ -112,6 +112,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float boostCost = 1.5f;
 
+    // 敵死亡時のアニメーション時間
+    [SerializeField]
+    float animationTime;
+    // 死亡経過
+    float deathCount;
+    // 死亡フラグ
+    bool deathFlag = false;
+
     //------------------------------------------------------------------------------------------
     // Start
     //------------------------------------------------------------------------------------------
@@ -135,6 +143,9 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     void Update()
     {
+        // 故障アニメーション
+        DeathAnimation(deathFlag);
+
         if (!canControl)
         {
             dir = Integer.ZERO;
@@ -505,7 +516,7 @@ public class PlayerController : MonoBehaviour
         {
             balloonController.Burst();
             bubbleG.StopChase();
-            this.transform.position = Data.initialPlayerPos;
+            deathFlag = true;
         }
 
         // エネミーと接触したらぶっ飛ぶ(入力方向)
@@ -658,6 +669,27 @@ public class PlayerController : MonoBehaviour
         }
         this.rig.velocity = Vector2.zero;
         this.rig.AddForce(addVel, ForceMode2D.Impulse);
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 死亡時アニメーション
+    //------------------------------------------------------------------------------------------
+    public void DeathAnimation(bool enable)
+    {
+        // 死亡カウント
+        if (enable)
+        {
+            EnableControl(false);
+            deathCount += Time.deltaTime;
+            // アニメーション終了
+            if (deathCount >= animationTime)
+            {
+                this.transform.position = Data.initialPlayerPos;
+                deathCount = 0.0f;
+                deathFlag = false;
+                EnableControl(true);
+            }
+        }
     }
 }
 
