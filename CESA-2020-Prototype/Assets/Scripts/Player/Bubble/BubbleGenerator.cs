@@ -94,6 +94,5 @@ public class BubbleGenerator : MonoBehaviour
             i++;
             child.StopChase();
         }
-        Debug.Log("count:" + i);
     }
 }
