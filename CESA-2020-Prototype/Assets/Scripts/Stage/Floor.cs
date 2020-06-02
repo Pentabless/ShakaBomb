@@ -39,12 +39,10 @@ public partial class Floor
             }
            
             // 中で止まったら通り抜けるようにする
-            if(Mathf.Abs(Data.currentPlayerVel.y) < 0.1f && Data.currentPlayerVel.y < Data.prePlayerVel.y)
+            if(Mathf.Abs(Data.currentPlayerVel.y) < 0.05f && Data.currentPlayerVel.y < Data.prePlayerVel.y)
             {
-                Debug.Log("pass");
                 passable = true;
             }
-            //Debug.Log("c:" + Data.currentPlayerVel.y + " p:" + Data.prePlayerVel.y);
            
         }
     }
