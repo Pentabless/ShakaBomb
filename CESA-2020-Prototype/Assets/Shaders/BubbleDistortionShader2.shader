@@ -1,10 +1,11 @@
-﻿Shader "Unlit/BubbleDistortionShader"
+﻿Shader "Unlit/BubbleDistortionShader2"
 {
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
 		_Seed("Seed", Float) = 0
 		_Timer("Timer", Float) = 0
+		_GrabDistortion("_GrabDistortion", Float) = 0.04
 		_Distortion("Distortion", Float) = 0.1
 		_DistortionSpeed("DistortionSpeed", Float) = 1.0
 		_ScaleRate("ScaleRate", Vector) = (1.3, 0.95, 0, 0)
@@ -12,7 +13,7 @@
 	}
 		SubShader
 		{
-			Tags { "Queue" = "Transparent" }
+			Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			LOD 100
 
 			ZWrite Off
@@ -24,7 +25,6 @@
 
 			Pass
 			{
-				Name "DISTORTION"
 				CGPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
@@ -41,19 +41,22 @@
 				struct v2f
 				{
 					float2 uv : TEXCOORD0;
+					fixed4 uvgrab : TEXCOORD1;
 					float4 color : COLOR;
 					float4 vertex : SV_POSITION;
 				};
 
+				sampler2D _BackgroundTexture;
 				sampler2D _MainTex;
 				float4 _MainTex_ST;
 				float _Seed;
 				float _Timer;
+				float _GrabDistortion;
 				float _Distortion;
 				float _DistortionSpeed;
 				float4 _ScaleRate;
 				float4 _ScaleVec;
-				
+
 
 				v2f vert(appdata v)
 				{
@@ -62,6 +65,7 @@
 					o.vertex = UnityObjectToClipPos(v.vertex);
 					o.color = v.color;
 					o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+					o.uvgrab = ComputeGrabScreenPos(o.vertex);
 					return o;
 				}
 
@@ -106,26 +110,40 @@
 				{
 					float2 uv = (i.uv - 0.5)*_ScaleRate.x;
 					float2 p = getPos(uv);
-	
-					float2 posX = p * (1.0+(_ScaleRate.xy-1.0)*_ScaleVec.x);
-					float2 posY = p * (1.0+(_ScaleRate.yx-1.0)*_ScaleVec.y);
-	
+
+					float2 posX = p * (1.0 + (_ScaleRate.xy - 1.0)*_ScaleVec.x);
+					float2 posY = p * (1.0 + (_ScaleRate.yx - 1.0)*_ScaleVec.y);
+
 					float2 pos = lerp(posX, posY, step(_ScaleVec.x, _ScaleVec.y));
 
-					float4 color = tex2D(_MainTex, pos+0.5);
+					fixed4 diff = tex2D(_MainTex, pos + 0.5);
 
-					int v = pos.x*2;
+					int v = pos.x * 2;
 					float range01 = 1 - (float)v / (v - 0.00001);
-					v = pos.y*2;
+					v = pos.y * 2;
 					range01 *= 1 - (float)v / (v - 0.00001);
 
 					//color.a *= step(dot(pos, pos), 0.25);
-					color.a *= range01;
+					diff.a *= range01;
+					clip(diff.a - 0.01f);
 
-					color.a *= color.a;
+					float2 dist = length(p * 2);
+					dist = saturate(1 - dist);
+					dist = pow(dist, 1.5);
+
+					i.uvgrab.xy += dist.xy*abs(normalize(dist))*_GrabDistortion;
+
+					fixed4 color = tex2Dproj(_BackgroundTexture, UNITY_PROJ_COORD(i.uvgrab));
+
+					//diff.a *= diff.a;
+					//color.rgb = color.rgb*(1 - diff.a) + diff.rgb*diff.a;
+					
+
 					return color;
 				}
 				ENDCG
 			}
+
+			UsePass "Unlit/BubbleDistortionShader/DISTORTION"
 		}
 }
