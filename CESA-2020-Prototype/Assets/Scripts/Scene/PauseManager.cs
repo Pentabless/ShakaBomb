@@ -18,11 +18,13 @@ public class PauseManager : MonoBehaviour
     {
         public Vector2 velocity;          // 速度
         public float angularVeloccity;    // 角速度
+        public RigidbodyConstraints2D constraints;   // 固定状態
 
         public RigidbodyVelocity(Rigidbody2D rigidbody)
         {
             velocity = rigidbody.velocity;
             angularVeloccity = rigidbody.angularVelocity;
+            constraints = rigidbody.constraints;
         }
     }
 
@@ -199,6 +201,7 @@ public class PauseManager : MonoBehaviour
             //速度と角速度の保存
             rigidbodyVelocities[i] = new RigidbodyVelocity(pausingRigidbodies[i]);
             //Rigidbodyの停止
+            pausingRigidbodies[i].constraints = RigidbodyConstraints2D.FreezeAll;
             pausingRigidbodies[i].Sleep();
         }
 
@@ -282,6 +285,7 @@ public class PauseManager : MonoBehaviour
             pausingRigidbodies[i].WakeUp();
             pausingRigidbodies[i].velocity = rigidbodyVelocities[i].velocity;
             pausingRigidbodies[i].angularVelocity = rigidbodyVelocities[i].angularVeloccity;
+            pausingRigidbodies[i].constraints = rigidbodyVelocities[i].constraints;
         }
 
         //MonoBehaviourの再開
