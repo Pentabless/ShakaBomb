@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float boostCost = 1.5f;
 
-
     //------------------------------------------------------------------------------------------
     // Start
     //------------------------------------------------------------------------------------------
@@ -198,7 +197,7 @@ public class PlayerController : MonoBehaviour
         //// テストコード
         //if (Input.GetKey(KeyCode.LeftShift))
         //{
-        //    bulletG.EnableGuideLines(transform.position, (Data.playerDir > 0 ? 0 : Mathf.PI));
+        //bulletG.EnableGuideLines(transform.position, (Data.playerDir > 0 ? 0 : Mathf.PI));
         //}
         //else
         //{
@@ -298,6 +297,7 @@ public class PlayerController : MonoBehaviour
                 EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
                 balloonController.UseBoost(boostCost);
                 boostCount--;
+
             }
         }
 
@@ -314,7 +314,6 @@ public class PlayerController : MonoBehaviour
                 rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
             }
         }
-
 
         // 前フレームのキー入力の情報保持
         // Jump
@@ -534,6 +533,7 @@ public class PlayerController : MonoBehaviour
         {
             isEnemyBoost = true;
         }
+
     }
 
     //------------------------------------------------------------------------------------------
@@ -556,6 +556,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "CollectObject")
         {
+            // リスポーン位置を設定
             Data.initialPlayerPos = collision.gameObject.transform.position;
         }
 
@@ -574,6 +575,26 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.tag == Common.Floor.NAME)
         {
             floor = collision.gameObject.GetComponent<Floor>();
+        }
+
+        // バブルキャノン(仮)
+        if (collision.gameObject.tag == "BubbleCannon")
+        {
+            collision.gameObject.transform.parent.gameObject.GetComponent<BubbleCannon>().HitToPlayer();
+            rig.velocity = rig.velocity * 0.0f;
+            float sticV = Input.GetAxis(Player.VERTICAL);
+            Mathf.Abs(sticV); // 入力の度合
+
+            if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
+            {
+                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
+            }
+            else
+            {
+                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
+            }
+            // ブースト回数の回復
+            boostCount = 2;
         }
     }
 
