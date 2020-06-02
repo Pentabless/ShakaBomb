@@ -91,6 +91,11 @@ public class CameraController : MonoBehaviour
                 pController.EnableControl(false);
                 playerLockCount = 0.0f;
             }
+
+            if (followOn)
+            {
+                pController.EnableControl(true);
+            }
         }
         else
         {
@@ -127,7 +132,6 @@ public class CameraController : MonoBehaviour
                 nextPos.y -= cellY;
             }
             // カメラが移動していないときの設定
-            pController.EnableControl(true);
             startTime = Time.time;
             currentPos = mainCamera.transform.position;
             distance = Vector3.Distance(nextPos, currentPos);
