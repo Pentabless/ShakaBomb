@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SharedData : MonoBehaviour
 {
@@ -37,6 +38,20 @@ public class SharedData : MonoBehaviour
         canvas.sortingOrder = 5;
     }
     /*--終わり：SetCanvasOption--*/
+
+    /*--------------------------------------------------*/
+    /*--関数名：SetCanvasScalerOption(public)-----------*/
+    /*--概要：シーンのCanvasの設定をする(ボタンのため)--*/
+    /*--引数：設定をするCanvasScaler(CanvasScaler)------*/
+    /*--戻り値：なし------------------------------------*/
+    /*--------------------------------------------------*/
+    public void SetCanvasScaleOption(CanvasScaler scaler)
+    {
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920.0f, 1050.0f);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+    }
+    /*--終わり：SetCanvasScalerOption--*/
 
     /*--------------------------------------------------*/
     /*--関数名：GetCameraRange(public)------------------*/
@@ -99,14 +114,13 @@ public class SharedData : MonoBehaviour
     }
     /*--終わり：CreatePreviousSceneDecoration--*/
 
-
     /*--------------------------------------------*/
     /*--関数名：SetDecorationList(public)---------*/
     /*--概要：シーン内にある飾りをリストに入れる--*/
     /*--引数：なし--------------------------------*/
     /*--戻り値：なし------------------------------*/
     /*--------------------------------------------*/
-    public void SetDecorationList()
+    public void SetDecorationList(Vector2 camera_position)
     {
         //リストをリセットする
         back_decoration_list.Clear();
@@ -120,8 +134,15 @@ public class SharedData : MonoBehaviour
 
         for (int i = 0; i < decoration_array.Length; i++)
         {
+            //情報を記録する前に座標を覚える
+            Vector3 pos = decoration_array[i].transform.position;
+            //カメラから見た座標に調整する
+            decoration_array[i].transform.position -= new Vector3(camera_position.x, camera_position.y, 0.0f);
             //リストに入る前に必要な情報を記憶する
             decoration_array[i].GetComponent<BackGroundDecorationController>().RememberInformation();
+            //調整前の座標に戻す
+            decoration_array[i].transform.position = pos;
+
             //前景だったら
             if (decoration_array[i].GetComponent<SpriteRenderer>().sortingOrder >= 0)
             {

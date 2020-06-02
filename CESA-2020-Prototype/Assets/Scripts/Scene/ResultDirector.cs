@@ -60,13 +60,13 @@ public class ResultDirector : MonoBehaviour
         score = 700;
 
         //オブジェクトを探す
-        go_result_frame = GameObject.Find("ResultFrame");      
+        go_result_frame = GameObject.Find("ResultFrame");
         //コンポーネントを探す
         text_stage_clear = GameObject.Find("StageClear").GetComponent<Text>();
         text_score = GameObject.Find("Score").GetComponent<Text>();
         sc_screen_fade = GameObject.Find("ScreenFade").GetComponent<FadeController>();
         sc_decoration_generator = GameObject.Find("BackGroundDecorationGenerator").GetComponent<BackGroundDecorationGenerator>();
-        
+
         //座標変更
         go_result_frame.transform.position = new Vector3(-30.0f, 2.0f, 0.0f);
         text_stage_clear.rectTransform.anchoredPosition = new Vector3(-Screen.width - 300.0f, 200.0f, 0.0f);
@@ -84,8 +84,20 @@ public class ResultDirector : MonoBehaviour
         //フェードインさせる
         //FadeManager.FadeIn(1.5f);
 
+        //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
+        SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
         //Cameraの映る範囲をもらう
         camera_range = SharedData.instance.GetCameraRange(GameObject.Find("Main Camera").GetComponent<Camera>());
+        //CanvasScalerの設定を変える(画面サイズが変わっても自動的に大きさなどを変更するように)
+        SharedData.instance.SetCanvasScaleOption(GameObject.Find("Canvas").GetComponent<CanvasScaler>());
+
+        //Canvasの設定を変える(選択フレーム)
+        SharedData.instance.SetCanvasOption(GameObject.Find("SelectFrame").GetComponent<Canvas>());
+        //CanvasScalerの設定を変える
+        SharedData.instance.SetCanvasScaleOption(GameObject.Find("SelectFrame").GetComponent<CanvasScaler>());
+        //オブジェクト「Canvas」より前に設定する
+        GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
+
     }
     /*--終わり：Start--*/
 
@@ -102,7 +114,7 @@ public class ResultDirector : MonoBehaviour
         sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
 
         //フェードアウトしていたら
-        if ((sc_screen_fade.GetFadeType()==true) && sc_screen_fade.GetFadeValue() > 0.0f)
+        if ((sc_screen_fade.GetFadeType() == true) && sc_screen_fade.GetFadeValue() > 0.0f)
         {
             //前景の飾りを作成する
             decoration_scale = Random.Range(0.3f, 3.0f);
@@ -158,9 +170,9 @@ public class ResultDirector : MonoBehaviour
         }
 
         //Spaceキーを押したら
-        if (Input.GetKeyDown(KeyCode.Space)||
+        if (Input.GetKeyDown(KeyCode.Space) ||
             //Aボタンを押したら
-            (Input.GetAxis(Common.GamePad.BUTTON_A)>0))
+            (Input.GetAxis(Common.GamePad.BUTTON_A) > 0))
         {
             //フェードを始める
             sc_screen_fade.SetFadeType(true);
@@ -172,7 +184,7 @@ public class ResultDirector : MonoBehaviour
         if (sc_screen_fade.GetFadeValue() == 1.0f)
         {
             //SharedDataにあるリストに飾りを入れる
-            SharedData.instance.SetDecorationList();
+            SharedData.instance.SetDecorationList(GameObject.Find("Main Camera").transform.position);
             //ステージ選択画面に移る
             SceneManager.LoadScene("StageSelectScene");
         }

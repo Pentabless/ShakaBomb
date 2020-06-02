@@ -26,6 +26,9 @@ public class TitleDirector : MonoBehaviour
     private GameObject go_exit_button;
     //選択フレーム
     private GameObject go_select_tex;
+    private GameObject go_select_frame;
+    //選択フレームのコンポーネント
+    private RectTransform component_select_frame;
     //画面フェード
     private FadeController sc_screen_fade;
     //背景の飾りジェネレーター
@@ -58,14 +61,13 @@ public class TitleDirector : MonoBehaviour
         go_start_button = GameObject.Find("StartButton");
         go_exit_button = GameObject.Find("ExitButton");
         go_select_tex = GameObject.Find("SelectTex");
+        go_select_frame = GameObject.Find("SelectFrame");
+        GameObject go_screen_fade = GameObject.Find("ScreenFade");
         //コンポーネントを探す
-        sc_screen_fade = GameObject.Find("ScreenFade").GetComponent<FadeController>();
+        component_select_frame = go_select_frame.transform.Find("Frame").GetComponent<RectTransform>();
+        sc_screen_fade = go_screen_fade.GetComponent<FadeController>();
         sc_decoration_generator = GameObject.Find("BackGroundDecorationGenerator").GetComponent<BackGroundDecorationGenerator>();
 
-        //座標変更
-        go_select_tex.transform.position = go_start_button.transform.position;
-        //拡大率変更
-        go_select_tex.transform.localScale = go_start_button.transform.localScale + new Vector3(0.5f, 0.5f, 0.0f);
         //初期化
         button_distance = Vector3.zero;
         last_position = Vector3.zero;
@@ -74,12 +76,32 @@ public class TitleDirector : MonoBehaviour
         select_eixt = false;
         start_fade_out = false;
 
+        //フェードの初期化
+        Vector4 fade_color = go_screen_fade.GetComponent<Image>().color;
+        go_screen_fade.GetComponent<Image>().color = new Vector4(fade_color.x, fade_color.y, fade_color.z, 1.0f);
+
         //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
         SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
         //Cameraの映る範囲をもらう
         camera_range = SharedData.instance.GetCameraRange(GameObject.Find("Main Camera").GetComponent<Camera>());
         //飾りを作成する(背景と前景)
         SharedData.instance.CreatePreviousSceneDecoration(sc_decoration_generator, GameObject.Find("Main Camera").transform.position);
+        //CanvasScalerの設定を変える(画面サイズが変わっても自動的に大きさなどを変更するように)
+        SharedData.instance.SetCanvasScaleOption(GameObject.Find("Canvas").GetComponent<CanvasScaler>());
+
+        //Canvasの設定を変える(選択フレーム)
+        SharedData.instance.SetCanvasOption(go_select_frame.GetComponent<Canvas>());
+        //CanvasScalerの設定を変える
+        SharedData.instance.SetCanvasScaleOption(go_select_frame.GetComponent<CanvasScaler>());
+        //オブジェクト「Canvas」より前に設定する
+        GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
+
+        //座標変更
+        go_select_tex.transform.position = go_start_button.transform.position;
+        component_select_frame.position = new Vector3(go_select_tex.transform.position.x, go_select_tex.transform.position.y, component_select_frame.position.z);
+        //拡大率変更
+        go_select_tex.transform.localScale = go_start_button.transform.localScale + new Vector3(0.5f, 0.5f, 0.0f);
+        component_select_frame.localScale = go_select_tex.transform.localScale;
     }
     /*--終わり：Start--*/
 
@@ -174,12 +196,18 @@ public class TitleDirector : MonoBehaviour
                     if (select_eixt)
                     {
                         go_select_tex.transform.position = go_exit_button.transform.position;
+                        component_select_frame.position = new Vector3(go_select_tex.transform.position.x, go_select_tex.transform.position.y, component_select_frame.position.z);
+
                         go_select_tex.transform.localScale = go_exit_button.transform.localScale + new Vector3(0.5f, 0.5f, 0.0f);
+                        component_select_frame.localScale = go_select_tex.transform.localScale;
                     }
                     else
                     {
                         go_select_tex.transform.position = go_start_button.transform.position;
+                        component_select_frame.position = new Vector3(go_select_tex.transform.position.x, go_select_tex.transform.position.y, component_select_frame.position.z);
+
                         go_select_tex.transform.localScale = go_start_button.transform.localScale + new Vector3(0.5f, 0.5f, 0.0f);
+                        component_select_frame.localScale = go_select_tex.transform.localScale;
                     }
                     //円運動が終わった事にする
                     select_frame_angle = 0.0f;
@@ -197,7 +225,7 @@ public class TitleDirector : MonoBehaviour
             if (sc_screen_fade.GetFadeValue() == 1.0f)
             {
                 //SharedDataにあるリストに飾りを入れる
-                SharedData.instance.SetDecorationList();
+                SharedData.instance.SetDecorationList(GameObject.Find("Main Camera").transform.position);
                 //ステージ選択画面に移る
                 SceneManager.LoadScene("StageSelectScene");
             }
@@ -248,6 +276,7 @@ public class TitleDirector : MonoBehaviour
             (Mathf.Sin(Mathf.Deg2Rad * (select_frame_angle - 90.0f)) + 1) * (button_distance.x * 0.5f),
             (Mathf.Sin(Mathf.Deg2Rad * (select_frame_angle - 90.0f)) + 1) * (button_distance.y * 0.5f),
             0.0f);
+        component_select_frame.position = new Vector3(go_select_tex.transform.position.x, go_select_tex.transform.position.y, component_select_frame.position.z);
 
         //始点
         Transform start_button;
@@ -276,6 +305,8 @@ public class TitleDirector : MonoBehaviour
             ((Mathf.Sin(Mathf.Deg2Rad * (select_frame_angle - 90.0f)) + 1) * 0.5f));
         //ボタンより少し大きくする
         go_select_tex.transform.localScale += new Vector3(0.5f, 0.5f, 0.0f);
+
+        component_select_frame.transform.localScale = go_select_tex.transform.localScale;
 
     }
     /*--終わり：UpdateSelectFrame--*/
