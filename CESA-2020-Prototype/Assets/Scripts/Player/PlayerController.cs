@@ -33,10 +33,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     BulletGenerator bulletG;
 
-    // フロア
-    Floor floor;
-    float balloonFloorCount = Player.PUSH_INTERVAL;
-
     // コントローラ
     [SerializeField]
     GamepadManager gamepadManager;
@@ -210,48 +206,32 @@ public class PlayerController : MonoBehaviour
         // バレットの発射
         attackButton = Input.GetAxis(Player.ATTACK);
         var balloonFloor = Input.GetAxis(GamePad.BUTTON_B);
-        if (floor == null)
+        if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.balloonSize >= bulletCost)
         {
-            if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.balloonSize >= bulletCost)
+            float angle = 0.0f;
+            float v = Input.GetAxis(Player.VERTICAL);
+            float h = Input.GetAxis(Player.HORIZONTAL);
+            //if (Mathf.Abs(v) > 0.0f)
+            //{
+            //    angle = Mathf.PI * Mathf.Sign(v) * 0.5f;
+            //}
+            //else if (Data.playerDir < 0)
+            //{
+            //    angle = Mathf.PI;
+            //}
+            if (Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f)
             {
-                float angle = 0.0f;
-                float v = Input.GetAxis(Player.VERTICAL);
-                float h = Input.GetAxis(Player.HORIZONTAL);
-                //if (Mathf.Abs(v) > 0.0f)
-                //{
-                //    angle = Mathf.PI * Mathf.Sign(v) * 0.5f;
-                //}
-                //else if (Data.playerDir < 0)
-                //{
-                //    angle = Mathf.PI;
-                //}
-                if (Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f)
-                {
-                    angle = Mathf.Atan2(v, h);
-                }
-                else if (Data.playerDir < 0)
-                {
-                    angle = Mathf.PI;
-                }
-                if (bulletG.BulletCreate(transform.position, angle))
-                {
-                    balloonController.UseBalloon(bulletCost);
-                }
+                angle = Mathf.Atan2(v, h);
             }
-        }
-        // バルーンフロアの使用
-        else
-        {
-            balloonFloorCount -= Time.deltaTime;
-            if (balloonFloorCount <= 0 && balloonFloor > 0 && Data.balloonSize >= bulletCost)
+            else if (Data.playerDir < 0)
             {
-                Debug.Log("yes");
-                balloonFloorCount = Player.PUSH_INTERVAL;
+                angle = Mathf.PI;
+            }
+            if (bulletG.BulletCreate(transform.position, angle))
+            {
                 balloonController.UseBalloon(bulletCost);
-                floor.UpFloor();
             }
         }
-
         //// ExplosionTest
         //if (Input.GetKeyDown(KeyCode.B) && Data.num_balloon > 0)
         //{
@@ -572,11 +552,6 @@ public class PlayerController : MonoBehaviour
                 null);
         }
 
-        if (collision.transform.tag == Common.Floor.NAME)
-        {
-            floor = collision.gameObject.GetComponent<Floor>();
-        }
-
         // バブルキャノン(仮)
         if (collision.gameObject.tag == "BubbleCannon")
         {
@@ -604,11 +579,6 @@ public class PlayerController : MonoBehaviour
         {
             isGround = false;
             bubbleGround = false;
-        }
-
-        if (collision.transform.tag == Common.Floor.NAME)
-        {
-            floor = null;
         }
     }
 
