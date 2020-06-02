@@ -37,7 +37,7 @@ public partial class Floor : MonoBehaviour
     private bool passable = false;
     [SerializeField]
     private float passSensitivity = 0.2f;
-    private RaycastHit2D[] result = new RaycastHit2D[10];
+    private RaycastHit2D[] results = new RaycastHit2D[10];
 
     protected GameObject thisObj;
     protected BoxCollider2D thisCollider;
@@ -126,28 +126,36 @@ public partial class Floor : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Pass()
     {
-        // めり込み対策
+        // 下入力時に通り抜けるようにする
+        if (Input.GetAxis(Player.VERTICAL) < -passSensitivity)
+        {
+            passable = true;
+            platform.colliderMask &= ~passLayerMask.value;
+        }
+        
+        // 通り抜け中か判定する
         if (passable)
         {
             int hitCount = Physics2D.BoxCastNonAlloc(thisCollider.bounds.center, thisCollider.bounds.size,
-                0, Vector2.down, result, 0, passLayerMask.value);
-            if (hitCount > 0)
+                0, Vector2.down, results, 0, passLayerMask.value);
+
+            for(int i = 0; i < hitCount; i++)
             {
+                Debug.Log(results[i].collider.name + " : " + results[i].collider.isTrigger);
+                if (results[i].collider.isTrigger && results[i].collider.tag == "Player")
+                {
+                    continue;
+                }
                 platform.colliderMask &= ~passLayerMask.value;
                 return;
             }
             passable = false;
         }
-
-        // 下入力時に通り抜けるする
-        if (Input.GetAxis(Player.VERTICAL) < -passSensitivity)
-        {
-            platform.colliderMask &= ~passLayerMask.value;
-        }
         else
         {
             platform.colliderMask |= passLayerMask.value;
         }
+        
         
     }
 }
