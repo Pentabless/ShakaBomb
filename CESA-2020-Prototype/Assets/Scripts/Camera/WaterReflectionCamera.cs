@@ -8,7 +8,7 @@ using UnityEngine;
 using System;
 using Common;
 //==============================================================================================
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class WaterReflectionCamera : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
@@ -80,7 +80,8 @@ public class WaterReflectionCamera : MonoBehaviour
         // オブジェクトの生成
         if (autoDestroy && refCameraObject)
         {
-            DestroyImmediate(refCameraObject);
+            //DestroyImmediate(refCameraObject);
+            Destroy(refCameraObject);
         }
         refCameraObject = new GameObject("RefCamera");
         refCameraObject.transform.parent = transform;
