@@ -21,10 +21,12 @@ public class TimeGaugeController : MonoBehaviour
     private CanvasGroup canvasGroup = null;
     // プレイヤー
     private GameObject player = null;
-
+    
     [SerializeField]
-    // ゲージの割合のプロパティ名
-    private string ratePropertyName = "";
+    // アラート開始時のタイムの割合
+    private float alertTimeRate = 1.0f / 6;
+    // アラートが開始してからの時間
+    private float alertTime = 0;
 
     [SerializeField]
     // プレイヤーと重なっているときのアルファ値
@@ -59,10 +61,17 @@ public class TimeGaugeController : MonoBehaviour
 	//------------------------------------------------------------------------------------------
 	private void Update()
     {
+        float timeRate = Data.time / Data.timeLimit;
+        if(timeRate <= alertTimeRate)
+        {
+            alertTime += Time.deltaTime;
+        }
+
         OverlapPlayer();
 
         Material mat = timeImage.material;
-        mat.SetFloat(ratePropertyName, Data.time / Data.timeLimit);
+        mat.SetFloat("_TimeRate", timeRate);
+        mat.SetFloat("_AlertTime", alertTime);
     }
 
     //------------------------------------------------------------------------------------------
@@ -85,6 +94,7 @@ public class TimeGaugeController : MonoBehaviour
     private void OnApplicationQuit()
     {
         Material mat = timeImage.material;
-        mat.SetFloat(ratePropertyName, 1.0f);
+        mat.SetFloat("_TimeRate", 1.0f);
+        mat.SetFloat("_AlertTime", 0.0f);
     }
 }

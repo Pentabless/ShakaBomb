@@ -3,17 +3,21 @@
 	Properties
 	{
 		_TimeRate("TimeRate", Range(0, 1)) = 1
+		_AlertTime("AlertTime", Float) = 0
 		_MainTex("Texture", 2D) = "white" {}
-		_Radius("Radius", Float) = 0.5
+		_GaugeMask("GaugeMask", 2D) = "white" {}
 		_MainColor("MainColor", Color) = (1,1,1,1)
 		_LightColor("LightColor", Color) = (1,1,1,1)
 		_SubColorCoef("SubColorCoef", Vector) = (1.25,1.25,1.25,1)
+		_AlertColor("AlertColor", Color) = (0.9,0.1,0.1,0.5)
+		_AlertBlinkSpeed("AlertBlinkSpeed", Float) = 2.0
 		_UpperLine("UpperLine", Float) = 1.0
 		_LowerLine("LowerLine", Float) = -0.05
 		_SubHeight("SubHeight", Float) = 0.05
 		_SubOffset("SubOffset", Float) = 0.4
 		_MainSpeed("MainSpeed", Float) = 0.3
 		_SubSpeed("SubSpeed", Float) = 0.3
+		_SpeedUpRate("SpeedUpRate", Float) = 2
 		_MainFrequency("MainFrequency", Float) = 2.4
 		_SubFrequency("SubFrequency", Float) = 2.0
 		_MainAmplitude("MainAmplitude", Float) = 0.02
@@ -51,18 +55,22 @@
 				};
 
 				float _TimeRate;
+				float _AlertTime;
 				sampler2D _MainTex;
 				float4 _MainTex_ST;
-				float _Radius;
+				sampler2D _GaugeMask;
 				fixed4 _MainColor;
 				fixed4 _LightColor;
+				fixed4 _AlertColor;
 				float4 _SubColorCoef;
+				float _AlertBlinkSpeed;
 				float _UpperLine;
 				float _LowerLine;
 				float _SubHeight;
 				float _SubOffset;
 				float _MainSpeed;
 				float _SubSpeed;
+				float _SpeedUpRate;
 				float _MainFrequency;
 				float _SubFrequency;
 				float _MainAmplitude;
@@ -88,33 +96,36 @@
 						
 					float PI = 3.14159265359;
 
-					if (distance(i.uv, float2(0.5, 0.5)) > _Radius) {
-						return texColor*i.color;
-					}
-
 					fixed4 color = lerp(_LightColor, _MainColor, smoothstep(0.0, 1.0, 1.0 - i.uv.y));
 
-					float line1 = lerp(_LowerLine, _UpperLine, _TimeRate);
-					float line2 = line1 + _SubHeight;
+					bool outside = tex2D(_GaugeMask, i.uv).a < 0.1;
 
-					float w1 = sin((i.uv.x + _Time.y * _MainSpeed)*PI*_MainFrequency)*_MainAmplitude;
-					float w2 = sin((i.uv.x + _Time.y * _SubSpeed + _SubOffset)*PI*_SubFrequency)*_SubAmplitude;
+					if(outside)
+					{
+						color.a = -1.0;
+					}
+					else {
 
-					color = lerp(color, saturate(color*_SubColorCoef), step(i.uv.y, line1 + w1));
-					color *= step(i.uv.y, line2 + w2);
+						float line1 = lerp(_LowerLine, _UpperLine, _TimeRate);
+						float line2 = line1 + _SubHeight;
 
-					//if (i.uv.y > line1 + w1) {
-					//	if (i.uv.y < line2 + w2) {
-					//		color = saturate(color*_SubColorCoef);
+						float speedRate = 1.0 + (_SpeedUpRate - 1.0)*(1.0 - _TimeRate);
 
-					//	}
-					//	else {
-					//		color.a = 0.0;
-					//	}
-					//}
+						float w1 = sin((i.uv.x + _Time.y * _MainSpeed * speedRate)*PI*_MainFrequency)*_MainAmplitude;
+						float w2 = sin((i.uv.x + _Time.y * _SubSpeed * speedRate + _SubOffset)*PI*_SubFrequency)*_SubAmplitude;
+
+						color = lerp(color, saturate(color*_SubColorCoef), step(i.uv.y, line1 + w1));
+						color *= step(i.uv.y, line2 + w2);
+					}
 
 					color.rgb = lerp(color.rgb*(1.0 - texColor.a) + texColor.rgb*texColor.a, texColor.rgb, step(color.a, 0));
 					color.a = lerp(color.a, texColor.a, step(color.a, 0));
+
+					if (_AlertTime > 0 && texColor.a > 0.01) {
+						float a = abs(sin(_AlertTime*_AlertBlinkSpeed))*_AlertColor.a;
+						
+						color.rgb = color.rgb*(1 - a) + _AlertColor.rgb * a;
+					}
 
 					return color*i.color;
 				}
