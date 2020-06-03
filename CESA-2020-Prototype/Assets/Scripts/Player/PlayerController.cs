@@ -210,9 +210,20 @@ public class PlayerController : MonoBehaviour
         //{
         //    bulletG.DisableGuideLines();
         //}
-        // ガイドライン
-        bulletG.EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
 
+        ////ガイドライン(停止時非表示)
+        //if (Mathf.Abs(Input.GetAxis(Player.HORIZONTAL)) <= 0.1f && Mathf.Abs(Input.GetAxis(Player.VERTICAL)) <= 0.1f)
+        //{
+        //    bulletG.DisableGuideLines();
+
+        //}
+        //else
+        //{
+        //    bulletG.EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
+        //}
+
+        // ガイドライン常時
+        bulletG.EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
 
         // バレットの発射
         attackButton = Input.GetAxis(Player.ATTACK);
