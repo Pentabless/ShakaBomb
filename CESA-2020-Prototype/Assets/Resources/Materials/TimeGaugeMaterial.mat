@@ -39,6 +39,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GaugeMask:
+        m_Texture: {fileID: 2800000, guid: 77ac449f433b8514780e327999b009ab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: b84bf6b7358cd7649af238bac467a590, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -57,6 +61,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - PixelSnap: 0
+    - _AlertBlinkSpeed: 2
+    - _AlertTime: 0
     - _BumpScale: 1
     - _CutEnd: 0.2
     - _CutStart: 0
@@ -66,10 +72,10 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LowerLine: -0.05
+    - _LowerLine: -0.02
     - _MainAmplitude: 0.02
     - _MainFrequency: 2.4
-    - _MainSpeed: 0.3
+    - _MainSpeed: 0.25
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -77,17 +83,19 @@ Material:
     - _Radius: 0.45
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SpeedUpRate: 2
     - _SrcBlend: 1
     - _SubAmplitude: 0.03
     - _SubFrequency: 2
     - _SubHeight: 0.05
     - _SubOffset: 0.4
-    - _SubSpeed: 0.3
+    - _SubSpeed: 0.25
     - _TimeRate: 1
     - _UVSec: 0
     - _UpperLine: 1
     - _ZWrite: 1
     m_Colors:
+    - _AlertColor: {r: 0.9, g: 0.1, b: 0.1, a: 0.5}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightColor: {r: 0.4787979, g: 0.7264151, b: 0.09251513, a: 1}
