@@ -20,4 +20,6 @@ public class Data
     public static float timeLimit = 0.0f;
     public static float time = 0.0f;
     public static int star_num = 0;
+
+    public static int stage_number;
 }
