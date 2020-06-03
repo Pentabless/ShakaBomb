@@ -22,7 +22,7 @@ public class StageCreateController : MonoBehaviour
     void Start()
     {
         //ステージセレクトシーンからもらった番号をもとにステージを作る
-        GameObject stage = Instantiate(stage_prefab[Data.stage_number])as GameObject;
+        GameObject stage = Instantiate(stage_prefab[/*Data.stage_number*/3])as GameObject;
         //座標を設定する(原点)
         stage.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 

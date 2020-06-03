@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Common;
-using UnityEngine.SceneManagement;
 //==============================================================================================
 public class DoorToStage : MonoBehaviour
 {
@@ -20,6 +19,8 @@ public class DoorToStage : MonoBehaviour
     int numStage;
 
     float goStage = Common.Decimal.ZERO;
+
+    int temp = 0;
 
 	//------------------------------------------------------------------------------------------
     // Awake
@@ -43,6 +44,9 @@ public class DoorToStage : MonoBehaviour
 	private void Update()
     {
         goStage = Input.GetAxis(GamePad.BUTTON_A);
+
+        if (temp != 0)
+            Debug.Log(temp);
     }
 
 
@@ -51,9 +55,8 @@ public class DoorToStage : MonoBehaviour
         if (collision.tag == Player.NAME && goStage > 0.0f)
         {
             // ToDo:静的な変数に代入
-            Data.stage_number = numStage;
-            Debug.Log(numStage);
-            SceneManager.LoadScene("KubotaScene");
+
+            temp = numStage;
         }
     }
 }
