@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     // バブルジェネレータ
     [SerializeField]
-    BubbleGenerator bubbleG;
+    GameObject bubbleG;
 
     // バルーンコントローラ
     [SerializeField]
@@ -31,11 +31,12 @@ public class PlayerController : MonoBehaviour
 
     // バレットジェネレータ
     [SerializeField]
-    BulletGenerator bulletG;
+    GameObject bulletG;
 
     // コントローラ
     [SerializeField]
-    GamepadManager gamepadManager;
+    GameObject gamepadManager;
+
     bool checkController;
     // 入力を受け付けるかのフラグ
     bool canControl = true;
@@ -154,7 +155,7 @@ public class PlayerController : MonoBehaviour
 
         // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
         // コントローラの接続チェック
-        checkController = gamepadManager.GetCheckGamepad();
+        checkController = gamepadManager.GetComponent<GamepadManager>().GetCheckGamepad();
 
         // 左右移動
         if (Input.GetAxis(Player.HORIZONTAL) < Integer.ZERO)
@@ -223,7 +224,7 @@ public class PlayerController : MonoBehaviour
         //}
 
         // ガイドライン常時
-        bulletG.EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
+        bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
 
         // バレットの発射
         attackButton = Input.GetAxis(Player.ATTACK);
@@ -249,7 +250,7 @@ public class PlayerController : MonoBehaviour
             {
                 angle = Mathf.PI;
             }
-            if (bulletG.BulletCreate(transform.position, angle))
+            if (bulletG.GetComponent<BulletGenerator>().BulletCreate(transform.position, angle))
             {
                 balloonController.UseBalloon(bulletCost);
             }
@@ -334,11 +335,11 @@ public class PlayerController : MonoBehaviour
             //{
             if (lastDir > 0.0f && dir == -1)
             {
-                bubbleG.BubbleCreate();
+                bubbleG.GetComponent<BubbleGenerator>().BubbleCreate();
             }
             if (lastDir < 0.0f && dir == 1)
             {
-                bubbleG.BubbleCreate();
+                bubbleG.GetComponent<BubbleGenerator>().BubbleCreate();
             }
             //}
         }
@@ -526,7 +527,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == Stage.DAMAGE_TILE)
         {
             balloonController.Burst();
-            bubbleG.StopChase();
+            bubbleG.GetComponent<BubbleGenerator>().StopChase();
             deathFlag = true;
         }
 
