@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: bf5d646536cf5fe4e9cf4807d792b1cf
   - enabled: 1
+    path: Assets/Scenes/NewStageSelectScene.unity
+    guid: 4e21b713418ae5148b548dd52746c7c0
+  - enabled: 0
     path: Assets/Scenes/StageSelectScene.unity
     guid: ce748213a546a004082d8f13b3f202b2
   - enabled: 1
@@ -23,4 +26,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/NagatoScene.unity
     guid: 4096938f2de7a1543b64e19b4e83dc07
+  - enabled: 1
+    path: Assets/Scenes/KubotaScene.unity
+    guid: b5886edbccc1f7c4185724930f9a8f0e
   m_configObjects: {}
