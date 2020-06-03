@@ -14,6 +14,8 @@ public class SoundPlayer : MonoBehaviour
         soundPlayerObject = new GameObject("SoundPlayer");
         audioSource = soundPlayerObject.AddComponent<AudioSource>();
         audioSource.loop = true;
+
+        soundPlayerObject.AddComponent<SoundFadeController>();  //フェード用
     }
 
     // オブジェクトを取得する
