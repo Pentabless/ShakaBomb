@@ -22,9 +22,19 @@ public class IEnemy : MonoBehaviour
 
     public Status currentStatus = Status.None;
 
-    virtual protected void DestructionConfirmation()
+    [SerializeField]
+    GameObject bubblePre;
+    GameObject bubble;
+
+    bool onDestroy = false;
+
+    protected void DestructionConfirmation()
     {
-        if(currentStatus == Status.Dead)
+        if(bubble != null)
+        {
+            bubble.transform.position = this.transform.position;
+        }
+        else if(onDestroy)
         {
             Destroy(this.gameObject);
         }
@@ -34,21 +44,19 @@ public class IEnemy : MonoBehaviour
     /// 当たり判定時に呼ぶ
     /// </summary>
     /// <param name="collision"></param>
-    virtual protected void OnCollisionEnterEvent(Collision2D collision)
+    protected void OnCollisionEnterEvent(Collision2D collision)
     {
         if (collision.transform.tag == "Player" && currentStatus == Status.Hit)
         {
             currentStatus = Status.Dead;
-
-            Vector2 effectSize = Vector2.one * 1.5f;
-            EffectGenerator.BubbleBurstFX(
-                new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),
-                transform.position,
-                null);
         }
 
         if (collision.transform.tag == "Bullet")
         {
+            bubble = Instantiate(bubblePre);
+            bubble.transform.position = this.transform.position;
+            onDestroy = true;
+            bubble.transform.tag = Enemy.HIT_STATE;
             this.transform.tag = Enemy.HIT_STATE;
             currentStatus = Status.Hit;
         }
