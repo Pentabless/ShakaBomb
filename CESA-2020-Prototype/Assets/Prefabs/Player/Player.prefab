@@ -633,11 +633,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c920b2f66b1ff16429d19bafa5e95ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bubbleG: {fileID: 0}
+  bubbleG: {fileID: 5491862832334669860, guid: a93a28b17cdb9e74596fb25ff7b88208, type: 3}
   balloonController: {fileID: 1912286093}
   antiRotationWrapper: {fileID: 25961973}
   bulletG: {fileID: 0}
-  gamepadManager: {fileID: 0}
+  gamepadManager: {fileID: 3867471678414555890, guid: ac9a527e5f2cecb41be67a8ed7cc3b25,
+    type: 3}
   audios:
   - {fileID: 8300000, guid: 2eb7895c5ab334e4da030bfd15b60384, type: 3}
   - {fileID: 8300000, guid: 44853a3714e096e458222e6332fcb99f, type: 3}
