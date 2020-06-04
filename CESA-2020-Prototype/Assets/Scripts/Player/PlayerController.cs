@@ -595,6 +595,7 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME)
         {
             isGround = false;
+            jumpCount = 1;
             bubbleGround = false;
         }
     }
@@ -685,6 +686,7 @@ public class PlayerController : MonoBehaviour
     public void KnockBack(Vector3 hitPos)
     {
         isGround = false;
+        jumpCount = 1;
         hitCount = 15;
         Vector2 hitVel = this.transform.position - hitPos;
         Vector2 addVel = new Vector2(8.0f, 8.0f);
