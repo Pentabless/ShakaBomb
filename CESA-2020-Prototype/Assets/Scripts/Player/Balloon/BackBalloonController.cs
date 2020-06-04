@@ -37,7 +37,13 @@ public class BackBalloonController : MonoBehaviour
     private bool hasBalloon = false;
     [SerializeField]
     // バルーンの限界サイズ
-    private float limitSize = 10.0f;
+    private float limitSize = 1.5f;
+    // バルーンのサイズ倍率
+    [SerializeField]
+    private float sizeRate = 3.0f;
+    [SerializeField]
+    // 取得するバルーンサイズの減衰
+    private float mergeDecay = 0.25f;
     // バルーンの現在サイズ
     private float balloonSize = 0.0f;
     [SerializeField]
@@ -125,7 +131,7 @@ public class BackBalloonController : MonoBehaviour
         }
 
         // サイズ変更
-        ChangeSize(Mathf.Abs(collision.transform.localScale.x));
+        ChangeSize(Mathf.Abs(collision.transform.localScale.x*mergeDecay));
 
         // バブルの消滅
         collision.gameObject.GetComponent<BubbleController>().Destroy();
@@ -148,12 +154,21 @@ public class BackBalloonController : MonoBehaviour
     {
         // コライダーのサイズ変更
         float size = change_size * Mathf.Abs(change_size);
-        balloonSize = Mathf.Clamp(balloonSize + size, 0, limitSize * limitSize);
-        size = Mathf.Sqrt(balloonSize);
+        if(balloonSize + size < limitSize * limitSize)
+        {
+            balloonSize = Mathf.Clamp(balloonSize + size, 0, limitSize * limitSize);
+            size = Mathf.Sqrt(balloonSize);
+        }
+        else
+        {
+            balloonSize = size = 0;
+            GenerateBurstEffect();
+        }
+       
         thisCollider.radius = size / 2;
 
         // 画像のサイズ変更
-        renderObject.transform.localScale = Vector2.one * size;
+        renderObject.transform.localScale = Vector2.one * size * sizeRate;
 
         // 無くなったら無効化させる
         if (size <= Mathf.Epsilon)
