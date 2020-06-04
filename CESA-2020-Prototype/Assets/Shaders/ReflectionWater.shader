@@ -99,7 +99,7 @@
 
 				output.rgb = lerp(output.rgb, 1, step(1,
 					step(1-_Lightness, random2(area+seed).x)*
-					step(_PerlinThreshold, perlinNoise(i.uv*_PerlinGrid.xy))));
+					step(_PerlinThreshold, perlinNoise(i.uv*_PerlinGrid.xy*_Displacement_ST.xy))));
 
 				return output;
 			}
