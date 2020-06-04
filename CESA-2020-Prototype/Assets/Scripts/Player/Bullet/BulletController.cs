@@ -53,8 +53,8 @@ public class BulletController : MonoBehaviour
         else
         {
             t += Time.deltaTime;
-            Debug.Log("real:" + transform.position + " t:"+t);
-            Debug.Log("calc:" + (p + f * t + Vector3.up * 0.5f * rig.gravityScale*Physics2D.gravity.y * t * t) + " t:" + t);
+            //Debug.Log("real:" + transform.position + " t:"+t);
+            //Debug.Log("calc:" + (p + f * t + Vector3.up * 0.5f * rig.gravityScale*Physics2D.gravity.y * t * t) + " t:" + t);
         }
 
     }
