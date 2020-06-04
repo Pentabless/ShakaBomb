@@ -87,7 +87,6 @@ public class CameraController : MonoBehaviour
             playerLockCount += Time.deltaTime;
             if (playerLockCount >= Common.Camera.CANNOT_FRAME)
             {
-                Debug.Log("yes");
                 pController.EnableControl(false);
                 playerLockCount = 0.0f;
             }
