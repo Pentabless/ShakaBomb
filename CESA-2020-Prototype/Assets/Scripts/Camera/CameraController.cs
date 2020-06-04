@@ -67,9 +67,17 @@ public class CameraController : MonoBehaviour
         cameraShake = mainCamera.transform.GetComponent<CameraShake>();
         mainCamera.orthographicSize = cameraViewRange;
 
-        initializePos.z = Common.Camera.POSITION_Z;
-        mainCamera.transform.position = initializePos;
-        nextPos = initializePos;
+        if(initializePos != Vector3.zero)
+        {
+            initializePos.z = Common.Camera.POSITION_Z;
+            mainCamera.transform.position = initializePos;
+            nextPos = initializePos;
+        }
+        else
+        {
+            nextPos = mainCamera.transform.position;
+        }
+
         // プレイヤーのポジションを保存しておく
         Data.initialPlayerPos = player.transform.position;
 
@@ -80,6 +88,7 @@ public class CameraController : MonoBehaviour
     {
         var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y, GetScreenBottomRight().x, GetScreenTopLeft().y);
 
+        Debug.Log(nextPos.y);
         if (!followOn)
         {
             // カメラ移動中
@@ -134,6 +143,15 @@ public class CameraController : MonoBehaviour
             startTime = Time.time;
             currentPos = mainCamera.transform.position;
             distance = Vector3.Distance(nextPos, currentPos);
+        }
+
+        if(nextPos.y >= Common.Camera.FIRST_CELL_Y)
+        {
+            cellY = Common.Camera.SECOND_CELL_Y;
+        }
+        else
+        {
+            cellY = Common.Camera.FIRST_CELL_Y;
         }
 
         // リスポーンポジションの記憶とカウント
