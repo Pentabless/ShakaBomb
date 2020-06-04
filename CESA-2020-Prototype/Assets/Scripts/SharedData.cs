@@ -24,6 +24,20 @@ public class SharedData : MonoBehaviour
     //カメラの映る範囲
     public Vector3[] camera_range;
 
+    //データの初期化をしたか
+    public bool initialize_stage_data;
+
+
+    public struct StageData
+    {
+        public bool clear;             //クリアしているか
+        public bool can_play;          //プレイできるか
+        public int purification_rate;  //浄化率
+    }
+
+    //ステージの情報
+    public StageData[] stage_data;
+
     /*----------------------------------------------------*/
     /*--関数名：SetCanvasOption(public)-------------------*/
     /*--概要：シーンのCanvasの設定をする(泡の飾りのため)--*/
@@ -207,4 +221,81 @@ public class SharedData : MonoBehaviour
         return str_number + " Stage";
     }
     /*--終わり：SetStageNameEnglish--*/
+
+    /*----------------------------------------*/
+    /*--関数名：SetStageDataSize(public)------*/
+    /*--概要：ステージデータのサイズを決める--*/
+    /*--引数：ステージの扉の数(int)-----------*/
+    /*--戻り値：なし--------------------------*/
+    /*----------------------------------------*/
+    public void SetStageDataSize(int num)
+    {
+        //初期化していなかったら
+        if (initialize_stage_data == false)
+        {
+            stage_data = new StageData[num];
+            //全て初期化
+            for (int i = 0; i < num; i++)
+            {
+                stage_data[i].clear = false;
+                stage_data[i].can_play = false;
+                stage_data[i].purification_rate = 0;
+            }
+            //一番最初のステージだけプレイできるようにする
+            stage_data[0].can_play = true;
+            //初期化をしたことにする
+            initialize_stage_data = true;
+        }
+    }
+    /*--終わり：SetStageDataSize--*/
+
+    /*------------------------------------------------------------------------------------*/
+    /*--関数名：SetPurificationRate(public)-----------------------------------------------*/
+    /*--概要：浄化率をデータに記録する(クリア状況と次のステージがプレイできるようにする)--*/
+    /*--引数：浄化率(int)-----------------------------------------------------------------*/
+    /*--戻り値：なし----------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------------*/
+    public void SetPurificationRate(int purification)
+    {
+        //クリアしたことにする
+        stage_data[Data.stage_number].clear = true;
+        //今回の浄化率が前回の浄化率より大きかったら
+        if (purification > stage_data[Data.stage_number].purification_rate)
+        {
+            //浄化率を入れる
+            stage_data[Data.stage_number].purification_rate = purification;
+        }
+        //クリアした所が一番最後のステージでなかったら
+        if (Data.stage_number == (stage_data.Length - 1))
+        {
+            //次のステージをプレイできるようにする
+            stage_data[Data.stage_number + 1].can_play = true;
+        }
+    }
+    /*--終わり：SetPurificationRate--*/
+
+    /*------------------------------------------------------*/
+    /*--関数名：GetCanPlay(public)--------------------------*/
+    /*--概要：ステージがプレイできるかどうかのデータを渡す--*/
+    /*--引数：ステージ番号(int)-----------------------------*/
+    /*--戻り値：プレイできるか(bool)------------------------*/
+    /*------------------------------------------------------*/
+    public bool GetCanPlay(int stage_number)
+    {
+        return stage_data[stage_number].can_play;
+    }
+    /*--終わり：GetCanPlay--*/
+
+    /*------------------------------------------*/
+    /*--関数名：GetPurification(public)---------*/
+    /*--概要：ステージ毎の浄化率のデータを渡す--*/
+    /*--引数：ステージ番号(int) ----------------*/
+    /*--戻り値：浄化率(int)---------------------*/
+    /*------------------------------------------*/
+    public int GetPurification(int stage_number)
+    {
+        return stage_data[stage_number].purification_rate;
+    }
+    /*--終わり：GetCanPlay--*/
+
 }

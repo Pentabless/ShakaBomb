@@ -23,18 +23,20 @@ public class ResultDirector : MonoBehaviour
     public float change_sprite_angle;
     //回転を止める角度
     public float stop_rotate_angle;
+    //流すBGM
+    public AudioClip[] bgm_list;
 
     /*-----------*/
     /*--private--*/
     /*-----------*/
     //リザルトフレーム
-    private GameObject go_result_frame;
-    //評価の星
-    private GameObject[] go_rank_star = new GameObject[3];
+    //private GameObject go_result_frame;
+    ////評価の星
+    //private GameObject[] go_rank_star = new GameObject[3];
     //…ステージクリア！
-    private Text text_stage_clear;
+    private Text text_stage_purification_rate;
     //スコア(テキスト)
-    private Text text_score;
+    private Text text_rate;
     //画面フェード
     private FadeController sc_screen_fade;
     //背景の飾りジェネレーター
@@ -43,8 +45,6 @@ public class ResultDirector : MonoBehaviour
     private Vector3[] camera_range;
     //星を回転させたかどうか
     private bool[] rotate_star = new bool[3];
-    //スコア
-    private int score;
     //評価の星の数
     private int num_rank_star;
 
@@ -56,29 +56,43 @@ public class ResultDirector : MonoBehaviour
     /*-----------------*/
     void Start()
     {
-        //スコア(仮)
-        score = 700;
-
         //オブジェクトを探す
-        go_result_frame = GameObject.Find("ResultFrame");
+        //go_result_frame = GameObject.Find("ResultFrame");
         //コンポーネントを探す
-        text_stage_clear = GameObject.Find("StageClear").GetComponent<Text>();
-        text_score = GameObject.Find("Score").GetComponent<Text>();
+        text_stage_purification_rate = GameObject.Find("StagePurificationRate").GetComponent<Text>();
+        text_rate = GameObject.Find("PurificationRate").GetComponent<Text>();
         sc_screen_fade = GameObject.Find("ScreenFade").GetComponent<FadeController>();
         sc_decoration_generator = GameObject.Find("BackGroundDecorationGenerator").GetComponent<BackGroundDecorationGenerator>();
 
         //座標変更
-        go_result_frame.transform.position = new Vector3(-30.0f, 2.0f, 0.0f);
-        text_stage_clear.rectTransform.anchoredPosition = new Vector3(-Screen.width - 300.0f, 200.0f, 0.0f);
+        //go_result_frame.transform.position = new Vector3(-30.0f, 2.0f, 0.0f);
+        //stage_purification_rate.rectTransform.anchoredPosition = new Vector3(-Screen.width - 300.0f, 200.0f, 0.0f);
+
+        //*----浄化率のテキストの設定----*//
+        //プレイシーンから汚染ポイントと残っている汚染ポイントを使って浄化率を求める
+        float rate = 0.79f;
+        //パーセンテージに変更
+        int percent = (int)(rate * 100);
+        //浄化率のテキストを設定する
+        text_rate.text = percent.ToString() + "%";
+        //浄化率からテキストの色を設定する
+        SetPercentTextColor(percent);
+        //浄化率をBGMを決めて再生する
+        //PlayPercentBGM(percent);      //BGMが入ったらコメントアウト
+
+        //*----SharedDataにあるステージデータに記録する----*//
+        SharedData.instance.SetPurificationRate(percent);
+
+
         //○○ステージクリア！　のテキストを設定する
-        text_stage_clear.text = SharedData.instance.SetStageNameEnglish(SharedData.instance.play_stage_number) + " クリア!";
+        //stage_purification_rate.text = SharedData.instance.SetStageNameEnglish(SharedData.instance.play_stage_number) + " クリア!";
         //スコア　のテキストを設定する
-        text_score.text = "Score:" + score.ToString();
+        //text_score.text = "Score:" + score.ToString();
         //評価の星の数を決める
         //SetNumRankStar(score);
         //評価する星の数から評価する星の設定をする
         //SetRankStar(num_rank_star);
-        SetRankStar(Data.star_num);
+        //SetRankStar(Data.star_num);
 
 
         //フェードインさせる
@@ -121,56 +135,56 @@ public class ResultDirector : MonoBehaviour
             sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), 10);
         }
 
-        //リザルトフレーム(ステージクリアの後ろにある旗みたいなもの)
-        if (go_result_frame.transform.position.x != 0.0f)
-        {
-            go_result_frame.transform.position += new Vector3(frame_speed, 0.0f, 0.0f);
-            if (go_result_frame.transform.position.x > 0.0f)
-            {
-                go_result_frame.transform.position = new Vector3(0.0f, 2.0f, 0.0f);
-            }
-        }
+        ////リザルトフレーム(ステージクリアの後ろにある旗みたいなもの)
+        //if (go_result_frame.transform.position.x != 0.0f)
+        //{
+        //    go_result_frame.transform.position += new Vector3(frame_speed, 0.0f, 0.0f);
+        //    if (go_result_frame.transform.position.x > 0.0f)
+        //    {
+        //        go_result_frame.transform.position = new Vector3(0.0f, 2.0f, 0.0f);
+        //    }
+        //}
 
-        //ステージクリア(テキストUI)
-        if (text_stage_clear.rectTransform.anchoredPosition.x != 0.0f)
-        {
-            text_stage_clear.rectTransform.anchoredPosition += new Vector2((frame_speed * Screen.width) / 30.0f, 0.0f);
-            if (text_stage_clear.rectTransform.anchoredPosition.x > 0.0f)
-            {
-                text_stage_clear.rectTransform.anchoredPosition = new Vector3(0.0f, 200.0f);
-            }
-        }
+        ////ステージクリア(テキストUI)
+        //if (text_stage_purification_rate.rectTransform.anchoredPosition.x != 0.0f)
+        //{
+        //    text_stage_purification_rate.rectTransform.anchoredPosition += new Vector2((frame_speed * Screen.width) / 30.0f, 0.0f);
+        //    if (text_stage_purification_rate.rectTransform.anchoredPosition.x > 0.0f)
+        //    {
+        //        text_stage_purification_rate.rectTransform.anchoredPosition = new Vector3(0.0f, 200.0f);
+        //    }
+        //}
 
-        //評価する星
-        for (int i = 0; i < go_rank_star.Length; i++)
-        {
-            //回転できるかどうか
-            bool rotate_check = true;
+        //////評価する星
+        ////for (int i = 0; i < go_rank_star.Length; i++)
+        ////{
+        ////    //回転できるかどうか
+        ////    bool rotate_check = true;
 
-            //一番目じゃなかったら
-            if (i != 0)
-            {
-                //一つ前の星が回転終わっていなかったら
-                if (rotate_star[i - 1] == false)
-                {
-                    rotate_check = false;
-                }
-            }
+        ////    //一番目じゃなかったら
+        ////    if (i != 0)
+        ////    {
+        ////        //一つ前の星が回転終わっていなかったら
+        ////        if (rotate_star[i - 1] == false)
+        ////        {
+        ////            rotate_check = false;
+        ////        }
+        ////    }
 
-            //回転できる状態で　回転済みじゃなかったら
-            if (rotate_check == true && rotate_star[i] == false)
-            {
-                //回転(角度スピードを足していく)
-                go_rank_star[i].transform.Rotate(new Vector3(0.0f, angle_speed, 0.0f));
-                //条件があっていたら画像を変える
-                ChangeStarSprite(i);
-                //条件に当てはまっていたら回転を止める
-                StopRotateStar(i);
-            }
-        }
+        ////    //回転できる状態で　回転済みじゃなかったら
+        ////    if (rotate_check == true && rotate_star[i] == false)
+        ////    {
+        ////        //回転(角度スピードを足していく)
+        ////        go_rank_star[i].transform.Rotate(new Vector3(0.0f, angle_speed, 0.0f));
+        ////        //条件があっていたら画像を変える
+        ////        ChangeStarSprite(i);
+        ////        //条件に当てはまっていたら回転を止める
+        ////        StopRotateStar(i);
+        ////    }
+        ////}
 
-        //Spaceキーを押したら
-        if (Input.GetKeyDown(KeyCode.Space) ||
+        //何かのキーを押したら
+        if (Input.anyKeyDown ||
             //Aボタンを押したら
             (Input.GetAxis(Common.GamePad.BUTTON_A) > 0))
         {
@@ -190,6 +204,76 @@ public class ResultDirector : MonoBehaviour
         }
     }
     /*--終わり：Update--*/
+
+    /*--------------------------------------------*/
+    /*--関数名：SetPercentTextColor(private)------*/
+    /*--概要：パーセントのテキストの色を設定する--*/
+    /*--引数：パーセント(int)---------------------*/
+    /*--戻り値：なし------------------------------*/
+    /*--------------------------------------------*/
+    private void SetPercentTextColor(int percent)
+    {
+        //25%以下だったら
+        if(percent<=25)
+        {
+            //赤　(仮)
+            text_rate.color = new Color(1.0f, 0.0f, 0.0f);
+        }
+        //50%以下だったら
+        else if(percent<=50)
+        {
+            //オレンジ　(仮)
+            text_rate.color = new Color(1.0f, 0.5f, 0.0f);
+        }
+        //75%以下だったら
+        else if(percent<=75)
+        {
+            //黄　(仮)
+            text_rate.color = new Color(1.0f, 1.0f, 0.0f);
+        }
+        //76%以上だったら
+        else
+        {
+            //黄緑　(仮)
+            text_rate.color = new Color(0.4f, 0.9f, 0.0f);
+        }
+    }
+    /*--終わり：SetPercentTextColor--*/
+
+    /*-----------------------------------*/
+    /*--関数名：PlayPercentBGM(private)--*/
+    /*--概要：BGMを決めて再生する--------*/
+    /*--引数：パーセント(int)------------*/
+    /*--戻り値：なし---------------------*/
+    /*-----------------------------------*/
+    private void PlayPercentBGM(int percent)
+    {
+        AudioClip clip;
+        //25%以下だったら
+        if (percent <= 25)
+        {
+            clip = bgm_list[0];
+        }
+        //50%以下だったら
+        else if (percent <= 50)
+        {
+            clip = bgm_list[1];
+        }
+        //75%以下だったら
+        else if (percent <= 75)
+        {
+            clip = bgm_list[2];
+        }
+        //76%以上だったら
+        else
+        {
+            clip = bgm_list[3];
+        }
+
+        //BGMを流す
+        SoundPlayer.PlayBGM(clip);
+    }
+    /*--終わり：PlayPercentBGM--*/
 
     /*-----------------------------------*/
     /*--関数名：SetNumRankStar(private)--*/
@@ -219,67 +303,67 @@ public class ResultDirector : MonoBehaviour
     }
     /*--終わり：SetNumRankStar--*/
 
-    /*--------------------------------------------------*/
-    /*--関数名：SetRankStar(private)--------------------*/
-    /*--概要：評価する星の数から評価する星の設定をする--*/
-    /*--引数：星の数(int)-------------------------------*/
-    /*--戻り値：なし------------------------------------*/
-    /*--------------------------------------------------*/
-    private void SetRankStar(int num)
-    {
-        for (int i = 0; i < go_rank_star.Length; i++)
-        {
-            go_rank_star[i] = GameObject.Find("Star" + i.ToString());
-            //回転済みにする
-            rotate_star[i] = true;
+    /////*--------------------------------------------------*/
+    /////*--関数名：SetRankStar(private)--------------------*/
+    /////*--概要：評価する星の数から評価する星の設定をする--*/
+    /////*--引数：星の数(int)-------------------------------*/
+    /////*--戻り値：なし------------------------------------*/
+    /////*--------------------------------------------------*/
+    ////private void SetRankStar(int num)
+    ////{
+    ////    for (int i = 0; i < go_rank_star.Length; i++)
+    ////    {
+    ////        go_rank_star[i] = GameObject.Find("Star" + i.ToString());
+    ////        //回転済みにする
+    ////        rotate_star[i] = true;
 
-            //評価する星の数より小さかったら回転していない事にする
-            if (i < num)
-            {
-                rotate_star[i] = false;
-            }
-        }
-    }
-    /*--終わり：SetRankStar--*/
+    ////        //評価する星の数より小さかったら回転していない事にする
+    ////        if (i < num)
+    ////        {
+    ////            rotate_star[i] = false;
+    ////        }
+    ////    }
+    ////}
+    /////*--終わり：SetRankStar--*/
 
-    /*-------------------------------------*/
-    /*--関数名：ChangeStarSprite(private)--*/
-    /*--概要：評価の星の画像を変更する-----*/
-    /*--引数：処理している星の番号(int)----*/
-    /*--戻り値：なし-----------------------*/
-    /*-------------------------------------*/
-    private void ChangeStarSprite(int star_number)
-    {
-        //画像が変わる角度を超えていて　画像を変えていなかったら
-        if ((go_rank_star[star_number].transform.localEulerAngles.y >= change_sprite_angle) &&
-            (go_rank_star[star_number].GetComponent<SpriteRenderer>().sprite.name == "TransparentStar"))
-        {
-            //画像を変更する
-            go_rank_star[star_number].GetComponent<SpriteRenderer>().sprite = color_star;
-            //画像の色を変更する
-            go_rank_star[star_number].GetComponent<SpriteRenderer>().color = Color.red;
-        }
-    }
-    /*--終わり：ChangeStarSprite--*/
+    /////*-------------------------------------*/
+    /////*--関数名：ChangeStarSprite(private)--*/
+    /////*--概要：評価の星の画像を変更する-----*/
+    /////*--引数：処理している星の番号(int)----*/
+    /////*--戻り値：なし-----------------------*/
+    /////*-------------------------------------*/
+    ////private void ChangeStarSprite(int star_number)
+    ////{
+    ////    //画像が変わる角度を超えていて　画像を変えていなかったら
+    ////    if ((go_rank_star[star_number].transform.localEulerAngles.y >= change_sprite_angle) &&
+    ////        (go_rank_star[star_number].GetComponent<SpriteRenderer>().sprite.name == "TransparentStar"))
+    ////    {
+    ////        //画像を変更する
+    ////        go_rank_star[star_number].GetComponent<SpriteRenderer>().sprite = color_star;
+    ////        //画像の色を変更する
+    ////        go_rank_star[star_number].GetComponent<SpriteRenderer>().color = Color.red;
+    ////    }
+    ////}
+    /////*--終わり：ChangeStarSprite--*/
 
-    /*-----------------------------------*/
-    /*--関数名：StopRotateStar(private)--*/
-    /*--概要：評価の星の回転を止める-----*/
-    /*--引数：処理している星の番号(int)--*/
-    /*--戻り値：なし---------------------*/
-    /*-----------------------------------*/
-    private void StopRotateStar(int star_number)
-    {
-        //(回転を止める角度-10)を超えていて　回転を止めていなかったら
-        if ((go_rank_star[star_number].transform.localEulerAngles.y > (stop_rotate_angle - 10.0f)) &&
-            (rotate_star[star_number] == false))
-        {
-            //微調整する
-            go_rank_star[star_number].transform.rotation = Quaternion.Euler(new Vector3(0.0f, stop_rotate_angle, 0.0f));
-            //回転を止めるようにする
-            rotate_star[star_number] = true;
-        }
-    }
-    /*--終わり：ChangeStarSprite--*/
+    /////*-----------------------------------*/
+    /////*--関数名：StopRotateStar(private)--*/
+    /////*--概要：評価の星の回転を止める-----*/
+    /////*--引数：処理している星の番号(int)--*/
+    /////*--戻り値：なし---------------------*/
+    /////*-----------------------------------*/
+    ////private void StopRotateStar(int star_number)
+    ////{
+    ////    //(回転を止める角度-10)を超えていて　回転を止めていなかったら
+    ////    if ((go_rank_star[star_number].transform.localEulerAngles.y > (stop_rotate_angle - 10.0f)) &&
+    ////        (rotate_star[star_number] == false))
+    ////    {
+    ////        //微調整する
+    ////        go_rank_star[star_number].transform.rotation = Quaternion.Euler(new Vector3(0.0f, stop_rotate_angle, 0.0f));
+    ////        //回転を止めるようにする
+    ////        rotate_star[star_number] = true;
+    ////    }
+    ////}
+    /////*--終わり：ChangeStarSprite--*/
 
 }

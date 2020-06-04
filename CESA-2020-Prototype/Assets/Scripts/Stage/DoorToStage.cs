@@ -55,4 +55,10 @@ public class DoorToStage : MonoBehaviour
             SceneManager.LoadScene("PlayScene");
         }
     }
+
+    //扉のステージ番号を渡す
+    public int GetStageNumber()
+    {
+        return numStage;
+    }
 }
