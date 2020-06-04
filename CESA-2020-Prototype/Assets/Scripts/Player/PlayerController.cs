@@ -249,7 +249,6 @@ public class PlayerController : MonoBehaviour
 
         // 空中ブースト Test
         jumpButton = Input.GetAxis(Player.JUMP);
-        boostButton = Input.GetAxis(Player.BOOST);
         float sticV = Input.GetAxis(Player.VERTICAL);
         Mathf.Abs(sticV); // 入力の度合
 
@@ -257,23 +256,16 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount >= 1)
             {
-                //isGround = false;
-                float boostDir = (transform.position - balloonController.gameObject.transform.position).x;
-                rig.velocity = rig.velocity * 0.0f;
+                Vector2 direction = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
+                if(sticV <= 0.1f)
+                {
+                    direction.y = 0;
+                }
+                direction.Normalize();
 
-                if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
-                {
-                    rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), boostForce.y * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
-                }
-                else
-                {
-                    rig.AddForce(new Vector2(boostForce.x * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
-                }
-                // エフェクトを生成する
-                EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
-                balloonController.UseBoost(boostCost);
+                Boost(direction, boostCost);
+
                 boostCount--;
-
             }
         }
 
@@ -652,6 +644,26 @@ public class PlayerController : MonoBehaviour
     public int GetMaxBalloons()
     {
         return m_balloonList.Count;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // ブースト移動
+    //------------------------------------------------------------------------------------------
+    public void Boost(Vector3 direction, float cost)
+    {
+        rig.velocity = rig.velocity * 0.0f;
+
+        if (direction.y >= 0.0f)
+        {
+            rig.AddForce(new Vector2(boostForce.x * direction.x, boostForce.y * direction.y + 10.0f), ForceMode2D.Impulse);
+        }
+        else
+        {
+            rig.AddForce(new Vector2(boostForce.x * direction.x, boostForce.y * direction.y), ForceMode2D.Impulse);
+        }
+        // エフェクトを生成する
+        EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
+        balloonController.UseBoost(cost);
     }
 
     //------------------------------------------------------------------------------------------

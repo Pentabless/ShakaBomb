@@ -76,7 +76,6 @@ public partial class Floor : MonoBehaviour
 
             for(int i = 0; i < hitCount; i++)
             {
-                Debug.Log(results[i].collider.name + " : " + results[i].collider.isTrigger);
                 if (results[i].collider.isTrigger && results[i].collider.tag == "Player")
                 {
                     continue;

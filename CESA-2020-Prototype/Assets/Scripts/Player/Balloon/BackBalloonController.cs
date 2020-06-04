@@ -154,16 +154,11 @@ public class BackBalloonController : MonoBehaviour
     {
         // コライダーのサイズ変更
         float size = change_size * Mathf.Abs(change_size);
-        if(balloonSize + size < limitSize * limitSize)
-        {
-            balloonSize = Mathf.Clamp(balloonSize + size, 0, limitSize * limitSize);
-            size = Mathf.Sqrt(balloonSize);
-        }
-        else
-        {
-            balloonSize = size = 0;
-            GenerateBurstEffect();
-        }
+
+        bool burst = (balloonSize + size > limitSize * limitSize);
+
+        balloonSize = Mathf.Clamp(balloonSize + size, 0, limitSize * limitSize);
+        size = Mathf.Sqrt(balloonSize);
        
         thisCollider.radius = size / 2;
 
@@ -178,6 +173,13 @@ public class BackBalloonController : MonoBehaviour
 
         // サイズを更新
         Data.balloonSize = size;
+
+        // サイズが大きくなりすぎたら破裂する
+        if (burst)
+        {
+            Vector2 direction = playerController.transform.position - transform.position;
+            playerController.Boost(direction.normalized, Mathf.Sqrt(balloonSize));
+        }
     }
 
     //------------------------------------------------------------------------------------------
