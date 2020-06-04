@@ -218,7 +218,7 @@ PrefabInstance:
         type: 3}
       propertyPath: sweepPartcle
       value: 
-      objectReference: {fileID: 2108157683}
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5622152113422975392, guid: 33edfaeb0eaa2614fbfaca2dc6f0b077, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 33edfaeb0eaa2614fbfaca2dc6f0b077, type: 3}
@@ -663,10 +663,4 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5454663761963855899, guid: 5566c4c9e771f764096b8c8e56fe0823,
     type: 3}
   m_PrefabInstance: {fileID: 335385750}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &2108157683 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4463317105277755161, guid: 33edfaeb0eaa2614fbfaca2dc6f0b077,
-    type: 3}
-  m_PrefabInstance: {fileID: 45806804}
   m_PrefabAsset: {fileID: 0}
