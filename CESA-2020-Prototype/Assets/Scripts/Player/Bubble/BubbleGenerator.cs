@@ -3,30 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using Common;
 
-[RequireComponent(typeof(AudioSource))]
 public class BubbleGenerator : MonoBehaviour
 {
-    // プレファブ
-    public GameObject bubblePrefab;
-    // 作っているか
-    bool isCreate;
-    // 限度の大きさ
-    Vector3 limit_scale;
-    // 色
-    Vector4 color;
+    [SerializeField]
+    // プレハブ
+    private GameObject bubblePrefab;
+    [SerializeField]
+    // 足元にできるエフェクト
+    private ParticleSystem sweepPartcle;
+    [SerializeField]
+    // プレイヤー
+    private Transform playerTransform;
 
+
+    // 作っているか
+    private bool isCreate;
+    // 限度の大きさ
+    private Vector3 limit_scale;
+    // 色
+    private Vector4 color;
+
+    [SerializeField]
     // SE
-    public AudioClip m_sound;
-    //AudioSource m_audioSource;
+    private AudioClip m_sound;
 
     void Start()
     {
+        playerTransform = GameObject.Find(Player.NAME).transform;
+
         isCreate = false;
         limit_scale = new Vector3(5.0f, 5.0f, 5.0f);
         color = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-
-        //Componentを取得
-        //m_audioSource = GetComponent<AudioSource>();
+        
     }
 
     void Update()
@@ -39,7 +47,7 @@ public class BubbleGenerator : MonoBehaviour
 
         if (isCreate)
         {
-            //プレファブと同じオブジェクトを作る
+            //プレハブと同じオブジェクトを作る
             GameObject go = Instantiate(bubblePrefab) as GameObject;
             //座標を設定する
             go.transform.position = GameObject.Find(Player.NAME).transform.position;
@@ -49,6 +57,10 @@ public class BubbleGenerator : MonoBehaviour
             go.GetComponent<Renderer>().material.color = color;
             //作っていない状態にする
             isCreate = false;
+
+            // 足元にエフェクトを発生させる
+            sweepPartcle.transform.position = playerTransform.position;
+            sweepPartcle.Emit(1);
         }
     }
 
@@ -61,7 +73,6 @@ public class BubbleGenerator : MonoBehaviour
 
     public void BubbleCreate()
     {
-        //m_audioSource.PlayOneShot(m_sound);
         SoundPlayer.Play(m_sound);
         limit_scale = new Vector3(5.0f, 5.0f, 5.0f);
         color = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
