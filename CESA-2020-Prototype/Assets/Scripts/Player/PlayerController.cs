@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float defaultJumpForce;
     float jumpForce;
-    int jumpCount;
+    int jumpCount = 0;
     bool jumpStopFlag;
 
     // 切り替えし猶予フレーム
@@ -175,31 +175,6 @@ public class PlayerController : MonoBehaviour
             dir = 0;
         }
 
-        // ジャンプ
-        if (hitCount == 0)
-        {
-            jumpButton = Input.GetAxis(Player.JUMP);
-            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && coyoteFlag == true)
-            {
-                if (this.rig.velocity.y <= 0)
-                {
-                    if (!isGround)   // コヨーテ中
-                    {
-                        this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
-                    }
-
-                    rig.AddForce(new Vector2(0, jumpForce));
-                    isGround = false;
-                    jumpStopFlag = false;
-                }
-            }
-            // ジャンプ中にボタンを離す
-            if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
-            {
-                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.6f);
-                jumpStopFlag = true;
-            }
-        }
 
 
         //// テストコード
@@ -273,20 +248,18 @@ public class PlayerController : MonoBehaviour
         //}
 
         // 空中ブースト Test
+        jumpButton = Input.GetAxis(Player.JUMP);
         boostButton = Input.GetAxis(Player.BOOST);
         float sticV = Input.GetAxis(Player.VERTICAL);
         Mathf.Abs(sticV); // 入力の度合
 
         if (boostCount >= 1)
         {
-            if (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize)
+            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount >= 1)
             {
-                isGround = false;
+                //isGround = false;
                 float boostDir = (transform.position - balloonController.gameObject.transform.position).x;
-                //boostDir = boostDir > 0 ? 1 : boostDir < 0 ? -1 : 0;
-                //rig.velocity = new Vector2(0, 0);
                 rig.velocity = rig.velocity * 0.0f;
-                //rig.AddForce(new Vector2(boostForce.x * boostDir, boostForce.y));
 
                 if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
                 {
@@ -317,6 +290,34 @@ public class PlayerController : MonoBehaviour
                 rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
             }
         }
+
+
+        // ジャンプ
+        if (hitCount == 0)
+        {
+            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && coyoteFlag == true)
+            {
+                jumpCount = 1;
+                if (this.rig.velocity.y <= 0)
+                {
+                    if (!isGround)   // コヨーテ中
+                    {
+                        this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
+                    }
+
+                    rig.AddForce(new Vector2(0, jumpForce));
+                    isGround = false;
+                    jumpStopFlag = false;
+                }
+            }
+            // ジャンプ中にボタンを離す
+            if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
+            {
+                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.6f);
+                jumpStopFlag = true;
+            }
+        }
+
 
         // 前フレームのキー入力の情報保持
         // Jump
@@ -566,6 +567,7 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME || collision.tag == "DamageTile")
         {
             isGround = true;
+            jumpCount = 0;
             boostCount = 2;
             // 着地エフェクト
             Vector2 effectSize = Vector2.one * 0.4f;
