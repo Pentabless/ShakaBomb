@@ -103,6 +103,15 @@ public class CameraController : MonoBehaviour
             if (followOn)
             {
                 pController.EnableControl(true);
+
+                //if (nextPos.y >= 40.0f)
+                //{
+                //    cellY = Common.Camera.SECOND_CELL_Y;
+                //}
+                //else
+                //{
+                //    cellY = Common.Camera.FIRST_CELL_Y;
+                //}
             }
         }
         else
@@ -145,15 +154,6 @@ public class CameraController : MonoBehaviour
             distance = Vector3.Distance(nextPos, currentPos);
         }
 
-        if(nextPos.y >= Common.Camera.FIRST_CELL_Y)
-        {
-            cellY = Common.Camera.SECOND_CELL_Y;
-        }
-        else
-        {
-            cellY = Common.Camera.FIRST_CELL_Y;
-        }
-
         // リスポーンポジションの記憶とカウント
         if (rememberPos)
         {
@@ -172,23 +172,6 @@ public class CameraController : MonoBehaviour
 
         // カメラの範囲指定を適用
         mainCamera.transform.position = SetCameraRangePosition(mainCamera.transform.position.x, mainCamera.transform.position.y);
-
-        /// ここからデバック処理
-        if (Input.GetKeyDown(KeyCode.A))
-            cameraShake.Shake(0.5f, 0.3f);
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            cameraViewRange++;
-            mainCamera.orthographicSize = cameraViewRange;
-            Debug.Log("描画範囲(+)：" + cameraViewRange);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            cameraViewRange--;
-            mainCamera.orthographicSize = cameraViewRange;
-            Debug.Log("描画範囲(-)：" + cameraViewRange);
-        }
 
         // 背景の移動
         MoveBackGrounds();
