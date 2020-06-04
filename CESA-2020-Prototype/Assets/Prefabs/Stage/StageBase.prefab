@@ -868,7 +868,7 @@ PrefabInstance:
     - target: {fileID: 813411900762931536, guid: c2a266178a69909449dfab2ef01c5d77,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 813411900762931536, guid: c2a266178a69909449dfab2ef01c5d77,
         type: 3}
@@ -970,6 +970,12 @@ PrefabInstance:
       propertyPath: saturationRate
       value: 0.45
       objectReference: {fileID: 0}
+    - target: {fileID: 8058223871699142091, guid: c2a266178a69909449dfab2ef01c5d77,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fe80af5ae5e80a943bfb3ec516a4750d,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2a266178a69909449dfab2ef01c5d77, type: 3}
 --- !u!4 &2068734014870035697 stripped

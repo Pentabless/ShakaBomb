@@ -14,7 +14,10 @@
 	}
 
 	SubShader{
+		Tags { "Queue" = "Transparent" }
+
 		Pass {
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
