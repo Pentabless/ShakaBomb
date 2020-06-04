@@ -638,6 +638,9 @@ MonoBehaviour:
   antiRotationWrapper: {fileID: 25961973}
   bulletG: {fileID: 0}
   gamepadManager: {fileID: 0}
+  audios:
+  - {fileID: 8300000, guid: 2eb7895c5ab334e4da030bfd15b60384, type: 3}
+  - {fileID: 8300000, guid: 44853a3714e096e458222e6332fcb99f, type: 3}
   accelForce: 80
   maxSpeed: 6
   defaultJumpForce: 800

@@ -15,6 +15,13 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    // オーディオタイプ
+    enum AudioType
+    {
+        Jump,
+        Acceleration
+    }
+
     // リジッドボディ
     Rigidbody2D rig;
 
@@ -36,6 +43,10 @@ public class PlayerController : MonoBehaviour
     // コントローラ
     [SerializeField]
     GameObject gamepadManager;
+
+    // SE
+    [SerializeField]
+    List<AudioClip> audios;
 
     bool checkController;
     // 入力を受け付けるかのフラグ
@@ -265,6 +276,8 @@ public class PlayerController : MonoBehaviour
 
                 Boost(direction, boostCost);
 
+                SoundPlayer.Play(audios[(int)AudioType.Acceleration]);
+
                 boostCount--;
             }
         }
@@ -300,6 +313,8 @@ public class PlayerController : MonoBehaviour
                     rig.AddForce(new Vector2(0, jumpForce));
                     isGround = false;
                     jumpStopFlag = false;
+
+                    SoundPlayer.Play(audios[(int)AudioType.Jump]);
                 }
             }
             // ジャンプ中にボタンを離す
