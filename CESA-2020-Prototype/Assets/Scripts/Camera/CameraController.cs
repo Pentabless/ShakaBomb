@@ -140,12 +140,18 @@ public class CameraController : MonoBehaviour
             {
                 followOn = false;
                 rememberPos = true;
+
+                if (nextPos.y >= Common.Camera.FIRST_CELL_Y)
+                    cellY = Common.Camera.SECOND_CELL_Y;
                 nextPos.y += cellY;
             }
             if (fourCorners.y >= player.transform.position.y)
             {
                 followOn = false;
                 rememberPos = true;
+
+                if (nextPos.y <= Common.Camera.FIRST_CELL_Y)
+                    cellY = Common.Camera.FIRST_CELL_Y;
                 nextPos.y -= cellY;
             }
             // カメラが移動していないときの設定
