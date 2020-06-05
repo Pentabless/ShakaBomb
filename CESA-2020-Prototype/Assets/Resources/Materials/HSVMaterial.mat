@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DistortionBubble2
-  m_Shader: {fileID: 4800000, guid: 885335d1f6e41aa44833f7205c8c351f, type: 3}
+  m_Name: HSVMaterial
+  m_Shader: {fileID: 4800000, guid: e77bf01a409b47d44addd9eff03d9fff, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: cf3385214b957dc439bb2c264fbc9f14, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -56,29 +56,31 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _BrightnessMultiply: 1
+    - _BrightnessShift: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Distortion: 0.08
-    - _DistortionSpeed: 1.5
     - _DstBlend: 0
+    - _FixHue: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GrabDistortion: 0.03
+    - _HueShift: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Seed: 0
+    - _SaturationMultiply: 1
+    - _SaturationShift: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Timer: 0
     - _UVSec: 0
+    - _UseFixHue: 0
+    - _UseVertexColor: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ScaleRate: {r: 1.25, g: 0.85, b: 0, a: 0}
-    - _ScaleVec: {r: 0, g: 0, b: 0, a: 0}
+    - _FixHue: {r: 1, g: 1, b: 1, a: 1}
