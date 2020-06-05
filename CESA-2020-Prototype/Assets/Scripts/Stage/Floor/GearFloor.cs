@@ -8,11 +8,13 @@ using UnityEngine;
 using System;
 using Common;
 //==============================================================================================
-public class RotationFloor : Floor
+public class GearFloor : Floor
 {
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    [SerializeField]
+    GameObject Body;
     [SerializeField]
     float speed;
     [SerializeField]
@@ -29,28 +31,29 @@ public class RotationFloor : Floor
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
-        if (startPosition == Vector3.zero)
-            startPosition = this.transform.position;
+        this.transform.position = Body.transform.position;
+        startPosition = Body.transform.position;
 
-        direction = 
-            rightRotation == leftRotation ? 
-            true : rightRotation == true ? 
+        direction =
+            rightRotation == leftRotation ?
+            true : rightRotation == true ?
             true : false;
 
         thisCollider = GetComponent<BoxCollider2D>();
         platform = GetComponent<PlatformEffector2D>();
-
     }
 
 
-    //------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------
     // Update
-    //------------------------------------------------------------------------------------------
-    private void Update()
+	//------------------------------------------------------------------------------------------
+	private void Update()
     {
         var x = radius * Mathf.Sin(Time.time * (direction ? speed : speed * -1)) + startPosition.x;
         var y = radius * Mathf.Cos(Time.time * (direction ? speed : speed * -1)) + startPosition.y;
         var z = Common.Decimal.ZERO;
+
+        Body.transform.Rotate(new Vector3(0, 0, +speed));
 
         this.transform.position = new Vector3(x, y, z);
 
