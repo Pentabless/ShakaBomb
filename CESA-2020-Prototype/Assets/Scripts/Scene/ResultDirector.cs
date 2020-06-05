@@ -25,7 +25,8 @@ public class ResultDirector : MonoBehaviour
     public float stop_rotate_angle;
     //流すBGM
     public AudioClip[] bgm_list;
-
+    //仮　浄化率
+    public float purification;
     /*-----------*/
     /*--private--*/
     /*-----------*/
@@ -70,7 +71,7 @@ public class ResultDirector : MonoBehaviour
 
         //*----浄化率のテキストの設定----*//
         //プレイシーンから汚染ポイントと残っている汚染ポイントを使って浄化率を求める
-        float rate = 0.79f;
+        float rate = purification;
         //パーセンテージに変更
         int percent = (int)(rate * 100);
         //浄化率のテキストを設定する
@@ -78,10 +79,10 @@ public class ResultDirector : MonoBehaviour
         //浄化率からテキストの色を設定する
         SetPercentTextColor(percent);
         //浄化率をBGMを決めて再生する
-        //PlayPercentBGM(percent);      //BGMが入ったらコメントアウト
+        PlayPercentBGM(percent);      //BGMが入ったらコメントアウト
 
         //*----SharedDataにあるステージデータに記録する----*//
-        SharedData.instance.SetPurificationRate(percent);
+        //SharedData.instance.SetPurificationRate(percent);
 
 
         //○○ステージクリア！　のテキストを設定する
@@ -269,7 +270,6 @@ public class ResultDirector : MonoBehaviour
         {
             clip = bgm_list[3];
         }
-
         //BGMを流す
         SoundPlayer.PlayBGM(clip);
     }
