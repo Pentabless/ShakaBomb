@@ -108,9 +108,6 @@ public class PlayerController : MonoBehaviour
     float jumpButton = Decimal.ZERO;
     float jumpButtonTrigger = Decimal.ZERO;
 
-    float attackButton = Decimal.ZERO;
-    float attackButtonTrigger = Decimal.ZERO;
-
     float boostButton = Decimal.ZERO;
     float boostButtonTrigger = Decimal.ZERO;
 
@@ -161,6 +158,7 @@ public class PlayerController : MonoBehaviour
         if (!canControl)
         {
             dir = Integer.ZERO;
+            bulletG.GetComponent<BulletGenerator>().DisableGuideLines();
             return;
         }
 
@@ -186,48 +184,14 @@ public class PlayerController : MonoBehaviour
             dir = 0;
         }
 
-
-
-        //// テストコード
-        //if (Input.GetKey(KeyCode.LeftShift))
-        //{
-        //bulletG.EnableGuideLines(transform.position, (Data.playerDir > 0 ? 0 : Mathf.PI));
-        //}
-        //else
-        //{
-        //    bulletG.DisableGuideLines();
-        //}
-
-        ////ガイドライン(停止時非表示)
-        //if (Mathf.Abs(Input.GetAxis(Player.HORIZONTAL)) <= 0.1f && Mathf.Abs(Input.GetAxis(Player.VERTICAL)) <= 0.1f)
-        //{
-        //    bulletG.DisableGuideLines();
-
-        //}
-        //else
-        //{
-        //    bulletG.EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
-        //}
-
-        // ガイドライン常時
-        bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
-
         // バレットの発射
-        attackButton = Input.GetAxis(Player.ATTACK);
+        bool releaseAttack = Input.GetButtonUp(Player.ATTACK);
         var balloonFloor = Input.GetAxis(GamePad.BUTTON_B);
-        if (attackButton > 0 && attackButtonTrigger == 0.0f && Data.balloonSize >= bulletCost)
+        if (releaseAttack && Data.balloonSize >= bulletCost)
         {
             float angle = 0.0f;
             float v = Input.GetAxis(Player.VERTICAL);
             float h = Input.GetAxis(Player.HORIZONTAL);
-            //if (Mathf.Abs(v) > 0.0f)
-            //{
-            //    angle = Mathf.PI * Mathf.Sign(v) * 0.5f;
-            //}
-            //else if (Data.playerDir < 0)
-            //{
-            //    angle = Mathf.PI;
-            //}
             if (Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f)
             {
                 angle = Mathf.Atan2(v, h);
@@ -241,6 +205,29 @@ public class PlayerController : MonoBehaviour
                 balloonController.UseBalloon(bulletCost);
             }
         }
+
+        // バレットの発射ボタンを押している間、ガイドラインを表示する
+        if (Input.GetButton(Player.ATTACK))
+        {
+            var inputDir = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
+            if(inputDir.magnitude > 0)
+            {
+                bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, Mathf.Atan2(inputDir.y, inputDir.x));
+            }
+            else
+            {
+                bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, (Data.playerDir >= 0 ? 0 : Mathf.PI));
+            }
+        }
+        else
+        {
+            bulletG.GetComponent<BulletGenerator>().DisableGuideLines();
+        }
+
+        // ガイドライン常時
+        //bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
+
+
         //// ExplosionTest
         //if (Input.GetKeyDown(KeyCode.B) && Data.num_balloon > 0)
         //{
@@ -329,8 +316,6 @@ public class PlayerController : MonoBehaviour
         // 前フレームのキー入力の情報保持
         // Jump
         jumpButtonTrigger = jumpButton;
-        // Attack
-        attackButtonTrigger = attackButton;
         // Boost
         boostButtonTrigger = boostButton;
         // ------------------------------------------------------------------------------
