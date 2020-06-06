@@ -480,6 +480,9 @@ MonoBehaviour:
   renderObject: {fileID: 2135826699}
   offsetPos: {x: -0.65, y: 0.55}
   offsetDirection: {x: -0.65, y: 0.55}
+  uselessColor: {r: 0.37486652, g: 0.40466648, b: 0.9811321, a: 1}
+  cautionColor: {r: 1, g: 0.5613208, b: 0.5613208, a: 1}
+  cautionSpeed: 0.5
   limitSize: 1
   sizeRate: 2.5
   mergeDecay: 0.35
