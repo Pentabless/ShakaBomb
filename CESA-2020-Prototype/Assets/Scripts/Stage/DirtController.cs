@@ -105,6 +105,9 @@ public class DirtController : MonoBehaviour
                 targetAlpha = 0;
                 dirtManager.DirtCleaned(amount);
                 wasCleaned = true;
+
+                var size = GetComponent<BoxCollider2D>().size * transform.lossyScale;
+                EffectGenerator.CleanFX(new CleanFX.Param(size), transform.position);
             }
            
 
@@ -127,4 +130,16 @@ public class DirtController : MonoBehaviour
     {
         beingSwept = true;
     }
+
+    //------------------------------------------------------------------------------------------
+    // OnTriggerEnter2D
+    //------------------------------------------------------------------------------------------
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Bullet")
+        {
+            Swept();
+        }
+    }
 }
+

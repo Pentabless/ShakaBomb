@@ -25,4 +25,9 @@ public class EffectPrefabHolder : MonoBehaviour
     private GameObject BoostTrailFX = null;
     public GameObject boostTrailFX { get { return BoostTrailFX; } private set { BoostTrailFX = value; } }
 
+    // クリーンエフェクト
+    [SerializeField]
+    private GameObject CleanFX = null;
+    public GameObject cleanFX { get { return CleanFX; } private set { CleanFX = value; } }
+
 }
