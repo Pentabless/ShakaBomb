@@ -94,9 +94,9 @@
 
 				float2 getPos(float2 p)
 				{
-					float rand = hash(_Seed) * 10000;
-					float2 n = float2(sin(_Timer*0.7*_DistortionSpeed), cos(_Timer*0.3*_DistortionSpeed));
-					float2 q = _Distortion * (noise2(p + n + rand) - 0.5);
+					float r = hash(_Seed)*0.5+0.3;
+					float2 n = float2(sin(_Timer*r*_DistortionSpeed), cos(_Timer*(1-r)*_DistortionSpeed));
+					float2 q = _Distortion * (noise2(p + n) - 0.5);
 
 					return p + q;
 				}
