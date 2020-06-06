@@ -10,13 +10,15 @@ using Common;
 //==============================================================================================
 public partial class Floor
 {
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Player")
         {
             collision.transform.parent = this.transform;
         }
-
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
         if(collision.transform.tag == "Player" || collision.transform.tag == "Balloon")
         {
             Rigidbody2D rig = collision.gameObject.GetComponent<Rigidbody2D>();
