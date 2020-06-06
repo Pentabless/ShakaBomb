@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4669190992227570454}
   - component: {fileID: 9209079890762465390}
   - component: {fileID: 4669190992227570452}
-  - component: {fileID: 4669190992227570453}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Floor
@@ -126,25 +125,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.15, y: 0.23}
   m_EdgeRadius: 0
---- !u!251 &4669190992227570453
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4669190992227570459}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
 --- !u!1 &4669190992489830674
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +137,6 @@ GameObject:
   - component: {fileID: 4669190992489831145}
   - component: {fileID: 3976739514589772953}
   - component: {fileID: 4669190992489831151}
-  - component: {fileID: 4669190992489831148}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Floor
@@ -271,25 +250,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.15, y: 0.23}
   m_EdgeRadius: 0
---- !u!251 &4669190992489831148
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4669190992489830674}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
 --- !u!1 &4669190992704787076
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +342,6 @@ GameObject:
   - component: {fileID: 4669190992856483679}
   - component: {fileID: 5964402041733620896}
   - component: {fileID: 4669190992856483678}
-  - component: {fileID: 4669190992856483673}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Floor
@@ -496,25 +455,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.15, y: 0.23}
   m_EdgeRadius: 0
---- !u!251 &4669190992856483673
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4669190992856483677}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
 --- !u!1 &4669190992920072799
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +467,6 @@ GameObject:
   - component: {fileID: 4669190992920072794}
   - component: {fileID: 8252143528738563029}
   - component: {fileID: 4669190992920072792}
-  - component: {fileID: 4669190992920072793}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Floor
@@ -641,25 +580,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.15, y: 0.23}
   m_EdgeRadius: 0
---- !u!251 &4669190992920072793
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4669190992920072799}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
 --- !u!1 &4669190993078345984
 GameObject:
   m_ObjectHideFlags: 0
