@@ -15,6 +15,10 @@ public class FlyingEnemy : IEnemy
     //------------------------------------------------------------------------------------------
     [SerializeField]
     private float range;
+    [SerializeField]
+    private bool vertical;
+    [SerializeField]
+    private bool horizontal;
 
     private Vector3 startPosition;
     //------------------------------------------------------------------------------------------
@@ -34,8 +38,21 @@ public class FlyingEnemy : IEnemy
 
         if (currentStatus == Status.None)
         {
-            // 縦方向
-            this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * range + startPosition.y, startPosition.z);
+            if(vertical == horizontal)
+            {
+                // 縦方向
+                this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * range + startPosition.y, startPosition.z);
+            }
+            else if(vertical)
+            {
+                // 縦方向
+                this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * range + startPosition.y, startPosition.z);
+            }
+            else
+            {
+                // 横方向
+                this.transform.position = new Vector3(Mathf.Sin(Time.time) * range + startPosition.x, startPosition.y, startPosition.z);
+            }
         }
     }
 
