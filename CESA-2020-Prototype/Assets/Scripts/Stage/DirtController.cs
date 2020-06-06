@@ -13,7 +13,42 @@ public class DirtController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    // スプライトレンダラー
+    SpriteRenderer spriteRenderer = null;
+    // HSVシェーダー
     HSVShaderController hsvController = null;
+    //　ダートマネージャ
+    DirtManager dirtManager = null;
+
+    [SerializeField]
+    [Header("量と掃除回数にSacleを掛けるかどうか")]
+    bool useScale = true;
+
+    [SerializeField]
+    [Header("汚れの量")]
+    int amount = 10;
+
+    [SerializeField]
+    [Header("必要な掃除回数")]
+    int sweepLevel = 4;
+
+    // 掃除回数
+    int sweepCount = 0;
+    // 掃除されているかどうか
+    bool beingSwept = false;
+    // 掃除が完了したかどうか
+    bool wasCleaned = false;
+
+    // 初期の不透明度
+    float defaultAlpha = 1;
+    // 現在の不透明度
+    float currentAlpha = 1;
+    // 目的の不透明度
+    float targetAlpha = 1;
+    [SerializeField]
+    // 透明度合い
+    float alphaRate = 0.7f;
+
 
     [SerializeField]
     // 光の点滅加減
@@ -33,7 +68,9 @@ public class DirtController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         hsvController = GetComponent<HSVShaderController>();
+        currentAlpha = targetAlpha = defaultAlpha = GetComponent<SpriteRenderer>().color.a;
     }
 
 	//------------------------------------------------------------------------------------------
@@ -41,7 +78,13 @@ public class DirtController : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
-        
+        if (useScale)
+        {
+            float scale = Mathf.Max(transform.lossyScale.x, transform.lossyScale.y);
+            amount = Mathf.FloorToInt(amount * scale);
+            sweepLevel = Mathf.FloorToInt(sweepLevel * scale);
+        }
+        dirtManager = GameObject.Find(Dirt.MANAGER).GetComponent<DirtManager>();
     }
 
 	//------------------------------------------------------------------------------------------
@@ -49,7 +92,39 @@ public class DirtController : MonoBehaviour
 	//------------------------------------------------------------------------------------------
 	private void Update()
     {
+        if (beingSwept && !wasCleaned)
+        {
+            sweepCount++;
+
+            float a = Mathf.Max(1 - (sweepCount * 1.0f / sweepLevel), 0.0f);
+            a = a * alphaRate + (1 - alphaRate);
+            targetAlpha = defaultAlpha * a;
+
+            if (sweepCount >= sweepLevel)
+            {
+                targetAlpha = 0;
+                dirtManager.DirtCleaned(amount);
+                wasCleaned = true;
+            }
+           
+
+            beingSwept = false;
+        }
+        currentAlpha = Mathf.Lerp(currentAlpha, targetAlpha, 0.2f);
+        var color = spriteRenderer.color;
+        color.a = currentAlpha;
+        spriteRenderer.color = color;
+
+
         timer += Time.deltaTime;
         hsvController.brightnessMultiply = Mathf.Lerp(brightnessMin, brightnessMax, Mathf.Sin(timer * Mathf.PI * 2 * blinkSpeed) * 0.5f + 0.5f);
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 掃除処理
+    //------------------------------------------------------------------------------------------
+    public void Swept()
+    {
+        beingSwept = true;
     }
 }
