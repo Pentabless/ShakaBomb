@@ -106,8 +106,10 @@ public class DirtController : MonoBehaviour
                 dirtManager.DirtCleaned(amount);
                 wasCleaned = true;
 
-                var size = GetComponent<BoxCollider2D>().size * transform.lossyScale;
-                EffectGenerator.CleanFX(new CleanFX.Param(size), transform.position);
+                var collider = GetComponent<BoxCollider2D>();
+                var size = collider.size * transform.lossyScale;
+                var offset = collider.offset * transform.lossyScale;
+                EffectGenerator.CleanFX(new CleanFX.Param(size), transform.position+(Vector3)offset);
             }
            
 
