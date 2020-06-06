@@ -26,7 +26,7 @@ public class IEnemy : MonoBehaviour
     GameObject bubblePre;
     GameObject bubble;
 
-    bool onDestroy = false;
+    protected bool onDestroy = false;
 
     protected void DestructionConfirmation()
     {

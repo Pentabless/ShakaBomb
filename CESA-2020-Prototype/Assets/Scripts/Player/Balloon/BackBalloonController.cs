@@ -178,7 +178,8 @@ public class BackBalloonController : MonoBehaviour
         if (burst)
         {
             Vector2 direction = playerController.transform.position - transform.position;
-            playerController.Boost(direction.normalized, Mathf.Sqrt(balloonSize));
+            playerController.Boost(direction.normalized);
+            Burst();
         }
     }
 

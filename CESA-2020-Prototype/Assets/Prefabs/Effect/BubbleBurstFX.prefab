@@ -664,7 +664,7 @@ ParticleSystem:
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 0.2
+    radiusThickness: 0.4
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
@@ -4713,8 +4713,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8a319a20c9058e04a89f1528a5146e77, type: 2}
-  - {fileID: 2100000, guid: 8a319a20c9058e04a89f1528a5146e77, type: 2}
+  - {fileID: 2100000, guid: bb700f0d9f1d8f548b50346ceb563c50, type: 2}
+  - {fileID: 2100000, guid: bb700f0d9f1d8f548b50346ceb563c50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4769,5 +4769,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec83fc60b38d6148a390c67596fb065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseBurstCount: 10
-  baseSizeRate: 0.5
+  baseBurstCount: 8
+  baseSizeRate: 0.3
+  baseRadius: 0.5
