@@ -122,6 +122,8 @@
 					//color.a *= step(dot(pos, pos), 0.25);
 					color.a *= range01;
 
+					color *= i.color;
+
 					return color;
 				}
 				ENDCG

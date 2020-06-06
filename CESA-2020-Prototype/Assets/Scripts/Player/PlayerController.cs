@@ -574,12 +574,13 @@ public class PlayerController : MonoBehaviour
             isGround = true;
             jumpCount = 0;
             boostCount = 2;
-            // 着地エフェクト
-            Vector2 effectSize = Vector2.one * 0.4f;
-            EffectGenerator.BubbleBurstFX(
-                new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),
-                new Vector2(this.transform.position.x, this.transform.position.y - 1.0f),
-                null);
+
+            //// 着地エフェクト(保留)
+            //Vector2 effectSize = Vector2.one * 0.7f;
+            //EffectGenerator.BubbleBurstFX(
+            //    new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),
+            //    new Vector2(this.transform.position.x, this.transform.position.y - 1.0f),
+            //    null);
         }
 
         // バブルキャノン(仮)
@@ -670,6 +671,14 @@ public class PlayerController : MonoBehaviour
     public int GetMaxBalloons()
     {
         return m_balloonList.Count;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // ブースト移動コストを取得
+    //------------------------------------------------------------------------------------------
+    public float GetBoostCost()
+    {
+        return boostCost;
     }
 
     //------------------------------------------------------------------------------------------
