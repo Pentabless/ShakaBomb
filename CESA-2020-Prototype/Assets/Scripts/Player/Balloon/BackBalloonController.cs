@@ -160,7 +160,7 @@ public class BackBalloonController : MonoBehaviour
         balloonSize = Mathf.Clamp(balloonSize + size, 0, limitSize * limitSize);
         size = Mathf.Sqrt(balloonSize);
        
-        thisCollider.radius = size / 2;
+        thisCollider.radius = size * sizeRate/ 2;
 
         // 画像のサイズ変更
         renderObject.transform.localScale = Vector2.one * size * sizeRate;
