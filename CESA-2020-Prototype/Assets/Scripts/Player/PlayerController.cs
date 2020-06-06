@@ -261,7 +261,11 @@ public class PlayerController : MonoBehaviour
                 }
                 direction.Normalize();
 
-                Boost(direction, boostCost);
+                Boost(direction);
+
+                // エフェクトを生成する
+                EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
+                balloonController.UseBoost(boostCost);
 
                 SoundPlayer.Play(audios[(int)AudioType.Acceleration]);
 
@@ -650,7 +654,7 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // ブースト移動
     //------------------------------------------------------------------------------------------
-    public void Boost(Vector3 direction, float cost)
+    public void Boost(Vector3 direction)
     {
         rig.velocity = rig.velocity * 0.0f;
 
@@ -662,9 +666,6 @@ public class PlayerController : MonoBehaviour
         {
             rig.AddForce(new Vector2(boostForce.x * direction.x, boostForce.y * direction.y), ForceMode2D.Impulse);
         }
-        // エフェクトを生成する
-        EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
-        balloonController.UseBoost(cost);
     }
 
     //------------------------------------------------------------------------------------------

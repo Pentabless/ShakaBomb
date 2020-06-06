@@ -482,7 +482,7 @@ MonoBehaviour:
   offsetDirection: {x: -0.65, y: 0.55}
   limitSize: 1
   sizeRate: 2.5
-  mergeDecay: 0.5
+  mergeDecay: 0.35
   balloonLerpRate: 0.1
   moveLayerMask:
     serializedVersion: 2
