@@ -33,6 +33,21 @@ public class BackBalloonController : MonoBehaviour
     // オフセット方向
     private Vector2 offsetDirection = -Vector2.one;
 
+    [SerializeField]
+    // 使用不可時のカラー
+    private Color uselessColor = Color.white;
+    [SerializeField]
+    // 破裂寸前のカラー
+    private Color cautionColor = Color.white;
+    [SerializeField]
+    // 破裂寸前判定の割合
+    private float cautionRate = 0.8f;
+    [SerializeField]
+    // 破裂寸前の点滅速度
+    private float cautionSpeed = 2.0f;
+    // 破裂タイマー
+    private float cautionTimer = 0;
+
     // バルーンの所持状態
     private bool hasBalloon = false;
     [SerializeField]
@@ -105,8 +120,27 @@ public class BackBalloonController : MonoBehaviour
 
         transform.position += targetVec.normalized * distance;
 
+
+        if (Data.balloonSize < playerController.GetBoostCost())
+        {
+            renderer.color = Color.Lerp(renderer.color, uselessColor, 0.3f);
+        }
+        else
+        {
+            renderer.color = Color.Lerp(renderer.color, Color.white, 0.3f);
+        }
+
+        if (Data.balloonSize > limitSize * cautionRate)
+        {
+            cautionTimer += Time.deltaTime;
+            renderer.color = Color.Lerp(Color.white, cautionColor, Mathf.Abs(Mathf.Sin(cautionTimer * Mathf.PI * 2 * cautionSpeed)));
+        }
+        else
+        {
+            cautionTimer = 0;
+        }
     }
-    
+
     //------------------------------------------------------------------------------------------
     // OnTriggerStay2D
     //------------------------------------------------------------------------------------------
@@ -189,7 +223,7 @@ public class BackBalloonController : MonoBehaviour
     public bool UseBalloon(float useSize)
     {
         // サイズチェック
-        if (balloonSize < useSize*useSize)
+        if (Data.balloonSize < useSize)
         {
             return false;
         }
@@ -212,7 +246,7 @@ public class BackBalloonController : MonoBehaviour
 
         Vector2 effectSize = Vector2.one * useSize;
         EffectGenerator.BubbleBurstFX(
-            new BubbleBurstFX.Param(renderObject.GetComponent<SpriteRenderer>().color, effectSize),
+            new BubbleBurstFX.Param(Color.white, effectSize),
             transform.position,
             null);
 
@@ -234,7 +268,7 @@ public class BackBalloonController : MonoBehaviour
     private void GenerateBurstEffect()
     {
         EffectGenerator.BubbleBurstFX(
-            new BubbleBurstFX.Param(renderObject.GetComponent<SpriteRenderer>().color, renderObject.transform.lossyScale),
+            new BubbleBurstFX.Param(Color.white, renderObject.transform.lossyScale),
             transform.position,
             null);
     }
