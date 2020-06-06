@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButton(Player.ATTACK))
         {
             var inputDir = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
-            if(inputDir.magnitude > 0)
+            if (inputDir.magnitude > 0)
             {
                 bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, Mathf.Atan2(inputDir.y, inputDir.x));
             }
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
             if (jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount >= 1)
             {
                 Vector2 direction = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
-                if(sticV <= 0.1f)
+                if (sticV <= 0.1f)
                 {
                     direction.y = 0;
                 }
@@ -524,6 +524,9 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == Enemy.NAME || collision.gameObject.tag == Enemy.ATTACK)
         {
             KnockBack(collision.transform.position);
+            balloonController.Burst();
+            bubbleG.GetComponent<BubbleGenerator>().StopChase();
+            deathFlag = true;
         }
 
         // ダメージタイルと衝突した時に破裂させる
