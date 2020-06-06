@@ -464,7 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 211029279388131761}
   m_Layer: 0
-  m_Name: Stage_Base
+  m_Name: Stage_Base_NT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -779,6 +779,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 211029279388131761}
     m_Modifications:
+    - target: {fileID: 3524930649752458141, guid: eca9fe8788fa57044b4acb2daac0cbbb,
+        type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 3524930649752458143, guid: eca9fe8788fa57044b4acb2daac0cbbb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -834,21 +839,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3524930649752458143, guid: eca9fe8788fa57044b4acb2daac0cbbb,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.60095996
-      objectReference: {fileID: 0}
-    - target: {fileID: 3524930649752458143, guid: eca9fe8788fa57044b4acb2daac0cbbb,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.60095996
-      objectReference: {fileID: 0}
-    - target: {fileID: 3524930649752458141, guid: eca9fe8788fa57044b4acb2daac0cbbb,
-        type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 3524930649752458130, guid: eca9fe8788fa57044b4acb2daac0cbbb,
         type: 3}
       propertyPath: bubbleG
@@ -859,14 +849,6 @@ PrefabInstance:
       propertyPath: bulletG
       value: 
       objectReference: {fileID: 3787310233287937095}
-    - target: {fileID: 1870395021, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
-      propertyPath: m_Offset.y
-      value: -1.3032411
-      objectReference: {fileID: 0}
-    - target: {fileID: 1870395021, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
-      propertyPath: m_Size.y
-      value: 0.5239613
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
 --- !u!1 &3604757404419427666 stripped
@@ -1129,6 +1111,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 211029279388131761}
     m_Modifications:
+    - target: {fileID: 813411900762931549, guid: c2a266178a69909449dfab2ef01c5d77,
+        type: 3}
+      propertyPath: m_Name
+      value: ReflectWater
+      objectReference: {fileID: 0}
     - target: {fileID: 813411900762931536, guid: c2a266178a69909449dfab2ef01c5d77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1193,11 +1180,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 12.5904
-      objectReference: {fileID: 0}
-    - target: {fileID: 813411900762931549, guid: c2a266178a69909449dfab2ef01c5d77,
-        type: 3}
-      propertyPath: m_Name
-      value: ReflectWater
       objectReference: {fileID: 0}
     - target: {fileID: 813411900762931548, guid: c2a266178a69909449dfab2ef01c5d77,
         type: 3}
