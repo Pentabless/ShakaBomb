@@ -655,8 +655,8 @@ MonoBehaviour:
   boostForce: {x: 14, y: 14}
   boostFXOffset: {x: 1, y: -0.75}
   maxPowerBalloonSize: 2.5
-  bulletCost: 0.4
-  boostCost: 0.4
+  bulletCost: 0.3
+  boostCost: 0.3
   animationTime: 1
 --- !u!212 &3524930649752458142
 SpriteRenderer:
