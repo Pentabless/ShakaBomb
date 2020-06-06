@@ -315,7 +315,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.14239788, y: -1.2872093}
+  m_Offset: {x: 0.14239788, y: -1.3032411}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -326,7 +326,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9642901, y: 0.4918977}
+  m_Size: {x: 1.9642901, y: 0.5239613}
   m_EdgeRadius: 0
 --- !u!70 &1269467507
 CapsuleCollider2D:
@@ -611,7 +611,7 @@ Transform:
   m_GameObject: {fileID: 3524930649752458141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.89, y: -1.04, z: 0}
-  m_LocalScale: {x: 0.60096395, y: 0.60096395, z: 1.71704}
+  m_LocalScale: {x: 0.60095996, y: 0.60095996, z: 1.71704}
   m_Children:
   - {fileID: 1317584703}
   - {fileID: 1354774277}
@@ -633,10 +633,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c920b2f66b1ff16429d19bafa5e95ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bubbleG: {fileID: 5491862832334669860, guid: a93a28b17cdb9e74596fb25ff7b88208, type: 3}
+  bubbleG: {fileID: 0}
   balloonController: {fileID: 1912286093}
   antiRotationWrapper: {fileID: 25961973}
   bulletG: {fileID: 0}
+  dirtManager: {fileID: 9095182324152653805, guid: 2f0df4da4e635144d8ff96dd339d2970,
+    type: 3}
   gamepadManager: {fileID: 3867471678414555890, guid: ac9a527e5f2cecb41be67a8ed7cc3b25,
     type: 3}
   audios:
