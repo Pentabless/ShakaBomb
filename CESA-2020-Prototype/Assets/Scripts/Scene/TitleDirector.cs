@@ -104,7 +104,7 @@ public class TitleDirector : MonoBehaviour
         go_select_tex.transform.localScale = go_start_button.transform.localScale + new Vector3(0.5f, 0.5f, 0.0f);
         component_select_frame.localScale = go_select_tex.transform.localScale;
 
-        //仮BGMを流す
+        //BGMを流す
         SoundPlayer.PlayBGM(bgm);
     }
     /*--終わり：Start--*/
@@ -121,16 +121,16 @@ public class TitleDirector : MonoBehaviour
         float decoration_scale = Random.Range(0.3f, 3.0f);
         sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
 
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            //音のフェードアウト
-            SoundFadeController.SetFadeOutSpeed(-0.01f);
-        }
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            //音のフェードイン
-            SoundFadeController.SetFadeInSpeed(0.01f);
-        }
+        ////if(Input.GetKeyDown(KeyCode.O))
+        ////{
+        ////    //音のフェードアウト
+        ////    SoundFadeController.SetFadeOutSpeed(-0.01f);
+        ////}
+        ////if(Input.GetKeyDown(KeyCode.I))
+        ////{
+        ////    //音のフェードイン
+        ////    SoundFadeController.SetFadeInSpeed(0.01f);
+        ////}
 
 
         //フェードアウトを始めていなかったら
@@ -186,6 +186,8 @@ public class TitleDirector : MonoBehaviour
                             sc_screen_fade.SetFadeValue(0.0f);
                             //フェードアウトが始まった事にする
                             start_fade_out = true;
+                            //BGMをフェードアウトする
+                            SoundFadeController.SetFadeOutSpeed(-0.01f);
                         }
                         else
                         {

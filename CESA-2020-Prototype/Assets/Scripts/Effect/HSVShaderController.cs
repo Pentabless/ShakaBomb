@@ -15,32 +15,26 @@ public class HSVShaderController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private new Renderer renderer = null;  // レンダラー
 
-    [SerializeField]
+    
     [Header("色相を固定するかどうか")]
-    private bool useFixHue = false;
-    [SerializeField]
+    public bool useFixHue = false;
     [Header("固定する色相")]
-    private Color fixHue = Color.red;
-    [SerializeField]
+    public Color fixHue = Color.red;
     [Header("色相の変移")]
-    private float hueShift = 0;
-    [SerializeField]
+    public float hueShift = 0;
     [Header("彩度の倍率")]
-    private float saturationMultiply = 1;
-    [SerializeField]
+    public float saturationMultiply = 1;
     [Header("彩度の変移")]
-    private float saturationShift = 0;
-    [SerializeField]
+    public float saturationShift = 0;
     [Header("明度の倍率")]
-    private float brightnessMultiply = 1;
-    [SerializeField]
+    public float brightnessMultiply = 1;
     [Header("彩度の変移")]
-    private float brightnessShift = 0;
+    public float brightnessShift = 0;
 
 	//------------------------------------------------------------------------------------------
     // Awake
 	//------------------------------------------------------------------------------------------
-    private void Awake()
+    public void Awake()
     {
         renderer = GetComponent<Renderer>();
     }
@@ -48,15 +42,15 @@ public class HSVShaderController : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     // Update
 	//------------------------------------------------------------------------------------------
-	private void Update()
+	public void Update()
     {
         var mat = renderer.material;
-        mat.SetFloat("UseFixHue", (useFixHue ? 1 : 0));
-        mat.SetColor("FixHue", fixHue);
-        mat.SetFloat("HueShift", hueShift);
-        mat.SetFloat("SaturationMultiply", saturationMultiply);
-        mat.SetFloat("SaturationShift", saturationShift);
-        mat.SetFloat("BrightnessMultiply", brightnessMultiply);
-        mat.SetFloat("BrightnessShift", brightnessShift);
+        mat.SetFloat("_UseFixHue", (useFixHue ? 1 : 0));
+        mat.SetColor("_FixHue", fixHue);
+        mat.SetFloat("_HueShift", hueShift);
+        mat.SetFloat("_SaturationMultiply", saturationMultiply);
+        mat.SetFloat("_SaturationShift", saturationShift);
+        mat.SetFloat("_BrightnessMultiply", brightnessMultiply);
+        mat.SetFloat("_BrightnessShift", brightnessShift);
     }
 }
