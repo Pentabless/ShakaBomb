@@ -146,7 +146,12 @@ MonoBehaviour:
   angle_speed: 5
   change_sprite_angle: 90
   stop_rotate_angle: 180
-  bgm_list: []
+  bgm_list:
+  - {fileID: 8300000, guid: a8e6b5ca45f453644850240efb6a3eb6, type: 3}
+  - {fileID: 8300000, guid: 16e160badba33b64fb16d428c61b3110, type: 3}
+  - {fileID: 8300000, guid: befc4733551cde74c80c3bcb1824e114, type: 3}
+  - {fileID: 8300000, guid: f5b476de4ddb6764197b3ea9cb57aaed, type: 3}
+  purification: 1
 --- !u!4 &10429221
 Transform:
   m_ObjectHideFlags: 0
@@ -862,7 +867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
-  m_EffectDistance: {x: 5, y: 5}
+  m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!1 &711566312
 GameObject:
