@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4669190992227570458}
   - component: {fileID: 4669190992227570454}
-  - component: {fileID: 4669190992227570455}
+  - component: {fileID: 9209079890762465390}
   - component: {fileID: 4669190992227570452}
   - component: {fileID: 4669190992227570453}
   m_Layer: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4669190992227570455
+--- !u!114 &9209079890762465390
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,14 +91,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4669190992227570459}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89c86661975339d47a679e2f4403d925, type: 3}
+  m_Script: {fileID: 11500000, guid: ee613123ebaedab4084b75e84478f2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
   endPosition: {x: 0, y: 0, z: 0}
   passLayerMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 0
   passSensitivity: 0.2
 --- !u!61 &4669190992227570452
 BoxCollider2D:
@@ -155,7 +155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4669190992489831149}
   - component: {fileID: 4669190992489831145}
-  - component: {fileID: 4669190992489831150}
+  - component: {fileID: 3976739514589772953}
   - component: {fileID: 4669190992489831151}
   - component: {fileID: 4669190992489831148}
   m_Layer: 0
@@ -227,7 +227,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4669190992489831150
+--- !u!114 &3976739514589772953
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,14 +236,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4669190992489830674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89c86661975339d47a679e2f4403d925, type: 3}
+  m_Script: {fileID: 11500000, guid: ee613123ebaedab4084b75e84478f2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
   endPosition: {x: 0, y: 0, z: 0}
   passLayerMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 0
   passSensitivity: 0.2
 --- !u!61 &4669190992489831151
 BoxCollider2D:
@@ -380,7 +380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4669190992856483676}
   - component: {fileID: 4669190992856483679}
-  - component: {fileID: 4669190992856483672}
+  - component: {fileID: 5964402041733620896}
   - component: {fileID: 4669190992856483678}
   - component: {fileID: 4669190992856483673}
   m_Layer: 0
@@ -452,7 +452,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4669190992856483672
+--- !u!114 &5964402041733620896
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -461,14 +461,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4669190992856483677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89c86661975339d47a679e2f4403d925, type: 3}
+  m_Script: {fileID: 11500000, guid: ee613123ebaedab4084b75e84478f2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
   endPosition: {x: 0, y: 0, z: 0}
   passLayerMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 0
   passSensitivity: 0.2
 --- !u!61 &4669190992856483678
 BoxCollider2D:
@@ -525,7 +525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4669190992920072798}
   - component: {fileID: 4669190992920072794}
-  - component: {fileID: 4669190992920072795}
+  - component: {fileID: 8252143528738563029}
   - component: {fileID: 4669190992920072792}
   - component: {fileID: 4669190992920072793}
   m_Layer: 0
@@ -597,7 +597,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4669190992920072795
+--- !u!114 &8252143528738563029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -606,14 +606,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4669190992920072799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89c86661975339d47a679e2f4403d925, type: 3}
+  m_Script: {fileID: 11500000, guid: ee613123ebaedab4084b75e84478f2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
   endPosition: {x: 0, y: 0, z: 0}
   passLayerMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 0
   passSensitivity: 0.2
 --- !u!61 &4669190992920072792
 BoxCollider2D:
