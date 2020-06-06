@@ -68,4 +68,22 @@ public class EffectGenerator : MonoBehaviour
 
         return go;
     }
+
+    //------------------------------------------------------------------------------------------
+    // クリーンエフェクトの生成
+    //------------------------------------------------------------------------------------------
+    static public GameObject CleanFX(CleanFX.Param param, Vector3 pos, Transform parent = null)
+    {
+        if (!prefabHolder)
+        {
+            Init();
+        }
+
+        var go = Instantiate(prefabHolder.cleanFX, pos, Quaternion.identity, parent);
+        var fx = go.GetComponent<CleanFX>();
+        fx.SetParam(param);
+        fx.Play();
+
+        return go;
+    }
 }

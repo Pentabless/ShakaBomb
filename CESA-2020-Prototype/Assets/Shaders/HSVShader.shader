@@ -18,6 +18,7 @@
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
         LOD 100
 		Blend SrcAlpha OneMinusSrcAlpha
+		Cull Off
 
         Pass
         {

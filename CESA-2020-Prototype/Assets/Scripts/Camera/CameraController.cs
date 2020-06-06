@@ -88,7 +88,6 @@ public class CameraController : MonoBehaviour
     {
         var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y, GetScreenBottomRight().x, GetScreenTopLeft().y);
 
-        Debug.Log(nextPos.y);
         if (!followOn)
         {
             // カメラ移動中
