@@ -40,6 +40,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject bulletG;
 
+    // ダートマネージャ
+    [SerializeField]
+    DirtManager dirtManager = null;
+
     // コントローラ
     [SerializeField]
     GameObject gamepadManager;
@@ -333,10 +337,12 @@ public class PlayerController : MonoBehaviour
             if (lastDir > 0.0f && dir == -1)
             {
                 bubbleG.GetComponent<BubbleGenerator>().BubbleCreate();
+                dirtManager.SweepDirt();
             }
             if (lastDir < 0.0f && dir == 1)
             {
                 bubbleG.GetComponent<BubbleGenerator>().BubbleCreate();
+                dirtManager.SweepDirt();
             }
             //}
         }
@@ -592,6 +598,12 @@ public class PlayerController : MonoBehaviour
             // ブースト回数の回復
             boostCount = 2;
         }
+
+        // 汚れ
+        if (collision.gameObject.tag == "Dirt")
+        {
+            dirtManager.EnterDirt(collision.gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -601,6 +613,12 @@ public class PlayerController : MonoBehaviour
             isGround = false;
             jumpCount = 1;
             bubbleGround = false;
+        }
+
+        // 汚れ
+        if (collision.gameObject.tag == "Dirt")
+        {
+            dirtManager.ExitDirt(collision.gameObject);
         }
     }
 
