@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
     float jumpForce;
     int jumpCount = 0;
     bool jumpStopFlag;
+    bool jumpTiming;
 
     // 切り替えし猶予フレーム
     [SerializeField]
@@ -148,6 +149,7 @@ public class PlayerController : MonoBehaviour
         jumpForce = defaultJumpForce;
         jumpCount = Integer.ZERO;
         jumpStopFlag = false;
+        jumpTiming = false;
         playerSpeed = accelForce;
     }
 
@@ -271,6 +273,7 @@ public class PlayerController : MonoBehaviour
 
 
         // ジャンプ
+        jumpTiming = false;
         if (hitCount == 0)
         {
             if (jumpButton > 0 && jumpButtonTrigger == 0.0f && coyoteFlag == true)
@@ -286,6 +289,7 @@ public class PlayerController : MonoBehaviour
                     rig.AddForce(new Vector2(0, jumpForce));
                     isGround = false;
                     jumpStopFlag = false;
+                    jumpTiming = true;
 
                     SoundPlayer.Play(audios[(int)AudioType.Jump]);
                 }
@@ -335,17 +339,17 @@ public class PlayerController : MonoBehaviour
             Data.playerDir = dir;
         }
 
-        // プレイヤーの向き変更
-        if (Data.playerDir != 1)
-        {
-            this.transform.localRotation = new Quaternion(0, 180, 0, 0);
-            antiRotationWrapper.transform.rotation = Quaternion.identity;
-        }
-        else
-        {
-            this.transform.localRotation = new Quaternion(0, 0, 0, 0);
-            antiRotationWrapper.transform.rotation = Quaternion.identity;
-        }
+        //// プレイヤーの向き変更
+        //if (Data.playerDir != 1)
+        //{
+        //    this.transform.localRotation = new Quaternion(0, 180, 0, 0);
+        //    antiRotationWrapper.transform.rotation = Quaternion.identity;
+        //}
+        //else
+        //{
+        //    this.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        //    antiRotationWrapper.transform.rotation = Quaternion.identity;
+        //}
 
         // プレイヤーの速度取得
         Data.prePlayerVel = Data.currentPlayerVel;
@@ -565,6 +569,38 @@ public class PlayerController : MonoBehaviour
     public void EnableControl(bool enable)
     {
         canControl = enable;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 現在の方向を取得する
+    //------------------------------------------------------------------------------------------
+    public int GetCurrentDir()
+    {
+        return dir;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // ジャンプしたタイミングか取得する
+    //------------------------------------------------------------------------------------------
+    public bool JumpTiming()
+    {
+        return jumpTiming;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 接地しているか取得する
+    //------------------------------------------------------------------------------------------
+    public bool IsGround()
+    {
+        return isGround;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 死亡しているか取得する
+    //------------------------------------------------------------------------------------------
+    public bool IsDead()
+    {
+        return deathFlag;
     }
 
     //------------------------------------------------------------------------------------------
