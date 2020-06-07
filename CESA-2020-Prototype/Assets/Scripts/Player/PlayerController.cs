@@ -429,12 +429,12 @@ public class PlayerController : MonoBehaviour
         if (hitCount == 0)
         {
             // 接地時慣性消滅
-            if (isGround && dir == 0)
+            if (isGround && dir == 0 && rig.velocity.y <= 0.1f)
             {
                 this.rig.velocity = new Vector2(0, this.rig.velocity.y);
             }
             // 爆風加速対処
-            if (isGround && Mathf.Abs(rig.velocity.x) >= 5.0f)
+            if (isGround && Mathf.Abs(rig.velocity.x) >= 5.0f && rig.velocity.y <= 0.1f)
             {
                 rig.velocity = new Vector2(5.0f * dir, rig.velocity.y);
             }
@@ -455,6 +455,7 @@ public class PlayerController : MonoBehaviour
         {
             KnockBack(collision.transform.position);
             balloonController.Burst();
+            balloonController.EnableMerge(false);
             bubbleG.GetComponent<BubbleGenerator>().StopChase();
             deathFlag = true;
         }
@@ -463,6 +464,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == Stage.DAMAGE_TILE)
         {
             balloonController.Burst();
+            balloonController.EnableMerge(false);
             bubbleG.GetComponent<BubbleGenerator>().StopChase();
             deathFlag = true;
         }
@@ -677,6 +679,7 @@ public class PlayerController : MonoBehaviour
                 deathCount = 0.0f;
                 deathFlag = false;
                 EnableControl(true);
+                balloonController.EnableMerge(true);
             }
         }
     }
