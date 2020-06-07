@@ -230,8 +230,7 @@ public class PlayerController : MonoBehaviour
 
         // 空中ブースト
         jumpButton = Input.GetAxis(Player.JUMP);
-        float sticV = Input.GetAxis(Player.VERTICAL);
-        Mathf.Abs(sticV); // 入力の度合
+        float sticV = Mathf.Abs(Input.GetAxis(Player.VERTICAL));
 
         if (boostCount >= 1)
         {
