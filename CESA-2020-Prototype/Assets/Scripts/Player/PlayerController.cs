@@ -339,17 +339,17 @@ public class PlayerController : MonoBehaviour
             Data.playerDir = dir;
         }
 
-        // プレイヤーの向き変更
-        if (Data.playerDir != 1)
-        {
-            this.transform.localRotation = new Quaternion(0, 180, 0, 0);
-            antiRotationWrapper.transform.rotation = Quaternion.identity;
-        }
-        else
-        {
-            this.transform.localRotation = new Quaternion(0, 0, 0, 0);
-            antiRotationWrapper.transform.rotation = Quaternion.identity;
-        }
+        //// プレイヤーの向き変更
+        //if (Data.playerDir != 1)
+        //{
+        //    this.transform.localRotation = new Quaternion(0, 180, 0, 0);
+        //    antiRotationWrapper.transform.rotation = Quaternion.identity;
+        //}
+        //else
+        //{
+        //    this.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        //    antiRotationWrapper.transform.rotation = Quaternion.identity;
+        //}
 
         // プレイヤーの速度取得
         Data.prePlayerVel = Data.currentPlayerVel;
@@ -593,6 +593,14 @@ public class PlayerController : MonoBehaviour
     public bool IsGround()
     {
         return isGround;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 死亡しているか取得する
+    //------------------------------------------------------------------------------------------
+    public bool IsDead()
+    {
+        return deathFlag;
     }
 
     //------------------------------------------------------------------------------------------

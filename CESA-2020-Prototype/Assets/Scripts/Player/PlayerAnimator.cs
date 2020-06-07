@@ -46,5 +46,6 @@ public class PlayerAnimator : MonoBehaviour
             animator.SetTrigger("Jump");
         }
         animator.SetBool("IsGround", player.IsGround());
+        animator.SetBool("IsDead", player.IsDead());
     }
 }
