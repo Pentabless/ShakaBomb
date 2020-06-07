@@ -13,15 +13,18 @@ public class PlayerAnimator : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    public List<Sprite> sprites;
-    public SpriteRenderer spriteRenderer;
+    // アニメーター
+    private Animator animator;
+    // プレイヤー
+    private PlayerController player;
+
 
 	//------------------------------------------------------------------------------------------
     // Awake
 	//------------------------------------------------------------------------------------------
     private void Awake()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
 	//------------------------------------------------------------------------------------------
@@ -29,18 +32,19 @@ public class PlayerAnimator : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
-        
+        player = GameObject.Find(Player.NAME).GetComponent<PlayerController>();
     }
-    float t = 0;
-    public float s = 1;
+
     //------------------------------------------------------------------------------------------
     // Update
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        t += Time.deltaTime*s;
-        int num = (sprites.Count - 1) * 2;
-        int index = Mathf.FloorToInt(t) % num;
-        spriteRenderer.sprite = sprites[index < sprites.Count - 1 ? index : num - index];
+        animator.SetInteger("Direction", player.GetCurrentDir());
+        if (player.JumpTiming())
+        {
+            animator.SetTrigger("Jump");
+        }
+        animator.SetBool("IsGround", player.IsGround());
     }
 }
