@@ -48,8 +48,17 @@ public class BackBalloonController : MonoBehaviour
     // 破裂タイマー
     private float cautionTimer = 0;
 
+    [SerializeField]
+    // 破裂時にで吹き飛ぶ方向
+    private Vector2 burstDirection = new Vector2(1, 0.0f);
+    [SerializeField]
+    // 破裂時のパワー
+    private float burstForce = 1.5f;
+
     // バルーンの所持状態
     private bool hasBalloon = false;
+    // バルーンが合体可能かどうか
+    private bool enableMerge = true;
     [SerializeField]
     // バルーンの限界サイズ
     private float limitSize = 1.5f;
@@ -146,7 +155,7 @@ public class BackBalloonController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag != "Bubble" || !collision.gameObject.GetComponent<BubbleController>().CanCatch())
+        if (!enableMerge || collision.tag != "Bubble" || !collision.gameObject.GetComponent<BubbleController>().CanCatch())
         {
             return;
         }
@@ -182,6 +191,14 @@ public class BackBalloonController : MonoBehaviour
     }
 
     //------------------------------------------------------------------------------------------
+    // 合体の有効無効化
+    //------------------------------------------------------------------------------------------
+    public void EnableMerge(bool enable)
+    {
+        enableMerge = enable;
+    }
+
+    //------------------------------------------------------------------------------------------
     // バルーンのサイズ変更
     //------------------------------------------------------------------------------------------
     private void ChangeSize(float change_size)
@@ -212,7 +229,9 @@ public class BackBalloonController : MonoBehaviour
         if (burst)
         {
             Vector2 direction = playerController.transform.position - transform.position;
-            playerController.Boost(direction.normalized);
+            direction.x = (direction.x >= 0 ? burstDirection.x : -burstDirection.x);
+            direction.y = (direction.y >= 0 ? burstDirection.y : -burstDirection.y);
+            playerController.Boost(direction.normalized*burstForce);
             Burst();
         }
     }
@@ -272,4 +291,5 @@ public class BackBalloonController : MonoBehaviour
             transform.position,
             null);
     }
+
 }
