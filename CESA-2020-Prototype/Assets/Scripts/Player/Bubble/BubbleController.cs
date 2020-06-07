@@ -256,7 +256,7 @@ public class BubbleController : MonoBehaviour
         {
             mergeTarget = collision.gameObject;
         }
-        stopChaise = false;
+        //stopChaise = false;
         //if (collision.tag == Bubble.NAME)
         //{
         //    isTouchBubble = false;

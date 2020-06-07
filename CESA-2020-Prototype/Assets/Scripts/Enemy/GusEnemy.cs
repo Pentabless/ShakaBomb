@@ -38,6 +38,12 @@ public class GusEnemy : IEnemy
             Debug.Log(percentage);
             this.transform.position = Vector3.Lerp(initializePos, arrivalPosition, percentage);
         }
+
+        //アニメーションが終了したら
+        if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        {
+            onDestroy = true;   //消える
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
