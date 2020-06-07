@@ -228,31 +228,9 @@ public class PlayerController : MonoBehaviour
             bulletG.GetComponent<BulletGenerator>().DisableGuideLines();
         }
 
-        // ガイドライン常時
-        //bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, Mathf.Atan2(Input.GetAxis(Player.VERTICAL), Input.GetAxis(Player.HORIZONTAL)));
-
-
-        //// ExplosionTest
-        //if (Input.GetKeyDown(KeyCode.B) && Data.num_balloon > 0)
-        //{
-        //    Vector3 vel = this.transform.position;
-        //    if (Data.playerDir > 0)
-        //    {
-        //        vel.x -= 5;
-        //    }
-        //    else
-        //    {
-        //        vel.x += 5;
-        //    }
-        //    vel.y -= 3;
-        //    ExplosionForce(vel, 500.0f, 800.0f);
-        //    UsedBalloon();
-        //}
-
-        // 空中ブースト Test
+        // 空中ブースト
         jumpButton = Input.GetAxis(Player.JUMP);
-        float sticV = Input.GetAxis(Player.VERTICAL);
-        Mathf.Abs(sticV); // 入力の度合
+        float sticV = Mathf.Abs(Input.GetAxis(Player.VERTICAL));
 
         if (boostCount >= 1)
         {
@@ -332,8 +310,6 @@ public class PlayerController : MonoBehaviour
         // 切り替えし(地上にいるときのみ)
         if (isGround)
         {
-            //if (bubbleGround)
-            //{
             if (lastDir > 0.0f && dir == -1)
             {
                 bubbleG.GetComponent<BubbleGenerator>().BubbleCreate();
@@ -344,7 +320,6 @@ public class PlayerController : MonoBehaviour
                 bubbleG.GetComponent<BubbleGenerator>().BubbleCreate();
                 dirtManager.SweepDirt();
             }
-            //}
         }
 
         // 最終入力方向
@@ -383,42 +358,10 @@ public class PlayerController : MonoBehaviour
         jumpForce = defaultJumpForce * Mathf.Lerp(1.0f, 0.9f, t);
         playerSpeed = accelForce * Mathf.Lerp(1.0f, 0.85f, t);
 
-        //switch (Data.num_balloon)
-        //{
-        //    case 0:
-        //        this.rig.gravityScale = 5.0f;
-        //        jumpForce = defaultJumpForce * 1.0f;
-        //        playerSpeed = accelForce * 1.0f;
-        //        break;
-
-        //    case 1:
-        //        this.rig.gravityScale = 3.0f;
-        //        jumpForce = defaultJumpForce * 0.9f;
-        //        playerSpeed = accelForce * 0.9f;
-        //        break;
-
-        //    case 2:
-        //        this.rig.gravityScale = 2.0f;
-        //        jumpForce = defaultJumpForce * 0.8f;
-        //        playerSpeed = accelForce * 0.85f;
-        //        break;
-
-        //    case 3:
-        //        this.rig.gravityScale = 1.5f;
-        //        jumpForce = defaultJumpForce * 0.77f;
-        //        playerSpeed = accelForce * 0.8f;
-        //        break;
-
-        //    default:
-        //        break;
-        //}
-
         //接地時であれば Gravity Speed は 変化しない
         if (coyoteFlag)
         {
             this.rig.gravityScale = 5.0f;
-            //jumpForce = defaultJumpForce * 1.0f;
-            //playerSpeed = accelForce * 1.0f;
         }
 
         // コヨーテタイムによる接地判定
@@ -480,21 +423,8 @@ public class PlayerController : MonoBehaviour
                 {
                     rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
                 }
-
-                //rig.AddForce(new Vector2(playerSpeed / 2.0f * dir * stickSence, 0));
             }
         }
-
-        //// 速さ制限
-        //if (dir >= 1.0f && rig.velocity.x >= maxSpeed)  // 右側
-        //{
-        //    rig.velocity = new Vector2(maxSpeed, rig.velocity.y);
-        //}
-        //else if (dir <= -1.0f && rig.velocity.x <= -maxSpeed)   // 左側
-        //{
-        //    rig.velocity = new Vector2(-maxSpeed, rig.velocity.y);
-        //}
-
 
         if (hitCount == 0)
         {
