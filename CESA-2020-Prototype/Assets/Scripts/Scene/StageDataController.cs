@@ -9,13 +9,18 @@ using UnityEngine.UI;   //UI
 
 public class StageDataController : MonoBehaviour
 {
+    /*----------*/
+    /*--public--*/
+    /*----------*/
+    //浄化率のテキストオブジェクト
+    public GameObject PurificationRateTextPrefab;
     /*-----------*/
     /*--private--*/
     /*-----------*/
-    //テキストオブジェクト
-    GameObject text_obj;
     //ドアオブジェクト
-    GameObject door_obj;
+    private GameObject[] door_obj;
+    //テキストオブジェクト
+    private GameObject[] text_obj;
 
     /*-----------------*/
     /*--関数名：Start--*/
@@ -25,35 +30,52 @@ public class StageDataController : MonoBehaviour
     /*-----------------*/
     void Start()
     {
-        //オブジェクト取得
-        text_obj = transform.GetChild(0).gameObject;
-        GameObject parent_obj = transform.parent.gameObject;
-        door_obj = parent_obj.transform.GetChild(0).gameObject;
-
-
         //自身のCanvasの設定をする
         SharedData.instance.SetCanvasOption(GetComponent<Canvas>());
         //自身のCanvasScalerの設定をする
         SharedData.instance.SetCanvasScaleOption(GetComponent<CanvasScaler>());
 
+        //シーン内にあるドアオブジェクトを全部探す
+        door_obj = GameObject.FindGameObjectsWithTag("StageDoor");
         //ステージデータの初期化をする(初期化していたら何もしない)
-        SharedData.instance.SetStageDataSize(4);    //とりあえず4ステージ
+        SharedData.instance.SetStageDataSize(door_obj.Length);    //ドアオブジェクトの数だけ
 
-        //親オブジェクト(Door)からステージ番号をもらう
-        int stage_number = door_obj.GetComponent<DoorToStage>().GetStageNumber();
-        //ステージ番号を使って浄化率をもらう
-        int purification = SharedData.instance.GetPurification(stage_number);
-        //テキスト内容を変える
-        text_obj.GetComponent<Text>().text = purification.ToString() + "%";
+        //テキストオブジェクトのサイズを決める
+        text_obj = new GameObject[door_obj.Length];
 
-        //プレイできるものは赤色にできないものは黒色に
-        if(SharedData.instance.GetCanPlay(stage_number))
+        Debug.Log(door_obj.Length);
+
+        //ドアオブジェクトの数だけテキストオブジェクトを作る
+        for (int i = 0; i < door_obj.Length; i++)
         {
-            door_obj.GetComponent<SpriteRenderer>().color = Color.red;
+            //プレファブを元にテキストオブジェクトを作る
+            GameObject text = Instantiate(PurificationRateTextPrefab) as GameObject;
+            //ドアオブジェクトからステージ番号をもらう
+            int stage_number = door_obj[i].GetComponent<DoorToStage>().GetStageNumber();
+            //ステージ番号を使って浄化率をもらう
+            int purification = SharedData.instance.GetPurification(stage_number);
+            //テキスト内容を変える
+            text.GetComponent<Text>().text = purification.ToString() + "%";
+            //テキストオブジェクトを覚える
+            text_obj[i] = text;
+            //作ったテキストオブジェクトを子オブジェクトに登録する
+            text.transform.parent = transform;
+            //拡大率
+            text_obj[i].GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
-        else
+
+        //ドアの色を変える
+        for (int i = 0; i < door_obj.Length; i++)
         {
-            door_obj.GetComponent<SpriteRenderer>().color = Color.black;
+            //プレイできるものは赤色にできないものは黒色に
+            if (SharedData.instance.GetCanPlay(door_obj[i].GetComponent<DoorToStage>().GetStageNumber()))
+            {
+                door_obj[i].GetComponent<SpriteRenderer>().color = Color.red;
+            }
+            else
+            {
+                door_obj[i].GetComponent<SpriteRenderer>().color = Color.black;
+            }
         }
     }
     /*--終わり：Start--*/
@@ -66,9 +88,12 @@ public class StageDataController : MonoBehaviour
     /*------------------*/
     void Update()
     {
-        //座標移動(扉の下に移動する)
-        text_obj.transform.position = new Vector3(door_obj.transform.position.x, door_obj.transform.position.y, text_obj.transform.position.z);
-        text_obj.transform.position += new Vector3(0.0f, -2.0f, 0.0f);
+        //移動するドアのために毎回座標更新する
+        for (int i = 0; i < door_obj.Length; i++)
+        {
+            text_obj[i].GetComponent<RectTransform>().position = new Vector3(door_obj[i].transform.position.x, door_obj[i].transform.position.y, text_obj[i].GetComponent<RectTransform>().position.z);
+            text_obj[i].GetComponent<RectTransform>().position += new Vector3(0.0f, -2.0f, 0.0f);
+        }
     }
     /*--終わり：Update--*/
 

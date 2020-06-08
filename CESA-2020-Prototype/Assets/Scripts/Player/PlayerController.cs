@@ -125,12 +125,7 @@ public class PlayerController : MonoBehaviour
     // ブースト移動コスト
     [SerializeField]
     float boostCost = 1.5f;
-
-    // 敵死亡時のアニメーション時間
-    [SerializeField]
-    float animationTime;
-    // 死亡経過
-    float deathCount;
+    
     // 死亡フラグ
     bool deathFlag = false;
 
@@ -158,8 +153,11 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     void Update()
     {
-        // 故障アニメーション
-        DeathAnimation(deathFlag);
+        // 故障中の処理
+        if (deathFlag)
+        {
+            DeathUpdate();
+        }
 
         if (!canControl)
         {
@@ -699,25 +697,22 @@ public class PlayerController : MonoBehaviour
     }
 
     //------------------------------------------------------------------------------------------
-    // 死亡時アニメーション
+    // 死亡時処理
     //------------------------------------------------------------------------------------------
-    public void DeathAnimation(bool enable)
+    public void DeathUpdate()
     {
-        // 死亡カウント
-        if (enable)
-        {
-            EnableControl(false);
-            deathCount += Time.deltaTime;
-            // アニメーション終了
-            if (deathCount >= animationTime)
-            {
-                this.transform.position = Data.initialPlayerPos;
-                deathCount = 0.0f;
-                deathFlag = false;
-                EnableControl(true);
-                balloonController.EnableMerge(true);
-            }
-        }
+        EnableControl(false);
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 復活
+    //------------------------------------------------------------------------------------------
+    public void Repair()
+    {
+        this.transform.position = Data.initialPlayerPos;
+        deathFlag = false;
+        EnableControl(true);
+        balloonController.EnableMerge(true);
     }
 }
 
