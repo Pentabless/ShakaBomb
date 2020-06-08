@@ -8,26 +8,25 @@ using UnityEngine;
 using System;
 using Common;
 //==============================================================================================
-public class FlyingEnemy : IEnemy
+public class RespawnManager : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
     [SerializeField]
-    private float range;
+    GameObject enemyPrefab;
     [SerializeField]
-    private bool vertical;
-    [SerializeField]
-    private bool horizontal;
+    CameraController cameraController;
 
-    private Vector3 startPosition;
+    GameObject enemy;
+
 
     //------------------------------------------------------------------------------------------
-    // Start
+    // Awake
     //------------------------------------------------------------------------------------------
-    private void Start()
+    private void Awake()
     {
-        startPosition = this.transform.position;
+        RespawnEnemy();
     }
 
     //------------------------------------------------------------------------------------------
@@ -35,30 +34,16 @@ public class FlyingEnemy : IEnemy
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        DestructionConfirmation();
-
-        if (currentStatus == Status.None)
+        if(enemy == null)
         {
-            if(vertical == horizontal)
-            {
-                // 縦方向
-                this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * range + startPosition.y, startPosition.z);
-            }
-            else if(vertical)
-            {
-                // 縦方向
-                this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * range + startPosition.y, startPosition.z);
-            }
-            else
-            {
-                // 横方向
-                this.transform.position = new Vector3(Mathf.Sin(Time.time) * range + startPosition.x, startPosition.y, startPosition.z);
-            }
+            if (cameraController.RespawnApproval)
+                RespawnEnemy();
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void RespawnEnemy()
     {
-        OnCollisionEnterEvent(collision);
+        enemy = Instantiate(enemyPrefab.gameObject);
+        enemy.transform.position = this.transform.position;
     }
 }
