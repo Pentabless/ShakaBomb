@@ -85,7 +85,7 @@ public class PlayerAnimator : MonoBehaviour
             animator.SetTrigger("Jump");
         }
         animator.SetBool("IsGround", player.IsGround());
-        
+
         if(player.IsDead())
         {
             DeathUpdate();
@@ -103,7 +103,6 @@ public class PlayerAnimator : MonoBehaviour
             playerIsDead = true;
             deathAnimationTimer = 0;
             deathAnimationInfo.bubble.SetActive(false);
-            deathPos = player.transform.position;
             animator.SetInteger("DeathState", 1);
         }
 
@@ -127,18 +126,19 @@ public class PlayerAnimator : MonoBehaviour
                 {
                     deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Move;
                     deathAnimationTimer = 0;
+                    deathPos = player.transform.position;
                 }
                 break;
             case DeathAnimationInfo.DeathAnimatonState.Move:
                 float t3 = Mathf.Min(deathAnimationTimer / deathAnimationInfo.bubbleMoveTime, 1);
                 t3 = t3 * (2 - t3);
-                player.transform.position = Vector3.Lerp(deathPos, Data.initialPlayerPos, t3);
+                player.transform.position = Vector3.Lerp(deathPos, Data.initialPlayerPos+Vector3.up*0.1f, t3);
                 if (deathAnimationTimer >= deathAnimationInfo.bubbleMoveTime)
                 {
                     deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Burst;
                     deathAnimationTimer = 0;
                     deathAnimationInfo.bubble.SetActive(false);
-                    EffectGenerator.BubbleBurstFX(new BubbleBurstFX.Param(Color.white, Vector2.one * 3), Data.initialPlayerPos);
+                    EffectGenerator.BubbleBurstFX(new BubbleBurstFX.Param(Color.white, Vector2.one * 3), Data.initialPlayerPos + Vector3.up * 0.1f);
                 }
                 break;
             case DeathAnimationInfo.DeathAnimatonState.Burst:
