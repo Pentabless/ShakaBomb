@@ -54,6 +54,9 @@ public class PlayerAnimator : MonoBehaviour
     // 死亡アニメーション用タイマー
     private float deathAnimationTimer = 0;
 
+    // 死亡位置
+    private Vector3 deathPos = Vector3.zero;
+
     //------------------------------------------------------------------------------------------
     // Awake
     //------------------------------------------------------------------------------------------
@@ -99,6 +102,8 @@ public class PlayerAnimator : MonoBehaviour
             deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Death;
             playerIsDead = true;
             deathAnimationTimer = 0;
+            deathAnimationInfo.bubble.SetActive(false);
+            deathPos = player.transform.position;
             animator.SetInteger("DeathState", 1);
         }
 
@@ -110,9 +115,14 @@ public class PlayerAnimator : MonoBehaviour
                 {
                     deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Appear;
                     deathAnimationTimer = 0;
+                    deathAnimationInfo.bubble.SetActive(true);
+                    deathAnimationInfo.bubble.transform.localScale = new Vector3(0, 0, 1);
                 }
                 break;
             case DeathAnimationInfo.DeathAnimatonState.Appear:
+                float t2 = Mathf.Min(deathAnimationTimer / deathAnimationInfo.bubbleAppearTime, 1);
+                t2 *= 2;
+                deathAnimationInfo.bubble.transform.localScale = new Vector3(3*t2, 3*t2, 1);
                 if (deathAnimationTimer >= deathAnimationInfo.bubbleAppearTime)
                 {
                     deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Move;
@@ -120,10 +130,15 @@ public class PlayerAnimator : MonoBehaviour
                 }
                 break;
             case DeathAnimationInfo.DeathAnimatonState.Move:
+                float t3 = Mathf.Min(deathAnimationTimer / deathAnimationInfo.bubbleMoveTime, 1);
+                t3 = t3 * (2 - t3);
+                player.transform.position = Vector3.Lerp(deathPos, Data.initialPlayerPos, t3);
                 if (deathAnimationTimer >= deathAnimationInfo.bubbleMoveTime)
                 {
                     deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Burst;
                     deathAnimationTimer = 0;
+                    deathAnimationInfo.bubble.SetActive(false);
+                    EffectGenerator.BubbleBurstFX(new BubbleBurstFX.Param(Color.white, Vector2.one * 3), Data.initialPlayerPos);
                 }
                 break;
             case DeathAnimationInfo.DeathAnimatonState.Burst:
