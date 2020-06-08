@@ -524,6 +524,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7261e18dfd389ce49925ec8b5c6f8691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathAnimationInfo:
+    bubble: {fileID: 0}
+    deathAnimationTime: 1
+    bubbleAppearTime: 1
+    bubbleMoveTime: 2
+    bubbleBurstTime: 0.5
+    repairAnimationTime: 1
 --- !u!95 &3802445320335400585
 Animator:
   serializedVersion: 3
@@ -613,7 +620,6 @@ MonoBehaviour:
   maxPowerBalloonSize: 2.5
   bulletCost: 0.3
   boostCost: 0.3
-  animationTime: 1
 --- !u!212 &3524930649752458142
 SpriteRenderer:
   m_ObjectHideFlags: 0
