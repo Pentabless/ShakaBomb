@@ -13,6 +13,9 @@ public class CameraController : MonoBehaviour
         public Vector2 size;
     }
 
+    // リスポーン許可
+    public bool RespawnApproval { get; set; }
+
     // カメラ
     [SerializeField]
     Camera mainCamera;
@@ -82,11 +85,14 @@ public class CameraController : MonoBehaviour
         Data.initialPlayerPos = player.transform.position;
 
         pController = player.GetComponent<PlayerController>();
+
+        RespawnApproval = false;
     }
 
     private void FixedUpdate()
     {
         var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y, GetScreenBottomRight().x, GetScreenTopLeft().y);
+        RespawnApproval = false;
 
         if (!followOn)
         {
@@ -102,15 +108,7 @@ public class CameraController : MonoBehaviour
             if (followOn)
             {
                 pController.EnableControl(true);
-
-                //if (nextPos.y >= 40.0f)
-                //{
-                //    cellY = Common.Camera.SECOND_CELL_Y;
-                //}
-                //else
-                //{
-                //    cellY = Common.Camera.FIRST_CELL_Y;
-                //}
+                RespawnApproval = true;
             }
         }
         else
