@@ -159,6 +159,12 @@ public class PlayerController : MonoBehaviour
             DeathUpdate();
         }
 
+        // 敵接触カウント
+        if (hitCount > 0)
+        {
+            hitCount--;
+        }
+
         if (!canControl)
         {
             dir = Integer.ZERO;
@@ -380,13 +386,7 @@ public class PlayerController : MonoBehaviour
         {
             coyoteFlag = false;
         }
-
-        // 敵接触カウント
-        if (hitCount > 0)
-        {
-            hitCount--;
-        }
-
+        
         // エネミーブーストのリセット
         isEnemyBoost = false;
     }

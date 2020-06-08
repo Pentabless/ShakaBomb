@@ -527,11 +527,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathAnimationInfo:
     bubble: {fileID: 4245955288243349886}
-    deathAnimationTime: 0.75
-    bubbleAppearTime: 0.8
-    bubbleMoveTime: 1
-    bubbleBurstTime: 0.5
-    repairAnimationTime: 0.75
+    deathAnimationTime: 0.5
+    bubbleAppearTime: 0.5
+    bubbleMoveTime: 0.8
+    bubbleBurstTime: 0.3
+    repairAnimationTime: 0.5
 --- !u!95 &3802445320335400585
 Animator:
   serializedVersion: 3
