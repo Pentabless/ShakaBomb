@@ -332,11 +332,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage_B_NT
       objectReference: {fileID: 0}
-    - target: {fileID: 3550879228950596499, guid: 90cb457e6de19874faf88fbdeaf14556,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3550879228950596496, guid: 90cb457e6de19874faf88fbdeaf14556,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -392,10 +387,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 650543912, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
+    - target: {fileID: 621314040, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
+      propertyPath: m_Tiles.Array.data[106].second.m_TileSpriteIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 621314040, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[1].m_RefCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 621314040, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[1].m_Data
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 621314040, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[2].m_RefCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 621314040, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[2].m_Data
+      value: 
+      objectReference: {fileID: 21300000, guid: e7bf9b52746eac440909d897e9038283,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
 --- !u!1001 &608220969
@@ -622,7 +634,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &978947909
@@ -1334,9 +1346,87 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1611908356
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5880400404657148285, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_Name
+      value: Stage_D_NT
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148285, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880400404657148286, guid: f96dfddb45358f34387a54e97abb2acf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987760384, guid: f96dfddb45358f34387a54e97abb2acf, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f96dfddb45358f34387a54e97abb2acf, type: 3}
 --- !u!1 &1634230696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,6 +1827,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage_C_NT
       objectReference: {fileID: 0}
+    - target: {fileID: 9130065815275088609, guid: 1128fc5805815ac4c8a30596f94fcd36,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9130065815275088610, guid: 1128fc5805815ac4c8a30596f94fcd36,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1790,6 +1885,10 @@ PrefabInstance:
     - target: {fileID: 9130065815275088610, guid: 1128fc5805815ac4c8a30596f94fcd36,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1819465462, guid: 1128fc5805815ac4c8a30596f94fcd36, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2219,7 +2318,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &2123465205
