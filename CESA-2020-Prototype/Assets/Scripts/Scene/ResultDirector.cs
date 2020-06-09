@@ -25,6 +25,10 @@ public class ResultDirector : MonoBehaviour
     public float stop_rotate_angle;
     //流すBGM
     public AudioClip[] bgm_list;
+    //表示する背景(明るい)
+    public Sprite[] bright_background;
+    //表示する背景(暗い)
+    public Sprite[] gloomy_background;
     //仮　浄化率
     public float purification;
     /*-----------*/
@@ -34,20 +38,31 @@ public class ResultDirector : MonoBehaviour
     //private GameObject go_result_frame;
     ////評価の星
     //private GameObject[] go_rank_star = new GameObject[3];
-    //…ステージクリア！
-    private Text text_stage_purification_rate;
-    //スコア(テキスト)
-    private Text text_rate;
+    //今回の汚染浄化率
+    private GameObject text_stage_purification_rate;
+    //浄化率(??%)
+    private GameObject text_rate;
+    //浄化率のパーセント
+    private GameObject text_percent;
+    //背景([0]…明るい　[1]…暗い)
+    private Sprite[] background_sprite = new Sprite[2];
+    //背景のSpriteRenderer
+    private SpriteRenderer renderer_background;
     //画面フェード
     private FadeController sc_screen_fade;
     //背景の飾りジェネレーター
     private BackGroundDecorationGenerator sc_decoration_generator;
     //カメラの映す範囲([0]左下　[1]右上)
     private Vector3[] camera_range;
-    //星を回転させたかどうか
-    private bool[] rotate_star = new bool[3];
-    //評価の星の数
-    private int num_rank_star;
+    ////星を回転させたかどうか
+    //private bool[] rotate_star = new bool[3];
+    ////評価の星の数
+    //private int num_rank_star;
+
+    //スプライトを切り替える時間(単位：秒)
+    private float change_sprite_time;
+    //リザルト画面が始まった時間
+    private float start_result_time;
 
     /*-----------------*/
     /*--関数名：Start--*/
@@ -60,8 +75,10 @@ public class ResultDirector : MonoBehaviour
         //オブジェクトを探す
         //go_result_frame = GameObject.Find("ResultFrame");
         //コンポーネントを探す
-        text_stage_purification_rate = GameObject.Find("StagePurificationRate").GetComponent<Text>();
-        text_rate = GameObject.Find("PurificationRate").GetComponent<Text>();
+        text_stage_purification_rate = GameObject.Find("StagePurificationRate");
+        text_rate = GameObject.Find("PurificationRate");
+        text_percent = GameObject.Find("PurificationRatePercent");
+        renderer_background = GameObject.Find("BackGround").GetComponent<SpriteRenderer>();
         sc_screen_fade = GameObject.Find("ScreenFade").GetComponent<FadeController>();
         sc_decoration_generator = GameObject.Find("BackGroundDecorationGenerator").GetComponent<BackGroundDecorationGenerator>();
 
@@ -75,11 +92,15 @@ public class ResultDirector : MonoBehaviour
         //パーセンテージに変更
         int percent = (int)(rate * 100);
         //浄化率のテキストを設定する
-        text_rate.text = percent.ToString() + "%";
+        text_rate.GetComponent<Text>().text = percent.ToString();
+        //浄化率からランクを決める
+        int rank = SetPercentRank(percent);
         //浄化率からテキストの色を設定する
-        SetPercentTextColor(percent);
+        SetPercentTextPositionColor(rank,percent/10);
         //浄化率をBGMを決めて再生する
-        PlayPercentBGM(percent);      //BGMが入ったらコメントアウト
+        PlayPercentBGM(rank);
+        //浄化率から背景を設定する
+        SetBackGroundSprite(rank);
 
         //*----SharedDataにあるステージデータに記録する----*//
         //SharedData.instance.SetPurificationRate(percent);
@@ -113,6 +134,12 @@ public class ResultDirector : MonoBehaviour
         //オブジェクト「Canvas」より前に設定する
         GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
 
+
+        //スプライトを切り替える時間を設定する(0.5秒～1.0秒の間ランダム)
+        change_sprite_time = Random.Range(0.5f, 1.0f);
+        //リザルト画面が始まった時間を設定する
+        start_result_time = Time.time;
+
     }
     /*--終わり：Start--*/
 
@@ -134,6 +161,24 @@ public class ResultDirector : MonoBehaviour
             //前景の飾りを作成する
             decoration_scale = Random.Range(0.3f, 3.0f);
             sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), 10);
+        }
+
+        //スプライトを切り替える時間になったら
+        if (change_sprite_time + start_result_time < Time.time)
+        {
+            //スプライトを切り替える&時間を再設定する
+            if (renderer_background.sprite == background_sprite[0])
+            {
+                //暗いスプライトに切り替える
+                renderer_background.sprite = background_sprite[1];
+                change_sprite_time += Random.Range(0.25f, 0.4f);    //短め
+            }
+            else if (renderer_background.sprite == background_sprite[1])
+            {
+                //明るいスプライトに切り替える
+                renderer_background.sprite = background_sprite[0];
+                change_sprite_time += Random.Range(0.25f, 0.75f);     //長め
+            }
         }
 
         ////リザルトフレーム(ステージクリアの後ろにある旗みたいなもの)
@@ -191,6 +236,8 @@ public class ResultDirector : MonoBehaviour
         {
             //フェードを始める
             sc_screen_fade.SetFadeType(true);
+            //BGMをフェードアウトする
+            SoundFadeController.SetFadeOutSpeed(-0.005f);
             //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
             SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
         }
@@ -207,101 +254,169 @@ public class ResultDirector : MonoBehaviour
     /*--終わり：Update--*/
 
     /*--------------------------------------------*/
-    /*--関数名：SetPercentTextColor(private)------*/
-    /*--概要：パーセントのテキストの色を設定する--*/
+    /*--関数名：SetPercentRank(private)-----------*/
+    /*--概要：パーセントからランクを決める--------*/
     /*--引数：パーセント(int)---------------------*/
-    /*--戻り値：なし------------------------------*/
+    /*--戻り値：ランク(int)-----------------------*/
     /*--------------------------------------------*/
-    private void SetPercentTextColor(int percent)
+    private int SetPercentRank(int percent)
     {
-        //25%以下だったら
-        if(percent<=25)
+        int rank = 0;
+        //29%以下だったら
+        if (percent <= 29)
         {
-            //赤　(仮)
-            text_rate.color = new Color(1.0f, 0.0f, 0.0f);
+            rank = 0;
         }
-        //50%以下だったら
-        else if(percent<=50)
+        //69%以下だったら
+        else if (percent <= 69)
         {
-            //オレンジ　(仮)
-            text_rate.color = new Color(1.0f, 0.5f, 0.0f);
+            rank = 1;
         }
-        //75%以下だったら
-        else if(percent<=75)
+        //99%以下だったら
+        else if (percent <= 99)
         {
-            //黄　(仮)
-            text_rate.color = new Color(1.0f, 1.0f, 0.0f);
+            rank = 2;
         }
-        //76%以上だったら
+        //100%だったら
         else
         {
-            //黄緑　(仮)
-            text_rate.color = new Color(0.4f, 0.9f, 0.0f);
+            rank = 3;
+        }
+
+        return rank;
+    }
+    /*--終わり：SetPercentRank--*/
+
+
+    /*------------------------------------------------------------*/
+    /*--関数名：SetPercentTextPositionColor(private)--------------*/
+    /*--概要：パーセントのテキストの色を設定する------------------*/
+    /*--引数：ランク(int)、割合を10で割った数(一桁の時は0になる)--*/
+    /*--戻り値：なし----------------------------------------------*/
+    /*------------------------------------------------------------*/
+    private void SetPercentTextPositionColor(int rank,int num)
+    {
+        Vector3 pos = new Vector3(400.0f, -300.0f,-2000.0f);
+        switch (rank)
+        {
+            //29%以下だったら
+            case 0:
+                //赤　(仮)
+                text_rate.GetComponent<Text>().color = new Color(1.0f, 0.0f, 0.0f);
+                text_percent.GetComponent<Text>().color = new Color(1.0f, 0.0f, 0.0f);
+                //座標変更
+                text_stage_purification_rate.GetComponent<RectTransform>().localPosition = new Vector3(pos.x, 0.0f, pos.z);
+                text_rate.GetComponent<RectTransform>().localPosition = new Vector3(pos.x, pos.y, pos.z);
+                //割合の桁数によって座標を変える
+                if (num > 0)
+                {
+                    text_percent.GetComponent<RectTransform>().localPosition = new Vector3(pos.x + 300.0f, pos.y - 50.0f, pos.z);
+                }
+                else
+                {
+                    text_percent.GetComponent<RectTransform>().localPosition = new Vector3(pos.x + 200.0f, pos.y - 50.0f, pos.z);
+                }
+                break;
+            //69%以下だったら
+            case 1:
+                //オレンジ　(仮)
+                text_rate.GetComponent<Text>().color = new Color(1.0f, 0.5f, 0.0f);
+                text_percent.GetComponent<Text>().color = new Color(1.0f, 0.5f, 0.0f);
+                //座標変更
+                text_stage_purification_rate.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x, 0.0f, pos.z);
+                text_rate.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x, pos.y, pos.z);
+                text_percent.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x + 300.0f, pos.y - 50.0f, pos.z);
+                break;
+            //99%以下だったら
+            case 2:
+                //黄　(仮)
+                text_rate.GetComponent<Text>().color = new Color(1.0f, 1.0f, 0.0f);
+                text_percent.GetComponent<Text>().color = new Color(1.0f, 1.0f, 0.0f);
+                //座標変更
+                text_stage_purification_rate.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x, 0.0f, pos.z);
+                text_rate.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x, pos.y, pos.z);
+                text_percent.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x + 300.0f, pos.y - 50.0f, pos.z);
+                break;
+            //100%だったら
+            case 3:
+                //黄緑　(仮)
+                text_rate.GetComponent<Text>().color = new Color(0.4f, 0.9f, 0.0f);
+                text_percent.GetComponent<Text>().color = new Color(0.4f, 0.9f, 0.0f);
+                //座標変更
+                text_stage_purification_rate.GetComponent<RectTransform>().localPosition = new Vector3(pos.x, 0.0f, pos.z);
+                text_rate.GetComponent<RectTransform>().localPosition = new Vector3(pos.x, pos.y, pos.z);
+                text_percent.GetComponent<RectTransform>().localPosition = new Vector3(pos.x + 350.0f, pos.y - 50.0f, pos.z);
+                break;
+            //当てはまらなかったら(絶対にないと思う)
+            default:
+                //黒　(仮)
+                text_rate.GetComponent<Text>().color = new Color(0.0f, 0.0f, 0.0f);
+                text_percent.GetComponent<Text>().color = new Color(0.0f, 0.0f, 0.0f);
+                break;
         }
     }
-    /*--終わり：SetPercentTextColor--*/
+    /*--終わり：SetPercentTextPositionColor--*/
 
     /*-----------------------------------*/
     /*--関数名：PlayPercentBGM(private)--*/
     /*--概要：BGMを決めて再生する--------*/
-    /*--引数：パーセント(int)------------*/
+    /*--引数：ランク(int)----------------*/
     /*--戻り値：なし---------------------*/
     /*-----------------------------------*/
-    private void PlayPercentBGM(int percent)
+    private void PlayPercentBGM(int rank)
     {
         AudioClip clip;
-        //25%以下だったら
-        if (percent <= 25)
-        {
-            clip = bgm_list[0];
-        }
-        //50%以下だったら
-        else if (percent <= 50)
-        {
-            clip = bgm_list[1];
-        }
-        //75%以下だったら
-        else if (percent <= 75)
-        {
-            clip = bgm_list[2];
-        }
-        //76%以上だったら
-        else
-        {
-            clip = bgm_list[3];
-        }
+        clip = bgm_list[rank];
         //BGMを流す
         SoundPlayer.PlayBGM(clip);
     }
     /*--終わり：PlayPercentBGM--*/
 
-    /*-----------------------------------*/
-    /*--関数名：SetNumRankStar(private)--*/
-    /*--概要：評価の星の数を求める-------*/
-    /*--引数：スコア(int)----------------*/
-    /*--戻り値：なし---------------------*/
-    /*-----------------------------------*/
-    private void SetNumRankStar(int check_score)
+    /*----------------------------------------*/
+    /*--関数名：SetBackGroundSprite(private)--*/
+    /*--概要：背景を決めて設定する------------*/
+    /*--引数：ランク(int)---------------------*/
+    /*--戻り値：なし--------------------------*/
+    /*----------------------------------------*/
+    private void SetBackGroundSprite(int rank)
     {
-        //スコアから評価の星の数を求める(仮)
-        if (check_score >= 1000)
-        {
-            num_rank_star = 3;
-        }
-        else if (check_score >= 500)
-        {
-            num_rank_star = 2;
-        }
-        else if (check_score >= 300)
-        {
-            num_rank_star = 1;
-        }
-        else
-        {
-            num_rank_star = 0;
-        }
+        //明るい背景を設定する
+        background_sprite[0] = bright_background[rank];
+        //暗い背景を設定する
+        background_sprite[1] = gloomy_background[rank];
+
+        //明るい背景をオブジェクトにセットする
+        renderer_background.sprite = background_sprite[0];
     }
-    /*--終わり：SetNumRankStar--*/
+    /*--終わり：PlayPercentBGM--*/
+
+    /////*-----------------------------------*/
+    /////*--関数名：SetNumRankStar(private)--*/
+    /////*--概要：評価の星の数を求める-------*/
+    /////*--引数：スコア(int)----------------*/
+    /////*--戻り値：なし---------------------*/
+    /////*-----------------------------------*/
+    ////private void SetNumRankStar(int check_score)
+    ////{
+    ////    //スコアから評価の星の数を求める(仮)
+    ////    if (check_score >= 1000)
+    ////    {
+    ////        num_rank_star = 3;
+    ////    }
+    ////    else if (check_score >= 500)
+    ////    {
+    ////        num_rank_star = 2;
+    ////    }
+    ////    else if (check_score >= 300)
+    ////    {
+    ////        num_rank_star = 1;
+    ////    }
+    ////    else
+    ////    {
+    ////        num_rank_star = 0;
+    ////    }
+    ////}
+    /////*--終わり：SetNumRankStar--*/
 
     /////*--------------------------------------------------*/
     /////*--関数名：SetRankStar(private)--------------------*/
