@@ -55,6 +55,10 @@ public class CameraController : MonoBehaviour
     float distance;
     // ラープの開始時間
     float startTime;
+    // 移動前のプレイヤーの速度
+    PauseManager.RigidbodyVelocity playerRigidInfo;
+    // アニメーションの速度
+    float playerAnimatorSpeed = 0;
 
     // 視差背景
     [Header("size=pixel/PixelPerUnit*scale")]
@@ -109,6 +113,13 @@ public class CameraController : MonoBehaviour
             {
                 pController.EnableControl(true);
                 RespawnApproval = true;
+                var rigid = player.GetComponent<Rigidbody2D>();
+                rigid.WakeUp();
+                rigid.velocity = playerRigidInfo.velocity;
+                rigid.angularVelocity = playerRigidInfo.angularVeloccity;
+                rigid.constraints = playerRigidInfo.constraints;
+                var animator = player.GetComponentInChildren<Animator>();
+                animator.speed = playerAnimatorSpeed;
             }
         }
         else
@@ -118,38 +129,28 @@ public class CameraController : MonoBehaviour
             {
                 if (fourCorners.x > player.transform.position.x)
                 {
-                    followOn = false;
-                    rememberPos = true;
-                    nextPos.x -= cellX;
+                    UpdateNextPos(Vector3.right * -cellX);
                 }
             }
             else
             {
                 if (fourCorners.width < player.transform.position.x)
                 {
-                    followOn = false;
-                    rememberPos = true;
-                    nextPos.x += cellX;
+                    UpdateNextPos(Vector3.right * cellX);
                 }
             }
 
             if (fourCorners.height <= player.transform.position.y)
             {
-                followOn = false;
-                rememberPos = true;
-
                 if (nextPos.y >= Common.Camera.FIRST_CELL_Y)
                     cellY = Common.Camera.SECOND_CELL_Y;
-                nextPos.y += cellY;
+                UpdateNextPos(Vector3.up * cellY);
             }
             if (fourCorners.y >= player.transform.position.y)
             {
-                followOn = false;
-                rememberPos = true;
-
                 if (nextPos.y <= Common.Camera.FIRST_CELL_Y)
                     cellY = Common.Camera.FIRST_CELL_Y;
-                nextPos.y -= cellY;
+                UpdateNextPos(Vector3.up * -cellY);
             }
             // カメラが移動していないときの設定
             startTime = Time.time;
@@ -235,6 +236,26 @@ public class CameraController : MonoBehaviour
             }
             bg.obj.transform.localPosition = offset;
         }
+    }
+
+    /// <summary>
+    /// カメラのスクロール先を更新する
+    /// </summary>
+    /// <param name="move">移動量</param>
+    private void UpdateNextPos(Vector3 move)
+    {
+        followOn = false;
+        rememberPos = true;
+        nextPos += move;
+
+        var rigid = player.GetComponent<Rigidbody2D>();
+        playerRigidInfo = new PauseManager.RigidbodyVelocity(rigid);
+        rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        rigid.Sleep();
+
+        var animator = player.GetComponentInChildren<Animator>();
+        playerAnimatorSpeed = animator.speed;
+        animator.speed = 0;
     }
 
     /// <summary>
