@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
         jumpButton = Input.GetAxis(Player.JUMP);
         float sticV = Mathf.Abs(Input.GetAxis(Player.VERTICAL));
 
-        if (boostCount >= 1)
+        //if (boostCount >= 1)
         {
             if (jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount >= 1)
             {
