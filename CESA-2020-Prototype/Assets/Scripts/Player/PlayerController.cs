@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
     // ブースト移動コスト
     [SerializeField]
     float boostCost = 1.5f;
-    
+
     // 死亡フラグ
     bool deathFlag = false;
 
@@ -386,7 +386,7 @@ public class PlayerController : MonoBehaviour
         {
             coyoteFlag = false;
         }
-        
+
         // エネミーブーストのリセット
         isEnemyBoost = false;
     }
@@ -709,7 +709,6 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void Repair()
     {
-        this.transform.position = Data.initialPlayerPos;
         deathFlag = false;
         EnableControl(true);
         balloonController.EnableMerge(true);
