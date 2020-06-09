@@ -65,9 +65,9 @@ public class PlayerAnimator : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     // Start
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         player = GameObject.Find(Player.NAME).GetComponent<PlayerController>();
@@ -85,8 +85,8 @@ public class PlayerAnimator : MonoBehaviour
             animator.SetTrigger("Jump");
         }
         animator.SetBool("IsGround", player.IsGround());
-        
-        if(player.IsDead())
+
+        if (player.IsDead())
         {
             DeathUpdate();
         }
@@ -103,7 +103,6 @@ public class PlayerAnimator : MonoBehaviour
             playerIsDead = true;
             deathAnimationTimer = 0;
             deathAnimationInfo.bubble.SetActive(false);
-            deathPos = player.transform.position;
             animator.SetInteger("DeathState", 1);
         }
 
@@ -111,7 +110,7 @@ public class PlayerAnimator : MonoBehaviour
         switch (deathAnimationState)
         {
             case DeathAnimationInfo.DeathAnimatonState.Death:
-                if(deathAnimationTimer >= deathAnimationInfo.deathAnimationTime)
+                if (deathAnimationTimer >= deathAnimationInfo.deathAnimationTime)
                 {
                     deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Appear;
                     deathAnimationTimer = 0;
@@ -122,23 +121,25 @@ public class PlayerAnimator : MonoBehaviour
             case DeathAnimationInfo.DeathAnimatonState.Appear:
                 float t2 = Mathf.Min(deathAnimationTimer / deathAnimationInfo.bubbleAppearTime, 1);
                 t2 *= 2;
-                deathAnimationInfo.bubble.transform.localScale = new Vector3(3*t2, 3*t2, 1);
+                deathAnimationInfo.bubble.transform.localScale = new Vector3(3 * t2, 3 * t2, 1);
                 if (deathAnimationTimer >= deathAnimationInfo.bubbleAppearTime)
                 {
                     deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Move;
                     deathAnimationTimer = 0;
+                    deathPos = player.transform.position;
                 }
                 break;
             case DeathAnimationInfo.DeathAnimatonState.Move:
                 float t3 = Mathf.Min(deathAnimationTimer / deathAnimationInfo.bubbleMoveTime, 1);
                 t3 = t3 * (2 - t3);
-                player.transform.position = Vector3.Lerp(deathPos, Data.initialPlayerPos, t3);
+                player.transform.position = Vector3.Lerp(deathPos, Data.initialPlayerPos + Vector3.up * 0.1f, t3);
                 if (deathAnimationTimer >= deathAnimationInfo.bubbleMoveTime)
                 {
                     deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Burst;
                     deathAnimationTimer = 0;
                     deathAnimationInfo.bubble.SetActive(false);
-                    EffectGenerator.BubbleBurstFX(new BubbleBurstFX.Param(Color.white, Vector2.one * 3), Data.initialPlayerPos);
+                    player.GetComponent<Rigidbody2D>().velocity *= 0.0f;
+                    EffectGenerator.BubbleBurstFX(new BubbleBurstFX.Param(Color.white, Vector2.one * 3), Data.initialPlayerPos + Vector3.up * 0.1f);
                 }
                 break;
             case DeathAnimationInfo.DeathAnimatonState.Burst:

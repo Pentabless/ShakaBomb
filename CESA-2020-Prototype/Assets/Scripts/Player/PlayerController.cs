@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
     // ブースト移動コスト
     [SerializeField]
     float boostCost = 1.5f;
-    
+
     // 死亡フラグ
     bool deathFlag = false;
 
@@ -157,6 +157,12 @@ public class PlayerController : MonoBehaviour
         if (deathFlag)
         {
             DeathUpdate();
+        }
+
+        // 敵接触カウント
+        if (hitCount > 0)
+        {
+            hitCount--;
         }
 
         if (!canControl)
@@ -232,7 +238,7 @@ public class PlayerController : MonoBehaviour
         jumpButton = Input.GetAxis(Player.JUMP);
         float sticV = Mathf.Abs(Input.GetAxis(Player.VERTICAL));
 
-        if (boostCount >= 1)
+        //if (boostCount >= 1)
         {
             if (jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount >= 1)
             {
@@ -379,12 +385,6 @@ public class PlayerController : MonoBehaviour
         if (coyoteCount >= coyoteTime)
         {
             coyoteFlag = false;
-        }
-
-        // 敵接触カウント
-        if (hitCount > 0)
-        {
-            hitCount--;
         }
 
         // エネミーブーストのリセット
@@ -709,7 +709,6 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void Repair()
     {
-        this.transform.position = Data.initialPlayerPos;
         deathFlag = false;
         EnableControl(true);
         balloonController.EnableMerge(true);
