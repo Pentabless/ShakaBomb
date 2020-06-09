@@ -236,11 +236,12 @@ public class PlayerController : MonoBehaviour
 
         // 空中ブースト
         jumpButton = Input.GetAxis(Player.JUMP);
+        boostButton = Input.GetAxis(Player.BOOST);
         float sticV = Mathf.Abs(Input.GetAxis(Player.VERTICAL));
 
         //if (boostCount >= 1)
         {
-            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount >= 1)
+            if ((jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount >= 1) || (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize))
             {
                 Vector2 direction = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
                 if (sticV <= 0.1f)
@@ -280,7 +281,7 @@ public class PlayerController : MonoBehaviour
         jumpTiming = false;
         if (hitCount == 0)
         {
-            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && coyoteFlag == true)
+            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && isGround) // && coyoteFlag == true)
             {
                 jumpCount = 1;
                 if (this.rig.velocity.y <= 0)
@@ -298,12 +299,12 @@ public class PlayerController : MonoBehaviour
                     SoundPlayer.Play(audios[(int)AudioType.Jump]);
                 }
             }
-            // ジャンプ中にボタンを離す
-            if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
-            {
-                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.6f);
-                jumpStopFlag = true;
-            }
+            //// ジャンプ中にボタンを離す
+            //if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
+            //{
+            //    rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.6f);
+            //    jumpStopFlag = true;
+            //}
         }
 
 
@@ -372,20 +373,20 @@ public class PlayerController : MonoBehaviour
             this.rig.gravityScale = 5.0f;
         }
 
-        // コヨーテタイムによる接地判定
-        if (!isGround)
-        {
-            coyoteCount++;
-        }
-        else
-        {
-            coyoteCount = 0;
-            coyoteFlag = true;
-        }
-        if (coyoteCount >= coyoteTime)
-        {
-            coyoteFlag = false;
-        }
+        //// コヨーテタイムによる接地判定
+        //if (!isGround)
+        //{
+        //    coyoteCount++;
+        //}
+        //else
+        //{
+        //    coyoteCount = 0;
+        //    coyoteFlag = true;
+        //}
+        //if (coyoteCount >= coyoteTime)
+        //{
+        //    coyoteFlag = false;
+        //}
 
         // エネミーブーストのリセット
         isEnemyBoost = false;
