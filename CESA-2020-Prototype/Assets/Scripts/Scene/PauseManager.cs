@@ -320,4 +320,9 @@ public class PauseManager : MonoBehaviour
     {
         filterColor = defaultFilterColor;
     }
+
+    public void AddIgnoreObject(GameObject obj)
+    {
+        ignoreGameObjects = ignoreGameObjects.Concat(new GameObject[] { obj }).ToArray();
+    }
 }

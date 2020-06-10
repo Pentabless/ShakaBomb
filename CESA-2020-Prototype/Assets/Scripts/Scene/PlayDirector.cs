@@ -211,7 +211,7 @@ public class PlayDirector : MonoBehaviour
     public void TimeUp()
     {
         state = PlayState.Failed;
-        waitTime = 2.0f;
+        waitTime = 3.0f;
         canPause = false;
 
         // プレイヤーの入力を停止する
