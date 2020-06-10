@@ -240,6 +240,24 @@ public class SharedData : MonoBehaviour
                 stage_data[i].clear = false;
                 stage_data[i].can_play = false;
                 stage_data[i].purification_rate = 0;
+                //if(i==0)
+                //{
+                //    stage_data[i].clear = true;
+                //    stage_data[i].can_play = true;
+                //    stage_data[i].purification_rate = 90;
+                //}
+                //if(i==1)
+                //{
+                //    stage_data[i].clear = true;
+                //    stage_data[i].can_play = true;
+                //    stage_data[i].purification_rate = 60;
+                //}
+                //if (i == 2)
+                //{
+                //    stage_data[i].clear = false;
+                //    stage_data[i].can_play = true;
+                //    stage_data[i].purification_rate = 0;
+                //}
             }
             //一番最初のステージだけプレイできるようにする
             stage_data[0].can_play = true;
@@ -248,6 +266,40 @@ public class SharedData : MonoBehaviour
         }
     }
     /*--終わり：SetStageDataSize--*/
+
+    /*--------------------------------------------*/
+    /*--関数名：GetPercentRank(private)-----------*/
+    /*--概要：パーセントからランクを決める--------*/
+    /*--引数：パーセント(int)---------------------*/
+    /*--戻り値：ランク(int)-----------------------*/
+    /*--------------------------------------------*/
+    public int GetPercentRank(int percent)
+    {
+        int rank = 0;
+        //29%以下だったら
+        if (percent <= 29)
+        {
+            rank = 0;
+        }
+        //69%以下だったら
+        else if (percent <= 69)
+        {
+            rank = 1;
+        }
+        //99%以下だったら
+        else if (percent <= 99)
+        {
+            rank = 2;
+        }
+        //100%だったら
+        else
+        {
+            rank = 3;
+        }
+
+        return rank;
+    }
+    /*--終わり：GetPercentRank--*/
 
     /*------------------------------------------------------------------------------------*/
     /*--関数名：SetPurificationRate(public)-----------------------------------------------*/
@@ -265,14 +317,30 @@ public class SharedData : MonoBehaviour
             //浄化率を入れる
             stage_data[Data.stage_number].purification_rate = purification;
         }
-        //クリアした所が一番最後のステージでなかったら
-        if (Data.stage_number == (stage_data.Length - 1))
+        //クリアした所の評価が2以上だったら
+        if (GetPercentRank(purification) >= 2)
         {
-            //次のステージをプレイできるようにする
-            stage_data[Data.stage_number + 1].can_play = true;
+            //クリアした所が一番最後のステージでなかったら
+            if (Data.stage_number == (stage_data.Length - 1))
+            {
+                //次のステージをプレイできるようにする
+                stage_data[Data.stage_number + 1].can_play = true;
+            }
         }
     }
     /*--終わり：SetPurificationRate--*/
+
+    /*--------------------------------------------*/
+    /*--関数名：GetClear(public)------------------*/
+    /*--概要：ステージがクリア状況のデータを渡す--*/
+    /*--引数：ステージ番号(int)-------------------*/
+    /*--戻り値：クリアしているか(bool)------------*/
+    /*--------------------------------------------*/
+    public bool GetClear(int stage_number)
+    {
+        return stage_data[stage_number].clear;
+    }
+    /*--終わり：GetClear--*/
 
     /*------------------------------------------------------*/
     /*--関数名：GetCanPlay(public)--------------------------*/
