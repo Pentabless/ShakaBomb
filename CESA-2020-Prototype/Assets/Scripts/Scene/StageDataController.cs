@@ -31,6 +31,23 @@ public class StageDataController : MonoBehaviour
     //ロゴの回転向き
     private bool logo_angle_direction;
 
+    /*------------------------------*/
+    /*--関数名：Awake---------------*/
+    /*--概要：Startより早い初期化---*/
+    /*--引数：なし------------------*/
+    /*--戻り値：なし----------------*/
+    /*------------------------------*/
+    private void Awake()
+    {
+        //**ステージのドア**//*************************************************************
+        //シーン内にあるドアオブジェクトを全部探す
+        door_obj = GameObject.FindGameObjectsWithTag("StageDoor");
+        //ドアオブジェクトのリストを並べ変える(要素番号とステージ番号が合うように)
+        door_obj = SortDoorObjectList();
+        //ステージデータの初期化をする(初期化していたら何もしない)
+        SharedData.instance.SetStageDataSize(door_obj.Length);    //ドアオブジェクトの数だけ
+    }
+
     /*-----------------*/
     /*--関数名：Start--*/
     /*--概要：初期化---*/
@@ -43,14 +60,6 @@ public class StageDataController : MonoBehaviour
         SharedData.instance.SetCanvasOption(GetComponent<Canvas>());
         //自身のCanvasScalerの設定をする
         SharedData.instance.SetCanvasScaleOption(GetComponent<CanvasScaler>());
-
-        //**ステージのドア**//*************************************************************
-        //シーン内にあるドアオブジェクトを全部探す
-        door_obj = GameObject.FindGameObjectsWithTag("StageDoor");
-        //ドアオブジェクトのリストを並べ変える(要素番号とステージ番号が合うように)
-        door_obj = SortDoorObjectList();
-        //ステージデータの初期化をする(初期化していたら何もしない)
-        SharedData.instance.SetStageDataSize(door_obj.Length);    //ドアオブジェクトの数だけ
 
         //**ステージ番号のロゴ**//*********************************************************
         //ステージ番号のロゴを探す

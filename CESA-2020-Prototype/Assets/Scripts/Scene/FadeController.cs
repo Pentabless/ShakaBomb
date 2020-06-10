@@ -30,11 +30,17 @@ public class FadeController : MonoBehaviour
             obj_color = GetComponent<SpriteRenderer>().color;
             componet_name = "SpriteRenderer";
         }
-        else
+        else if(GetComponent<Image>())
         {
             //Imageの時
             obj_color = GetComponent<Image>().color;
             componet_name = "Image";
+        }
+        else
+        {
+            //Textの時
+            obj_color = GetComponent<Text>().color;
+            componet_name = "Text";
         }
 
         //透明度を覚える
@@ -111,6 +117,10 @@ public class FadeController : MonoBehaviour
         else if (componet_name == "Image")
         {
             GetComponent<Image>().color = new Color(obj_color.r, obj_color.g, obj_color.b, alpha);
+        }
+        else if(componet_name=="Text")
+        {
+            GetComponent<Text>().color = new Color(obj_color.r, obj_color.g, obj_color.b, alpha);
         }
 
     }
