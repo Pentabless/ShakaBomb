@@ -220,6 +220,8 @@ public class PlayerController : MonoBehaviour
         // バレットの発射ボタンを押している間、ガイドラインを表示する
         if (Input.GetButton(Player.ATTACK))
         {
+            stickSence = 0.0f;
+            dir = 0;
             var inputDir = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
             if (inputDir.magnitude > 0)
             {
