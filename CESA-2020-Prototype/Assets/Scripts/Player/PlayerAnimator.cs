@@ -71,6 +71,7 @@ public class PlayerAnimator : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find(Player.NAME).GetComponent<PlayerController>();
+        GameObject.Find(PauseManager.NAME).GetComponent<PauseManager>().AddIgnoreObject(gameObject);
     }
 
     //------------------------------------------------------------------------------------------
@@ -89,6 +90,11 @@ public class PlayerAnimator : MonoBehaviour
         if (player.IsDead())
         {
             DeathUpdate();
+        }
+
+        if(Data.time <= 0)
+        {
+            animator.SetBool("TimeUp", true);
         }
     }
 
