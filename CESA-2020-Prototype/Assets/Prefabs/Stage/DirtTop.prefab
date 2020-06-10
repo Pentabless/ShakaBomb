@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6c86b97ed00ea46a36b65542749a62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useScale: 1
+  useScale: 0
   amount: 10
-  sweepLevel: 4
+  sweepLevel: 3
   alphaRate: 0.7
   brightnessMax: 1.4
   brightnessMin: 0.7
