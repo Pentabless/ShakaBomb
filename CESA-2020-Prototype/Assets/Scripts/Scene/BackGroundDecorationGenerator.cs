@@ -71,7 +71,7 @@ public class BackGroundDecorationGenerator : MonoBehaviour
             //レイヤーを設定する
             go.GetComponent<SpriteRenderer>().sortingOrder = layer;
             //移動量を設定する
-            go.GetComponent<BackGroundDecorationController>().SetMoveForce(new Vector3(Random.Range(0.01f, 0.05f), Random.Range(0.1f, 0.5f), 0.0f));
+            go.GetComponent<BackGroundDecorationController>().SetMoveForce(new Vector3(Random.Range(0.01f, 0.05f), Random.Range(0.05f, 0.2f), 0.0f));
             //角度を設定する
             go.GetComponent<BackGroundDecorationController>().SetAngle(Random.Range(1.0f, 10.0f));
         }

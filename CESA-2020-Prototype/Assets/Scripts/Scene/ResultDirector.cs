@@ -38,6 +38,8 @@ public class ResultDirector : MonoBehaviour
     //private GameObject go_result_frame;
     ////評価の星
     //private GameObject[] go_rank_star = new GameObject[3];
+    //ステージ選択シーンへ
+    private GameObject go_select_stage;
     //今回の汚染浄化率
     private GameObject text_stage_purification_rate;
     //浄化率(??%)
@@ -59,6 +61,11 @@ public class ResultDirector : MonoBehaviour
     ////評価の星の数
     //private int num_rank_star;
 
+    //ステージ選択シーンへ初期位置
+    Vector3 select_stage_start_pos;
+    //
+    float select_stage_angle;
+
     //スプライトを切り替える時間(単位：秒)
     private float change_sprite_time;
     //リザルト画面が始まった時間
@@ -74,6 +81,7 @@ public class ResultDirector : MonoBehaviour
     {
         //オブジェクトを探す
         //go_result_frame = GameObject.Find("ResultFrame");
+        go_select_stage = GameObject.Find("SelectStageButton");
         //コンポーネントを探す
         text_stage_purification_rate = GameObject.Find("StagePurificationRate");
         text_rate = GameObject.Find("PurificationRate");
@@ -82,6 +90,8 @@ public class ResultDirector : MonoBehaviour
         sc_screen_fade = GameObject.Find("ScreenFade").GetComponent<FadeController>();
         sc_decoration_generator = GameObject.Find("BackGroundDecorationGenerator").GetComponent<BackGroundDecorationGenerator>();
 
+        select_stage_start_pos = go_select_stage.GetComponent<RectTransform>().localPosition;
+        select_stage_angle = 0.0f;
         //座標変更
         //go_result_frame.transform.position = new Vector3(-30.0f, 2.0f, 0.0f);
         //stage_purification_rate.rectTransform.anchoredPosition = new Vector3(-Screen.width - 300.0f, 200.0f, 0.0f);
@@ -151,16 +161,21 @@ public class ResultDirector : MonoBehaviour
     /*------------------*/
     void Update()
     {
+
+        go_select_stage.GetComponent<RectTransform>().localPosition = new Vector3(select_stage_start_pos.x + (Mathf.Sin(select_stage_angle-90.0f)*30.0f), select_stage_start_pos.y, select_stage_start_pos.z);
+
+        select_stage_angle += 0.1f;
+
         //背景の飾りを作成する
-        float decoration_scale = Random.Range(0.3f, 3.0f);
-        sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), -10);
+        float decoration_scale = Random.Range(0.3f, 1.0f);
+        sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(/*Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f)*/1.0f, 1.0f, 1.0f, 1.0f), -10);
 
         //フェードアウトしていたら
         if ((sc_screen_fade.GetFadeType() == true) && sc_screen_fade.GetFadeValue() > 0.0f)
         {
             //前景の飾りを作成する
-            decoration_scale = Random.Range(0.3f, 3.0f);
-            sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 1.0f), 10);
+            decoration_scale = Random.Range(0.3f, 1.0f);
+            sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(/*Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f)*/1.0f, 1.0f, 1.0f, 1.0f), 10);
         }
 
         //スプライトを切り替える時間になったら
