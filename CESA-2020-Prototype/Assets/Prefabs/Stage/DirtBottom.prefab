@@ -53,6 +53,9 @@ MonoBehaviour:
   brightnessMax: 1.4
   brightnessMin: 0.7
   blinkSpeed: 0.25
+  audios:
+  - {fileID: 8300000, guid: fe00867c2550aad4a90922cc34422eae, type: 3}
+  - {fileID: 8300000, guid: 4465861aa0950cf45b033d9f54676bd6, type: 3}
 --- !u!212 &590567700342788291
 SpriteRenderer:
   m_ObjectHideFlags: 0

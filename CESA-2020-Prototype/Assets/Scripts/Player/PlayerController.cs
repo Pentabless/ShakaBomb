@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     enum AudioType
     {
         Jump,
-        Acceleration
+        Acceleration,
+        Damage
     }
 
     // リジッドボディ
@@ -449,6 +450,7 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //SoundPlayer.Play(audios[(int)AudioType.Damage]);
         if (collision.gameObject.tag == "BreakObject")
         {
             ExplosionForce(collision.transform.position, 500.0f, 800.0f);
@@ -456,6 +458,8 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == Enemy.NAME || collision.gameObject.tag == Enemy.ATTACK)
         {
+            if (!deathFlag)
+                StartCoroutine(AudioPlay());
             KnockBack(collision.transform.position);
             balloonController.Burst();
             balloonController.EnableMerge(false);
@@ -466,6 +470,9 @@ public class PlayerController : MonoBehaviour
         // ダメージタイルと衝突した時に破裂させる
         if (collision.gameObject.tag == Stage.DAMAGE_TILE)
         {
+            if (!deathFlag)
+                StartCoroutine(AudioPlay());
+            //SoundPlayer.Play(audios[(int)AudioType.Damage]);
             balloonController.Burst();
             balloonController.EnableMerge(false);
             bubbleG.GetComponent<BubbleGenerator>().StopChase();
@@ -479,7 +486,11 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+    private IEnumerator AudioPlay()
+    {
+        SoundPlayer.Play(audios[(int)AudioType.Damage]);
+        yield return null;
+    }
     //------------------------------------------------------------------------------------------
     // OnTrigger
     //------------------------------------------------------------------------------------------
