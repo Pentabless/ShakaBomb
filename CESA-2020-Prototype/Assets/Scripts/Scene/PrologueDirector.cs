@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Common;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Linq;
 //==============================================================================================
 public class PrologueDirector : MonoBehaviour
@@ -20,6 +20,8 @@ public class PrologueDirector : MonoBehaviour
 
     [SerializeField]
     float fadeInterval;
+    [SerializeField]
+    float fadeValues;
 
     float count;
 
@@ -37,7 +39,6 @@ public class PrologueDirector : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
-        
     }
 
 	//------------------------------------------------------------------------------------------
@@ -50,21 +51,20 @@ public class PrologueDirector : MonoBehaviour
         i++;
         if(count >= fadeInterval && fadeControllers.Count() >= i)
         {
-            Debug.Log(imageIndex);
+            fadeControllers[imageIndex].SetFadeValue(Common.Decimal.ZERO);
             fadeControllers[imageIndex].fade_type = false;
 
             if (fadeControllers.Count() > i)
             {
                 imageIndex++;
-                fadeControllers[imageIndex].SetFadeValue(0.1f);
                 fadeControllers[imageIndex].fade_type = true;
             }
 
             count = Common.Decimal.ZERO;
         }
-        else
+        else if (fadeControllers.Count() < i)
         {
-            // ToDo::次シーンに飛ばす
+            SceneManager.LoadScene("PlayScene");
         }
     }
 }
