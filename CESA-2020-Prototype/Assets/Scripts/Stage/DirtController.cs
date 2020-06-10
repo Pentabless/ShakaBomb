@@ -13,6 +13,12 @@ public class DirtController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    // オーディオタイプ
+    enum AudioType
+    {
+        Cleaning,
+        End
+    }
     // スプライトレンダラー
     SpriteRenderer spriteRenderer = null;
     // HSVシェーダー
@@ -63,6 +69,9 @@ public class DirtController : MonoBehaviour
 
     private float timer = 0;
 
+    [SerializeField]
+    List<AudioClip> audios;
+
     //------------------------------------------------------------------------------------------
     // Awake
     //------------------------------------------------------------------------------------------
@@ -110,9 +119,11 @@ public class DirtController : MonoBehaviour
                 var size = collider.size * transform.lossyScale;
                 var offset = collider.offset * transform.lossyScale;
                 EffectGenerator.CleanFX(new CleanFX.Param(size), transform.position+(Vector3)offset);
-            }
-           
 
+                SoundPlayer.Play(audios[(int)AudioType.End],0.5f);
+            }
+
+            SoundPlayer.Play(audios[(int)AudioType.Cleaning]);
             beingSwept = false;
         }
         currentAlpha = Mathf.Lerp(currentAlpha, targetAlpha, 0.2f);
