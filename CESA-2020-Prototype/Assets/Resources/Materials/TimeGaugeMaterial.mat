@@ -40,11 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GaugeMask:
-        m_Texture: {fileID: 2800000, guid: 77ac449f433b8514780e327999b009ab, type: 3}
+        m_Texture: {fileID: 2800000, guid: 49a7b0360051f7740be985661edd387c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b84bf6b7358cd7649af238bac467a590, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3a57221b5d853d443b130bf8dfb7a769, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -72,7 +72,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LowerLine: -0.02
+    - _LowerLine: 0.03
     - _MainAmplitude: 0.02
     - _MainFrequency: 2.4
     - _MainSpeed: 0.25
@@ -92,7 +92,7 @@ Material:
     - _SubSpeed: 0.25
     - _TimeRate: 1
     - _UVSec: 0
-    - _UpperLine: 0.95
+    - _UpperLine: 0.85
     - _ZWrite: 1
     m_Colors:
     - _AlertColor: {r: 0.9, g: 0.1, b: 0.1, a: 0.5}
