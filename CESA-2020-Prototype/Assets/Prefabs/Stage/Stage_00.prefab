@@ -13789,6 +13789,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 211029279388131762, guid: a7003b7183e75b5469cb14554ee97a89,
+        type: 3}
+      propertyPath: m_Name
+      value: Stage_00
+      objectReference: {fileID: 0}
     - target: {fileID: 211029279388131761, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13844,11 +13849,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 211029279388131762, guid: a7003b7183e75b5469cb14554ee97a89,
-        type: 3}
-      propertyPath: m_Name
-      value: Stage_00
-      objectReference: {fileID: 0}
     - target: {fileID: 3604757404419427664, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13858,6 +13858,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 694798795232538195, guid: a7003b7183e75b5469cb14554ee97a89,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 74.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 694798795232538195, guid: a7003b7183e75b5469cb14554ee97a89,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 201.825
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349350339785599439, guid: a7003b7183e75b5469cb14554ee97a89,
+        type: 3}
+      propertyPath: timeData.timeLimit
+      value: 30000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376258052083369882, guid: a7003b7183e75b5469cb14554ee97a89,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 211029278118051351, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
@@ -13908,16 +13928,6 @@ PrefabInstance:
         type: 3}
       propertyPath: backGrounds.Array.data[2].size.y
       value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 694798795232538195, guid: a7003b7183e75b5469cb14554ee97a89,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 74.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 694798795232538195, guid: a7003b7183e75b5469cb14554ee97a89,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 201.825
       objectReference: {fileID: 0}
     - target: {fileID: 211029277565075015, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
