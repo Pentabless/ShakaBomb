@@ -113,7 +113,7 @@ public class EventObject : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // イベントの開始
     //------------------------------------------------------------------------------------------
-    private void StartEvent()
+    public void StartEvent()
     {
         enableState = EnableState.True;
         time = 0.0f;
@@ -124,7 +124,7 @@ public class EventObject : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // イベントの終了
     //------------------------------------------------------------------------------------------
-    private void EndEvent()
+    public void EndEvent()
     {
         enableState = (once ? EnableState.End : EnableState.False);
 
