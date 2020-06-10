@@ -113,6 +113,7 @@ public class PlayerAnimator : MonoBehaviour
         }
 
         deathAnimationTimer += Time.deltaTime;
+        //deathAnimationTimer += Time.deltaTime * (animator.speed > 0 ? 1 : 0);
         switch (deathAnimationState)
         {
             case DeathAnimationInfo.DeathAnimatonState.Death:
