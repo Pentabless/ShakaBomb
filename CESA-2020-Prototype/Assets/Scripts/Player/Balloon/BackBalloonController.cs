@@ -228,10 +228,10 @@ public class BackBalloonController : MonoBehaviour
         // サイズが大きくなりすぎたら破裂する
         if (burst)
         {
-            Vector2 direction = playerController.transform.position - transform.position;
-            direction.x = (direction.x >= 0 ? burstDirection.x : -burstDirection.x);
-            direction.y = (direction.y >= 0 ? burstDirection.y : -burstDirection.y);
-            playerController.Boost(direction.normalized*burstForce);
+            //Vector2 direction = playerController.transform.position - transform.position;
+            //direction.x = (direction.x >= 0 ? burstDirection.x : -burstDirection.x);
+            //direction.y = (direction.y >= 0 ? burstDirection.y : -burstDirection.y);
+            //playerController.Boost(direction.normalized*burstForce);
             Burst();
         }
     }
