@@ -94,7 +94,7 @@ public class ResultDirector : MonoBehaviour
         //浄化率のテキストを設定する
         text_rate.GetComponent<Text>().text = percent.ToString();
         //浄化率からランクを決める
-        int rank = SetPercentRank(percent);
+        int rank = SharedData.instance.GetPercentRank(percent);
         //浄化率からテキストの色を設定する
         SetPercentTextPositionColor(rank,percent/10);
         //浄化率をBGMを決めて再生する
@@ -127,12 +127,12 @@ public class ResultDirector : MonoBehaviour
         //CanvasScalerの設定を変える(画面サイズが変わっても自動的に大きさなどを変更するように)
         SharedData.instance.SetCanvasScaleOption(GameObject.Find("Canvas").GetComponent<CanvasScaler>());
 
-        //Canvasの設定を変える(選択フレーム)
-        SharedData.instance.SetCanvasOption(GameObject.Find("SelectFrame").GetComponent<Canvas>());
-        //CanvasScalerの設定を変える
-        SharedData.instance.SetCanvasScaleOption(GameObject.Find("SelectFrame").GetComponent<CanvasScaler>());
-        //オブジェクト「Canvas」より前に設定する
-        GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
+        ////Canvasの設定を変える(選択フレーム)
+        //SharedData.instance.SetCanvasOption(GameObject.Find("SelectFrame").GetComponent<Canvas>());
+        ////CanvasScalerの設定を変える
+        //SharedData.instance.SetCanvasScaleOption(GameObject.Find("SelectFrame").GetComponent<CanvasScaler>());
+        ////オブジェクト「Canvas」より前に設定する
+        //GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
 
 
         //スプライトを切り替える時間を設定する(0.5秒～1.0秒の間ランダム)
@@ -252,41 +252,6 @@ public class ResultDirector : MonoBehaviour
         }
     }
     /*--終わり：Update--*/
-
-    /*--------------------------------------------*/
-    /*--関数名：SetPercentRank(private)-----------*/
-    /*--概要：パーセントからランクを決める--------*/
-    /*--引数：パーセント(int)---------------------*/
-    /*--戻り値：ランク(int)-----------------------*/
-    /*--------------------------------------------*/
-    private int SetPercentRank(int percent)
-    {
-        int rank = 0;
-        //29%以下だったら
-        if (percent <= 29)
-        {
-            rank = 0;
-        }
-        //69%以下だったら
-        else if (percent <= 69)
-        {
-            rank = 1;
-        }
-        //99%以下だったら
-        else if (percent <= 99)
-        {
-            rank = 2;
-        }
-        //100%だったら
-        else
-        {
-            rank = 3;
-        }
-
-        return rank;
-    }
-    /*--終わり：SetPercentRank--*/
-
 
     /*------------------------------------------------------------*/
     /*--関数名：SetPercentTextPositionColor(private)--------------*/
