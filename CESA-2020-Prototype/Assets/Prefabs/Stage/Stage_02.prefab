@@ -17934,6 +17934,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 202.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1349350339785599439, guid: a7003b7183e75b5469cb14554ee97a89,
+        type: 3}
+      propertyPath: timeData.timeLimit
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 211029278118051351, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
       propertyPath: backGrounds.Array.size
