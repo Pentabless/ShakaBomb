@@ -20843,10 +20843,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 211029279388131762, guid: a7003b7183e75b5469cb14554ee97a89,
+    - target: {fileID: 1349350339785599439, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
-      propertyPath: m_Name
-      value: Stage_01
+      propertyPath: timeData.timeLimit
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 211029279388131761, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
@@ -20903,6 +20903,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 211029279388131762, guid: a7003b7183e75b5469cb14554ee97a89,
+        type: 3}
+      propertyPath: m_Name
+      value: Stage_01
+      objectReference: {fileID: 0}
     - target: {fileID: 3604757404419427664, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20913,6 +20918,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.62
       objectReference: {fileID: 0}
+    - target: {fileID: 211029278118051351, guid: a7003b7183e75b5469cb14554ee97a89,
+        type: 3}
+      propertyPath: backGrounds.Array.data[0].obj
+      value: 
+      objectReference: {fileID: 474623303}
     - target: {fileID: 694798795232538195, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20927,11 +20937,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 12.401997
-      objectReference: {fileID: 0}
-    - target: {fileID: 1349350339785599439, guid: a7003b7183e75b5469cb14554ee97a89,
-        type: 3}
-      propertyPath: timeData.timeLimit
-      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 694798795232538207, guid: a7003b7183e75b5469cb14554ee97a89,
         type: 3}
@@ -20978,11 +20983,6 @@ PrefabInstance:
       propertyPath: brightnessRate
       value: 1.2
       objectReference: {fileID: 0}
-    - target: {fileID: 211029278118051351, guid: a7003b7183e75b5469cb14554ee97a89,
-        type: 3}
-      propertyPath: backGrounds.Array.data[0].obj
-      value: 
-      objectReference: {fileID: 474623303}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7003b7183e75b5469cb14554ee97a89, type: 3}
 --- !u!4 &3550879228950596496 stripped

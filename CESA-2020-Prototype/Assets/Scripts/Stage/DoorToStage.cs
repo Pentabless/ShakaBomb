@@ -138,10 +138,13 @@ public class DoorToStage : MonoBehaviour
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);
 
         //親オブジェクトがあって　親オブジェクトの拡大率が 1,1,1でない時
-        if ((transform.parent != null) && (transform.parent.localScale != new Vector3(1.0f, 1.0f, 1.0f)))
+        if (transform.parent != null)
         {
-            //親オブジェクトの拡大率の影響をなくす
-            transform.localScale = new Vector3(1.0f / transform.parent.localScale.x, 1.0f / transform.parent.localScale.y, 1.0f);
+            if (transform.parent.localScale != new Vector3(1.0f, 1.0f, 1.0f))
+            {
+                //親オブジェクトの拡大率の影響をなくす
+                transform.localScale = new Vector3(1.0f / transform.parent.localScale.x, 1.0f / transform.parent.localScale.y, 1.0f);
+            }
         }
     }
 
