@@ -148,7 +148,6 @@ public class EventObject : MonoBehaviour
             return;
         }
 
-       
         if (startInfo.condition == StartInfo.Condition.EnterArea)
         {
             StartEvent();
