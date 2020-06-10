@@ -82,9 +82,9 @@ public class DirtController : MonoBehaviour
         currentAlpha = targetAlpha = defaultAlpha = GetComponent<SpriteRenderer>().color.a;
     }
 
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     // Start
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         if (useScale)
@@ -94,12 +94,13 @@ public class DirtController : MonoBehaviour
             sweepLevel = Mathf.FloorToInt(sweepLevel * scale);
         }
         dirtManager = GameObject.Find(Dirt.MANAGER).GetComponent<DirtManager>();
+        dirtManager.RegisterDirt(amount);
     }
 
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     // Update
-	//------------------------------------------------------------------------------------------
-	private void Update()
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         if (beingSwept && !wasCleaned)
         {
@@ -118,9 +119,9 @@ public class DirtController : MonoBehaviour
                 var collider = GetComponent<BoxCollider2D>();
                 var size = collider.size * transform.lossyScale;
                 var offset = collider.offset * transform.lossyScale;
-                EffectGenerator.CleanFX(new CleanFX.Param(size), transform.position+(Vector3)offset);
+                EffectGenerator.CleanFX(new CleanFX.Param(size), transform.position + (Vector3)offset);
 
-                SoundPlayer.Play(audios[(int)AudioType.End],0.5f);
+                SoundPlayer.Play(audios[(int)AudioType.End], 0.5f);
             }
 
             SoundPlayer.Play(audios[(int)AudioType.Cleaning]);
