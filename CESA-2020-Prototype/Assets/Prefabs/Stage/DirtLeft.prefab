@@ -101,6 +101,9 @@ MonoBehaviour:
   brightnessMax: 2
   brightnessMin: 0.7
   blinkSpeed: 0.25
+  audios:
+  - {fileID: 8300000, guid: fe00867c2550aad4a90922cc34422eae, type: 3}
+  - {fileID: 8300000, guid: 4465861aa0950cf45b033d9f54676bd6, type: 3}
 --- !u!114 &3572818652381193900
 MonoBehaviour:
   m_ObjectHideFlags: 0

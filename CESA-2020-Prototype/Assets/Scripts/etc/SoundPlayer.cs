@@ -29,13 +29,13 @@ public class SoundPlayer : MonoBehaviour
     }
 
     //サウンドの再生
-    public static void Play(AudioClip audioClip)
+    public static void Play(AudioClip audioClip, float volumeScale = 1.0f)
     {
         if (audioSource == null)
         {
             Init();
         }
-        audioSource.PlayOneShot(audioClip);
+        audioSource.PlayOneShot(audioClip, volumeScale);
     }
 
     //BGMの再生
