@@ -36,7 +36,7 @@ public class GusEnemy : IEnemy
         if (currentStatus == Status.None)
         {
             var percentage = (Time.time - currentTime * moveSpeed) / distance;
-            Debug.Log(percentage);
+            //Debug.Log(percentage);
             this.transform.position = Vector3.Lerp(initializePos, arrivalPosition, percentage);
         }
 

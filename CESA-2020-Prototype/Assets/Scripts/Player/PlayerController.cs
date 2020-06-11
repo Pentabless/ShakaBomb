@@ -84,13 +84,6 @@ public class PlayerController : MonoBehaviour
     bool isGround;
     bool bubbleGround;
 
-    // コヨーテタイム
-    [SerializeField]
-    int coyoteTime;
-
-    bool coyoteFlag = true;
-    int coyoteCount = Integer.ZERO;
-
     // 敵接触時
     int hitCount = Integer.ZERO;
 
@@ -244,42 +237,29 @@ public class PlayerController : MonoBehaviour
         boostButton = Input.GetAxis(Player.BOOST);
         float sticV = Mathf.Abs(Input.GetAxis(Player.VERTICAL));
 
-        //if (boostCount >= 1)
+        if ((jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount > 0) || (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize))
         {
-            if ((jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount >= 1) || (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize))
+            Vector2 direction = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
+            if (sticV <= 0.1f)
             {
-                Vector2 direction = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
-                if (sticV <= 0.1f)
-                {
-                    direction.y = 0;
-                }
-                direction.Normalize();
-
-                Boost(direction);
-
-                // エフェクトを生成する
-                EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
-                balloonController.UseBoost(boostCost);
-
-                SoundPlayer.Play(audios[(int)AudioType.Acceleration]);
-
-                boostCount--;
+                direction.y = 0;
             }
+            direction.Normalize();
+
+            Boost(direction);
+
+            // エフェクトを生成する
+            EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
+            balloonController.UseBoost(boostCost);
+
+            SoundPlayer.Play(audios[(int)AudioType.Acceleration]);
+
+            boostCount--;
         }
 
         // エネミーを利用したブースト(仮)
         if (isEnemyBoost)
         {
-            //rig.velocity = rig.velocity * 0.0f;
-            //if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
-            //{
-            //    rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
-            //}
-            //else
-            //{
-            //    rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
-            //}
-
             Boost(Vector3.zero);
         }
 
@@ -287,16 +267,11 @@ public class PlayerController : MonoBehaviour
         // ジャンプ
         if (hitCount == 0)
         {
-            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && isGround) // && coyoteFlag == true)
+            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && isGround)
             {
-                jumpCount = 1;
                 if (this.rig.velocity.y <= 0)
                 {
-                    if (!isGround)   // コヨーテ中
-                    {
-                        this.rig.velocity = new Vector2(this.rig.velocity.x, 0.0f);
-                    }
-
+                    jumpCount = 1;
                     rig.AddForce(new Vector2(0, jumpForce));
                     isGround = false;
                     jumpStopFlag = false;
@@ -305,14 +280,7 @@ public class PlayerController : MonoBehaviour
                     SoundPlayer.Play(audios[(int)AudioType.Jump]);
                 }
             }
-            //// ジャンプ中にボタンを離す
-            //if (jumpButton == 0 && isGround == false && !jumpStopFlag && this.rig.velocity.y > 0)
-            //{
-            //    rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0.6f);
-            //    jumpStopFlag = true;
-            //}
         }
-
 
         // 前フレームのキー入力の情報保持
         // Jump
@@ -372,27 +340,6 @@ public class PlayerController : MonoBehaviour
         rig.gravityScale = Mathf.Lerp(5.0f, 1.5f, t);
         jumpForce = defaultJumpForce * Mathf.Lerp(1.0f, 0.9f, t);
         playerSpeed = accelForce * Mathf.Lerp(1.0f, 0.85f, t);
-
-        //接地時であれば Gravity Speed は 変化しない
-        if (coyoteFlag)
-        {
-            this.rig.gravityScale = 5.0f;
-        }
-
-        //// コヨーテタイムによる接地判定
-        //if (!isGround)
-        //{
-        //    coyoteCount++;
-        //}
-        //else
-        //{
-        //    coyoteCount = 0;
-        //    coyoteFlag = true;
-        //}
-        //if (coyoteCount >= coyoteTime)
-        //{
-        //    coyoteFlag = false;
-        //}
 
         // エネミーブーストのリセット
         isEnemyBoost = false;
