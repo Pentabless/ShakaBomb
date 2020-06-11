@@ -155,21 +155,21 @@ public class CameraController : MonoBehaviour
             distance = Vector3.Distance(nextPos, currentPos);
         }
 
-        // リスポーンポジションの記憶とカウント
-        if (rememberPos)
-        {
-            respawnCount += Time.deltaTime;
-            //　数フレームは記憶する
-            if (respawnCount >= Common.Camera.REMEMBER_FRAME)
-            {
-                Data.initialPlayerPos = player.transform.position;
-                rememberPos = false;
-            }
-        }
-        else
-        {
-            respawnCount = 0.0f;
-        }
+        //// リスポーンポジションの記憶とカウント
+        //if (rememberPos)
+        //{
+        //    respawnCount += Time.deltaTime;
+        //    //　数フレームは記憶する
+        //    if (respawnCount >= Common.Camera.REMEMBER_FRAME)
+        //    {
+        //        Data.initialPlayerPos = player.transform.position;
+        //        rememberPos = false;
+        //    }
+        //}
+        //else
+        //{
+        //    respawnCount = 0.0f;
+        //}
 
         // カメラの範囲指定を適用
         mainCamera.transform.position = SetCameraRangePosition(mainCamera.transform.position.x, mainCamera.transform.position.y);
@@ -242,8 +242,11 @@ public class CameraController : MonoBehaviour
     private void UpdateNextPos(Vector3 move)
     {
         followOn = false;
-        rememberPos = true;
+        //rememberPos = true;
         nextPos += move;
+
+        // リスポーン地点を更新
+        Data.initialPlayerPos = player.transform.position + move.normalized * 1.5f;
 
         var rigid = player.GetComponent<Rigidbody2D>();
         playerRigidInfo = new PauseManager.RigidbodyVelocity(rigid);
