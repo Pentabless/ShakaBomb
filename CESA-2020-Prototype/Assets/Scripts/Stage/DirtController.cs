@@ -94,6 +94,7 @@ public class DirtController : MonoBehaviour
             sweepLevel = Mathf.FloorToInt(sweepLevel * scale);
         }
         dirtManager = GameObject.Find(Dirt.MANAGER).GetComponent<DirtManager>();
+        dirtManager.RegisterDirt(amount);
     }
 
 	//------------------------------------------------------------------------------------------
