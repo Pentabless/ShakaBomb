@@ -84,10 +84,11 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator.SetInteger("Direction", player.GetCurrentDir());
         animator.SetInteger("LastDirection", Data.playerDir);
-        if (player.JumpTiming())
-        {
-            animator.SetTrigger("Jump");
-        }
+        //if (player.JumpTiming())
+        //{
+        //    animator.SetTrigger("Jump");
+        //}
+        animator.SetBool("Jump", player.JumpTiming());
         animator.SetBool("IsGround", player.IsGround());
         animator.SetFloat("VelocityY", Data.prePlayerVel.y);
 
