@@ -98,6 +98,7 @@ MonoBehaviour:
   bubblePre: {fileID: 7180998208429512912, guid: 15233702080600f4b8ce245c67c7ba87,
     type: 3}
   moveSpeed: 1
+  destroy_second: 2
 --- !u!58 &3572460233680945042
 CircleCollider2D:
   m_ObjectHideFlags: 0
