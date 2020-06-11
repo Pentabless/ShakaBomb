@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
             //    rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
             //}
 
-            Boost(new Vector3(0, 1, 0));
+            Boost(Vector3.zero);
         }
 
 
