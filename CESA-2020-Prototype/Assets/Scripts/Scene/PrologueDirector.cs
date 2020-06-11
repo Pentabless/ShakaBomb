@@ -47,6 +47,7 @@ public class PrologueDirector : MonoBehaviour
 	private void Update()
     {
         count += Time.deltaTime;
+        Debug.Log(imageIndex);
         var i = imageIndex;
         i++;
         if(count >= fadeInterval && fadeControllers.Count() >= i)
@@ -62,9 +63,9 @@ public class PrologueDirector : MonoBehaviour
 
             count = Common.Decimal.ZERO;
         }
-        else if (fadeControllers.Count() < i)
+        if (fadeControllers.Count()-1 <= imageIndex)
         {
-            SceneManager.LoadScene("PlayScene");
+            SceneManager.LoadScene("NewStageSelectScene");
         }
     }
 }

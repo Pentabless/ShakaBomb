@@ -184,7 +184,7 @@ public class PlayDirector : MonoBehaviour
         {
             CalculateStarNum();
             FadeManager.fadeColor = Color.white;
-            FadeManager.FadeOut("ResultScene", 1.5f);
+            FadeManager.FadeOut("NewResultScene", 1.5f);
             SceneEffecterController.StartEffect();
             waitTime = 99.0f;
         }

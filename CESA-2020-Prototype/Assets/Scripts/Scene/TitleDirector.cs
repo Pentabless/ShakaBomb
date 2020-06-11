@@ -266,7 +266,7 @@ public class TitleDirector : MonoBehaviour
                 //SharedDataにあるリストに飾りを入れる
                 SharedData.instance.SetDecorationList(GameObject.Find("Main Camera").transform.position);
                 //ステージ選択画面に移る
-                SceneManager.LoadScene("StageSelectScene");
+                SceneManager.LoadScene("PrologueScene");
             }
         }
     }

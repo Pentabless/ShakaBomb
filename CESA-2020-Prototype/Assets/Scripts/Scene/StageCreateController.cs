@@ -19,7 +19,7 @@ public class StageCreateController : MonoBehaviour
     /*--引数：なし-----*/
     /*--戻り値：なし---*/
     /*-----------------*/
-    void Start()
+    void Awake()
     {
         //ステージセレクトシーンからもらった番号をもとにステージを作る
         GameObject stage = Instantiate(stage_prefab[Data.stage_number])as GameObject;
