@@ -2931,9 +2931,9 @@ MonoBehaviour:
   useFixHue: 0
   fixHue: {r: 1, g: 1, b: 1, a: 1}
   hueShift: 0
-  saturationMultiply: 0.7
+  saturationMultiply: 0.85
   saturationShift: 0
-  brightnessMultiply: 0.9
+  brightnessMultiply: 1
   brightnessShift: 0
 --- !u!1 &3602756917235369435
 GameObject:
@@ -19763,12 +19763,12 @@ PrefabInstance:
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 119.513
+      value: 119.548
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19.844
+      value: 19.871
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
@@ -19818,12 +19818,12 @@ PrefabInstance:
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.3365827
+      value: 1.0089093
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.27881643
+      value: 0.45663518
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 426ca9d41e23db040bb766a316f37eeb, type: 3}
@@ -20003,12 +20003,12 @@ PrefabInstance:
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 36.9
+      value: 36.956
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19.86
+      value: 19.838
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
@@ -20058,12 +20058,12 @@ PrefabInstance:
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.6894403
+      value: 0.8089083
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.266814
+      value: 0.5267116
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 426ca9d41e23db040bb766a316f37eeb, type: 3}
