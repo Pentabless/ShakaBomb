@@ -10,17 +10,18 @@ using Common;
 //==============================================================================================
 public class HitBubble : MonoBehaviour
 {
+    public bool burst { private set; get; } = false;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Player")
+        if (collision.transform.tag == "Player" && !burst)
         {
             Vector2 effectSize = Vector2.one * 1.5f;
             EffectGenerator.BubbleBurstFX(
                 new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),
                 transform.position,
                 null);
-
-            Destroy(this.gameObject);
+            burst = true;
         }
     }
 }
