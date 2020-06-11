@@ -101,6 +101,7 @@ namespace Common
         public const string SRAGE               = ("Stage");
         public const string GROUND              = ("Ground");
         public const string DAMAGE_TILE         = ("DamageTile");
+        public const float  NotInputCount       = 2.0f;
     }
 
     //------------------------------------------------------------------------------------------
