@@ -973,11 +973,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage_05
       objectReference: {fileID: 0}
-    - target: {fileID: 988895088293129637, guid: 7c2f412272e81a7438441173778f7245,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 988895088293129638, guid: 7c2f412272e81a7438441173778f7245,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1032,22 +1027,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 314485838, guid: 7c2f412272e81a7438441173778f7245, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1455103376, guid: 7c2f412272e81a7438441173778f7245, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1455103375, guid: 7c2f412272e81a7438441173778f7245, type: 3}
-      propertyPath: saturationMultiply
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 1455103375, guid: 7c2f412272e81a7438441173778f7245, type: 3}
-      propertyPath: brightnessMultiply
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c2f412272e81a7438441173778f7245, type: 3}
@@ -1402,11 +1381,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 987760384, guid: f96dfddb45358f34387a54e97abb2acf, type: 3}
+    - target: {fileID: 806716065, guid: f96dfddb45358f34387a54e97abb2acf, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 806716065, guid: f96dfddb45358f34387a54e97abb2acf, type: 3}
+    - target: {fileID: 987760384, guid: f96dfddb45358f34387a54e97abb2acf, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -2885,6 +2864,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2589930516521526974, guid: e5531f092f0e5d84291392418c4ab8d3,
+        type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3856990063686171992, guid: e5531f092f0e5d84291392418c4ab8d3,
         type: 3}
       propertyPath: backGrounds.Array.data[0].obj
@@ -2905,11 +2889,6 @@ PrefabInstance:
       propertyPath: backGrounds.Array.data[3].obj
       value: 
       objectReference: {fileID: 611390556}
-    - target: {fileID: 2589930516521526974, guid: e5531f092f0e5d84291392418c4ab8d3,
-        type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7950861311605329848, guid: e5531f092f0e5d84291392418c4ab8d3,
         type: 3}
       propertyPath: m_ColliderPaths.Array.size
