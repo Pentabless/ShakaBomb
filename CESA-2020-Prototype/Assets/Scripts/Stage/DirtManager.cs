@@ -48,9 +48,9 @@ public class DirtManager : MonoBehaviour
     {
 
         float rate = 1 - dirtAmount / (float)maxDirtAmount;
-        Data.cleanRate[Data.stage_number] = 1 - dirtAmount / (float)maxDirtAmount;
-        //Debug.Log("rate:"+rate);
-        
+        Data.currentCleanRate = 1 - dirtAmount / (float)maxDirtAmount;
+        //Debug.Log("rate:" + rate);
+
     }
 
     //------------------------------------------------------------------------------------------

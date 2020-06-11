@@ -57,8 +57,6 @@ public class CameraController : MonoBehaviour
     float startTime;
     // 移動前のプレイヤーの速度
     PauseManager.RigidbodyVelocity playerRigidInfo;
-    // アニメーションの速度
-    float playerAnimatorSpeed = 0;
 
     // 視差背景
     [Header("size=pixel/PixelPerUnit*scale")]
@@ -118,8 +116,7 @@ public class CameraController : MonoBehaviour
                 rigid.velocity = playerRigidInfo.velocity;
                 rigid.angularVelocity = playerRigidInfo.angularVeloccity;
                 rigid.constraints = playerRigidInfo.constraints;
-                var animator = player.GetComponentInChildren<Animator>();
-                animator.speed = playerAnimatorSpeed;
+                player.GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
             }
         }
         else
@@ -252,10 +249,7 @@ public class CameraController : MonoBehaviour
         playerRigidInfo = new PauseManager.RigidbodyVelocity(rigid);
         rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         rigid.Sleep();
-
-        var animator = player.GetComponentInChildren<Animator>();
-        playerAnimatorSpeed = animator.speed;
-        animator.speed = 0;
+        player.GetComponentInChildren<PlayerAnimator>().StopAnimation();
     }
 
     /// <summary>

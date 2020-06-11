@@ -3,6 +3,7 @@
 /// Summary		: データ保持
 //==============================================================================================
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 //==============================================================================================
 public class Data
@@ -22,4 +23,6 @@ public class Data
     public static int star_num = 0;
 
     public static int stage_number;
+    public static Dictionary<int, float> cleanRate = new Dictionary<int, float>();
+    public static float currentCleanRate = 0;
 }
