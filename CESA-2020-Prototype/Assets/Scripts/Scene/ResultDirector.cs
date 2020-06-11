@@ -90,8 +90,15 @@ public class ResultDirector : MonoBehaviour
         sc_screen_fade = GameObject.Find("ScreenFade").GetComponent<FadeController>();
         sc_decoration_generator = GameObject.Find("BackGroundDecorationGenerator").GetComponent<BackGroundDecorationGenerator>();
 
-        select_stage_start_pos = go_select_stage.GetComponent<RectTransform>().localPosition;
         select_stage_angle = 0.0f;
+
+        //座標設定
+        text_stage_purification_rate.GetComponent<RectTransform>().anchoredPosition = new Vector3(560, 525, -2000);
+        text_rate.GetComponent<RectTransform>().anchoredPosition = new Vector3(560, 225, -2000);
+        text_percent.GetComponent<RectTransform>().anchoredPosition = new Vector3(860, 175, -2000);
+        go_select_stage.GetComponent<RectTransform>().anchoredPosition = new Vector3(-400, 200, -2000);
+        select_stage_start_pos = new Vector3(-200, 100, -2100);
+
         //座標変更
         //go_result_frame.transform.position = new Vector3(-30.0f, 2.0f, 0.0f);
         //stage_purification_rate.rectTransform.anchoredPosition = new Vector3(-Screen.width - 300.0f, 200.0f, 0.0f);
@@ -106,7 +113,7 @@ public class ResultDirector : MonoBehaviour
         //浄化率からランクを決める
         int rank = SharedData.instance.GetPercentRank(percent);
         //浄化率からテキストの色を設定する
-        SetPercentTextPositionColor(rank,percent/10);
+        SetPercentTextPositionColor(rank, percent / 10);
         //浄化率をBGMを決めて再生する
         PlayPercentBGM(rank);
         //浄化率から背景を設定する
@@ -130,8 +137,8 @@ public class ResultDirector : MonoBehaviour
         //フェードインさせる
         //FadeManager.FadeIn(1.5f);
 
-        //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
-        SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
+        ////Canvasの設定を変える(泡の飾りをUIより前に表示するために)
+        //SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
         //Cameraの映る範囲をもらう
         camera_range = SharedData.instance.GetCameraRange(GameObject.Find("Main Camera").GetComponent<Camera>());
         //CanvasScalerの設定を変える(画面サイズが変わっても自動的に大きさなどを変更するように)
@@ -162,7 +169,7 @@ public class ResultDirector : MonoBehaviour
     void Update()
     {
 
-        go_select_stage.GetComponent<RectTransform>().localPosition = new Vector3(select_stage_start_pos.x + (Mathf.Sin(select_stage_angle-90.0f)*30.0f), select_stage_start_pos.y, select_stage_start_pos.z);
+        go_select_stage.GetComponent<RectTransform>().anchoredPosition = new Vector3(select_stage_start_pos.x + (Mathf.Sin(select_stage_angle - 90.0f) * 30.0f), select_stage_start_pos.y, select_stage_start_pos.z);
 
         select_stage_angle += 0.1f;
 
@@ -274,66 +281,78 @@ public class ResultDirector : MonoBehaviour
     /*--引数：ランク(int)、割合を10で割った数(一桁の時は0になる)--*/
     /*--戻り値：なし----------------------------------------------*/
     /*------------------------------------------------------------*/
-    private void SetPercentTextPositionColor(int rank,int num)
+    private void SetPercentTextPositionColor(int rank, int num)
     {
-        Vector3 pos = new Vector3(400.0f, -300.0f,-2000.0f);
+        //今回の汚染浄化率のテキストの座標(評価１の時基準)
+        Vector3 stage_purification_pos = new Vector3(560.0f, 530.0f, -2000.0f);
+        //パーセンテージの座標(今回の汚染浄化率の差)
+        Vector3 purification_rate_pos = new Vector3(0.0f, -250.0f, 0.0f);
+        //パーセンテージの単位の座標(パーセンテージの差)
+        Vector3 percent_pos = new Vector3(300.0f, -50.0f, 0.0f);
+        //色(初期：黒)
+        Color color = new Color(0.0f, 0.0f, 0.0f);
+
         switch (rank)
         {
             //29%以下だったら
             case 0:
                 //赤　(仮)
-                text_rate.GetComponent<Text>().color = new Color(1.0f, 0.0f, 0.0f);
-                text_percent.GetComponent<Text>().color = new Color(1.0f, 0.0f, 0.0f);
+                color = new Color(1.0f, 0.0f, 0.0f);
                 //座標変更
-                text_stage_purification_rate.GetComponent<RectTransform>().localPosition = new Vector3(pos.x, 0.0f, pos.z);
-                text_rate.GetComponent<RectTransform>().localPosition = new Vector3(pos.x, pos.y, pos.z);
+                stage_purification_pos = new Vector3(stage_purification_pos.x + 700.0f, stage_purification_pos.y, stage_purification_pos.z);
+                purification_rate_pos = new Vector3(purification_rate_pos.x, purification_rate_pos.y, purification_rate_pos.z);
                 //割合の桁数によって座標を変える
                 if (num > 0)
                 {
-                    text_percent.GetComponent<RectTransform>().localPosition = new Vector3(pos.x + 300.0f, pos.y - 50.0f, pos.z);
+                    percent_pos = new Vector3(percent_pos.x, percent_pos.y, percent_pos.z);
                 }
                 else
                 {
-                    text_percent.GetComponent<RectTransform>().localPosition = new Vector3(pos.x + 200.0f, pos.y - 50.0f, pos.z);
+                    percent_pos = new Vector3(percent_pos.x - 100.0f, percent_pos.y, percent_pos.z);
                 }
                 break;
             //69%以下だったら
             case 1:
                 //オレンジ　(仮)
-                text_rate.GetComponent<Text>().color = new Color(1.0f, 0.5f, 0.0f);
-                text_percent.GetComponent<Text>().color = new Color(1.0f, 0.5f, 0.0f);
+                color = new Color(1.0f, 0.5f, 0.0f);
                 //座標変更
-                text_stage_purification_rate.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x, 0.0f, pos.z);
-                text_rate.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x, pos.y, pos.z);
-                text_percent.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x + 300.0f, pos.y - 50.0f, pos.z);
+                stage_purification_pos = new Vector3(stage_purification_pos.x, stage_purification_pos.y, stage_purification_pos.z);
+                purification_rate_pos = new Vector3(purification_rate_pos.x, purification_rate_pos.y, purification_rate_pos.z);
+                percent_pos = new Vector3(percent_pos.x, percent_pos.y, percent_pos.z);
                 break;
             //99%以下だったら
             case 2:
                 //黄　(仮)
-                text_rate.GetComponent<Text>().color = new Color(1.0f, 1.0f, 0.0f);
-                text_percent.GetComponent<Text>().color = new Color(1.0f, 1.0f, 0.0f);
+                color = new Color(1.0f, 1.0f, 0.0f);
                 //座標変更
-                text_stage_purification_rate.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x, 0.0f, pos.z);
-                text_rate.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x, pos.y, pos.z);
-                text_percent.GetComponent<RectTransform>().localPosition = new Vector3(-pos.x + 300.0f, pos.y - 50.0f, pos.z);
+                stage_purification_pos = new Vector3(stage_purification_pos.x, stage_purification_pos.y, stage_purification_pos.z);
+                purification_rate_pos = new Vector3(purification_rate_pos.x, purification_rate_pos.y, purification_rate_pos.z);
+                percent_pos = new Vector3(percent_pos.x, percent_pos.y, percent_pos.z);
                 break;
             //100%だったら
             case 3:
                 //黄緑　(仮)
-                text_rate.GetComponent<Text>().color = new Color(0.4f, 0.9f, 0.0f);
-                text_percent.GetComponent<Text>().color = new Color(0.4f, 0.9f, 0.0f);
+                color = new Color(0.4f, 0.9f, 0.0f);
                 //座標変更
-                text_stage_purification_rate.GetComponent<RectTransform>().localPosition = new Vector3(pos.x, 0.0f, pos.z);
-                text_rate.GetComponent<RectTransform>().localPosition = new Vector3(pos.x, pos.y, pos.z);
-                text_percent.GetComponent<RectTransform>().localPosition = new Vector3(pos.x + 350.0f, pos.y - 50.0f, pos.z);
+                stage_purification_pos = new Vector3(stage_purification_pos.x + 700.0f, stage_purification_pos.y, stage_purification_pos.z);
+                purification_rate_pos = new Vector3(purification_rate_pos.x, purification_rate_pos.y, purification_rate_pos.z);
+                percent_pos = new Vector3(percent_pos.x + 50.0f, percent_pos.y, percent_pos.z);
                 break;
             //当てはまらなかったら(絶対にないと思う)
             default:
                 //黒　(仮)
-                text_rate.GetComponent<Text>().color = new Color(0.0f, 0.0f, 0.0f);
-                text_percent.GetComponent<Text>().color = new Color(0.0f, 0.0f, 0.0f);
+                color = new Color(0.0f, 0.0f, 0.0f);
                 break;
         }
+
+        //座標変更
+        text_stage_purification_rate.GetComponent<RectTransform>().anchoredPosition = stage_purification_pos;
+        text_rate.GetComponent<RectTransform>().anchoredPosition = stage_purification_pos + purification_rate_pos;
+        text_percent.GetComponent<RectTransform>().anchoredPosition = stage_purification_pos + purification_rate_pos + percent_pos;
+        //パーセンテージの色
+        text_rate.GetComponent<Text>().color = color;
+        text_percent.GetComponent<Text>().color = color;
+
     }
     /*--終わり：SetPercentTextPositionColor--*/
 
