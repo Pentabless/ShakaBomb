@@ -7,36 +7,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Common;
-using UnityEngine.Video;
 using UnityEngine.UI;
-using System.Linq;
+using UnityEngine.Video;
 //==============================================================================================
-public class TutorialEvent : MonoBehaviour
+public class TutorialEvents: MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
     [SerializeField]
-    EventObject eventObj;
-    [SerializeField]
-    GameObject movieScreen;
+    CanvasGroup screen;
     [SerializeField]
     VideoPlayer video;
     [SerializeField]
     VideoClip clip;
     [SerializeField]
-    float fadeTime = 1.0f;
-    [SerializeField]
-    List<GameObject> childe;
-    [SerializeField]
-    List<FadeController> fade;
+    Text canvasText;
     [SerializeField]
     string text;
+    [SerializeField]
+    float fadeTime = 1.0f;
 
     PauseManager pauseManager = null;
+    EventObject eventObj;
 
     bool playOn = false;
     float count = 0.0f;
+
+    //------------------------------------------------------------------------------------------
+    // Awake
+    //------------------------------------------------------------------------------------------
+    private void Awake()
+    {
+    }
 
 	//------------------------------------------------------------------------------------------
     // Start
@@ -49,6 +52,10 @@ public class TutorialEvent : MonoBehaviour
             Debug.Log("PauseManagerをシーンに追加してください");
         }
         pauseManager = go.GetComponent<PauseManager>();
+
+        eventObj = GetComponent<EventObject>();
+
+        screen.alpha = 0.0f;
     }
 
     //------------------------------------------------------------------------------------------
@@ -56,18 +63,23 @@ public class TutorialEvent : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        if(playOn)
+        if (playOn)
         {
             count += Time.deltaTime;
+            if (screen.alpha <= 1.0f)
+            {
+                screen.alpha += fadeTime / 100;
+            }
         }
         else
         {
             count = 0.0f;
         }
+
         if (video.isPlaying)
         {
             var inputA = Input.GetButtonDown(GamePad.BUTTON_A);
-            if(count >= Stage.NotInputCount &&inputA)
+            if (count >= Stage.NotInputCount && inputA)
             {
                 eventObj.EndEvent();
             }
@@ -81,13 +93,10 @@ public class TutorialEvent : MonoBehaviour
     {
         FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
         FadeManager.FadeOut(fadeTime);
-        movieScreen.SetActive(true);
         playOn = true;
-        var temp = childe.Where(x => x.GetComponent<Text>() != null).First().GetComponent<Text>();
-        temp.text = text;
-        fade.ForEach(x => x.fade_type = true);
         video.clip = clip;
         video.Play();
+        canvasText.text = text;
         pauseManager.SetFilterColor(Color.clear);
         pauseManager.Pause(fadeTime);
     }
@@ -98,32 +107,9 @@ public class TutorialEvent : MonoBehaviour
     public void EndEvent()
     {
         pauseManager.Resume();
-        fade.ForEach(x =>
-        {
-            x.Alpha = 0.0f;
-            x.SetFadeValue(0.0f);
-        });
-        childe.ForEach(x =>
-        {
-            var image = x.GetComponent<Image>();
-            var rawImage = x.GetComponent<RawImage>();
-            var text = x.GetComponent<Text>();
-
-            if(image)
-            {
-                image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
-            }
-            else if(rawImage)
-            {
-                rawImage.color = new Color(rawImage.color.r, rawImage.color.g, rawImage.color.b, 0.0f);
-            }
-            else
-            {
-                text.color = new Color(text.color.r, text.color.g, text.color.b, 0.0f);
-            }
-        });
         playOn = false;
-        movieScreen.SetActive(false);
+        screen.alpha = 0.0f;
         FadeManager.FadeIn(fadeTime);
     }
+
 }
