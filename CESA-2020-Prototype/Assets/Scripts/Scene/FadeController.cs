@@ -36,6 +36,11 @@ public class FadeController : MonoBehaviour
             obj_color = GetComponent<Image>().color;
             componet_name = "Image";
         }
+        else if(GetComponent<RawImage>())
+        {
+            obj_color = GetComponent<RawImage>().color;
+            componet_name = "RawImage";
+        }
         else
         {
             //Textの時
@@ -118,6 +123,10 @@ public class FadeController : MonoBehaviour
         {
             GetComponent<Image>().color = new Color(obj_color.r, obj_color.g, obj_color.b, alpha);
         }
+        else if(componet_name == "RawImage")
+        {
+            GetComponent<RawImage>().color = new Color(obj_color.r, obj_color.g, obj_color.b, alpha);
+        }
         else if(componet_name=="Text")
         {
             GetComponent<Text>().color = new Color(obj_color.r, obj_color.g, obj_color.b, alpha);
@@ -153,5 +162,11 @@ public class FadeController : MonoBehaviour
     public float GetFadeValue()
     {
         return Mathf.Clamp(fade_value, 0.0f, 1.0f);
+    }
+
+    public float Alpha
+    {
+        set { alpha = value; }
+        get { return alpha; }
     }
 }
