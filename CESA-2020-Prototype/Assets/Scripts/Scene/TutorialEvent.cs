@@ -9,6 +9,7 @@ using System;
 using Common;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using System.Linq;
 //==============================================================================================
 public class TutorialEvent : MonoBehaviour
 {
@@ -29,10 +30,13 @@ public class TutorialEvent : MonoBehaviour
     List<GameObject> childe;
     [SerializeField]
     List<FadeController> fade;
+    [SerializeField]
+    string text;
 
     PauseManager pauseManager = null;
 
     bool playOn = false;
+    float count = 0.0f;
 
 	//------------------------------------------------------------------------------------------
     // Start
@@ -52,10 +56,18 @@ public class TutorialEvent : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        if(video.isPlaying)
+        if(playOn)
+        {
+            count += Time.deltaTime;
+        }
+        else
+        {
+            count = 0.0f;
+        }
+        if (video.isPlaying)
         {
             var inputA = Input.GetButtonDown(GamePad.BUTTON_A);
-            if(inputA)
+            if(count >= Stage.NotInputCount &&inputA)
             {
                 eventObj.EndEvent();
             }
@@ -70,6 +82,9 @@ public class TutorialEvent : MonoBehaviour
         FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
         FadeManager.FadeOut(fadeTime);
         movieScreen.SetActive(true);
+        playOn = true;
+        var temp = childe.Where(x => x.GetComponent<Text>() != null).First().GetComponent<Text>();
+        temp.text = text;
         fade.ForEach(x => x.fade_type = true);
         video.clip = clip;
         video.Play();
@@ -92,6 +107,7 @@ public class TutorialEvent : MonoBehaviour
         {
             var image = x.GetComponent<Image>();
             var rawImage = x.GetComponent<RawImage>();
+            var text = x.GetComponent<Text>();
 
             if(image)
             {
@@ -101,7 +117,12 @@ public class TutorialEvent : MonoBehaviour
             {
                 rawImage.color = new Color(rawImage.color.r, rawImage.color.g, rawImage.color.b, 0.0f);
             }
+            else
+            {
+                text.color = new Color(text.color.r, text.color.g, text.color.b, 0.0f);
+            }
         });
+        playOn = false;
         movieScreen.SetActive(false);
         FadeManager.FadeIn(fadeTime);
     }
