@@ -19,6 +19,10 @@ public class CylinderEnemy : MonoBehaviour
     float moveDistance;
     [SerializeField]
     float respawnCount;
+    [SerializeField]
+    float appearCount;
+    [SerializeField]
+    float destroyCount;
 
     GameObject gus;
     float count;
@@ -29,7 +33,16 @@ public class CylinderEnemy : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Awake()
     {
-        Respawn();
+        Respawn();  //ガスエネミーを出現させる
+
+        //出現する時間のずれが0じゃなかったら
+        if (appearCount != 0.0f)
+        {
+            //さっき作ったガスエネミーを消しておく
+            Destroy(gus.gameObject);
+            //出現する時間を少しずらしておく
+            count = respawnCount-appearCount;
+        }
     }
 
 	//------------------------------------------------------------------------------------------
@@ -57,6 +70,7 @@ public class CylinderEnemy : MonoBehaviour
         gus.GetComponent<GusEnemy>().arrivalPosition = new Vector3(gus.transform.position.x,
                                           gus.transform.position.y + moveDistance,
                                           gus.transform.position.z);
+        gus.GetComponent<GusEnemy>().destroy_count = destroyCount;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

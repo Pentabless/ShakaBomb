@@ -18,6 +18,7 @@ public class GusEnemy : IEnemy
     float currentTime;
 
     public Vector3 arrivalPosition { get; set; }
+    public float destroy_count { get; set; }
 
     private void Start()
     {
@@ -39,10 +40,21 @@ public class GusEnemy : IEnemy
             this.transform.position = Vector3.Lerp(initializePos, arrivalPosition, percentage);
         }
 
-        //アニメーションが終了したら
-        if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        //消える時間になったら
+        if (destroy_count <= (Time.time - currentTime))
         {
-            onDestroy = true;   //消える
+            //消えるアニメーションに切り替える
+            GetComponent<Animator>().SetTrigger("DestroyTrigger");
+        }
+
+        //消えるアニメーションをしていたら
+        if (GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name == "GusEnemyDesappearAnimationClip")
+        {
+            //アニメーションが終了したら
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                onDestroy = true;   //消える
+            }
         }
     }
 

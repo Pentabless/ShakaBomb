@@ -48,6 +48,8 @@ MonoBehaviour:
   gusPre: {fileID: 2765363482037713432, guid: 73dcaed47b4b7e445ae6e6eabacdd52b, type: 3}
   moveDistance: 3
   respawnCount: 2
+  appearCount: 0
+  destroyCount: 3
 --- !u!61 &4787785595106553483
 BoxCollider2D:
   m_ObjectHideFlags: 0
