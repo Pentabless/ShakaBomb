@@ -56,14 +56,19 @@ public class TutorialEvent : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        if(video.isPlaying)
+        if(playOn)
         {
-            Debug.Log(count);
             count += Time.deltaTime;
+        }
+        else
+        {
+            count = 0.0f;
+        }
+        if (video.isPlaying)
+        {
             var inputA = Input.GetButtonDown(GamePad.BUTTON_A);
             if(count >= Stage.NotInputCount &&inputA)
             {
-                video.Stop();
                 eventObj.EndEvent();
             }
         }
@@ -77,6 +82,7 @@ public class TutorialEvent : MonoBehaviour
         FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
         FadeManager.FadeOut(fadeTime);
         movieScreen.SetActive(true);
+        playOn = true;
         var temp = childe.Where(x => x.GetComponent<Text>() != null).First().GetComponent<Text>();
         temp.text = text;
         fade.ForEach(x => x.fade_type = true);
@@ -92,7 +98,6 @@ public class TutorialEvent : MonoBehaviour
     public void EndEvent()
     {
         pauseManager.Resume();
-        count = 0.0f;
         fade.ForEach(x =>
         {
             x.Alpha = 0.0f;
@@ -117,6 +122,7 @@ public class TutorialEvent : MonoBehaviour
                 text.color = new Color(text.color.r, text.color.g, text.color.b, 0.0f);
             }
         });
+        playOn = false;
         movieScreen.SetActive(false);
         FadeManager.FadeIn(fadeTime);
     }
