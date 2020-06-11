@@ -2802,6 +2802,21 @@ PrefabInstance:
       propertyPath: backGrounds.Array.data[3].obj
       value: 
       objectReference: {fileID: 611390556}
+    - target: {fileID: 2744287976439928569, guid: e5531f092f0e5d84291392418c4ab8d3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 110.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 2744287976439928569, guid: e5531f092f0e5d84291392418c4ab8d3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2744287976439928572, guid: e5531f092f0e5d84291392418c4ab8d3,
+        type: 3}
+      propertyPath: num_bubble
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5531f092f0e5d84291392418c4ab8d3, type: 3}
 --- !u!1 &2892462050538400305 stripped

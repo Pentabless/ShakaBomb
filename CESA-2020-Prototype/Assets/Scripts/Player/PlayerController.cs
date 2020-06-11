@@ -551,6 +551,12 @@ public class PlayerController : MonoBehaviour
             boostCount = 2;
         }
 
+        // バブルチャージ
+        if (collision.gameObject.tag == "BubbleCharge")
+        {
+            Boost(Vector3.zero);
+        }
+
         // 汚れ
         if (collision.gameObject.tag == "Dirt")
         {
