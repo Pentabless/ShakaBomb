@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2765363482037713414}
   - component: {fileID: 3572460233680945042}
   - component: {fileID: 5882111649615432039}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: GusEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -97,8 +97,8 @@ MonoBehaviour:
   currentStatus: 0
   bubblePre: {fileID: 7180998208429512912, guid: 15233702080600f4b8ce245c67c7ba87,
     type: 3}
+  notMadeBubble: 1
   moveSpeed: 1
-  destroy_second: 2
 --- !u!58 &3572460233680945042
 CircleCollider2D:
   m_ObjectHideFlags: 0
