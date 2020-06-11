@@ -38,7 +38,10 @@ public class TimeGaugeController : MonoBehaviour
     // 透明になり終わる距離
     private float fadeEndRadius = 110.0f;
 
-
+    // SE
+    [SerializeField]
+    AudioClip audio;
+    bool onPlay = false;
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -65,6 +68,11 @@ public class TimeGaugeController : MonoBehaviour
         if(timeRate <= alertTimeRate)
         {
             alertTime += Time.deltaTime;
+            if(!onPlay)
+            {
+                SoundPlayer.Play(audio);
+                onPlay = true;
+            }
         }
 
         OverlapPlayer();
