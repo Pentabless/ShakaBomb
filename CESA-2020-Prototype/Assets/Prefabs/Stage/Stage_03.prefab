@@ -2588,9 +2588,9 @@ MonoBehaviour:
   useFixHue: 0
   fixHue: {r: 1, g: 1, b: 1, a: 1}
   hueShift: 0
-  saturationMultiply: 0.5
+  saturationMultiply: 0.85
   saturationShift: 0
-  brightnessMultiply: 0.8
+  brightnessMultiply: 1
   brightnessShift: 0
 --- !u!1 &987760382
 GameObject:
@@ -25154,12 +25154,12 @@ PrefabInstance:
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 106.5
+      value: 106.518
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19.87
+      value: 19.882
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
@@ -25209,12 +25209,12 @@ PrefabInstance:
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.354
+      value: 1.0040114
       objectReference: {fileID: 0}
     - target: {fileID: 6108860973098658907, guid: 426ca9d41e23db040bb766a316f37eeb,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.191
+      value: 0.4840997
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 426ca9d41e23db040bb766a316f37eeb, type: 3}
