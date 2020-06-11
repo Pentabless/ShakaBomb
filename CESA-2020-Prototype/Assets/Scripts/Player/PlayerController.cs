@@ -324,12 +324,12 @@ public class PlayerController : MonoBehaviour
         {
             if (lastDir > 0.0f && dir == -1)
             {
-                bubbleG.GetComponent<BubbleGenerator>().BubbleCreate();
+                bubbleG.GetComponent<BubbleGenerator>().BubbleCreate(transform.position, 1, true);
                 dirtManager.SweepDirt();
             }
             if (lastDir < 0.0f && dir == 1)
             {
-                bubbleG.GetComponent<BubbleGenerator>().BubbleCreate();
+                bubbleG.GetComponent<BubbleGenerator>().BubbleCreate(transform.position, 1, true);
                 dirtManager.SweepDirt();
             }
         }
