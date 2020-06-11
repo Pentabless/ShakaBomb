@@ -79,7 +79,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.15169567, y: 0.4848331}
+  m_Offset: {x: 0.16319185, y: 0.44268095}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -90,7 +90,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.2788248, y: 0.6192195}
+  m_Size: {x: 2.179193, y: 0.5349152}
   m_EdgeRadius: 0
 --- !u!61 &1317584707
 BoxCollider2D:
@@ -105,7 +105,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.7891662, y: -0.4343924}
+  m_Offset: {x: -0.762342, y: -0.4343924}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -116,7 +116,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3784265, y: 1.1984543}
+  m_Size: {x: 0.32477802, y: 1.1984543}
   m_EdgeRadius: 0
 --- !u!61 &1317584706
 BoxCollider2D:
@@ -131,7 +131,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.0531243, y: -0.41277057}
+  m_Offset: {x: 1.0301325, y: -0.41277057}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -142,7 +142,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.48558426, y: 1.2066668}
+  m_Size: {x: 0.43960035, y: 1.2066668}
   m_EdgeRadius: 0
 --- !u!61 &1870395021
 BoxCollider2D:
@@ -157,7 +157,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.14239788, y: -1.3167295}
+  m_Offset: {x: 0.14239788, y: -1.3052337}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -168,7 +168,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9642901, y: 0.550938}
+  m_Size: {x: 1.9642901, y: 0.52794635}
   m_EdgeRadius: 0
 --- !u!70 &1269467507
 CapsuleCollider2D:
@@ -183,8 +183,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.15357912, y: -1.2337797}
-  m_Size: {x: 2.348453, y: 0.38497594}
+  m_Offset: {x: 0.17488739, y: -1.2337795}
+  m_Size: {x: 2.20843, y: 0.38497588}
   m_Direction: 1
 --- !u!1 &1354774276
 GameObject:
@@ -616,7 +616,6 @@ MonoBehaviour:
   maxSpeed: 6
   defaultJumpForce: 800
   turnCount: 10
-  coyoteTime: 8
   boostForce: {x: 14, y: 14}
   boostFXOffset: {x: 1, y: -0.75}
   maxPowerBalloonSize: 2.5
