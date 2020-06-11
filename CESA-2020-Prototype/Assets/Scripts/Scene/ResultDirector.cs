@@ -105,6 +105,15 @@ public class ResultDirector : MonoBehaviour
 
         //*----浄化率のテキストの設定----*//
         //プレイシーンから汚染ポイントと残っている汚染ポイントを使って浄化率を求める
+        purification = Data.currentCleanRate;
+        if (Data.cleanRate.ContainsKey(Data.stage_number))
+        {
+            Data.cleanRate[Data.stage_number] = Mathf.Max(Data.cleanRate[Data.stage_number], purification);
+        }
+        else
+        {
+            Data.cleanRate[Data.stage_number] = purification;
+        }
         float rate = purification;
         //パーセンテージに変更
         int percent = (int)(rate * 100);
@@ -270,7 +279,7 @@ public class ResultDirector : MonoBehaviour
             //SharedDataにあるリストに飾りを入れる
             SharedData.instance.SetDecorationList(GameObject.Find("Main Camera").transform.position);
             //ステージ選択画面に移る
-            SceneManager.LoadScene("StageSelectScene");
+            SceneManager.LoadScene("NewStageSelectScene");
         }
     }
     /*--終わり：Update--*/

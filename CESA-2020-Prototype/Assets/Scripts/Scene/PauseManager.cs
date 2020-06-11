@@ -91,7 +91,11 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
-        playDirector = GameObject.Find(PlayDirector.NAME).GetComponent<PlayDirector>();
+        var obj = GameObject.Find(PlayDirector.NAME);
+        if (obj)
+        {
+            playDirector = obj.GetComponent<PlayDirector>();
+        }
         defaultFilterColor = filterColor;
         CreatePauseFilter();
     }
@@ -100,7 +104,12 @@ public class PauseManager : MonoBehaviour
     {
         //ボタンが押されたら状態を変更する
         bool pressPause = (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button7));
-        if (pressPause && !FadeManager.isFadeOut && playDirector.canPause)
+        bool canPause = true;
+        if (playDirector)
+        {
+            canPause = playDirector.canPause;
+        }
+        if (pressPause && !FadeManager.isFadeOut && canPause)
         {
             filterColor = defaultFilterColor;
             ChangePauseState();

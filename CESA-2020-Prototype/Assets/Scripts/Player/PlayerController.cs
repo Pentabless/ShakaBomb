@@ -154,6 +154,8 @@ public class PlayerController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     void Update()
     {
+        jumpTiming = false;
+
         // 故障中の処理
         if (deathFlag)
         {
@@ -283,7 +285,6 @@ public class PlayerController : MonoBehaviour
 
 
         // ジャンプ
-        jumpTiming = false;
         if (hitCount == 0)
         {
             if (jumpButton > 0 && jumpButtonTrigger == 0.0f && isGround) // && coyoteFlag == true)
