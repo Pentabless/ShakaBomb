@@ -136,6 +136,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutolialEvent (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -267,6 +272,32 @@ PrefabInstance:
       value: jgirjgl
       objectReference: {fileID: 0}
     - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 32900000, guid: 2aa7f9bed8094ae40bc6bd077f90c749,
+        type: 3}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: screen
+      value: 
+      objectReference: {fileID: 996689816}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: video
+      value: 
+      objectReference: {fileID: 214119558}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: canvasText
+      value: 
+      objectReference: {fileID: 940698100}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: text
+      value: Event4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: clip
       value: 
@@ -461,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -578,6 +609,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TutolialEvent (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -715,6 +751,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 32900000, guid: e4353066fba6d824f8034e516a5e59c7,
         type: 3}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: screen
+      value: 
+      objectReference: {fileID: 996689816}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: video
+      value: 
+      objectReference: {fileID: 214119558}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: canvasText
+      value: 
+      objectReference: {fileID: 940698100}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: text
+      value: Event3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 32900000, guid: e4353066fba6d824f8034e516a5e59c7,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be4453056f1b76b478b3409e9b45d934, type: 3}
 --- !u!1001 &497730043
@@ -797,6 +859,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TutolialEvent (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -934,6 +1001,32 @@ PrefabInstance:
       value: aiuieiorj
       objectReference: {fileID: 0}
     - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 32900000, guid: 1b4494e94c00e594381ffdd1885f5eda,
+        type: 3}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: screen
+      value: 
+      objectReference: {fileID: 996689816}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: video
+      value: 
+      objectReference: {fileID: 214119558}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: canvasText
+      value: 
+      objectReference: {fileID: 940698100}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: text
+      value: Event2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: clip
       value: 
@@ -1151,7 +1244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8207547, g: 0.43444344, b: 0.081301175, a: 0}
+  m_Color: {r: 0.8207547, g: 0.43444344, b: 0.081301175, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1211,13 +1304,14 @@ GameObject:
   - component: {fileID: 996689814}
   - component: {fileID: 996689813}
   - component: {fileID: 996689812}
+  - component: {fileID: 996689816}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &996689812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,6 +1396,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &996689816
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996689811}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1023428432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1457,7 +1563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1655,7 +1761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1745,7 +1851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1836,80 +1942,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
-      propertyPath: fade.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: childe.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: movieScreen
+      propertyPath: screen
       value: 
-      objectReference: {fileID: 996689811}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
+      objectReference: {fileID: 996689816}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: video
       value: 
       objectReference: {fileID: 214119558}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
-      propertyPath: fade.Array.data[0]
+      propertyPath: canvasText
       value: 
-      objectReference: {fileID: 1118539092}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: fade.Array.data[1]
-      value: 
-      objectReference: {fileID: 214119561}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: childe.Array.data[0]
-      value: 
-      objectReference: {fileID: 1118539088}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: childe.Array.data[1]
-      value: 
-      objectReference: {fileID: 214119556}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: childe.Array.data[2]
-      value: 
-      objectReference: {fileID: 1806187936}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: childe.Array.data[3]
-      value: 
-      objectReference: {fileID: 2061336236}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: childe.Array.data[4]
-      value: 
-      objectReference: {fileID: 940698098}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: fade.Array.data[2]
-      value: 
-      objectReference: {fileID: 1806187937}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: fade.Array.data[3]
-      value: 
-      objectReference: {fileID: 2061336237}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: fade.Array.data[4]
-      value: 
-      objectReference: {fileID: 940698099}
-    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
-        type: 3}
-      propertyPath: text
-      value: jyhkht
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 940698100}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be4453056f1b76b478b3409e9b45d934, type: 3}
