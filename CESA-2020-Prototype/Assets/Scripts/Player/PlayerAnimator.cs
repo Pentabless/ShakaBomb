@@ -44,6 +44,9 @@ public class PlayerAnimator : MonoBehaviour
     // プレイヤー
     private PlayerController player = null;
 
+    // アニメーション速度を一時的に保存するための変数
+    private float tempSpeed = 0;
+
     // 死亡アニメーションの情報
     [SerializeField]
     private DeathAnimationInfo deathAnimationInfo;
@@ -167,5 +170,22 @@ public class PlayerAnimator : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    //------------------------------------------------------------------------------------------
+    // アニメーションを停止する
+    //------------------------------------------------------------------------------------------
+    public void StopAnimation()
+    {
+        tempSpeed = animator.speed;
+        animator.speed = 0;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // アニメーションを再開する
+    //------------------------------------------------------------------------------------------
+    public void ResumeAnimation()
+    {
+        animator.speed = tempSpeed;
     }
 }
