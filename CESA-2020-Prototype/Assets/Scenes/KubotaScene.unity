@@ -395,12 +395,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 608220969}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &611390556 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3550879229190601132, guid: 90cb457e6de19874faf88fbdeaf14556,
-    type: 3}
-  m_PrefabInstance: {fileID: 1027905052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &767016563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -991,7 +985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1060252562, guid: 6d1ab714bb741e84ba5d0911ea699e1a, type: 3}
       propertyPath: m_ColliderPaths.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d1ab714bb741e84ba5d0911ea699e1a, type: 3}
@@ -1065,10 +1059,6 @@ PrefabInstance:
     - target: {fileID: 9130065815275088610, guid: 1128fc5805815ac4c8a30596f94fcd36,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1343439179, guid: 1128fc5805815ac4c8a30596f94fcd36, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1819465462, guid: 1128fc5805815ac4c8a30596f94fcd36, type: 3}
@@ -1474,7 +1464,7 @@ PrefabInstance:
     - target: {fileID: 3550879228950596499, guid: 90cb457e6de19874faf88fbdeaf14556,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3550879228950596496, guid: 90cb457e6de19874faf88fbdeaf14556,
         type: 3}
@@ -1531,40 +1521,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 170200343, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 650543912, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
       propertyPath: m_ColliderPaths.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 120559354933553009, guid: 90cb457e6de19874faf88fbdeaf14556,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -21.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 120559354933553009, guid: 90cb457e6de19874faf88fbdeaf14556,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240248840, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 170200342, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
---- !u!1 &1053925652 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3550879227411397118, guid: 90cb457e6de19874faf88fbdeaf14556,
-    type: 3}
-  m_PrefabInstance: {fileID: 1027905052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1069601306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1640,15 +1602,6 @@ PrefabInstance:
     - target: {fileID: 314485838, guid: 7c2f412272e81a7438441173778f7245, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1455103376, guid: 7c2f412272e81a7438441173778f7245, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2156417357051651544, guid: 7c2f412272e81a7438441173778f7245,
-        type: 3}
-      propertyPath: timeData.timeLimit
-      value: 240
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c2f412272e81a7438441173778f7245, type: 3}
@@ -2003,10 +1956,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 806716065, guid: f96dfddb45358f34387a54e97abb2acf, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 987760384, guid: f96dfddb45358f34387a54e97abb2acf, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 0
@@ -2219,12 +2168,6 @@ PrefabInstance:
       objectReference: {fileID: 1668994467}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b191f3c7f120eec45beae71f6c5b34f0, type: 3}
---- !u!1 &1531743133 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 474623303, guid: 90cb457e6de19874faf88fbdeaf14556,
-    type: 3}
-  m_PrefabInstance: {fileID: 1027905052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1549969833
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,12 +2247,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1619312789 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3550879227655099488, guid: 90cb457e6de19874faf88fbdeaf14556,
-    type: 3}
-  m_PrefabInstance: {fileID: 1027905052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1634230696
 GameObject:
   m_ObjectHideFlags: 0
@@ -3486,31 +3423,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2589930516521526974, guid: e5531f092f0e5d84291392418c4ab8d3,
-        type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3856990063686171992, guid: e5531f092f0e5d84291392418c4ab8d3,
-        type: 3}
-      propertyPath: backGrounds.Array.data[0].obj
-      value: 
-      objectReference: {fileID: 1531743133}
-    - target: {fileID: 3856990063686171992, guid: e5531f092f0e5d84291392418c4ab8d3,
-        type: 3}
-      propertyPath: backGrounds.Array.data[1].obj
-      value: 
-      objectReference: {fileID: 1053925652}
-    - target: {fileID: 3856990063686171992, guid: e5531f092f0e5d84291392418c4ab8d3,
-        type: 3}
-      propertyPath: backGrounds.Array.data[2].obj
-      value: 
-      objectReference: {fileID: 1619312789}
-    - target: {fileID: 3856990063686171992, guid: e5531f092f0e5d84291392418c4ab8d3,
-        type: 3}
-      propertyPath: backGrounds.Array.data[3].obj
-      value: 
-      objectReference: {fileID: 611390556}
     - target: {fileID: 7950861311605329848, guid: e5531f092f0e5d84291392418c4ab8d3,
         type: 3}
       propertyPath: m_ColliderPaths.Array.size
