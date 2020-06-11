@@ -784,14 +784,6 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 458014140, guid: dd77280caf3f31a468f13f35f500cd8e, type: 3}
-      propertyPath: saturationMultiply
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 458014140, guid: dd77280caf3f31a468f13f35f500cd8e, type: 3}
-      propertyPath: brightnessMultiply
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd77280caf3f31a468f13f35f500cd8e, type: 3}
 --- !u!1 &1004938534
@@ -973,6 +965,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage_05
       objectReference: {fileID: 0}
+    - target: {fileID: 988895088293129637, guid: 7c2f412272e81a7438441173778f7245,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 988895088293129638, guid: 7c2f412272e81a7438441173778f7245,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1028,10 +1025,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7325341590702344774, guid: 7c2f412272e81a7438441173778f7245,
-        type: 3}
-      propertyPath: range
-      value: 4
+    - target: {fileID: 314485838, guid: 7c2f412272e81a7438441173778f7245, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455103376, guid: 7c2f412272e81a7438441173778f7245, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c2f412272e81a7438441173778f7245, type: 3}
