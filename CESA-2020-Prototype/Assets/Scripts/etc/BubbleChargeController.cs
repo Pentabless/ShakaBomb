@@ -21,6 +21,7 @@ public class BubbleChargeController : MonoBehaviour
     int num_bubble;
 
     BubbleGenerator bubbleG;
+    bool atOnce = false;
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -48,8 +49,9 @@ public class BubbleChargeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == Player.NAME)
+        if (collision.tag == Player.NAME && !atOnce)
         {
+            atOnce = true;
             // バブルを生成(複数個)
             bubbleG.BubbleCreate(this.transform.position, num_bubble, false);
             Destroy(this.gameObject);

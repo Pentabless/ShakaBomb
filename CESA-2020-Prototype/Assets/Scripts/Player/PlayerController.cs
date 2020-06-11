@@ -268,15 +268,17 @@ public class PlayerController : MonoBehaviour
         // エネミーを利用したブースト(仮)
         if (isEnemyBoost)
         {
-            rig.velocity = rig.velocity * 0.0f;
-            if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
-            {
-                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
-            }
-            else
-            {
-                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
-            }
+            //rig.velocity = rig.velocity * 0.0f;
+            //if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
+            //{
+            //    rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
+            //}
+            //else
+            //{
+            //    rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
+            //}
+
+            Boost(new Vector3(0, 1, 0));
         }
 
 
