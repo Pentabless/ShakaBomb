@@ -24,6 +24,8 @@ public class IEnemy : MonoBehaviour
 
     [SerializeField]
     GameObject bubblePre;
+    [SerializeField]
+    bool notMadeBubble = false;
     GameObject bubble;
     HitBubble hitBubble;
 
@@ -52,7 +54,7 @@ public class IEnemy : MonoBehaviour
     /// <param name="collision"></param>
     protected void OnCollisionEnterEvent(Collision2D collision)
     {
-        if (collision.transform.tag == "Bullet")
+        if (collision.transform.tag == "Bullet" && !notMadeBubble)
         {
             bubble = Instantiate(bubblePre);
             bubble.transform.parent = transform;

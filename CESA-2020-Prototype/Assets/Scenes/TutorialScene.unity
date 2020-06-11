@@ -266,6 +266,12 @@ PrefabInstance:
       propertyPath: text
       value: jgirjgl
       objectReference: {fileID: 0}
+    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 32900000, guid: 2aa7f9bed8094ae40bc6bd077f90c749,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be4453056f1b76b478b3409e9b45d934, type: 3}
 --- !u!1001 &106434708
@@ -439,7 +445,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
-  m_Looping: 0
+  m_Looping: 1
   m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
 --- !u!114 &214119559
@@ -703,6 +709,12 @@ PrefabInstance:
       propertyPath: text
       value: jeijfiej
       objectReference: {fileID: 0}
+    - target: {fileID: 965603190136412043, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 32900000, guid: e4353066fba6d824f8034e516a5e59c7,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be4453056f1b76b478b3409e9b45d934, type: 3}
 --- !u!1001 &497730043

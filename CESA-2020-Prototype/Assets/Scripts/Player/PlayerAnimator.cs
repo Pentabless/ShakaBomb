@@ -89,6 +89,7 @@ public class PlayerAnimator : MonoBehaviour
             animator.SetTrigger("Jump");
         }
         animator.SetBool("IsGround", player.IsGround());
+        animator.SetFloat("VelocityY", Data.prePlayerVel.y);
 
         if (player.IsDead())
         {
