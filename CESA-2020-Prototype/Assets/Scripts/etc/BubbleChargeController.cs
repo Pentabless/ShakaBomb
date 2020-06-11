@@ -14,7 +14,12 @@ public class BubbleChargeController : MonoBehaviour
     // member variable
     //------------------------------------------------------------------------------------------
     [SerializeField]
+    // BubbleGeneratorのオブジェクト
     GameObject bubbleGeneratorObject;
+    [SerializeField]
+    // Bubbleの生成個数
+    int num_bubble;
+
     BubbleGenerator bubbleG;
 
     //------------------------------------------------------------------------------------------
@@ -46,6 +51,10 @@ public class BubbleChargeController : MonoBehaviour
         if (collision.tag == Player.NAME)
         {
             // バブルを生成(複数個)
+            bubbleG.BubbleCreate(this.transform.position, num_bubble, false);
+            Destroy(this.gameObject);
+            Vector2 effectSize = Vector2.one * 1.5f;
+            EffectGenerator.BubbleBurstFX(new BubbleBurstFX.Param(Color.white, effectSize), transform.position, null);
         }
     }
 
