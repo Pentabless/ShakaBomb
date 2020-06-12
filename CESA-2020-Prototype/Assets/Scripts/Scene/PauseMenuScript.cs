@@ -114,7 +114,7 @@ public class PauseMenuScript : MonoBehaviour
                     break;
                 //ステージ選択
                 case 2:
-                    FadeManager.FadeOut("StageSelectScene");
+                    FadeManager.FadeOut("NewStageSelectScene");
                     break;
                 default:
                     Debug.Log("PauseMenu:SelectError");

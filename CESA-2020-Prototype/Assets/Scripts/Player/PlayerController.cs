@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     bool checkController;
     // 入力を受け付けるかのフラグ
     bool canControl = true;
+    // ジャンプできるかのフラグ
+    bool canJump = true;
 
     // 所持しているバルーン
     private List<GameObject> m_balloonList = new List<GameObject>();
@@ -267,7 +269,7 @@ public class PlayerController : MonoBehaviour
         // ジャンプ
         if (hitCount == 0)
         {
-            if (jumpButton > 0 && jumpButtonTrigger == 0.0f && isGround)
+            if (canJump && jumpButton > 0 && jumpButtonTrigger == 0.0f && isGround)
             {
                 if (this.rig.velocity.y <= 0)
                 {
@@ -531,12 +533,19 @@ public class PlayerController : MonoBehaviour
     }
 
     //------------------------------------------------------------------------------------------
-    // イベント
-    //------------------------------------------------------------------------------------------
     // 入力を受け付けるか設定する
+    //------------------------------------------------------------------------------------------
     public void EnableControl(bool enable)
     {
         canControl = enable;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // ジャンプを受け付けるか設定する
+    //------------------------------------------------------------------------------------------
+    public void EnableJump(bool enable)
+    {
+        canJump = enable;
     }
 
     //------------------------------------------------------------------------------------------

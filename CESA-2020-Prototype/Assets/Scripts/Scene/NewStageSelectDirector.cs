@@ -110,6 +110,10 @@ public class NewStageSelectDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void DecideStage()
     {
+        if (state != StageSelectState.Playing)
+        {
+            return;
+        }
         state = StageSelectState.Decide;
         waitTime = 0.5f;
 

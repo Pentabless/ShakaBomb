@@ -180,7 +180,6 @@ public class DoorToStage : MonoBehaviour
                 // ToDo:静的な変数に代入
                 Data.stage_number = numStage;
                 GameObject.Find(NewStageSelectDirector.NAME).GetComponent<NewStageSelectDirector>().DecideStage();
-                //SceneManager.LoadScene("PlayScene");
             }
         }
 
