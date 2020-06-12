@@ -23,5 +23,14 @@ public class HitBubble : MonoBehaviour
                 null);
             burst = true;
         }
+        if (collision.transform.tag == "Bullet" && !burst)
+        {
+            Vector2 effectSize = Vector2.one * 3.5f;
+            EffectGenerator.BubbleBurstFX(
+                new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),
+                transform.position,
+                null);
+            burst = true;
+        }
     }
 }
