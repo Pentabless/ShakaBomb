@@ -240,24 +240,6 @@ public class SharedData : MonoBehaviour
                 stage_data[i].clear = false;
                 stage_data[i].can_play = false;
                 stage_data[i].purification_rate = 0;
-                //if(i==0)
-                //{
-                //    stage_data[i].clear = true;
-                //    stage_data[i].can_play = true;
-                //    stage_data[i].purification_rate = 90;
-                //}
-                //if(i==1)
-                //{
-                //    stage_data[i].clear = true;
-                //    stage_data[i].can_play = true;
-                //    stage_data[i].purification_rate = 60;
-                //}
-                //if (i == 2)
-                //{
-                //    stage_data[i].clear = false;
-                //    stage_data[i].can_play = true;
-                //    stage_data[i].purification_rate = 0;
-                //}
             }
             //一番最初のステージだけプレイできるようにする
             stage_data[0].can_play = true;
@@ -321,7 +303,7 @@ public class SharedData : MonoBehaviour
         if (GetPercentRank(purification) >= 2)
         {
             //クリアした所が一番最後のステージでなかったら
-            if (Data.stage_number == (stage_data.Length - 1))
+            if (Data.stage_number != (stage_data.Length - 1))
             {
                 //次のステージをプレイできるようにする
                 stage_data[Data.stage_number + 1].can_play = true;
