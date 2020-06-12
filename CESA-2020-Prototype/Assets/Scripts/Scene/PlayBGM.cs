@@ -17,6 +17,7 @@ public class PlayBGM : MonoBehaviour
     [SerializeField]
     [Header("ステージBGM")]
     AudioClip clip;
+    bool first = false;
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -31,7 +32,7 @@ public class PlayBGM : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
-        SoundPlayer.PlayBGM(clip,0.4f);
+        SoundPlayer.PlayBGM(clip, 0.4f);
     }
 
     //------------------------------------------------------------------------------------------
