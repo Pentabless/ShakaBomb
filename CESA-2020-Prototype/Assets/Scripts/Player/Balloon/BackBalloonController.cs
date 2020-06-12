@@ -256,16 +256,15 @@ public class BackBalloonController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // ブースト移動
     //------------------------------------------------------------------------------------------
-    public bool UseBoost(float useSize)
+    public bool UseBoost(float useSize, float effectSize)
     {
         if (!UseBalloon(useSize))
         {
             return false;
         }
-
-        Vector2 effectSize = Vector2.one * useSize;
+        
         EffectGenerator.BubbleBurstFX(
-            new BubbleBurstFX.Param(Color.white, effectSize),
+            new BubbleBurstFX.Param(Color.white, Vector2.one * effectSize),
             transform.position,
             null);
 
