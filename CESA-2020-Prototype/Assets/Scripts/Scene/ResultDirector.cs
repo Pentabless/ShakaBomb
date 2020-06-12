@@ -144,7 +144,8 @@ public class ResultDirector : MonoBehaviour
 
 
         //フェードインさせる
-        //FadeManager.FadeIn(1.5f);
+        FadeManager.fadeColor = Color.black;
+        FadeManager.FadeIn(1.5f);
 
         ////Canvasの設定を変える(泡の飾りをUIより前に表示するために)
         //SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
@@ -183,16 +184,16 @@ public class ResultDirector : MonoBehaviour
         select_stage_angle += 0.1f;
 
         //背景の飾りを作成する
-        float decoration_scale = Random.Range(0.3f, 1.0f);
-        sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(/*Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f)*/1.0f, 1.0f, 1.0f, 1.0f), -10);
+        //float decoration_scale = Random.Range(0.3f, 1.0f);
+        //sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(/*Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f)*/1.0f, 1.0f, 1.0f, 1.0f), -10);
 
         //フェードアウトしていたら
-        if ((sc_screen_fade.GetFadeType() == true) && sc_screen_fade.GetFadeValue() > 0.0f)
-        {
-            //前景の飾りを作成する
-            decoration_scale = Random.Range(0.3f, 1.0f);
-            sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(/*Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f)*/1.0f, 1.0f, 1.0f, 1.0f), 10);
-        }
+        //if ((sc_screen_fade.GetFadeType() == true) && sc_screen_fade.GetFadeValue() > 0.0f)
+        //{
+        //    前景の飾りを作成する
+        //    decoration_scale = Random.Range(0.3f, 1.0f);
+        //    sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(/*Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f)*/1.0f, 1.0f, 1.0f, 1.0f), 10);
+        //}
 
         //スプライトを切り替える時間になったら
         if (change_sprite_time + start_result_time < Time.time)
@@ -263,24 +264,28 @@ public class ResultDirector : MonoBehaviour
         //何かのキーを押したら
         if (Input.anyKeyDown ||
             //Aボタンを押したら
-            (Input.GetAxis(Common.GamePad.BUTTON_A) > 0))
+            Input.GetAxis(Common.GamePad.BUTTON_A) > 0 &&
+            // フェードアウト中でないなら
+            !FadeManager.isFadeOut)
         {
             //フェードを始める
-            sc_screen_fade.SetFadeType(true);
+            //sc_screen_fade.SetFadeType(true);
+            FadeManager.fadeColor = Color.black;
+            FadeManager.FadeOut("NewStageSelectScene", 2.5f);
             //BGMをフェードアウトする
             SoundFadeController.SetFadeOutSpeed(-0.005f);
             //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
-            SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
+            //SharedData.instance.SetCanvasOption(GameObject.Find("Canvas").GetComponent<Canvas>());
         }
 
         //フェードアウトが終わったら
-        if (sc_screen_fade.GetFadeValue() == 1.0f)
-        {
-            //SharedDataにあるリストに飾りを入れる
-            SharedData.instance.SetDecorationList(GameObject.Find("Main Camera").transform.position);
-            //ステージ選択画面に移る
-            SceneManager.LoadScene("NewStageSelectScene");
-        }
+        //if (sc_screen_fade.GetFadeValue() == 1.0f)
+        //{
+        //    SharedDataにあるリストに飾りを入れる
+        //    SharedData.instance.SetDecorationList(GameObject.Find("Main Camera").transform.position);
+        //    ステージ選択画面に移る
+        //    SceneManager.LoadScene("NewStageSelectScene");
+        //}
     }
     /*--終わり：Update--*/
 
