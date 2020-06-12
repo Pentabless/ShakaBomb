@@ -35,6 +35,7 @@ public class PauseManager : MonoBehaviour
     private GameObject objectsWrapper;      // ポーズを適用するオブジェクトの範囲
     
     private PlayDirector playDirector;     // プレイディレクター
+    private NewStageSelectDirector stageSelectDirector; // ステージセレクトディレクター
     [SerializeField]
     private GameObject pauseMenu;            // ポーズメニューオブジェクト
     [SerializeField]
@@ -84,9 +85,13 @@ public class PauseManager : MonoBehaviour
         ignoreGameObjects = ignoreGameObjects.Concat(new GameObject[] {
             FadeCanvasObject,
             FadeManager.GetCanvas().gameObject,
-            SoundPlayer.GetAudioSource().gameObject,
-            SceneEffecterController.instance.gameObject
+            SoundPlayer.GetAudioSource().gameObject
         }).ToArray();
+        var obj = SceneEffecterController.instance.gameObject;
+        if (obj)
+        {
+            AddIgnoreObject(obj);
+        }
     }
 
     private void Start()
@@ -95,6 +100,11 @@ public class PauseManager : MonoBehaviour
         if (obj)
         {
             playDirector = obj.GetComponent<PlayDirector>();
+        }
+        obj = GameObject.Find(NewStageSelectDirector.NAME);
+        if (obj)
+        {
+            stageSelectDirector = obj.GetComponent<NewStageSelectDirector>();
         }
         defaultFilterColor = filterColor;
         CreatePauseFilter();
@@ -109,6 +119,11 @@ public class PauseManager : MonoBehaviour
         {
             canPause = playDirector.canPause;
         }
+        if (stageSelectDirector)
+        {
+            canPause = stageSelectDirector.canPause;
+        }
+
         if (pressPause && !FadeManager.isFadeOut && canPause)
         {
             filterColor = defaultFilterColor;

@@ -35,6 +35,9 @@ public class NewStageSelectDirector : MonoBehaviour
     // ポーズ用フレーム
     //private FailedFrameController failedFrameController;
 
+    // ポーズ可能かどうか
+    public bool canPause { get; private set; } = false;
+
     // ゲームの進行状況
     private StageSelectState state = StageSelectState.Start;
     // 待ち時間用タイマー
@@ -58,6 +61,13 @@ public class NewStageSelectDirector : MonoBehaviour
         player = GameObject.Find(Player.NAME);
         playerController = player.GetComponent<PlayerController>();
 
+        GameObject go = GameObject.Find(PauseManager.NAME);
+        if (!go)
+        {
+            Debug.Log("PauseManagerをシーンに追加してください");
+        }
+
+        pauseManager = go.GetComponent<PauseManager>();
         // シーン開始時にフェードインする
         FadeManager.FadeIn(0.01f);
         wipeCamera = GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<WipeCamera>();
@@ -76,11 +86,7 @@ public class NewStageSelectDirector : MonoBehaviour
                 state = StageSelectState.Playing;
                 break;
             case StageSelectState.Playing:
-                bool pressPause = (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button7));
-                if (pressPause)
-                {
-                    pauseManager.ChangePauseState();
-                }
+                canPause = true;
                 break;
             case StageSelectState.Decide:
                 waitTime -= Time.deltaTime;
@@ -114,8 +120,10 @@ public class NewStageSelectDirector : MonoBehaviour
         {
             return;
         }
+
         state = StageSelectState.Decide;
         waitTime = 0.5f;
+        canPause = false;
 
         // プレイヤーの入力を停止する
         playerController.EnableControl(false);

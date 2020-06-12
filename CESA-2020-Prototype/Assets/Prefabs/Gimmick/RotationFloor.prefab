@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9072750050121458169}
   - component: {fileID: 9072750050121458168}
-  - component: {fileID: 9072750050121458167}
   - component: {fileID: 9072750050121458166}
   - component: {fileID: 9072750050121458165}
   m_Layer: 0
@@ -79,32 +78,9 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9072750050121458167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9072750050121458164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a4a9cabd40fb94e80c0d8454a50eca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosition: {x: 0, y: 0, z: 0}
-  endPosition: {x: 0, y: 0, z: 0}
-  floorStatus: 0
-  passLayerMask:
-    serializedVersion: 2
-    m_Bits: 768
-  passSensitivity: 0.2
-  speed: 2
-  radius: 2
-  rightRotation: 0
-  leftRotation: 0
 --- !u!61 &9072750050121458166
 BoxCollider2D:
   m_ObjectHideFlags: 0
