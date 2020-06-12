@@ -45,10 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeImage: {fileID: 7255300772082245939}
-  ratePropertyName: _TimeRate
+  alertTimeRate: 0.16666667
   fadeAlpha: 0.15
   fadeStartRadius: 180
   fadeEndRadius: 110
+  audio: {fileID: 8300000, guid: 0031e626e0206e54eb0473aefb613fb6, type: 3}
 --- !u!1 &7255300772082245937
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,8 @@ public class PrologueDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     [SerializeField]
     List<FadeController> fadeControllers;
+    [SerializeField]
+    PlayBGM bgm;
 
     [SerializeField]
     float fadeInterval;
@@ -66,6 +68,10 @@ public class PrologueDirector : MonoBehaviour
         if (fadeControllers.Count()-1 <= imageIndex)
         {
             SceneManager.LoadScene("NewStageSelectScene");
+        }
+        else if(imageIndex == fadeControllers.Count() -2 && count >= fadeInterval*0.7f)
+        {
+            bgm.OnFadeBGM();
         }
     }
 }
