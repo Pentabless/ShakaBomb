@@ -10,7 +10,7 @@ using Common;
 //==============================================================================================
 public class NewStageSelectDirector : MonoBehaviour
 {
-    public static string NAME = "NewStageSelectDirecotr";
+    public static string NAME = "NewStageSelectDirector";
 
     // ステージセレクトシーンの状態
     private enum StageSelectState
