@@ -129,7 +129,7 @@ public class ResultDirector : MonoBehaviour
         SetBackGroundSprite(rank);
 
         //*----SharedDataにあるステージデータに記録する----*//
-        //SharedData.instance.SetPurificationRate(percent);
+        SharedData.instance.SetPurificationRate(percent);
 
 
         //○○ステージクリア！　のテキストを設定する
