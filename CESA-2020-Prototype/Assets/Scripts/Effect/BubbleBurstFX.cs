@@ -19,14 +19,18 @@ public class BubbleBurstFX : MonoBehaviour
     {
         public Color color;   // 色
         public Vector2 scale; // 元オブジェクトのサイズ
+        public float arc;     // 放出する角度
+        public int orederInLayer; // 描画順
 
         public Param()
-            : this(Color.white, Vector2.one) { }
+            : this(Color.white, Vector2.one, 360.0f, -99) { }
 
-        public Param(Color color, Vector2 scale)
+        public Param(Color color, Vector2 scale, float arc = 360.0f, int orderInLayer = -99)
         {
             this.color = color;
             this.scale = scale;
+            this.arc = arc;
+            this.orederInLayer = orderInLayer;
         }
     }
 
@@ -39,6 +43,7 @@ public class BubbleBurstFX : MonoBehaviour
     private ParticleSystem.MainModule     mainModule;           // メインモジュール
     private ParticleSystem.EmissionModule emissionModule;       // エミッションモジュール
     private ParticleSystem.ShapeModule    shapeModule;          // シェイプモジュール
+    private ParticleSystemRenderer renderModule;                // レンダラーモジュール
     private Param                         param;                // 設定パラメータ
     [SerializeField]                                            
     private int                           baseBurstCount = 15;  // サイズ1時のパーティクルの発生量
@@ -57,6 +62,7 @@ public class BubbleBurstFX : MonoBehaviour
         mainModule = system.main;
         emissionModule = system.emission;
         shapeModule = system.shape;
+        renderModule = GetComponent<ParticleSystemRenderer>();
     }
 
 	//------------------------------------------------------------------------------------------
@@ -129,5 +135,11 @@ public class BubbleBurstFX : MonoBehaviour
         emissionModule.SetBurst(0, burst);
 
         shapeModule.radius = baseRadius * rate;
+        shapeModule.arc = param.arc;
+
+        if(param.orederInLayer != -99)
+        {
+            renderModule.sortingOrder = param.orederInLayer;
+        }
     }
 }

@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
 
             // エフェクトを生成する
             EffectGenerator.BoostTrailFX(new BoostTrailFX.Param(Color.white, 0.5f, rig), transform.position);
-            balloonController.UseBoost(boostCost);
+            balloonController.UseBoost(boostCost, 1.3f);
 
             SoundPlayer.Play(audios[(int)AudioType.Acceleration]);
 
@@ -473,12 +473,12 @@ public class PlayerController : MonoBehaviour
             jumpCount = 0;
             boostCount = 2;
 
-            //// 着地エフェクト(保留)
-            //Vector2 effectSize = Vector2.one * 0.7f;
-            //EffectGenerator.BubbleBurstFX(
-            //    new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),
-            //    new Vector2(this.transform.position.x, this.transform.position.y - 1.0f),
-            //    null);
+            // 着地エフェクト(保留)
+            Vector2 effectSize = Vector2.one * 0.7f;
+            EffectGenerator.BubbleBurstFX(
+                new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize, 160, 4),
+                new Vector2(this.transform.position.x, this.transform.position.y - 1.0f),
+                null);
         }
 
         // バブルキャノン(仮)
