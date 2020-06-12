@@ -17,6 +17,8 @@ public class DoorToStage : MonoBehaviour
     public Sprite[] door_frame_sprite;
     //ランプのスプライト
     public Sprite[] lamp_sprite;
+    //シャッター音
+    public AudioClip sound;
 
     //------------------------------------------------------------------------------------------
     // member variable
@@ -88,6 +90,8 @@ public class DoorToStage : MonoBehaviour
                         shutter_up = 0.0f;
                         //シャッターのアニメーションをする
                         animate_shutter = true;
+                        // 音を入れる
+                        SoundPlayer.Play(sound);
                     }
                 }
                 else
