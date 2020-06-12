@@ -51,6 +51,8 @@ public class PlayDirector : MonoBehaviour
     private GameObject player;
     private PlayerController playerController;
 
+    // ワイプエフェクト
+    private WipeCamera wipeCamera;
     // ポーズマネージャー
     private PauseManager pauseManager;
     // クリア失敗用フレーム
@@ -96,7 +98,10 @@ public class PlayDirector : MonoBehaviour
         failedFrameController = go.GetComponent<FailedFrameController>();
 
         // シーン開始時にフェードインする
-        FadeManager.FadeIn();
+        FadeManager.FadeIn(0.01f);
+        wipeCamera = GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<WipeCamera>();
+        wipeCamera.StartFadeIn(player.transform.position, 1.5f);
+
     }
 
 	//------------------------------------------------------------------------------------------
@@ -183,9 +188,10 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             CalculateStarNum();
-            FadeManager.fadeColor = Color.white;
+            FadeManager.fadeColor = Color.clear;
             FadeManager.FadeOut("NewResultScene", 1.5f);
-            SceneEffecterController.StartEffect();
+            wipeCamera.StartFadeOut(player.transform.position, 1.4f);
+            //SceneEffecterController.StartEffect();
             waitTime = 99.0f;
         }
     }

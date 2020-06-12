@@ -630,6 +630,11 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 988895088355813936, guid: 7c2f412272e81a7438441173778f7245,
+        type: 3}
+      propertyPath: filter
+      value: 
+      objectReference: {fileID: 2100000, guid: 394338c3723dd544f9574d754413e3bd, type: 2}
     - target: {fileID: 1455103376, guid: 7c2f412272e81a7438441173778f7245, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 1
@@ -642,5 +647,10 @@ PrefabInstance:
       propertyPath: brightnessMultiply
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 988895087551001088, guid: 7c2f412272e81a7438441173778f7245,
+        type: 3}
+      propertyPath: filter
+      value: 
+      objectReference: {fileID: 2100000, guid: 394338c3723dd544f9574d754413e3bd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c2f412272e81a7438441173778f7245, type: 3}
