@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Common;
+using UnityEngine.SceneManagement;
 //==============================================================================================
 public class PlayBGM : MonoBehaviour
 {
@@ -38,5 +39,11 @@ public class PlayBGM : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
+
+    }
+
+    public void OnFadeBGM()
+    {
+        SoundFadeController.SetFadeOutSpeed(-0.01f);
     }
 }
