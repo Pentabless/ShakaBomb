@@ -143,6 +143,19 @@ public class StageDataController : MonoBehaviour
                     text_stage_number.text = "ステージ0" + door_obj[i].GetComponent<DoorToStage>().GetStageNumber().ToString();
                 }
 
+                Color color = GameObject.Find("LogoDirty").GetComponent<Image>().color;
+                //プレイできないステージだったら
+                if (SharedData.instance.GetCanPlay(i)==false)
+                {
+                    //汚れを出す
+                    GameObject.Find("LogoDirty").GetComponent<Image>().color=new Color(color.r,color.g,color.b,1.0f);
+                }
+                else
+                {
+                    //汚れを出さない
+                    GameObject.Find("LogoDirty").GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0.0f);
+                }
+
                 break;
             }
         }

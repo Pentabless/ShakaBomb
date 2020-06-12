@@ -19,7 +19,8 @@ public class DoorToStage : MonoBehaviour
     public Sprite[] lamp_sprite;
     //シャッター音
     public AudioClip sound;
-
+    //シャッターが当たる速さ
+    public float up_speed;
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
@@ -160,7 +161,7 @@ public class DoorToStage : MonoBehaviour
         //シャッターが上がるアニメーションをする
         if(animate_shutter)
         {
-            shutter_up += 0.01f;
+            shutter_up += up_speed;
         }
         //シャッターの上がり具合を影響させる
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);
