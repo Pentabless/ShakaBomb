@@ -22,7 +22,7 @@ public class HitBubble : MonoBehaviour
                 transform.position,
                 null);
             burst = true;
-            GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
+            GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.08f, 0.4f);
         }
         if (collision.transform.tag == "Bullet" && !burst)
         {
@@ -32,7 +32,7 @@ public class HitBubble : MonoBehaviour
                 transform.position,
                 null);
             burst = true;
-            GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
+            GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.08f, 0.4f);
         }
     }
 }
