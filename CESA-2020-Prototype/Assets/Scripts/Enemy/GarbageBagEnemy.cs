@@ -18,10 +18,10 @@ public class GarbageBagEnemy : IEnemy
     private Vector2 moveRange = Vector2.zero;
     [SerializeField]
     // 横方向の移動速度
-    private float verticalSpeed = 1;
+    private float horizontalSpeed = 1;
     [SerializeField]
     // 縦方向の移動速度
-    private float horizontalSpeed = 1;
+    private float verticalSpeed = 1;
 
     // 初期位置
     private Vector3 startPosition = Vector3.zero;
@@ -48,7 +48,7 @@ public class GarbageBagEnemy : IEnemy
         if (currentStatus == Status.None)
         {
             float angle = Mathf.PI * 2 * timer;
-            var offset = new Vector2(Mathf.Cos(angle * verticalSpeed), Mathf.Sin(angle * horizontalSpeed)) * moveRange;
+            var offset = new Vector2(Mathf.Cos(angle * horizontalSpeed), Mathf.Sin(angle * verticalSpeed)) * moveRange;
             transform.position = startPosition + (Vector3)offset;
         }
     }
