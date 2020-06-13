@@ -14,7 +14,8 @@ public class ButtonController : MonoBehaviour
     // member variable
     //------------------------------------------------------------------------------------------
     RectTransform rectTrasform;
-    Vector3 startPos;
+    [SerializeField]
+    Vector3 startPos = new Vector3(-440, 300, 0);
     float angle;
     //------------------------------------------------------------------------------------------
     // Awake
@@ -22,7 +23,6 @@ public class ButtonController : MonoBehaviour
     private void Awake()
     {
         rectTrasform = GetComponent<RectTransform>();
-        startPos = new Vector3(-440, 300, 0);
     }
 
 	//------------------------------------------------------------------------------------------

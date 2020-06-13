@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Common;
-using UnityEngine.Video;
+using UnityEngine.UI;
 //==============================================================================================
-public class TutorialEvents: MonoBehaviour
+public class StageSelectEvent : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
     // member variable
@@ -17,26 +17,23 @@ public class TutorialEvents: MonoBehaviour
     [SerializeField]
     CanvasGroup screen;
     [SerializeField]
-    VideoPlayer video;
+    Text canvasText;
     [SerializeField]
-    VideoClip clip;
+    string text;
     [SerializeField]
     float fadeTime = 1.0f;
-    [SerializeField]
-    float changeTime;
 
     PauseManager pauseManager = null;
     EventObject eventObj;
     IEnumerator routine;
-
     bool playOn = false;
-    float count = 0.0f;
 
     //------------------------------------------------------------------------------------------
     // Awake
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
+        
     }
 
 	//------------------------------------------------------------------------------------------
@@ -63,7 +60,6 @@ public class TutorialEvents: MonoBehaviour
     {
         if (playOn)
         {
-            count += Time.deltaTime;
             if (routine != null && screen.alpha >= 1.0f)
             {
                 StopCoroutine(routine);
@@ -73,22 +69,17 @@ public class TutorialEvents: MonoBehaviour
         }
         else
         {
-            if (routine != null&&screen.alpha <= 0.0f)
+            if (routine != null && screen.alpha <= 0.0f)
             {
                 StopCoroutine(routine);
                 routine = null;
                 screen.alpha = 0.0f;
             }
-            count = 0.0f;
         }
 
-        if (video.isPlaying)
+        if(Input.GetButtonDown(GamePad.BUTTON_A))
         {
-            var inputA = Input.GetButtonDown(GamePad.BUTTON_A);
-            if (count >= Stage.NotInputCount && inputA)
-            {
-                eventObj.EndEvent();
-            }
+            eventObj.EndEvent();
         }
     }
 
@@ -97,15 +88,14 @@ public class TutorialEvents: MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void StartEvent()
     {
-        FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
-        FadeManager.FadeOut(fadeTime);
+        //FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
+        //FadeManager.FadeOut(fadeTime);
         playOn = true;
-        video.clip = clip;
-        video.Play();
         routine = Fade();
+        canvasText.text = text;
+        pauseManager.Pause(fadeTime);
         StartCoroutine(routine);
         pauseManager.SetFilterColor(Color.clear);
-        pauseManager.Pause(fadeTime);
         GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().StopAnimation();
     }
 
@@ -114,8 +104,8 @@ public class TutorialEvents: MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void EndEvent()
     {
-        pauseManager.Resume();
         playOn = false;
+        pauseManager.Resume();
         routine = Fade();
         StartCoroutine(routine);
         FadeManager.FadeIn(fadeTime);
@@ -127,16 +117,16 @@ public class TutorialEvents: MonoBehaviour
     {
         while (true)
         {
-            if(playOn)
+            if (playOn)
             {
-                screen.alpha +=  0.1f;
+                screen.alpha += 0.1f;
             }
             else
             {
                 screen.alpha -= 0.1f;
             }
 
-            yield return new WaitForSeconds(fadeTime);
+            yield return new WaitForSeconds(fadeTime/100);
         }
     }
 
