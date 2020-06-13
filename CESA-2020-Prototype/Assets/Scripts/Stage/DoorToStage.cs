@@ -167,22 +167,22 @@ public class DoorToStage : MonoBehaviour
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);
         
         goStage = Input.GetButtonDown(Common.Player.JUMP);
-    }
 
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == Player.NAME && goStage)
+        if(goStage&& touch_player)
         {
             //プレイできるドアだったら
-            if (SharedData.instance.GetCanPlay(numStage-1))
+            if (SharedData.instance.GetCanPlay(numStage - 1))
             {
                 // ToDo:静的な変数に代入
                 Data.stage_number = numStage;
                 GameObject.Find(NewStageSelectDirector.NAME).GetComponent<NewStageSelectDirector>().DecideStage();
             }
         }
+    }
 
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
         if (collision.tag == Player.NAME)
         {
             touch_player = true;
