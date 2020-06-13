@@ -34,7 +34,7 @@ public class FadeManager : MonoBehaviour
         // 最前面になるよう適当なソートオーダー設定
         fadeCanvas.sortingOrder = 110;
         // カメラの割り当て
-        fadeCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+        fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
         fadeCanvas.worldCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         fadeCanvas.planeDistance = 8;
 
