@@ -32,6 +32,7 @@ public class DoorToStage : MonoBehaviour
     GameObject shutter;      //シャッター
     GameObject door_frame;   //ドアフレーム
     GameObject lamp;         //ランプ
+    CameraController cameraController; // カメラ
     //シャッターが上がる最大の高さ
     const float ShutterMaxHeight = 3.0f;
     //シャッターが上がるアニメーションをするか
@@ -63,6 +64,8 @@ public class DoorToStage : MonoBehaviour
         shutter = transform.GetChild(1).gameObject;      //シャッター
         door_frame = transform.GetChild(2).gameObject;   //ドアフレーム
         lamp = transform.GetChild(3).gameObject;         //ランプ
+
+        cameraController = GameObject.Find(Common.Camera.CONTROLLER).GetComponent<CameraController>();
 
         //画像を変更する
         switch (rank)
@@ -159,7 +162,13 @@ public class DoorToStage : MonoBehaviour
         //シャッターが上がるアニメーションをする
         if(animate_shutter)
         {
-            shutter_up += up_speed;
+            var topLeft = cameraController.GetScreenTopLeft();
+            var bottomRight = cameraController.GetScreenBottomRight();
+            if (topLeft.x < transform.position.x && transform.position.x < bottomRight.x &&
+                topLeft.y > transform.position.y && transform.position.y > bottomRight.y)
+            {
+                shutter_up += up_speed;
+            }
         }
         //シャッターの上がり具合を影響させる
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);

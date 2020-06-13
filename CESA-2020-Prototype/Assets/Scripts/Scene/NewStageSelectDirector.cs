@@ -34,6 +34,10 @@ public class NewStageSelectDirector : MonoBehaviour
     private PauseManager pauseManager = null;
     // ポーズ用フレーム
     //private FailedFrameController failedFrameController;
+    
+    [SerializeField]
+    // ドアラッパー
+    private GameObject doorWrapper = null;
 
     // ポーズ可能かどうか
     public bool canPause { get; private set; } = false;
@@ -60,6 +64,20 @@ public class NewStageSelectDirector : MonoBehaviour
 
         player = GameObject.Find(Player.NAME);
         playerController = player.GetComponent<PlayerController>();
+
+        if (Data.stage_number > 0)
+        {
+            var doors = doorWrapper.GetComponentsInChildren<DoorToStage>();
+            foreach(var door in doors)
+            {
+                if (door.GetStageNumber() == Data.star_num)
+                {
+                    player.transform.position = door.transform.position;
+                    GameObject.Find(Common.Camera.CONTROLLER).GetComponent<CameraController>().ResetCameraPos(player.transform.position);
+                    break;
+                }
+            }
+        }
 
         GameObject go = GameObject.Find(PauseManager.NAME);
         if (!go)
