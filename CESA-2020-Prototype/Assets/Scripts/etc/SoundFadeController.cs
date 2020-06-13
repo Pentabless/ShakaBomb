@@ -117,9 +117,9 @@ public class SoundFadeController : MonoBehaviour
     /*--引数：なし----------------------*/
     /*--戻り値：bool--------------------*/
     /*----------------------------------*/
-    public static float GetFadeSpeed()
+    public static AudioSource GetAudioSource()
     {
-        return fade_speed;
+        return audio_source;
     }
     /*--終わり：FadeCompleted--*/
 

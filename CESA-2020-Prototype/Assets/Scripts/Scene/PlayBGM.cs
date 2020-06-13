@@ -16,9 +16,14 @@ public class PlayBGM : MonoBehaviour
     //------------------------------------------------------------------------------------------
     [SerializeField]
     [Header("ステージBGM")]
+    AudioClip bgm;
+    [SerializeField]
+    [Header("ファンファーレ")]
     AudioClip clip;
     [SerializeField]
     float volum;
+    [SerializeField]
+    int fadeTime = 90;
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -35,7 +40,7 @@ public class PlayBGM : MonoBehaviour
     {
         if (volum == 0.0f)
             volum = 1.0f;
-        SoundPlayer.PlayBGM(clip, volum);
+        SoundPlayer.PlayBGM(bgm, volum);
     }
 
     //------------------------------------------------------------------------------------------
@@ -43,5 +48,21 @@ public class PlayBGM : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
+    }
+
+    public void GoalEvent()
+    {
+        SoundPlayer.Play(clip);
+        StartCoroutine(FadeBGM());
+        // ToDoファンファーレを入れる
+    }
+
+    private IEnumerator FadeBGM()
+    {
+        while(SoundFadeController.GetAudioSource().volume >= 0.0f)
+        {
+            SoundFadeController.SetFadeOutSpeed(0.0025f);
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 }

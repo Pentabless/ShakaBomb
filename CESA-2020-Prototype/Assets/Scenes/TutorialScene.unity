@@ -1899,6 +1899,11 @@ PrefabInstance:
       propertyPath: clip
       value: 
       objectReference: {fileID: 8300000, guid: bf9c6039359bb2644b82ee2f894caa96, type: 3}
+    - target: {fileID: 3424076715530571499, guid: 639d26e69005a5f4397b32abfd264a82,
+        type: 3}
+      propertyPath: bgm
+      value: 
+      objectReference: {fileID: 8300000, guid: bf9c6039359bb2644b82ee2f894caa96, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 639d26e69005a5f4397b32abfd264a82, type: 3}
 --- !u!1001 &890486851

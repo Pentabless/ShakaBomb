@@ -252,11 +252,16 @@ PrefabInstance:
         type: 3}
       propertyPath: clip
       value: 
-      objectReference: {fileID: 8300000, guid: e046a2d1615ac544e915dfdddf3272e7, type: 3}
+      objectReference: {fileID: 8300000, guid: f79cb650c6840ac48b952d393a6220a4, type: 3}
     - target: {fileID: 3424076715530571499, guid: 639d26e69005a5f4397b32abfd264a82,
         type: 3}
       propertyPath: volum
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3424076715530571499, guid: 639d26e69005a5f4397b32abfd264a82,
+        type: 3}
+      propertyPath: fadeTime
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 639d26e69005a5f4397b32abfd264a82, type: 3}

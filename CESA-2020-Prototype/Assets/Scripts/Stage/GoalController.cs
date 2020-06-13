@@ -15,6 +15,7 @@ public class GoalController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     [SerializeField]
     PlayDirector playDirector;
+    PlayBGM bgm;
 
     bool once = false;  // 一度だけイベントを通知するための変数
 
@@ -31,7 +32,7 @@ public class GoalController : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
-        
+        bgm = GameObject.Find("PlaySceneBgm").GetComponent<PlayBGM>();
     }
 
 	//------------------------------------------------------------------------------------------
@@ -55,6 +56,8 @@ public class GoalController : MonoBehaviour
         if (col.tag == Player.NAME)
         {
             playDirector.Goal();
+            bgm.GoalEvent();
+            once = true;
         }
     }
 }
