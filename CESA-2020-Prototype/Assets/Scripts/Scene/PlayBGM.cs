@@ -19,7 +19,6 @@ public class PlayBGM : MonoBehaviour
     AudioClip clip;
     [SerializeField]
     float volum;
-    bool first = false;
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -44,11 +43,5 @@ public class PlayBGM : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-
-    }
-
-    public void OnFadeBGM()
-    {
-        SoundFadeController.SetFadeOutSpeed(-0.01f);
     }
 }
