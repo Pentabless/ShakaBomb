@@ -521,11 +521,14 @@ public class PlayerController : MonoBehaviour
             boostCount = 2;
 
             // 着地エフェクト(保留)
-            Vector2 effectSize = Vector2.one * 0.7f;
-            EffectGenerator.BubbleBurstFX(
-                new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize, 160, 4),
-                new Vector2(this.transform.position.x, this.transform.position.y - 1.0f),
-                null);
+            if(!IsDead())
+            {
+                Vector2 effectSize = Vector2.one * 0.7f;
+                EffectGenerator.BubbleBurstFX(
+                    new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize, 160, 4),
+                    new Vector2(this.transform.position.x, this.transform.position.y - 1.0f),
+                    null);
+            }
         }
 
         // バブルキャノン(仮)
