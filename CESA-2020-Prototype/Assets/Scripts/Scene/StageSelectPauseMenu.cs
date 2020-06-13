@@ -100,9 +100,11 @@ public class StageSelectPauseMenu : MonoBehaviour
                     break;
                 //タイトルに戻る
                 case 1:
+                    FadeManager.fadeColor = Color.black;
                     FadeManager.FadeOut("TitleScene");
                     break;
                 default:
+                    FadeManager.fadeColor = Color.black;
                     Debug.Log("PauseMenu:SelectError");
                     break;
             }

@@ -112,10 +112,12 @@ public class PauseMenuScript : MonoBehaviour
                     break;
                 //リトライ
                 case 1:
+                    FadeManager.fadeColor = Color.black;
                     FadeManager.FadeOut(SceneManager.GetActiveScene().buildIndex);
                     break;
                 //ステージ選択
                 case 2:
+                    FadeManager.fadeColor = Color.black;
                     FadeManager.FadeOut("NewStageSelectScene");
                     break;
                 default:
