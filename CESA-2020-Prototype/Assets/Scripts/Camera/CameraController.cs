@@ -68,13 +68,13 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     float bgBottom = 0.0f;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         cameraShake = mainCamera.transform.GetComponent<CameraShake>();
         mainCamera.orthographicSize = cameraViewRange;
 
-        if(initializePos != Vector3.zero)
+        if (initializePos != Vector3.zero)
         {
             initializePos.z = Common.Camera.POSITION_Z;
             mainCamera.transform.position = initializePos;
@@ -85,14 +85,18 @@ public class CameraController : MonoBehaviour
             nextPos = mainCamera.transform.position;
         }
 
-        // プレイヤーのポジションを保存しておく
-        Data.initialPlayerPos = player.transform.position;
-
         pController = player.GetComponent<PlayerController>();
 
         RespawnApproval = false;
 
         originPos = SetCameraRangePosition(mainCamera.transform.position);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // プレイヤーのポジションを保存しておく
+        Data.initialPlayerPos = player.transform.position;   
     }
 
     private void FixedUpdate()
@@ -184,6 +188,45 @@ public class CameraController : MonoBehaviour
         MoveBackGrounds();
     }
 
+    public void ResetCameraPos(Vector3 target)
+    {
+        bool loop = true;
+        while (loop)
+        {
+            loop = false;
+            var topLeft = GetScreenTopLeft();
+            var bottomRight = GetScreenBottomRight();
+
+            if (bottomRight.x < target.x)
+            {
+                mainCamera.transform.Translate(cellX, 0, 0);
+                loop = true;
+            }
+            else if (topLeft.x > target.x)
+            {
+                mainCamera.transform.Translate(-cellX, 0, 0);
+                loop = true;
+            }
+
+            if (topLeft.y < target.y)
+            {
+                if (mainCamera.transform.position.y >= Common.Camera.FIRST_CELL_Y)
+                    cellY = Common.Camera.SECOND_CELL_Y;
+                mainCamera.transform.Translate(0, cellY, 0);
+                loop = true;
+            }
+            else if (bottomRight.y > target.y)
+            {
+                if (mainCamera.transform.position.y <= Common.Camera.FIRST_CELL_Y)
+                    cellY = Common.Camera.FIRST_CELL_Y;
+                mainCamera.transform.Translate(0, -cellY, 0);
+                loop = true;
+            }
+        }
+
+        nextPos = mainCamera.transform.position;
+        originPos = SetCameraRangePosition(mainCamera.transform.position);
+    }
 
     /// <summary>
     /// カメラ追従

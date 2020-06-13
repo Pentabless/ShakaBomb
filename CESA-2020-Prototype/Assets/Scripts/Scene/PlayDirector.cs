@@ -141,10 +141,21 @@ public class PlayDirector : MonoBehaviour
             state = PlayState.Playing;
             canPause = true;
             GameObject go = GameObject.Find(AreaNameScript.NAME);
-            if (go && Data.stage_number >= 0)
+            if (go)
             {
-                string text = "第" + (Data.stage_number) + "区画";
-                go.GetComponent<AreaNameScript>().ShowAreaName(text, 1.0f, 2.0f);
+                var areaNameScript = go.GetComponent<AreaNameScript>();
+                if (Data.stage_number > 0)
+                {
+                    string text = "第" + (Data.stage_number) + "区画";
+                    areaNameScript.ShowAreaName(text, 1.0f, 2.0f);
+                }
+                else if (Data.stage_number == 0)
+                {
+                    areaNameScript.ShowAreaName("チュートリアル", 1.0f, 2.0f);
+                    areaNameScript.SetOutlineColor(new Color(0.08f, 0.36f, 0, 0.5f));
+                    areaNameScript.SetBackColor(new Color(0.3f, 0.9f, 0, 0.5f));
+                    areaNameScript.SetBackScale(new Vector3(1.5f, 1, 1));
+                }
             }
         }
     }
