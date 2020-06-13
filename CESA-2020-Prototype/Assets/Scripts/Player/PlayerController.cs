@@ -180,13 +180,13 @@ public class PlayerController : MonoBehaviour
         if (autoControl)
         {
             bulletGenerator.DisableGuideLines();
-            if(transform.position.x < targetPos.x - 0.05f)
+            if(transform.position.x < targetPos.x - 0.1f)
             {
                 Data.playerDir = lastDir = dir = 1;
                 stickSence = 0.1f;
                 autoMoveFinished = false;
             }
-            else if(transform.position.x > targetPos.x + 0.05f)
+            else if(transform.position.x > targetPos.x + 0.1f)
             {
                 Data.playerDir = lastDir = dir = -1;
                 stickSence = 0.1f;
