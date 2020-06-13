@@ -112,4 +112,12 @@ public class AreaNameScript : MonoBehaviour
     {
         backColor.color = color;
     }
+
+    //------------------------------------------------------------------------------------------
+    // 背景サイズの設定
+    //------------------------------------------------------------------------------------------
+    public void SetBackScale(Vector3 scale)
+    {
+        backColor.rectTransform.localScale = scale;
+    }
 }
