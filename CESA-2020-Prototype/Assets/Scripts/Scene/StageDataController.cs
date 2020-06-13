@@ -28,6 +28,8 @@ public class StageDataController : MonoBehaviour
     private Image image_stage_number_logo;
     //ステージ番号のテキスト
     private Text text_stage_number;
+    //ステージ番号の汚れ
+    private Image image_dirty_logo;
     //操作説明のロゴ
     private Image image_operation_logo;
     //ロゴの回転角度
@@ -80,6 +82,10 @@ public class StageDataController : MonoBehaviour
         text_stage_number = GameObject.Find("StageNumber").GetComponent<Text>();
         //ステージ番号のテキストを初期化
         text_stage_number.text = "ステージ??";
+
+        //**ステージ番号の汚れ**//*****************************************************
+        //汚れを探す
+        image_dirty_logo = GameObject.Find("LogoDirty").GetComponent<Image>();
 
         //**操作説明のロゴ**//*****************************************************
         image_operation_logo = GameObject.Find("SmallUILogo").GetComponent<Image>();
@@ -160,17 +166,17 @@ public class StageDataController : MonoBehaviour
                 //    text_stage_number.text = "ステージ0" + door_obj[i].GetComponent<DoorToStage>().GetStageNumber().ToString();
                 //}
 
-                Color color = GameObject.Find("LogoDirty").GetComponent<Image>().color;
+                Color color = image_dirty_logo.color;
                 //プレイできないステージだったら
                 if (SharedData.instance.GetCanPlay(stage_num - 1) == false)
                 {
                     //汚れを出す
-                    GameObject.Find("LogoDirty").GetComponent<Image>().color = new Color(color.r, color.g, color.b, 1.0f);
+                    image_dirty_logo.color = new Color(color.r, color.g, color.b, 1.0f);
                 }
                 else
                 {
                     //汚れを出さない
-                    GameObject.Find("LogoDirty").GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0.0f);
+                    image_dirty_logo.color = new Color(color.r, color.g, color.b, 0.0f);
                     enableJump = false;
                 }
 
@@ -184,7 +190,11 @@ public class StageDataController : MonoBehaviour
         if (logo_angle_direction)
         {
             number_logo_angle -= 3.0f;
-            operation_logo_angle -= 3.0f;
+            //汚れを出していなかったら
+            if (image_dirty_logo.color.a != 1.0f)
+            {
+                operation_logo_angle -= 3.0f;
+            }
             //0.0度まで
             if (number_logo_angle < 0.0f)
             {
@@ -199,10 +209,14 @@ public class StageDataController : MonoBehaviour
         else
         {
             number_logo_angle += 3.0f;
-            //少しずらして戻す
-            if (number_logo_angle > 20.0f)
+            //汚れを出していなかったら
+            if (image_dirty_logo.color.a != 1.0f)
             {
-                operation_logo_angle += 3.0f;
+                //少しずらして戻す
+                if (number_logo_angle > 20.0f)
+                {
+                    operation_logo_angle += 3.0f;
+                }
             }
             //90.0度まで
             if (number_logo_angle > 90.0f)
