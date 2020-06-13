@@ -22,11 +22,9 @@ public class TutorialEvents: MonoBehaviour
     [SerializeField]
     VideoClip clip;
     [SerializeField]
-    Text canvasText;
-    [SerializeField]
-    string text;
-    [SerializeField]
     float fadeTime = 1.0f;
+    [SerializeField]
+    float changeTime;
 
     PauseManager pauseManager = null;
     EventObject eventObj;
@@ -107,7 +105,6 @@ public class TutorialEvents: MonoBehaviour
         video.Play();
         routine = Fade();
         StartCoroutine(routine);
-        canvasText.text = text;
         pauseManager.SetFilterColor(Color.clear);
         pauseManager.Pause(fadeTime);
         GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().StopAnimation();

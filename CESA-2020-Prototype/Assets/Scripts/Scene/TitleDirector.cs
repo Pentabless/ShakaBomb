@@ -86,6 +86,7 @@ public class TitleDirector : MonoBehaviour
         fade_angle = 0.0f;
         select_eixt = false;
         start_fade_out = false;
+        Data.stage_number = 0;
 
         //明るいフレームに設定する
         go_exit_button_frame.GetComponent<Image>().sprite = exit_button_frame[0];
