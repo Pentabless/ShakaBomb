@@ -29,8 +29,6 @@ public class CylinderEnemy : MonoBehaviour
     bool stopRespawn = false;
 
     private CameraController cameraController = null;
-    [SerializeField]
-    AudioClip spawnSE = null;
     private float spawnDelay = 1.5f;
 
 	//------------------------------------------------------------------------------------------
@@ -99,7 +97,7 @@ public class CylinderEnemy : MonoBehaviour
                                           gus.transform.position.z);
         gus.GetComponent<GusEnemy>().destroy_count = destroyCount;
         
-        SoundPlayer.Play(spawnSE, 0.5f);
+        //sSoundPlayer.Play(spawnSE, 0.5f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
