@@ -156,6 +156,12 @@ public class PlayDirector : MonoBehaviour
     {
         time -= Time.deltaTime;
 
+        if (wipeCamera.currentEffect != WipeCamera.PostEffects.Alert &&
+            time <= timeData.timeLimit / 6)
+        {
+            wipeCamera.StartAlert();
+        }
+
         // 時間切れになったらクリア失敗になる
         if (time <= 0.0f)
         {
@@ -256,6 +262,11 @@ public class PlayDirector : MonoBehaviour
         playerController.SetTargetPos(GameObject.Find(Common.Goal.NAME).transform.position);
         // UIをフェードアウトさせる
         StartCoroutine(FadeOutUICoroutine());
+
+        if(wipeCamera.currentEffect == WipeCamera.PostEffects.Alert)
+        {
+            wipeCamera.StartAlert();
+        }
     }
 
     //------------------------------------------------------------------------------------------
