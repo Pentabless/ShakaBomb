@@ -68,7 +68,6 @@ public class MoveDustEnemy : IEnemy
             //左向きの時
             if (transform.localScale.x == -1.0f)
             {
-                Debug.Log(start_position.x - left_move_range);
                 //範囲の左側から出たら
                 if (transform.position.x <= start_position.x - left_move_range)
                 {
