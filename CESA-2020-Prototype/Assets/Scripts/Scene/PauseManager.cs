@@ -209,6 +209,24 @@ public class PauseManager : MonoBehaviour
         fadeTime = time;
         this.time = 0.0f;
 
+        bool hasNull = false;
+        foreach(var obj in ignoreGameObjects)
+        {
+            if (obj == null)
+            {
+                hasNull = true;
+                break;
+            }
+        }
+        // nullを破棄する
+        //if (ignoreGameObjects.Contains(null))
+        if (hasNull)
+        {
+            var ignoreList = new List<GameObject>(ignoreGameObjects);
+            ignoreList.RemoveAll(item => item == null);
+            ignoreGameObjects = ignoreList.ToArray();
+        }
+
         //Rigidbodyの停止
         //子要素から、スリープ中でなく、IgnoreGameObjectsに含まれていないRigidbodyを抽出
         Predicate<Rigidbody2D> rigidbodyPredicate =
@@ -236,6 +254,7 @@ public class PauseManager : MonoBehaviour
                    obj != this &&
                    Array.FindIndex(ignoreGameObjects, gameObject =>
                     Array.FindIndex(gameObject.GetComponentsInChildren<Transform>(), child => child == obj.transform) >= 0) < 0;
+        var debugMonoBehaviours = Utility.GetComponentsInActiveScene<MonoBehaviour>();
         pausingMonoBehaviours = Array.FindAll(
             (objectsWrapper
             ? objectsWrapper.GetComponentsInChildren<MonoBehaviour>()
