@@ -17,20 +17,37 @@ public class ControllerEvents : MonoBehaviour
     [SerializeField]
     List<Image> circle;
     [SerializeField]
-    float blinkTime;
-    IEnumerator routine;
+    [Header("1回目の点滅")]
+    List<GameObject> first;
+    [SerializeField]
+    [Header("2回目の点滅")]
+    List<GameObject> seconds;
+    [SerializeField]
+    [Header("カウントで変えるか")]
+    bool onChange = false;
 
-	//------------------------------------------------------------------------------------------
+    [SerializeField]
+    float blinkTime;
+
+    [SerializeField]
+    float changeCount;
+
+    IEnumerator routine;
+    float count;
+    bool change = false;
+    bool start = false;
+
+    //------------------------------------------------------------------------------------------
     // Awake
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     private void Awake()
     {
         circle.ForEach(x => x.enabled = false);
     }
 
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     // Start
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         
@@ -41,6 +58,31 @@ public class ControllerEvents : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
+        if (!start || !onChange)
+            return;
+
+        if(change)
+        {
+            count -= Time.deltaTime;
+        }
+        else
+        {
+            count += Time.deltaTime;
+        }
+
+        if (count >= changeCount)
+        {
+            if (!change)
+                first.ForEach(x => x.SetActive(false));
+            change = true;
+        }
+
+        if(count <= Common.Decimal.ZERO)
+        {
+            if (change)
+                seconds.ForEach(x => x.SetActive(false));
+            change = false;
+        }
     }
 
     //------------------------------------------------------------------------------------------
@@ -48,6 +90,9 @@ public class ControllerEvents : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void StartEvent()
     {
+        start = true;
+        if(onChange)
+            seconds.ForEach(x => x.SetActive(false));
         circle.ForEach(x =>
         {
             x.enabled = true;
@@ -61,6 +106,7 @@ public class ControllerEvents : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void EndEvent()
     {
+        start = false;
         circle.ForEach(x =>
         {
             x.enabled = false;
@@ -73,17 +119,48 @@ public class ControllerEvents : MonoBehaviour
     {
         while (true)
         {
-            circle.ForEach(x =>
+            if(!onChange)
             {
-                if (x.gameObject.activeInHierarchy)
+                circle.ForEach(x =>
                 {
-                    x.gameObject.SetActive(false);
-                }
-                else
+                    if (x.gameObject.activeInHierarchy)
+                    {
+                        x.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        x.gameObject.SetActive(true);
+                    }
+                });
+            }
+            else if(change)
+            {
+                seconds.ForEach(x => 
                 {
-                    x.gameObject.SetActive(true);
-                }
-            });
+                    if (x.activeInHierarchy)
+                    {
+                        x.SetActive(false);
+                    }
+                    else
+                    {
+                        x.SetActive(true);
+                    }
+                });
+            }
+            else
+            {
+                first.ForEach(x =>
+                {
+                    if (x.activeInHierarchy)
+                    {
+                        x.SetActive(false);
+                    }
+                    else
+                    {
+                        x.SetActive(true);
+                    }
+                });
+            }
 
             yield return new WaitForSeconds(blinkTime);
         }

@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 131296337}
   - component: {fileID: 131296336}
   m_Layer: 5
-  m_Name: Circle
+  m_Name: LeftSttick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -985,7 +985,7 @@ GameObject:
   - component: {fileID: 367980047}
   - component: {fileID: 367980046}
   m_Layer: 5
-  m_Name: Circle (1)
+  m_Name: AButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1772,7 +1772,7 @@ Canvas:
   m_GameObject: {fileID: 996689811}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 59194455}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2153,7 +2153,14 @@ MonoBehaviour:
   circle:
   - {fileID: 131296336}
   - {fileID: 1739485080}
+  first:
+  - {fileID: 131296335}
+  seconds:
+  - {fileID: 1739485078}
+  - {fileID: 131296335}
+  onChange: 1
   blinkTime: 0.6
+  changeCount: 5
 --- !u!114 &1670954761 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
@@ -2178,7 +2185,7 @@ GameObject:
   - component: {fileID: 1739485081}
   - component: {fileID: 1739485080}
   m_Layer: 5
-  m_Name: Circle
+  m_Name: BButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2378,7 +2385,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circle:
   - {fileID: 131296336}
+  first: []
+  seconds: []
+  onChange: 0
   blinkTime: 0.3
+  changeCount: 0
 --- !u!1 &2061336236
 GameObject:
   m_ObjectHideFlags: 0
@@ -2613,7 +2624,14 @@ MonoBehaviour:
   circle:
   - {fileID: 367980046}
   - {fileID: 131296336}
+  first:
+  - {fileID: 131296335}
+  seconds:
+  - {fileID: 131296335}
+  - {fileID: 367980044}
+  onChange: 1
   blinkTime: 0.6
+  changeCount: 4
 --- !u!1 &2145812351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,7 +2677,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circle:
   - {fileID: 367980046}
+  first: []
+  seconds: []
+  onChange: 0
   blinkTime: 0.3
+  changeCount: 0
 --- !u!1001 &8085275817936323316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2742,6 +2764,17 @@ PrefabInstance:
       propertyPath: canvasText
       value: 
       objectReference: {fileID: 940698100}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: text
+      value: Event1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384515656644516705, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 32900000, guid: fd0374c1988271e40a2c811756e52486,
+        type: 3}
     - target: {fileID: 8085275816771829937, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: startEvents.m_PersistentCalls.m_Calls.Array.size
