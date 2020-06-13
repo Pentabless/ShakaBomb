@@ -126,6 +126,11 @@ public class NewStageSelectDirector : MonoBehaviour
             return;
         }
 
+        if (!playerController.IsGround())
+        {
+            return;
+        }
+
         state = StageSelectState.Decide;
         waitTime = 0.5f;
         canPause = false;
