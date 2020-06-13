@@ -907,6 +907,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GamepadManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3867471678414555890, guid: ac9a527e5f2cecb41be67a8ed7cc3b25,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3867471678414555892, guid: ac9a527e5f2cecb41be67a8ed7cc3b25,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -961,6 +966,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647834515996374337, guid: ac9a527e5f2cecb41be67a8ed7cc3b25,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac9a527e5f2cecb41be67a8ed7cc3b25, type: 3}
