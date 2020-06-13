@@ -15,6 +15,8 @@ public class ControllerEvents : MonoBehaviour
     // member variable
     //------------------------------------------------------------------------------------------
     [SerializeField]
+    GameObject ui;
+    [SerializeField]
     List<Image> circle;
     [SerializeField]
     [Header("1回目の点滅")]
@@ -43,6 +45,7 @@ public class ControllerEvents : MonoBehaviour
     private void Awake()
     {
         circle.ForEach(x => x.enabled = false);
+        ui.SetActive(false);
     }
 
     //------------------------------------------------------------------------------------------
@@ -91,8 +94,10 @@ public class ControllerEvents : MonoBehaviour
     public void StartEvent()
     {
         start = true;
-        if(onChange)
+        ui.SetActive(true);
+        if (onChange)
             seconds.ForEach(x => x.SetActive(false));
+
         circle.ForEach(x =>
         {
             x.enabled = true;
@@ -107,12 +112,16 @@ public class ControllerEvents : MonoBehaviour
     public void EndEvent()
     {
         start = false;
+        ui.SetActive(false);
         circle.ForEach(x =>
         {
             x.enabled = false;
         });
-        StopCoroutine(routine);
-        routine = null;
+        if(routine != null)
+        {
+            StopCoroutine(routine);
+            routine = null;
+        }
     }
 
     private IEnumerator OnBlink()
