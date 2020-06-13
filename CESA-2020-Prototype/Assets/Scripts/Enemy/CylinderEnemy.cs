@@ -73,18 +73,19 @@ public class CylinderEnemy : MonoBehaviour
         gus.GetComponent<GusEnemy>().destroy_count = destroyCount;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.tag == Player.NAME)
+        if (collision.tag == Player.NAME)
         {
             stopRespawn = true;
             count = Common.Decimal.ZERO;
         }
+
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.tag == Player.NAME)
+        if (collision.tag == Player.NAME)
         {
             stopRespawn = false;
         }
