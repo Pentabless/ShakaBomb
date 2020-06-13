@@ -57,6 +57,10 @@ public class PauseManager : MonoBehaviour
     private float fadeTime = 0.0f;
     private float time = 0.0f;
 
+    [SerializeField]
+    // 効果音
+    private AudioClip pauseSE = null;
+
     //ポーズ用のCanvasとImage生成
     private void CreatePauseFilter()
     {
@@ -126,6 +130,7 @@ public class PauseManager : MonoBehaviour
 
         if (pressPause && !FadeManager.isFadeOut && canPause)
         {
+            SoundPlayer.Play(pauseSE, 0.5f);
             filterColor = defaultFilterColor;
             ChangePauseState();
         }
