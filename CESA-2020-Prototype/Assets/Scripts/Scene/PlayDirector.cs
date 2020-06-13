@@ -21,6 +21,9 @@ public class PlayDirector : MonoBehaviour
         Goal,       // ゴール演出
         Failed,     // クリア失敗演出
         Result,     // リザルト演出
+
+        TutorialGoal,       // チュートリアル専用ゴール演出
+        TutorialResult,     // チュートリアル専用リザルト演出
     }
 
     // タイムデータ
@@ -118,6 +121,9 @@ public class PlayDirector : MonoBehaviour
             case PlayState.Goal:    UpdateGoal();       break;
             case PlayState.Failed:  UpdateFailed();     break;
             case PlayState.Result:  UpdateResult();     break;
+
+            case PlayState.TutorialGoal: UpdateTutorialGoal(); break;
+            case PlayState.TutorialResult: UpdateTutorialResult(); break;
             default:
                 Debug.Log("PlayDirecotr:StateError");
                 break;
@@ -174,7 +180,19 @@ public class PlayDirector : MonoBehaviour
             waitTime = 0.0f;
         }
     }
-    
+
+    //------------------------------------------------------------------------------------------
+    // チュートリアルゴール処理
+    //------------------------------------------------------------------------------------------
+    private void UpdateTutorialGoal()
+    {
+        waitTime -= Time.deltaTime;
+        if (waitTime <= 0.0f)
+        {
+            state = PlayState.TutorialResult;
+            waitTime = 0.0f;
+        }
+    }
     //------------------------------------------------------------------------------------------
     // クリア失敗処理
     //------------------------------------------------------------------------------------------
@@ -207,6 +225,22 @@ public class PlayDirector : MonoBehaviour
     }
 
     //------------------------------------------------------------------------------------------
+    // チュートリアルリザルト処理
+    //------------------------------------------------------------------------------------------
+    private void UpdateTutorialResult()
+    {
+        waitTime -= Time.deltaTime;
+        if (waitTime <= 0.0f)
+        {
+            FadeManager.fadeColor = Color.clear;
+            FadeManager.FadeOut("NewStageSelectScene", 1.5f);
+            wipeCamera.StartFadeOut(player.transform.position, 1.4f);
+            //SceneEffecterController.StartEffect();
+            waitTime = 99.0f;
+        }
+    }
+
+    //------------------------------------------------------------------------------------------
     // ゴールイベント
     //------------------------------------------------------------------------------------------
     public void Goal()
@@ -220,7 +254,23 @@ public class PlayDirector : MonoBehaviour
         // UIをフェードアウトさせる
         StartCoroutine(FadeOutUICoroutine());
     }
-    
+
+    //------------------------------------------------------------------------------------------
+    // チュートリアルゴールイベント
+    //------------------------------------------------------------------------------------------
+    public void TutorialGoal()
+    {
+        state = PlayState.TutorialGoal;
+        waitTime = 2.0f;
+        canPause = false;
+
+        // プレイヤーの入力を停止する
+        playerController.EnableControl(false);
+        // UIをフェードアウトさせる
+        StartCoroutine(FadeOutUICoroutine());
+    }
+
+
     //------------------------------------------------------------------------------------------
     // タイムアップイベント
     //------------------------------------------------------------------------------------------
