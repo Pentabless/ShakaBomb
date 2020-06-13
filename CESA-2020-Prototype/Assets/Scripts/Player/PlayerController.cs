@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     // バブルジェネレータ
     [SerializeField]
     GameObject bubbleG;
+    BubbleGenerator bubbleGenerator = null;
 
     // バルーンコントローラ
     [SerializeField]
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     // バレットジェネレータ
     [SerializeField]
     GameObject bulletG;
+    BulletGenerator bulletGenerator = null;
 
     // ダートマネージャ
     [SerializeField]
@@ -47,7 +49,8 @@ public class PlayerController : MonoBehaviour
 
     // コントローラ
     [SerializeField]
-    GameObject gamepadManager;
+    GameObject gamepadManagerObject;
+    GamepadManager gamaepadManager = null;
 
     // SE
     [SerializeField]
@@ -125,6 +128,13 @@ public class PlayerController : MonoBehaviour
     // 死亡フラグ
     bool deathFlag = false;
 
+    // 自動操作フラグ
+    bool autoControl = false;
+    // 移動移動が完了したかどうか
+    bool autoMoveFinished = false;
+    // 移動先
+    Vector3 targetPos = Vector3.zero;
+
     //------------------------------------------------------------------------------------------
     // Start
     //------------------------------------------------------------------------------------------
@@ -142,6 +152,10 @@ public class PlayerController : MonoBehaviour
         jumpStopFlag = false;
         jumpTiming = false;
         playerSpeed = accelForce;
+
+        gamaepadManager = gamepadManagerObject.GetComponent<GamepadManager>();
+        bubbleGenerator = bubbleG.GetComponent<BubbleGenerator>();
+        bulletGenerator = bulletG.GetComponent<BulletGenerator>();
     }
 
     //------------------------------------------------------------------------------------------
@@ -163,16 +177,41 @@ public class PlayerController : MonoBehaviour
             hitCount--;
         }
 
+        if (autoControl)
+        {
+            bulletGenerator.DisableGuideLines();
+            if(transform.position.x < targetPos.x - 0.05f)
+            {
+                Data.playerDir = lastDir = dir = 1;
+                stickSence = 0.1f;
+                autoMoveFinished = false;
+            }
+            else if(transform.position.x > targetPos.x + 0.05f)
+            {
+                Data.playerDir = lastDir = dir = -1;
+                stickSence = 0.1f;
+                autoMoveFinished = false;
+            }
+            else
+            {
+                dir = 0;
+                stickSence = 0;
+                autoMoveFinished = true;
+            }
+
+            return;
+        }
+
         if (!canControl)
         {
             dir = Integer.ZERO;
-            bulletG.GetComponent<BulletGenerator>().DisableGuideLines();
+            bulletGenerator.DisableGuideLines();
             return;
         }
 
         // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
         // コントローラの接続チェック
-        checkController = gamepadManager.GetComponent<GamepadManager>().GetCheckGamepad();
+        checkController = gamaepadManager.GetCheckGamepad();
 
         // 左右移動
         if (Input.GetAxis(Player.HORIZONTAL) < Integer.ZERO)
@@ -208,7 +247,7 @@ public class PlayerController : MonoBehaviour
             {
                 angle = Mathf.PI;
             }
-            if (bulletG.GetComponent<BulletGenerator>().BulletCreate(transform.position, angle))
+            if (bulletGenerator.BulletCreate(transform.position, angle))
             {
                 balloonController.UseBalloon(bulletCost);
             }
@@ -222,16 +261,16 @@ public class PlayerController : MonoBehaviour
             var inputDir = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
             if (inputDir.magnitude > 0)
             {
-                bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, Mathf.Atan2(inputDir.y, inputDir.x));
+                bulletGenerator.EnableGuideLines(transform.position, Mathf.Atan2(inputDir.y, inputDir.x));
             }
             else
             {
-                bulletG.GetComponent<BulletGenerator>().EnableGuideLines(transform.position, (Data.playerDir >= 0 ? 0 : Mathf.PI));
+                bulletGenerator.EnableGuideLines(transform.position, (Data.playerDir >= 0 ? 0 : Mathf.PI));
             }
         }
         else
         {
-            bulletG.GetComponent<BulletGenerator>().DisableGuideLines();
+            bulletGenerator.DisableGuideLines();
         }
 
         // 空中ブースト
@@ -297,12 +336,12 @@ public class PlayerController : MonoBehaviour
         {
             if (lastDir > 0.0f && dir == -1)
             {
-                bubbleG.GetComponent<BubbleGenerator>().BubbleCreate(transform.position, 1, true);
+                bubbleGenerator.BubbleCreate(transform.position, 1, true);
                 dirtManager.SweepDirt();
             }
             if (lastDir < 0.0f && dir == 1)
             {
-                bubbleG.GetComponent<BubbleGenerator>().BubbleCreate(transform.position, 1, true);
+                bubbleGenerator.BubbleCreate(transform.position, 1, true);
                 dirtManager.SweepDirt();
             }
         }
@@ -420,7 +459,7 @@ public class PlayerController : MonoBehaviour
             KnockBack(collision.transform.position);
             balloonController.Burst();
             balloonController.EnableMerge(false);
-            bubbleG.GetComponent<BubbleGenerator>().StopChase();
+            bubbleGenerator.StopChase();
             deathFlag = true;
         }
 
@@ -435,7 +474,7 @@ public class PlayerController : MonoBehaviour
             //SoundPlayer.Play(audios[(int)AudioType.Damage]);
             balloonController.Burst();
             balloonController.EnableMerge(false);
-            bubbleG.GetComponent<BubbleGenerator>().StopChase();
+            bubbleGenerator.StopChase();
             deathFlag = true;
         }
 
@@ -552,6 +591,31 @@ public class PlayerController : MonoBehaviour
     public void EnableJump(bool enable)
     {
         canJump = enable;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 自動操作に切り替えるか設定する
+    //------------------------------------------------------------------------------------------
+    public void EnableAutoControl(bool enable)
+    {
+        autoControl = enable;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 自動操作の行き先を設定する
+    //------------------------------------------------------------------------------------------
+    public void SetTargetPos(Vector3 pos)
+    {
+        targetPos = pos;
+        autoMoveFinished = false;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 自動移動が完了しているか取得する
+    //------------------------------------------------------------------------------------------
+    public bool AutoMoveFinished()
+    {
+        return autoMoveFinished;
     }
 
     //------------------------------------------------------------------------------------------

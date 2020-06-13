@@ -92,6 +92,11 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool("IsGround", player.IsGround());
         animator.SetFloat("VelocityY", Data.prePlayerVel.y);
 
+        if (player.AutoMoveFinished())
+        {
+            animator.SetBool("Goal", true);
+        }
+
         if (player.IsDead())
         {
             DeathUpdate();

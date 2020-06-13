@@ -251,6 +251,9 @@ public class PlayDirector : MonoBehaviour
 
         // プレイヤーの入力を停止する
         playerController.EnableControl(false);
+        // プレイヤーをゴールの位置に移動させる
+        playerController.EnableAutoControl(true);
+        playerController.SetTargetPos(GameObject.Find(Common.Goal.NAME).transform.position);
         // UIをフェードアウトさせる
         StartCoroutine(FadeOutUICoroutine());
     }
