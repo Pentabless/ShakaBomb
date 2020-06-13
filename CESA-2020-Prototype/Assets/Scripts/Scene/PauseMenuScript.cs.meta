@@ -3,7 +3,10 @@ guid: f0d6c4ad027be074b837257414adb77e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pauseManager: {instanceID: 0}
+  - cursorSE: {fileID: 8300000, guid: f53ae5bc772726744a2039d8ed02030c, type: 3}
+  - decisionSE: {fileID: 8300000, guid: caf9b64268cbc834ab072606a4df35fe, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

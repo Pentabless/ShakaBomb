@@ -323,6 +323,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 6721029518872107390}
   ignoreGameObjects:
   - {fileID: 6721029518872107390}
+  pauseSE: {fileID: 8300000, guid: 40b98956f3636124f9c0c371a02d926d, type: 3}
 --- !u!1 &6721029518872107390
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,5 +441,5 @@ MonoBehaviour:
   - {fileID: 6721029517943758119}
   - {fileID: 6721029517766716732}
   - {fileID: 6721029517351925892}
-  cursorSE: {fileID: 0}
-  decisionSE: {fileID: 0}
+  cursorSE: {fileID: 8300000, guid: f53ae5bc772726744a2039d8ed02030c, type: 3}
+  decisionSE: {fileID: 8300000, guid: caf9b64268cbc834ab072606a4df35fe, type: 3}

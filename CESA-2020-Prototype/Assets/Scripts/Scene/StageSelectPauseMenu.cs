@@ -75,6 +75,7 @@ public class StageSelectPauseMenu : MonoBehaviour
             // カーソル移動があった場合に処理する
             if (newChoice != choice)
             {
+                SoundPlayer.Play(cursorSE, 0.5f);
                 choices[choice].GetComponent<Text>().color = new Color(1f, 1f, 1f);
                 choice = newChoice;
                 choices[choice].GetComponent<Text>().color = new Color(1f, 0.8f, 0f);
@@ -87,7 +88,7 @@ public class StageSelectPauseMenu : MonoBehaviour
         if (pressSubmit)
         {
             wasDecided = true;
-            //SoundPlayer.Play(decisionSE);
+            SoundPlayer.Play(decisionSE, 0.5f);
 
             switch (choice)
             {
