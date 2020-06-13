@@ -27,6 +27,13 @@ public class ControllerEvents : MonoBehaviour
     [SerializeField]
     [Header("カウントで変えるか")]
     bool onChange = false;
+    [SerializeField]
+    Text canvasText;
+    [SerializeField]
+    string text1;
+    [SerializeField]
+    string text2;
+
 
     [SerializeField]
     float blinkTime;
@@ -76,14 +83,20 @@ public class ControllerEvents : MonoBehaviour
         if (count >= changeCount)
         {
             if (!change)
+            {
                 first.ForEach(x => x.SetActive(false));
+                canvasText.text = text2;
+            }
             change = true;
         }
 
         if(count <= Common.Decimal.ZERO)
         {
             if (change)
+            {
                 seconds.ForEach(x => x.SetActive(false));
+                canvasText.text = text1;
+            }
             change = false;
         }
     }
@@ -94,6 +107,8 @@ public class ControllerEvents : MonoBehaviour
     public void StartEvent()
     {
         start = true;
+        canvasText.text = text1;
+
         ui.SetActive(true);
         if (onChange)
             seconds.ForEach(x => x.SetActive(false));
