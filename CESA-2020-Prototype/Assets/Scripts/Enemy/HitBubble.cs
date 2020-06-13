@@ -12,10 +12,21 @@ public class HitBubble : MonoBehaviour
 {
     public bool burst { private set; get; } = false;
 
+    [SerializeField]
+    private AudioClip wrapSE = null;
+    [SerializeField]
+    private AudioClip burstSE = null;
+
+    private void Awake()
+    {
+        SoundPlayer.Play(wrapSE, 1.5f);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Player" && !burst)
         {
+            SoundPlayer.Play(burstSE);
             Vector2 effectSize = Vector2.one * 1.5f;
             EffectGenerator.BubbleBurstFX(
                 new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),
@@ -26,6 +37,7 @@ public class HitBubble : MonoBehaviour
         }
         if (collision.transform.tag == "Bullet" && !burst)
         {
+            SoundPlayer.Play(burstSE);
             Vector2 effectSize = Vector2.one * 3.5f;
             EffectGenerator.BubbleBurstFX(
                 new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),

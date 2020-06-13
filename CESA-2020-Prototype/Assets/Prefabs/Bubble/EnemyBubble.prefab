@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7180998208429512915}
   m_Layer: 0
   m_Name: EnemyBubble
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,6 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d354c6e997fd60f4bbd59647ea51feec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wrapSE: {fileID: 8300000, guid: c0bf0c13ad3af8143ac271b7508d441a, type: 3}
+  burstSE: {fileID: 8300000, guid: 618ec71f0e1cea542a185428080ec544, type: 3}
 --- !u!58 &7180998208429512915
 CircleCollider2D:
   m_ObjectHideFlags: 0

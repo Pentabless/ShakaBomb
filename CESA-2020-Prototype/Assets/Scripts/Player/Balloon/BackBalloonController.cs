@@ -75,6 +75,10 @@ public class BackBalloonController : MonoBehaviour
     private float balloonLerpRate = 0.1f;
 
     [SerializeField]
+    // 破裂時の効果音
+    private AudioClip burstSE = null;
+
+    [SerializeField]
     // 移動判定用レイヤーマスク
     private LayerMask moveLayerMask = 0;
     // 移動判定用レイキャスト情報
@@ -228,6 +232,7 @@ public class BackBalloonController : MonoBehaviour
         // サイズが大きくなりすぎたら破裂する
         if (burst)
         {
+            SoundPlayer.Play(burstSE);
             //Vector2 direction = playerController.transform.position - transform.position;
             //direction.x = (direction.x >= 0 ? burstDirection.x : -burstDirection.x);
             //direction.y = (direction.y >= 0 ? burstDirection.y : -burstDirection.y);
