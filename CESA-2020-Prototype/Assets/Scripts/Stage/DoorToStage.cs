@@ -80,7 +80,7 @@ public class DoorToStage : MonoBehaviour
                     //ランプ：全部赤
                     lamp.GetComponent<SpriteRenderer>().sprite = lamp_sprite[1];
                     //クリアしていたら
-                    if (SharedData.instance.GetClear(numStage))
+                    if (SharedData.instance.GetClear(numStage-1))
                     {
                         //シャッターの上がり具合
                         shutter_up = ShutterMaxHeight;
@@ -175,7 +175,7 @@ public class DoorToStage : MonoBehaviour
         if (collision.tag == Player.NAME && goStage)
         {
             //プレイできるドアだったら
-            if (SharedData.instance.GetCanPlay(numStage))
+            if (SharedData.instance.GetCanPlay(numStage-1))
             {
                 // ToDo:静的な変数に代入
                 Data.stage_number = numStage;

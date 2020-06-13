@@ -292,21 +292,21 @@ public class SharedData : MonoBehaviour
     public void SetPurificationRate(int purification)
     {
         //クリアしたことにする
-        stage_data[Data.stage_number].clear = true;
+        stage_data[Data.stage_number-1].clear = true;
         //今回の浄化率が前回の浄化率より大きかったら
-        if (purification > stage_data[Data.stage_number].purification_rate)
+        if (purification > stage_data[Data.stage_number-1].purification_rate)
         {
             //浄化率を入れる
-            stage_data[Data.stage_number].purification_rate = purification;
+            stage_data[Data.stage_number-1].purification_rate = purification;
         }
         //クリアした所の評価が2以上だったら
         if (GetPercentRank(purification) >= 2)
         {
             //クリアした所が一番最後のステージでなかったら
-            if (Data.stage_number != (stage_data.Length - 1))
+            if (Data.stage_number-1 != (stage_data.Length - 1))
             {
                 //次のステージをプレイできるようにする
-                stage_data[Data.stage_number + 1].can_play = true;
+                stage_data[Data.stage_number ].can_play = true;
             }
         }
     }
