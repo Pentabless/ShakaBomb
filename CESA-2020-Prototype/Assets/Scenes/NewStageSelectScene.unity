@@ -5663,7 +5663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31e2fe958db950459f6b4f27a89a3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filter: {fileID: 2100000, guid: 394338c3723dd544f9574d754413e3bd, type: 2}
+  wipeFilter: {fileID: 2100000, guid: 394338c3723dd544f9574d754413e3bd, type: 2}
+  alertFilter: {fileID: 2100000, guid: b770cb6a3f88c714780510ac44001f1e, type: 2}
 --- !u!1 &1214917515
 GameObject:
   m_ObjectHideFlags: 0
