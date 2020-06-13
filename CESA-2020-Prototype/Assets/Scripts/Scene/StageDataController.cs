@@ -178,7 +178,7 @@ public class StageDataController : MonoBehaviour
             }
         }
 
-        playerController.EnableJump(enableJump);
+        //playerController.EnableJump(enableJump);
 
         //見えるように回転する時
         if (logo_angle_direction)
