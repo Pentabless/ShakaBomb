@@ -110,4 +110,17 @@ public class SoundFadeController : MonoBehaviour
         fade_speed = 0.0f;
     }
     /*--終わり：NotFadeSound--*/
+
+    /*----------------------------------*/
+    /*--関数名：FadeCompleted(public)----*/
+    /*--概要：フェード終了を感知--*/
+    /*--引数：なし----------------------*/
+    /*--戻り値：bool--------------------*/
+    /*----------------------------------*/
+    public static float GetFadeSpeed()
+    {
+        return fade_speed;
+    }
+    /*--終わり：FadeCompleted--*/
+
 }

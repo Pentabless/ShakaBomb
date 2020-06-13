@@ -18,16 +18,15 @@ public class PrologueDirector : MonoBehaviour
     [SerializeField]
     List<FadeController> fadeControllers;
     [SerializeField]
-    PlayBGM bgm;
-
+    FadeController fadeScreen;
     [SerializeField]
     float fadeInterval;
     [SerializeField]
     float fadeValues;
 
     float count;
-
     int imageIndex = 0;
+    bool startFadeOut = false;
 
 	//------------------------------------------------------------------------------------------
     // Awake
@@ -49,7 +48,6 @@ public class PrologueDirector : MonoBehaviour
 	private void Update()
     {
         count += Time.deltaTime;
-        Debug.Log(imageIndex);
         var i = imageIndex;
         i++;
         if(count >= fadeInterval && fadeControllers.Count() >= i)
@@ -65,13 +63,21 @@ public class PrologueDirector : MonoBehaviour
 
             count = Common.Decimal.ZERO;
         }
-        if (fadeControllers.Count()-1 <= imageIndex)
+        if (fadeControllers.Count() - 1 <= imageIndex)
         {
-            SceneManager.LoadScene("TutorialScene");
+            if(!startFadeOut)
+            {
+                fadeScreen.SetFadeType(true);
+                fadeScreen.SetFadeValue(0.0f);
+            }
+            SoundFadeController.SetFadeOutSpeed(0.001f);
+            startFadeOut = true;
+
+            if (fadeScreen.GetFadeValue() == 1.0f)
+            {
+                SceneManager.LoadScene("TutorialScene");
+            }
         }
-        else if(imageIndex == fadeControllers.Count() -2 && count >= fadeInterval*0.7f)
-        {
-            bgm.OnFadeBGM();
-        }
+
     }
 }
