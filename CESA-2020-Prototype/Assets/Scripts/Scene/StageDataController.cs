@@ -45,7 +45,7 @@ public class StageDataController : MonoBehaviour
         //シーン内にあるドアオブジェクトを全部探す
         door_obj = GameObject.FindGameObjectsWithTag("StageDoor");
         //ドアオブジェクトのリストを並べ変える(要素番号とステージ番号が合うように)
-        door_obj = SortDoorObjectList();
+        //door_obj = SortDoorObjectList();
         //ステージデータの初期化をする(初期化していたら何もしない)
         SharedData.instance.SetStageDataSize(door_obj.Length);    //ドアオブジェクトの数だけ
     }
@@ -138,7 +138,7 @@ public class StageDataController : MonoBehaviour
             {
                 logo_angle_direction = true;
                 int stage_num = door_obj[i].GetComponent<DoorToStage>().GetStageNumber();
-                text_stage_number.text = "第" + (stage_num + 1).ToString() + "区画";
+                text_stage_number.text = "第" + (stage_num).ToString() + "区画";
                 //ステージ番号が二桁だったら
                 //if (i>=10)
                 //{
@@ -211,6 +211,7 @@ public class StageDataController : MonoBehaviour
     {
         //ドアの数分の配列を作る
         GameObject[] obj_list = new GameObject[door_obj.Length];
+        int count = 0;
 
         //用意した配列の数だけ繰り返す
         for (int i = 0; i < obj_list.Length; i++)
@@ -222,7 +223,8 @@ public class StageDataController : MonoBehaviour
                 if (i == door_obj[j].GetComponent<DoorToStage>().GetStageNumber())
                 {
                     //配列に入れる
-                    obj_list[i] = door_obj[j];
+                    obj_list[count] = door_obj[j];
+                    count++;
                     break;
                 }
             }
