@@ -110,6 +110,7 @@ public class TutorialEvents: MonoBehaviour
         canvasText.text = text;
         pauseManager.SetFilterColor(Color.clear);
         pauseManager.Pause(fadeTime);
+        GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().StopAnimation();
     }
 
     //------------------------------------------------------------------------------------------
@@ -122,6 +123,8 @@ public class TutorialEvents: MonoBehaviour
         routine = Fade();
         StartCoroutine(routine);
         FadeManager.FadeIn(fadeTime);
+        GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
+        StartCoroutine(ControlDelay());
     }
 
     private IEnumerator Fade()
@@ -141,4 +144,11 @@ public class TutorialEvents: MonoBehaviour
         }
     }
 
+    private IEnumerator ControlDelay()
+    {
+        var player = GameObject.Find(Player.NAME).GetComponent<PlayerController>();
+        player.EnableControl(false);
+        yield return new WaitForSeconds(0.2f);
+        player.EnableControl(true);
+    }
 }
