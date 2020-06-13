@@ -232,7 +232,7 @@ public class BackBalloonController : MonoBehaviour
         // サイズが大きくなりすぎたら破裂する
         if (burst)
         {
-            SoundPlayer.Play(burstSE);
+            SoundPlayer.Play(burstSE,0.7f);
             //Vector2 direction = playerController.transform.position - transform.position;
             //direction.x = (direction.x >= 0 ? burstDirection.x : -burstDirection.x);
             //direction.y = (direction.y >= 0 ? burstDirection.y : -burstDirection.y);
