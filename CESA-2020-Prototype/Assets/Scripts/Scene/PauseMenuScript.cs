@@ -68,9 +68,10 @@ public class PauseMenuScript : MonoBehaviour
 
         //入力状態受け取り
         float axis = Input.GetAxisRaw("Vertical");
-        bool pressUp = (Input.GetKey(KeyCode.UpArrow) || axis > 0.0f);
-        bool pressDown = (Input.GetKey(KeyCode.DownArrow) || axis < 0.0f);
-        
+        float axis2 = Input.GetAxisRaw("Vertical2");
+        bool pressUp = (Input.GetKey(KeyCode.UpArrow) || axis > 0.0f || axis2 > 0.0f);
+        bool pressDown = (Input.GetKey(KeyCode.DownArrow) || axis < 0.0f || axis2 < 0.0f);
+
 
         //連続入力制御
         if (pressDelay > 0f)
