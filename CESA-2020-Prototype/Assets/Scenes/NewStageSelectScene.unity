@@ -445,6 +445,11 @@ PrefabInstance:
       propertyPath: gamepadManager
       value: 
       objectReference: {fileID: 297024732}
+    - target: {fileID: 3524930649752458130, guid: eca9fe8788fa57044b4acb2daac0cbbb,
+        type: 3}
+      propertyPath: gamepadManagerObject
+      value: 
+      objectReference: {fileID: 297024732}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eca9fe8788fa57044b4acb2daac0cbbb, type: 3}
 --- !u!1 &165248725 stripped
@@ -5625,6 +5630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d20207fd12446b4c9e1e8ee45d9c9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeDelay: 0.016666668
 --- !u!81 &1182116643
 AudioListener:
   m_ObjectHideFlags: 0
