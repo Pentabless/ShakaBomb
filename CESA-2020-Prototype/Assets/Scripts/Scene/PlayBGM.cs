@@ -17,6 +17,8 @@ public class PlayBGM : MonoBehaviour
     [SerializeField]
     [Header("ステージBGM")]
     AudioClip clip;
+    [SerializeField]
+    float volum;
     bool first = false;
 
     //------------------------------------------------------------------------------------------
@@ -32,7 +34,9 @@ public class PlayBGM : MonoBehaviour
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
-        SoundPlayer.PlayBGM(clip, 0.4f);
+        if (volum == 0.0f)
+            volum = 1.0f;
+        SoundPlayer.PlayBGM(clip, volum);
     }
 
     //------------------------------------------------------------------------------------------
