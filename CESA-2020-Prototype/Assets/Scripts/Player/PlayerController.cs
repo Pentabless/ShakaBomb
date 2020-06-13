@@ -413,7 +413,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == Enemy.NAME || collision.gameObject.tag == Enemy.ATTACK)
         {
             if (!deathFlag)
+            {
                 StartCoroutine(AudioPlay());
+                GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
+            }
             KnockBack(collision.transform.position);
             balloonController.Burst();
             balloonController.EnableMerge(false);
@@ -425,7 +428,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == Stage.DAMAGE_TILE)
         {
             if (!deathFlag)
+            {
                 StartCoroutine(AudioPlay());
+                GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
+            }
             //SoundPlayer.Play(audios[(int)AudioType.Damage]);
             balloonController.Burst();
             balloonController.EnableMerge(false);
