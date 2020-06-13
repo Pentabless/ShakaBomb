@@ -57,8 +57,8 @@ public class DoorToStage : MonoBehaviour
     private void Start()
     {
         //自身の番号のステージのデータを貰う
-        bool can_play = SharedData.instance.GetCanPlay(numStage);
-        int purification = SharedData.instance.GetPurification(numStage);
+        bool can_play = SharedData.instance.GetCanPlay(numStage-1);
+        int purification = SharedData.instance.GetPurification(numStage-1);
         int rank = SharedData.instance.GetPercentRank(purification);
 
         //子オブジェクトを探す
