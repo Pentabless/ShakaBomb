@@ -143,7 +143,7 @@ public class PlayDirector : MonoBehaviour
             GameObject go = GameObject.Find(AreaNameScript.NAME);
             if (go && Data.stage_number >= 0)
             {
-                string text = "第" + (Data.stage_number + 1) + "区画";
+                string text = "第" + (Data.stage_number) + "区画";
                 go.GetComponent<AreaNameScript>().ShowAreaName(text, 1.0f, 2.0f);
             }
         }
