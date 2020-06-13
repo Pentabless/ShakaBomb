@@ -39,6 +39,8 @@ public class CameraController : MonoBehaviour
 
     // デバックカメラ揺れ
     CameraShake cameraShake;
+    // 揺れる前の座標
+    Vector3 originPos = Vector3.zero;
     // 次のブロックへのポジション
     Vector3 nextPos;
     // 現在のポジション
@@ -89,10 +91,13 @@ public class CameraController : MonoBehaviour
         pController = player.GetComponent<PlayerController>();
 
         RespawnApproval = false;
+
+        originPos = SetCameraRangePosition(mainCamera.transform.position);
     }
 
     private void FixedUpdate()
     {
+        mainCamera.transform.position = originPos;
         var fourCorners = new Rect(GetScreenTopLeft().x, GetScreenBottomRight().y, GetScreenBottomRight().x, GetScreenTopLeft().y);
         RespawnApproval = false;
 
@@ -172,7 +177,8 @@ public class CameraController : MonoBehaviour
         //}
 
         // カメラの範囲指定を適用
-        mainCamera.transform.position = SetCameraRangePosition(mainCamera.transform.position.x, mainCamera.transform.position.y);
+        originPos = SetCameraRangePosition(mainCamera.transform.position);
+        mainCamera.transform.position = SetCameraRangePosition(mainCamera.transform.position + cameraShake.shakeMove);
 
         // 背景の移動
         MoveBackGrounds();
@@ -292,15 +298,14 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// 画面の範囲指定をする
     /// </summary>
-    /// <param name="x">カメラのXポジション</param>
-    /// <param name="y">カメラのYポジション</param>
+    /// <param name="pos">カメラのポジション</param>
     /// <returns></returns>
-    private Vector3 SetCameraRangePosition(float x, float y)
+    private Vector3 SetCameraRangePosition(Vector3 pos)
     {
         Vector3 temp;
-        temp = new Vector3(Mathf.Clamp(x, cameraRange.x, cameraRange.width)
-                         , Mathf.Clamp(y, cameraRange.y, cameraRange.height)
-                         , mainCamera.transform.position.z);
+        temp = new Vector3(Mathf.Clamp(pos.x, cameraRange.x, cameraRange.width)
+                         , Mathf.Clamp(pos.y, cameraRange.y, cameraRange.height)
+                         , pos.z);
         return temp;
     }
 
