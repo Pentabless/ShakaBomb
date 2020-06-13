@@ -1469,6 +1469,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage_14
       objectReference: {fileID: 0}
+    - target: {fileID: 1806773028452803737, guid: 16c3d6631dbffaf4184d1567b6edd280,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1806773028452803738, guid: 16c3d6631dbffaf4184d1567b6edd280,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1523,6 +1528,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50324142, guid: 16c3d6631dbffaf4184d1567b6edd280, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c3d6631dbffaf4184d1567b6edd280, type: 3}
