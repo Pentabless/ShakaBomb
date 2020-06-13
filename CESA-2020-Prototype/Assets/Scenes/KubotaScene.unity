@@ -1115,10 +1115,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 650543912, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
-      propertyPath: m_ColliderPaths.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 650543916, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
       propertyPath: m_TileAssetArray.Array.data[0].m_Data
       value: 
@@ -1143,6 +1139,10 @@ PrefabInstance:
       propertyPath: m_TileSpriteArray.Array.data[12].m_Data
       value: 
       objectReference: {fileID: 919084880}
+    - target: {fileID: 650543912, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90cb457e6de19874faf88fbdeaf14556, type: 3}
 --- !u!1001 &1069601306
@@ -2018,6 +2018,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage_10
       objectReference: {fileID: 0}
+    - target: {fileID: 8231967584763095841, guid: cdbbcb93ad849b54bb11f3e9e9cd22ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8231967584763095842, guid: cdbbcb93ad849b54bb11f3e9e9cd22ef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2072,6 +2077,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 188836147, guid: cdbbcb93ad849b54bb11f3e9e9cd22ef, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdbbcb93ad849b54bb11f3e9e9cd22ef, type: 3}

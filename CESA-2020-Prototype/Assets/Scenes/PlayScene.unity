@@ -536,6 +536,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2575276704460649934, guid: f5c9003d343cba04f959eeba45efb563,
+        type: 3}
+      propertyPath: stage_prefab.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575276704460649934, guid: f5c9003d343cba04f959eeba45efb563,
+        type: 3}
+      propertyPath: stage_prefab.Array.data[5]
+      value: 
+      objectReference: {fileID: 2253501245551885051, guid: 6d1ab714bb741e84ba5d0911ea699e1a,
+        type: 3}
+    - target: {fileID: 2575276704460649934, guid: f5c9003d343cba04f959eeba45efb563,
+        type: 3}
+      propertyPath: stage_prefab.Array.data[6]
+      value: 
+      objectReference: {fileID: 8932341705582500017, guid: 3147a8fc933f59f498cc34eafc43958e,
+        type: 3}
+    - target: {fileID: 2575276704460649934, guid: f5c9003d343cba04f959eeba45efb563,
+        type: 3}
+      propertyPath: stage_prefab.Array.data[7]
+      value: 
+      objectReference: {fileID: 2977012396576132988, guid: 3c6a9dfd0719f9f448aeb8da96394fc9,
+        type: 3}
+    - target: {fileID: 2575276704460649934, guid: f5c9003d343cba04f959eeba45efb563,
+        type: 3}
+      propertyPath: stage_prefab.Array.data[8]
+      value: 
+      objectReference: {fileID: 2587318242021695990, guid: 2a116d2cb825c16468ec3b10b170f341,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5c9003d343cba04f959eeba45efb563, type: 3}
 --- !u!1 &927178317
@@ -831,11 +860,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 458014141, guid: dd77280caf3f31a468f13f35f500cd8e, type: 3}
+    - target: {fileID: 1093103533, guid: dd77280caf3f31a468f13f35f500cd8e, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1093103533, guid: dd77280caf3f31a468f13f35f500cd8e, type: 3}
+    - target: {fileID: 458014141, guid: dd77280caf3f31a468f13f35f500cd8e, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -1247,6 +1276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d20207fd12446b4c9e1e8ee45d9c9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeDelay: 0.016666668
 --- !u!81 &1514741963
 AudioListener:
   m_ObjectHideFlags: 0
