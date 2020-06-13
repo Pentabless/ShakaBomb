@@ -607,6 +607,15 @@ public class PlayerController : MonoBehaviour
     public void SetTargetPos(Vector3 pos)
     {
         targetPos = pos;
+        autoMoveFinished = false;
+    }
+
+    //------------------------------------------------------------------------------------------
+    // 自動移動が完了しているか取得する
+    //------------------------------------------------------------------------------------------
+    public bool AutoMoveFinished()
+    {
+        return autoMoveFinished;
     }
 
     //------------------------------------------------------------------------------------------
