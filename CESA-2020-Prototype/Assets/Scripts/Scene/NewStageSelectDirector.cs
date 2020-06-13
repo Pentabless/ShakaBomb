@@ -71,7 +71,8 @@ public class NewStageSelectDirector : MonoBehaviour
         // シーン開始時にフェードインする
         FadeManager.FadeIn(0.01f);
         wipeCamera = GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<WipeCamera>();
-        wipeCamera.StartFadeIn(player.transform.position, 1.5f);
+        wipeCamera.StartFadeIn(player.transform.position, 1.0f);
+        waitTime = 1.0f;
 
     }
 
@@ -83,7 +84,11 @@ public class NewStageSelectDirector : MonoBehaviour
         switch (state)
         {
             case StageSelectState.Start:
-                state = StageSelectState.Playing;
+                waitTime -= Time.deltaTime;
+                if (waitTime <= 0)
+                {
+                    state = StageSelectState.Playing;
+                }
                 break;
             case StageSelectState.Playing:
                 canPause = true;

@@ -100,7 +100,8 @@ public class PlayDirector : MonoBehaviour
         // シーン開始時にフェードインする
         FadeManager.FadeIn(0.01f);
         wipeCamera = GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<WipeCamera>();
-        wipeCamera.StartFadeIn(player.transform.position, 1.5f);
+        wipeCamera.StartFadeIn(player.transform.position, 1.0f);
+        waitTime = 1.0f;
 
     }
 
@@ -128,8 +129,18 @@ public class PlayDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void UpdateStart()
     {
-        state = PlayState.Playing;
-        canPause = true;
+        waitTime -= Time.deltaTime;
+        if (waitTime <= 0.0f)
+        {
+            state = PlayState.Playing;
+            canPause = true;
+            GameObject go = GameObject.Find(AreaNameScript.NAME);
+            if (go && Data.stage_number >= 0)
+            {
+                string text = "第" + (Data.stage_number + 1) + "区画";
+                go.GetComponent<AreaNameScript>().ShowAreaName(text, 1.0f, 2.0f);
+            }
+        }
     }
 
     //------------------------------------------------------------------------------------------
