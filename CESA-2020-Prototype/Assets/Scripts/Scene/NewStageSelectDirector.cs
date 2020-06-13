@@ -70,7 +70,7 @@ public class NewStageSelectDirector : MonoBehaviour
             var doors = doorWrapper.GetComponentsInChildren<DoorToStage>();
             foreach(var door in doors)
             {
-                if (door.GetStageNumber() == Data.star_num)
+                if (door.GetStageNumber() == Data.stage_number)
                 {
                     player.transform.position = door.transform.position;
                     GameObject.Find(Common.Camera.CONTROLLER).GetComponent<CameraController>().ResetCameraPos(player.transform.position);
