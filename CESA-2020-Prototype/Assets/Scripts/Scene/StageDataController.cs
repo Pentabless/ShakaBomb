@@ -28,8 +28,12 @@ public class StageDataController : MonoBehaviour
     private Image image_stage_number_logo;
     //ステージ番号のテキスト
     private Text text_stage_number;
+    //操作説明のロゴ
+    private Image image_operation_logo;
     //ロゴの回転角度
-    private float logo_angle;
+    private float number_logo_angle;
+    //操作説明の回転角度
+    private float operation_logo_angle;
     //ロゴの回転向き
     private bool logo_angle_direction;
 
@@ -67,15 +71,21 @@ public class StageDataController : MonoBehaviour
         //ステージ番号のロゴを探す
         image_stage_number_logo = GameObject.Find("StageNumberLogo").GetComponent<Image>();
         //ステージ番号のロゴの回転角度を設定する(最初は見えない)
-        logo_angle = 90.0f;
+        number_logo_angle = 90.0f;
         logo_angle_direction = false;   //プレイヤーがどのドアにも当たっていない
-        image_stage_number_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(logo_angle, 0.0f, 0.0f);
+        image_stage_number_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(number_logo_angle, 0.0f, 0.0f);
 
         //**ステージ番号のテキスト**//*****************************************************
         //ステージ番号のテキストを探す
         text_stage_number = GameObject.Find("StageNumber").GetComponent<Text>();
         //ステージ番号のテキストを初期化
         text_stage_number.text = "ステージ??";
+
+        //**操作説明のロゴ**//*****************************************************
+        image_operation_logo = GameObject.Find("SmallUILogo").GetComponent<Image>();
+        //操作説明のロゴの回転角度を設定する(最初は見えない)
+        operation_logo_angle = 110.0f;
+        image_operation_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(operation_logo_angle, 0.0f, 0.0f);
 
 
         playerController = GameObject.Find(Common.Player.NAME).GetComponent<PlayerController>();
@@ -152,10 +162,10 @@ public class StageDataController : MonoBehaviour
 
                 Color color = GameObject.Find("LogoDirty").GetComponent<Image>().color;
                 //プレイできないステージだったら
-                if (SharedData.instance.GetCanPlay(stage_num-1)==false)
+                if (SharedData.instance.GetCanPlay(stage_num - 1) == false)
                 {
                     //汚れを出す
-                    GameObject.Find("LogoDirty").GetComponent<Image>().color=new Color(color.r,color.g,color.b,1.0f);
+                    GameObject.Find("LogoDirty").GetComponent<Image>().color = new Color(color.r, color.g, color.b, 1.0f);
                 }
                 else
                 {
@@ -173,24 +183,41 @@ public class StageDataController : MonoBehaviour
         //見えるように回転する時
         if (logo_angle_direction)
         {
-            logo_angle -= 3.0f;
+            number_logo_angle -= 3.0f;
+            operation_logo_angle -= 3.0f;
             //0.0度まで
-            if (logo_angle < 0.0f)
+            if (number_logo_angle < 0.0f)
             {
-                logo_angle = 0.0f;
+                number_logo_angle = 0.0f;
+            }
+            //0.0度まで
+            if (operation_logo_angle < 0.0f)
+            {
+                operation_logo_angle = 0.0f;
             }
         }
         else
         {
-            logo_angle += 3.0f;
-            //90.0度まで
-            if(logo_angle>90.0f)
+            number_logo_angle += 3.0f;
+            //少しずらして戻す
+            if (number_logo_angle > 20.0f)
             {
-                logo_angle = 90.0f;
+                operation_logo_angle += 3.0f;
+            }
+            //90.0度まで
+            if (number_logo_angle > 90.0f)
+            {
+                number_logo_angle = 90.0f;
+            }
+            //110.0度まで
+            if (operation_logo_angle > 110.0f)
+            {
+                operation_logo_angle = 110.0f;
             }
         }
         //回転更新
-        image_stage_number_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(logo_angle, 0.0f, 0.0f);
+        image_stage_number_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(number_logo_angle, 0.0f, 0.0f);
+        image_operation_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(operation_logo_angle, 0.0f, 0.0f);
 
         ////移動するドアのために毎回座標更新する
         //for (int i = 0; i < door_obj.Length; i++)
