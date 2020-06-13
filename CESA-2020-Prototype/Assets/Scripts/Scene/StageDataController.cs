@@ -152,7 +152,7 @@ public class StageDataController : MonoBehaviour
 
                 Color color = GameObject.Find("LogoDirty").GetComponent<Image>().color;
                 //プレイできないステージだったら
-                if (SharedData.instance.GetCanPlay(i)==false)
+                if (SharedData.instance.GetCanPlay(stage_num-1)==false)
                 {
                     //汚れを出す
                     GameObject.Find("LogoDirty").GetComponent<Image>().color=new Color(color.r,color.g,color.b,1.0f);
@@ -211,7 +211,6 @@ public class StageDataController : MonoBehaviour
     {
         //ドアの数分の配列を作る
         GameObject[] obj_list = new GameObject[door_obj.Length];
-        int count = 0;
 
         //用意した配列の数だけ繰り返す
         for (int i = 0; i < obj_list.Length; i++)
@@ -220,11 +219,10 @@ public class StageDataController : MonoBehaviour
             for (int j = 0; j < door_obj.Length; j++)
             {
                 //配列の要素数がドアのステージ番号とあっていたら
-                if (i == door_obj[j].GetComponent<DoorToStage>().GetStageNumber())
+                if (i + 1 == door_obj[j].GetComponent<DoorToStage>().GetStageNumber())
                 {
                     //配列に入れる
-                    obj_list[count] = door_obj[j];
-                    count++;
+                    obj_list[i] = door_obj[j];
                     break;
                 }
             }
