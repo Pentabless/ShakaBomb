@@ -29,8 +29,6 @@ public class DoorToStage : MonoBehaviour
     [SerializeField]
     int numStage;
 
-    bool goStage = false;
-
     GameObject shutter;      //シャッター
     GameObject door_frame;   //ドアフレーム
     GameObject lamp;         //ランプ
@@ -165,10 +163,10 @@ public class DoorToStage : MonoBehaviour
         }
         //シャッターの上がり具合を影響させる
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);
-        
-        goStage = Input.GetButtonDown(Common.Player.JUMP);
 
-        if(goStage&& touch_player)
+        var goStage = Input.GetAxis(Player.VERTICAL);
+
+        if(goStage >= 1.0f&& touch_player||Input.GetKeyDown(KeyCode.UpArrow)&& touch_player)
         {
             //プレイできるドアだったら
             if (SharedData.instance.GetCanPlay(numStage - 1))

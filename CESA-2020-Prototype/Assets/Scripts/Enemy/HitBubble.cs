@@ -37,7 +37,7 @@ public class HitBubble : MonoBehaviour
         }
         if (collision.transform.tag == "Bullet" && !burst)
         {
-            SoundPlayer.Play(burstSE,0.5f);
+            SoundPlayer.Play(burstSE,1.0f);
             Vector2 effectSize = Vector2.one * 3.5f;
             EffectGenerator.BubbleBurstFX(
                 new BubbleBurstFX.Param(this.GetComponent<SpriteRenderer>().color, effectSize),

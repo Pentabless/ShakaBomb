@@ -67,7 +67,7 @@ public class PrologueDirector : MonoBehaviour
         }
         if (fadeControllers.Count()-1 <= imageIndex)
         {
-            SceneManager.LoadScene("NewStageSelectScene");
+            SceneManager.LoadScene("TutorialScene");
         }
         else if(imageIndex == fadeControllers.Count() -2 && count >= fadeInterval*0.7f)
         {
