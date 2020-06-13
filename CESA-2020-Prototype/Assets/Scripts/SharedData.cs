@@ -62,7 +62,7 @@ public class SharedData : MonoBehaviour
     public void SetCanvasScaleOption(CanvasScaler scaler)
     {
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920.0f, 1050.0f);
+        scaler.referenceResolution = new Vector2(1920.0f, 1080.0f);
         scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
     /*--終わり：SetCanvasScalerOption--*/

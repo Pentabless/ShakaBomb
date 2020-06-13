@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿//==============================================================================================
+/// File Name	: StageSelectPauseMenu.cs
+/// Summary		: ステージセレクトシーンのポーズメニュー
+//==============================================================================================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-
-//ポーズメニュースクリプト
-public class PauseMenuScript : MonoBehaviour
+using System;
+using Common;
+//==============================================================================================
+public class StageSelectPauseMenu : MonoBehaviour
 {
     [SerializeField]
     private PauseManager pauseManager;      //ポーズ管理スクリプト
@@ -22,7 +26,7 @@ public class PauseMenuScript : MonoBehaviour
     //初期化処理
     private void Init()
     {
-        choice = 1;
+        choice = 0;
         for (int i = 0; i < choices.Length; ++i)
         {
             if (i == choice)
@@ -41,23 +45,7 @@ public class PauseMenuScript : MonoBehaviour
     {
         Init();
     }
-
-    ////エネルギーの入手状況の設定
-    //public void SetResult(bool[] getEnergies)
-    //{
-    //    for (int i = 0; i < getEnergyImages.Length; ++i)
-    //    {
-    //        //入手してないなら飛ばす
-    //        if (!getEnergies[i])
-    //        {
-    //            continue;
-    //        }
-    //        //入手していないなら色を明るくする
-    //        Image image = getEnergyImages[i].GetComponent<Image>();
-    //        image.color = new Color(1f, 1f, 1f);
-    //    }
-    //}
-
+    
     private void Update()
     {
         //選択済みなら処理しない
@@ -70,19 +58,19 @@ public class PauseMenuScript : MonoBehaviour
         float axis = Input.GetAxisRaw("Vertical");
         bool pressUp = (Input.GetKey(KeyCode.UpArrow) || axis > 0.0f);
         bool pressDown = (Input.GetKey(KeyCode.DownArrow) || axis < 0.0f);
-        
+
 
         //連続入力制御
         if (pressDelay > 0f)
         {
             pressDelay -= Time.deltaTime;
         }
-        
+
         //カーソル移動
         if (pressDelay <= 0f)
         {
             int input = (pressDown ? 1 : pressUp ? choices.Length - 1 : 0);
-            int newChoice = (choice + input)%choices.Length;
+            int newChoice = (choice + input) % choices.Length;
 
             // カーソル移動があった場合に処理する
             if (newChoice != choice)
@@ -108,13 +96,9 @@ public class PauseMenuScript : MonoBehaviour
                     Init();
                     pauseManager.ChangePauseState();
                     break;
-                //リトライ
+                //タイトルに戻る
                 case 1:
-                    FadeManager.FadeOut(SceneManager.GetActiveScene().buildIndex);
-                    break;
-                //ステージ選択
-                case 2:
-                    FadeManager.FadeOut("NewStageSelectScene");
+                    FadeManager.FadeOut("TitleScene");
                     break;
                 default:
                     Debug.Log("PauseMenu:SelectError");

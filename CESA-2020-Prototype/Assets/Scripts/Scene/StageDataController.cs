@@ -21,6 +21,8 @@ public class StageDataController : MonoBehaviour
     private GameObject[] door_obj;
     ////テキストオブジェクト
     //private GameObject[] text_obj;
+    //プレイヤー
+    private PlayerController playerController;
 
     //ステージ番号のロゴ
     private Image image_stage_number_logo;
@@ -76,6 +78,8 @@ public class StageDataController : MonoBehaviour
         text_stage_number.text = "ステージ??";
 
 
+        playerController = GameObject.Find(Common.Player.NAME).GetComponent<PlayerController>();
+
         ////テキストオブジェクトのサイズを決める
         //text_obj = new GameObject[door_obj.Length];
 
@@ -125,6 +129,7 @@ public class StageDataController : MonoBehaviour
     void Update()
     {
         logo_angle_direction = false;
+        bool enableJump = true;
         //ドアの数だけ繰り返す
         for (int i = 0; i < door_obj.Length; i++)
         {
@@ -132,16 +137,18 @@ public class StageDataController : MonoBehaviour
             if (door_obj[i].GetComponent<DoorToStage>().GetTouchPlayer())
             {
                 logo_angle_direction = true;
+                int stage_num = door_obj[i].GetComponent<DoorToStage>().GetStageNumber();
+                text_stage_number.text = "第" + (stage_num + 1).ToString() + "区画";
                 //ステージ番号が二桁だったら
-                if (i>=10)
-                {
-                    text_stage_number.text = "ステージ" + door_obj[i].GetComponent<DoorToStage>().GetStageNumber().ToString();
-                }
+                //if (i>=10)
+                //{
+                //    text_stage_number.text = "ステージ" + door_obj[i].GetComponent<DoorToStage>().GetStageNumber().ToString();
+                //}
                 //ステージ番号が一桁だったら
-                else
-                {
-                    text_stage_number.text = "ステージ0" + door_obj[i].GetComponent<DoorToStage>().GetStageNumber().ToString();
-                }
+                //else
+                //{
+                //    text_stage_number.text = "ステージ0" + door_obj[i].GetComponent<DoorToStage>().GetStageNumber().ToString();
+                //}
 
                 Color color = GameObject.Find("LogoDirty").GetComponent<Image>().color;
                 //プレイできないステージだったら
@@ -154,11 +161,14 @@ public class StageDataController : MonoBehaviour
                 {
                     //汚れを出さない
                     GameObject.Find("LogoDirty").GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0.0f);
+                    enableJump = false;
                 }
 
                 break;
             }
         }
+
+        playerController.EnableJump(enableJump);
 
         //見えるように回転する時
         if (logo_angle_direction)

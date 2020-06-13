@@ -29,7 +29,7 @@ public class DoorToStage : MonoBehaviour
     [SerializeField]
     int numStage;
 
-    float goStage = Common.Decimal.ZERO;
+    bool goStage = false;
 
     GameObject shutter;      //シャッター
     GameObject door_frame;   //ドアフレーム
@@ -165,21 +165,21 @@ public class DoorToStage : MonoBehaviour
         }
         //シャッターの上がり具合を影響させる
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);
-
-        goStage = Input.GetAxis(GamePad.BUTTON_A);
+        
+        goStage = Input.GetButtonDown(Common.Player.JUMP);
     }
 
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == Player.NAME && goStage > 0.0f)
+        if (collision.tag == Player.NAME && goStage)
         {
             //プレイできるドアだったら
             if (SharedData.instance.GetCanPlay(numStage))
             {
                 // ToDo:静的な変数に代入
                 Data.stage_number = numStage;
-                SceneManager.LoadScene("PlayScene");
+                GameObject.Find(NewStageSelectDirector.NAME).GetComponent<NewStageSelectDirector>().DecideStage();
             }
         }
 

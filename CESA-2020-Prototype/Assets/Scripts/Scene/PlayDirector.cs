@@ -51,6 +51,8 @@ public class PlayDirector : MonoBehaviour
     private GameObject player;
     private PlayerController playerController;
 
+    // ワイプエフェクト
+    private WipeCamera wipeCamera;
     // ポーズマネージャー
     private PauseManager pauseManager;
     // クリア失敗用フレーム
@@ -96,7 +98,11 @@ public class PlayDirector : MonoBehaviour
         failedFrameController = go.GetComponent<FailedFrameController>();
 
         // シーン開始時にフェードインする
-        FadeManager.FadeIn();
+        FadeManager.FadeIn(0.01f);
+        wipeCamera = GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<WipeCamera>();
+        wipeCamera.StartFadeIn(player.transform.position, 1.0f);
+        waitTime = 1.0f;
+
     }
 
 	//------------------------------------------------------------------------------------------
@@ -123,8 +129,18 @@ public class PlayDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void UpdateStart()
     {
-        state = PlayState.Playing;
-        canPause = true;
+        waitTime -= Time.deltaTime;
+        if (waitTime <= 0.0f)
+        {
+            state = PlayState.Playing;
+            canPause = true;
+            GameObject go = GameObject.Find(AreaNameScript.NAME);
+            if (go && Data.stage_number >= 0)
+            {
+                string text = "第" + (Data.stage_number + 1) + "区画";
+                go.GetComponent<AreaNameScript>().ShowAreaName(text, 1.0f, 2.0f);
+            }
+        }
     }
 
     //------------------------------------------------------------------------------------------
@@ -182,10 +198,10 @@ public class PlayDirector : MonoBehaviour
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
-            CalculateStarNum();
-            FadeManager.fadeColor = Color.white;
+            FadeManager.fadeColor = Color.clear;
             FadeManager.FadeOut("NewResultScene", 1.5f);
-            SceneEffecterController.StartEffect();
+            wipeCamera.StartFadeOut(player.transform.position, 1.4f);
+            //SceneEffecterController.StartEffect();
             waitTime = 99.0f;
         }
     }
@@ -250,29 +266,6 @@ public class PlayDirector : MonoBehaviour
             }
            
             yield return null;
-        }
-    }
-
-    //------------------------------------------------------------------------------------------
-    // 星の数を計算する
-    //------------------------------------------------------------------------------------------
-    private void CalculateStarNum()
-    {
-        if (time >= timeData.star3Time)
-        {
-            Data.star_num = 3;
-        }
-        else if(time >= timeData.star2Time)
-        {
-            Data.star_num = 2;
-        }
-        else if (time >= timeData.star1Time)
-        {
-            Data.star_num = 1;
-        }
-        else
-        {
-            Data.star_num = 0;
         }
     }
 }
