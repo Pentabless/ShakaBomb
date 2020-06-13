@@ -313,7 +313,7 @@ public class CameraController : MonoBehaviour
     /// 画面の左上座標を取得
     /// </summary>
     /// <returns>画面の左上座標</returns>
-    private Vector3 GetScreenTopLeft()
+    public Vector3 GetScreenTopLeft()
     {
         // 画面の左上を取得
         Vector3 topLeft = mainCamera.ScreenToWorldPoint(new Vector3(0.0f, Screen.height, 0.0f));
@@ -325,7 +325,7 @@ public class CameraController : MonoBehaviour
     /// 画面の右下座標を取得
     /// </summary>
     /// <returns>画面の右下座標</returns>
-    private Vector3 GetScreenBottomRight()
+    public Vector3 GetScreenBottomRight()
     {
         // 画面の右下を取得
         Vector3 bottomRight = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f));
