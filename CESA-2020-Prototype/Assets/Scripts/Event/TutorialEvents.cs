@@ -30,6 +30,7 @@ public class TutorialEvents: MonoBehaviour
 
     PauseManager pauseManager = null;
     EventObject eventObj;
+    IEnumerator routine;
 
     bool playOn = false;
     float count = 0.0f;
@@ -66,13 +67,21 @@ public class TutorialEvents: MonoBehaviour
         if (playOn)
         {
             count += Time.deltaTime;
-            if (screen.alpha <= 1.0f)
+            if (routine != null && screen.alpha >= 1.0f)
             {
-                screen.alpha += fadeTime / 100;
+                StopCoroutine(routine);
+                routine = null;
+                screen.alpha = 1.0f;
             }
         }
         else
         {
+            if (routine != null&&screen.alpha <= 0.0f)
+            {
+                StopCoroutine(routine);
+                routine = null;
+                screen.alpha = 0.0f;
+            }
             count = 0.0f;
         }
 
@@ -96,6 +105,8 @@ public class TutorialEvents: MonoBehaviour
         playOn = true;
         video.clip = clip;
         video.Play();
+        routine = Fade();
+        StartCoroutine(routine);
         canvasText.text = text;
         pauseManager.SetFilterColor(Color.clear);
         pauseManager.Pause(fadeTime);
@@ -108,8 +119,26 @@ public class TutorialEvents: MonoBehaviour
     {
         pauseManager.Resume();
         playOn = false;
-        screen.alpha = 0.0f;
+        routine = Fade();
+        StartCoroutine(routine);
         FadeManager.FadeIn(fadeTime);
+    }
+
+    private IEnumerator Fade()
+    {
+        while (true)
+        {
+            if(playOn)
+            {
+                screen.alpha +=  0.1f;
+            }
+            else
+            {
+                screen.alpha -= 0.1f;
+            }
+
+            yield return new WaitForSeconds(fadeTime);
+        }
     }
 
 }
