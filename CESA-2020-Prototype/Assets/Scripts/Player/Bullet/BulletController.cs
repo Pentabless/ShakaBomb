@@ -16,10 +16,10 @@ public class BulletController : MonoBehaviour
     // リジッドボディ
     Rigidbody2D rig = null;
 
-    // 消えるかどうか
-    bool isDestroy = false;
     // 発射したかどうか
     bool wasShoted = false;
+    // 敵に当たったかどうか
+    bool hitEnemy = false;
 
     [SerializeField]
     // 発射速度
@@ -33,10 +33,13 @@ public class BulletController : MonoBehaviour
     // 発射方向
     float shotAngle = 0.0f;
 
+    [SerializeField]
+    // 破裂時の効果音
+    private AudioClip burstSE = null;
+
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
-        isDestroy = false;
         wasShoted = false;
     }
     float t = 0;Vector3 f;Vector3 p;
@@ -63,6 +66,10 @@ public class BulletController : MonoBehaviour
     {
         if (collision.gameObject.tag != "Player")
         {
+            if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == Common.Enemy.HIT_STATE)
+            {
+                hitEnemy = true;
+            }
             Destroy();
         }
     }
@@ -102,7 +109,11 @@ public class BulletController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Destroy()
     {
-        GenerateBurstEffect();
+        if (!hitEnemy)
+        {
+            GenerateBurstEffect();
+            SoundPlayer.Play(burstSE, 0.3f);
+        }
         Destroy(this.gameObject);
     }
 

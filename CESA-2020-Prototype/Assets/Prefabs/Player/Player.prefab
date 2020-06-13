@@ -332,6 +332,7 @@ MonoBehaviour:
   sizeRate: 2.5
   mergeDecay: 0.35
   balloonLerpRate: 0.1
+  burstSE: {fileID: 8300000, guid: 618ec71f0e1cea542a185428080ec544, type: 3}
   moveLayerMask:
     serializedVersion: 2
     m_Bits: 4276224
@@ -606,8 +607,7 @@ MonoBehaviour:
   bulletG: {fileID: 0}
   dirtManager: {fileID: 9095182324152653805, guid: 2f0df4da4e635144d8ff96dd339d2970,
     type: 3}
-  gamepadManager: {fileID: 3867471678414555890, guid: ac9a527e5f2cecb41be67a8ed7cc3b25,
-    type: 3}
+  gamepadManagerObject: {fileID: 0}
   audios:
   - {fileID: 8300000, guid: a62ab11091ec775468749260d0fc5f27, type: 3}
   - {fileID: 8300000, guid: c6d21aa15b6b57d459ef54a1079c6482, type: 3}
