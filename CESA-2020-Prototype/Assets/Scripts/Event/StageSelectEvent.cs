@@ -22,10 +22,13 @@ public class StageSelectEvent : MonoBehaviour
     string text;
     [SerializeField]
     float fadeTime = 1.0f;
+    [SerializeField]
+    float interval = 3.0f;
 
     PauseManager pauseManager = null;
     EventObject eventObj;
     IEnumerator routine;
+    float count;
     bool playOn = false;
 
     //------------------------------------------------------------------------------------------
@@ -60,11 +63,18 @@ public class StageSelectEvent : MonoBehaviour
     {
         if (playOn)
         {
+            count += Time.deltaTime;
             if (routine != null && screen.alpha >= 1.0f)
             {
                 StopCoroutine(routine);
                 routine = null;
                 screen.alpha = 1.0f;
+            }
+
+            if (Input.GetButtonDown(GamePad.BUTTON_A) && count >= interval)
+            {
+                count = 0.0f;
+                eventObj.EndEvent();
             }
         }
         else
@@ -76,11 +86,6 @@ public class StageSelectEvent : MonoBehaviour
                 screen.alpha = 0.0f;
                 screen.gameObject.SetActive(false);
             }
-        }
-
-        if(Input.GetButtonDown(GamePad.BUTTON_A))
-        {
-            eventObj.EndEvent();
         }
     }
 
