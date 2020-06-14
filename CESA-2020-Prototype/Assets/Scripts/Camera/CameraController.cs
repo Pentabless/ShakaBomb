@@ -139,11 +139,28 @@ public class CameraController : MonoBehaviour
                     UpdateNextPos(Vector3.right * -cellX);
                 }
             }
-            else
+            else if(playerRigi.velocity.x > 0.0f)
             {
                 if (fourCorners.width < player.transform.position.x)
                 {
                     UpdateNextPos(Vector3.right * cellX);
+                }
+            }
+            else
+            {
+                if(Data.playerDir < 0)
+                {
+                    if (fourCorners.x > player.transform.position.x)
+                    {
+                        UpdateNextPos(Vector3.right * -cellX);
+                    }
+                }
+                else
+                {
+                    if (fourCorners.width < player.transform.position.x)
+                    {
+                        UpdateNextPos(Vector3.right * cellX);
+                    }
                 }
             }
 
