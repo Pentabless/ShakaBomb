@@ -298,9 +298,9 @@ public class ResultDirector : MonoBehaviour
     private void SetPercentTextPositionColor(int rank, int num)
     {
         //今回の汚染浄化率のテキストの座標(評価１の時基準)
-        Vector3 stage_purification_pos = new Vector3(560.0f, 530.0f, -2000.0f);
+        Vector3 stage_purification_pos = new Vector3(560.0f, 500.0f, -2000.0f);
         //パーセンテージの座標(今回の汚染浄化率の差)
-        Vector3 purification_rate_pos = new Vector3(0.0f, -250.0f, 0.0f);
+        Vector3 purification_rate_pos = new Vector3(0.0f, -220.0f, 0.0f);
         //パーセンテージの単位の座標(パーセンテージの差)
         Vector3 percent_pos = new Vector3(300.0f, -50.0f, 0.0f);
         //色(初期：黒)
