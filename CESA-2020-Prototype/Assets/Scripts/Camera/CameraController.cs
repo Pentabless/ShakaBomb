@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     GameObject player;
     PlayerController pController;
+    Rigidbody2D playerRigi;
     // カメラの視野角
     [SerializeField]
     float cameraViewRange;
@@ -86,6 +87,7 @@ public class CameraController : MonoBehaviour
         }
 
         pController = player.GetComponent<PlayerController>();
+        playerRigi = player.GetComponent<Rigidbody2D>();
 
         RespawnApproval = false;
 
@@ -120,18 +122,17 @@ public class CameraController : MonoBehaviour
             {
                 pController.EnableControl(true);
                 RespawnApproval = true;
-                var rigid = player.GetComponent<Rigidbody2D>();
-                rigid.WakeUp();
-                rigid.velocity = playerRigidInfo.velocity;
-                rigid.angularVelocity = playerRigidInfo.angularVeloccity;
-                rigid.constraints = playerRigidInfo.constraints;
+                playerRigi.WakeUp();
+                playerRigi.velocity = playerRigidInfo.velocity;
+                playerRigi.angularVelocity = playerRigidInfo.angularVeloccity;
+                playerRigi.constraints = playerRigidInfo.constraints;
                 player.GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
             }
         }
         else
         {
             // プレイヤーの向きによって画面を切り替えるかどうかを判断
-            if (Data.playerDir < 0)
+            if (playerRigi.velocity.x < 0.0f)
             {
                 if (fourCorners.x > player.transform.position.x)
                 {
