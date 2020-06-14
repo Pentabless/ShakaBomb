@@ -70,6 +70,8 @@ public class ResultDirector : MonoBehaviour
     private float change_sprite_time;
     //リザルト画面が始まった時間
     private float start_result_time;
+    //ランプの数
+    private int num_lamp;
 
     /*-----------------*/
     /*--関数名：Start--*/
@@ -120,13 +122,13 @@ public class ResultDirector : MonoBehaviour
         //浄化率のテキストを設定する
         text_rate.GetComponent<Text>().text = percent.ToString();
         //浄化率からランクを決める
-        int rank = SharedData.instance.GetPercentRank(percent);
+        num_lamp = SharedData.instance.GetPercentRank(percent);
         //浄化率からテキストの色を設定する
-        SetPercentTextPositionColor(rank, percent / 10);
+        SetPercentTextPositionColor(num_lamp, percent / 10);
         //浄化率をBGMを決めて再生する
-        PlayPercentBGM(rank);
+        PlayPercentBGM(num_lamp);
         //浄化率から背景を設定する
-        SetBackGroundSprite(rank);
+        SetBackGroundSprite(num_lamp);
 
         //*----SharedDataにあるステージデータに記録する----*//
         SharedData.instance.SetPurificationRate(percent);
@@ -264,14 +266,22 @@ public class ResultDirector : MonoBehaviour
         //何かのキーを押したら
         if ((Input.anyKeyDown ||
             //Aボタンを押したら
-            Input.GetAxis(Common.GamePad.BUTTON_A) > 0 )&&
+            Input.GetAxis(Common.GamePad.BUTTON_A) > 0) &&
             // フェードアウト中でないなら
             !FadeManager.isFadeOut)
         {
             //フェードを始める
             //sc_screen_fade.SetFadeType(true);
             FadeManager.fadeColor = Color.black;
-            FadeManager.FadeOut("NewStageSelectScene", 2.5f);
+            //ステージ番号が15でランプの数が2つ以上じゃなかったら(最終ステージクリアしていない)
+            if (!((Data.stage_number == 15) && (num_lamp >= 2)))
+            {
+                FadeManager.FadeOut("NewStageSelectScene", 2.5f);
+            }
+            else
+            {
+                FadeManager.FadeOut("GameClearScene", 2.5f);
+            }
             //BGMをフェードアウトする
             SoundFadeController.SetFadeOutSpeed(-0.005f);
             //Canvasの設定を変える(泡の飾りをUIより前に表示するために)
