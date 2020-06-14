@@ -180,13 +180,13 @@ public class PlayerController : MonoBehaviour
         if (autoControl)
         {
             bulletGenerator.DisableGuideLines();
-            if(transform.position.x < targetPos.x - 0.1f)
+            if (transform.position.x < targetPos.x - 0.1f)
             {
                 Data.playerDir = lastDir = dir = 1;
                 stickSence = 0.1f;
                 autoMoveFinished = false;
             }
-            else if(transform.position.x > targetPos.x + 0.1f)
+            else if (transform.position.x > targetPos.x + 0.1f)
             {
                 Data.playerDir = lastDir = dir = -1;
                 stickSence = 0.1f;
@@ -521,7 +521,7 @@ public class PlayerController : MonoBehaviour
             boostCount = 2;
 
             // 着地エフェクト(保留)
-            if(!IsDead())
+            if (!IsDead())
             {
                 Vector2 effectSize = Vector2.one * 0.7f;
                 EffectGenerator.BubbleBurstFX(
