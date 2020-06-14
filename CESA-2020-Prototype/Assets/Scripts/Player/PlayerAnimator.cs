@@ -170,7 +170,10 @@ public class PlayerAnimator : MonoBehaviour
                 if (deathAnimationTimer >= deathAnimationInfo.repairAnimationTime)
                 {
                     playerIsDead = false;
-                    player.Repair();
+                    if (Data.time > 0)
+                    {
+                        player.Repair();
+                    }
                     animator.SetInteger("DeathState", 0);
                 }
                 break;
