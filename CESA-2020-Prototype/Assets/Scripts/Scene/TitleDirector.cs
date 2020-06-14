@@ -181,6 +181,7 @@ public class TitleDirector : MonoBehaviour
         {
             //Spaceキーを押したら
             if ((Input.GetKeyDown(KeyCode.Space)) ||
+                (Input.GetKeyDown(KeyCode.Escape)) ||
                 //Bボタンを押したら
                 (Input.GetAxis(Common.GamePad.BUTTON_B) > 0))
             {
@@ -300,8 +301,8 @@ public class TitleDirector : MonoBehaviour
         else
         {
             //前景の飾りを作成する
-            decoration_scale = Random.Range(0.3f, 1.0f);
-            sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(/*Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f)*/1.0f, 1.0f, 1.0f, 1.0f), 10);
+            //decoration_scale = Random.Range(0.3f, 1.0f);
+            //sc_decoration_generator.CreateDecoration(new Vector3(Random.Range(camera_range[0].x, camera_range[1].x), camera_range[0].y - decoration_scale, 0.0f), new Vector3(decoration_scale, decoration_scale, decoration_scale), new Color(/*Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f)*/1.0f, 1.0f, 1.0f, 1.0f), 10);
 
             //フェードアウトが終わったら
             if (sc_screen_fade.GetFadeValue() == 1.0f)
