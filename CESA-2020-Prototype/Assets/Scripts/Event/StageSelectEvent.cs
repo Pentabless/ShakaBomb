@@ -75,7 +75,6 @@ public class StageSelectEvent : MonoBehaviour
                 routine = null;
                 screen.alpha = 0.0f;
                 screen.gameObject.SetActive(false);
-                this.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
 
