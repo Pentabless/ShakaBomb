@@ -112,7 +112,7 @@ public class BulletController : MonoBehaviour
         if (!hitEnemy)
         {
             GenerateBurstEffect();
-            SoundPlayer.Play(burstSE, 0.3f);
+            SoundPlayer.Play(burstSE);
         }
         Destroy(this.gameObject);
     }
