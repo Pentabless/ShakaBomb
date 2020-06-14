@@ -53,7 +53,7 @@ public class PlayBGM : MonoBehaviour
     public void GoalEvent()
     {
         SoundPlayer.Play(clip);
-        SoundFadeController.SetFadeOutSpeed(0.0050f);
+        SoundFadeController.SetFadeOutSpeed(0.0020f);
         // ToDoファンファーレを入れる
     }
     

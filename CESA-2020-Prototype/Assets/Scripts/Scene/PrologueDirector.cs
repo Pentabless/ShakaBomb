@@ -55,6 +55,23 @@ public class PrologueDirector : MonoBehaviour
             fadeControllers[imageIndex].SetFadeValue(Common.Decimal.ZERO);
             fadeControllers[imageIndex].fade_type = false;
 
+            if (imageIndex == 3)
+            {
+                Debug.Log("yes");
+                if (!startFadeOut)
+                {
+                    fadeScreen.SetFadeType(true);
+                    fadeScreen.SetFadeValue(0.0f);
+                    SoundFadeController.SetFadeOutSpeed(0.01f);
+                }
+                startFadeOut = true;
+
+                if (fadeScreen.GetFadeValue() == 1.0f)
+                {
+                    SceneManager.LoadScene("TutorialScene");
+                }
+            }
+
             if (fadeControllers.Count() > i)
             {
                 imageIndex++;
@@ -63,21 +80,5 @@ public class PrologueDirector : MonoBehaviour
 
             count = Common.Decimal.ZERO;
         }
-        if (fadeControllers.Count() - 1 <= imageIndex)
-        {
-            if(!startFadeOut)
-            {
-                fadeScreen.SetFadeType(true);
-                fadeScreen.SetFadeValue(0.0f);
-            }
-            SoundFadeController.SetFadeOutSpeed(0.001f);
-            startFadeOut = true;
-
-            if (fadeScreen.GetFadeValue() == 1.0f)
-            {
-                SceneManager.LoadScene("TutorialScene");
-            }
-        }
-
     }
 }
