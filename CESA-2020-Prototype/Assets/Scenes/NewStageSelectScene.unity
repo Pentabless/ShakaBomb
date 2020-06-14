@@ -171,10 +171,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5c9a9cc61b5a64f4ba9a781f108490ed, type: 3}
-    m_FontSize: 35
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 230
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "100%\u4EE5\u4E0A3"
+  m_Text: 100%
 --- !u!222 &12466649
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -706,8 +706,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -43.4, y: -301.7}
-  m_SizeDelta: {x: 1465.7, y: 221.5}
+  m_AnchoredPosition: {x: -165, y: -291}
+  m_SizeDelta: {x: 1177.3, y: 221.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &165248724
 PrefabInstance:
@@ -874,7 +874,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5c9a9cc61b5a64f4ba9a781f108490ed, type: 3}
-    m_FontSize: 35
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -885,7 +885,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "70%-99%\u4EE5\u4E0B2"
+  m_Text: 70%-99%
 --- !u!222 &176554132
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1321,7 +1321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 659, y: -304}
+  m_AnchoredPosition: {x: 581, y: -303}
   m_SizeDelta: {x: 500, y: 328}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &339429600
@@ -1365,7 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6df27e39573dc449bb44704db940e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 800, y: -304, z: 0}
+  startPos: {x: 581, y: -304, z: 0}
 --- !u!222 &339429602
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1449,7 +1449,7 @@ PrefabInstance:
     - target: {fileID: 3424076715530571499, guid: 639d26e69005a5f4397b32abfd264a82,
         type: 3}
       propertyPath: volum
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3424076715530571499, guid: 639d26e69005a5f4397b32abfd264a82,
         type: 3}
@@ -1980,7 +1980,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5c9a9cc61b5a64f4ba9a781f108490ed, type: 3}
-    m_FontSize: 35
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -1991,7 +1991,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "0%-29%\u4EE5\u4E0B0"
+  m_Text: 0%-29%
 --- !u!222 &533948182
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16032,7 +16032,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5c9a9cc61b5a64f4ba9a781f108490ed, type: 3}
-    m_FontSize: 35
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -16225,7 +16225,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5c9a9cc61b5a64f4ba9a781f108490ed, type: 3}
-    m_FontSize: 35
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -16236,7 +16236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "30%-69%\u4EE5\u4E0B1"
+  m_Text: 30%-69%
 --- !u!222 &1559317018
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17394,8 +17394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   screen: {fileID: 1832817164}
   canvasText: {fileID: 157246484}
-  text: "\u6B21\u306E\u533A\u753B\u3092\u89E3\u653E\u3059\u308B\u305F\u3081\u306B\u306F\u3001
-    \u524D\u306E\u533A\u753B\u3067\u306E\u6C5A\u67D3\u9664\u53BB\u7387\u304C70%\u3092\u8D85\u3048\u306A\u3051\u308C\u3070\u306A\u308A\u307E\u305B\u3093\u3002"
+  text: "\u6B21\u306E\u533A\u753B\u3092\u89E3\u653E\u3059\u308B\u305F\u3081\u306B\u306F\u3001\n\u524D\u306E\u533A\u753B\u3067\u306E\u6C5A\u67D3\u9664\u53BB\u7387\u304C70%\u3092\n\u8D85\u3048\u306A\u3051\u308C\u3070\u306A\u308A\u307E\u305B\u3093\u3002"
   fadeTime: 1
   interval: 3
 --- !u!4 &1912934273

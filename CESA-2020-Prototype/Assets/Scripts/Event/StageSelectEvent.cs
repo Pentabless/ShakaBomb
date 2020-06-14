@@ -18,7 +18,7 @@ public class StageSelectEvent : MonoBehaviour
     CanvasGroup screen;
     [SerializeField]
     Text canvasText;
-    [SerializeField]
+    [SerializeField, TextArea(15,3)]
     string text;
     [SerializeField]
     float fadeTime = 1.0f;
