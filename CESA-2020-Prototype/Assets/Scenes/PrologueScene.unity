@@ -600,7 +600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repeat_fade: 0
   fade_type: 0
-  start_fade_value: 0.007
+  start_fade_value: 0.01
 --- !u!114 &1181033397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,7 +1004,7 @@ PrefabInstance:
     - target: {fileID: 6532208912914780760, guid: e0329969c249b3f48b25242400a12758,
         type: 3}
       propertyPath: fadeValues
-      value: 0.01
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6532208912914780760, guid: e0329969c249b3f48b25242400a12758,
         type: 3}
