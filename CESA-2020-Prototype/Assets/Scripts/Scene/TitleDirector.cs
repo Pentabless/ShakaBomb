@@ -28,9 +28,9 @@ public class TitleDirector : MonoBehaviour
     ////ゲームを始めるボタン
     //private GameObject go_start_button;
     //ゲームをやめるボタン
-    private GameObject go_exit_button;
+    //private GameObject go_exit_button;
     //ゲームをやめるボタンのフレーム
-    private GameObject go_exit_button_frame;
+    //private GameObject go_exit_button_frame;
     ////選択フレーム
     //private GameObject go_select_tex;
     //private GameObject go_select_frame;
@@ -69,8 +69,8 @@ public class TitleDirector : MonoBehaviour
     {
         //オブジェクトを探す
         //go_start_button = GameObject.Find("StartButton");
-        go_exit_button = GameObject.Find("ExitButton");
-        go_exit_button_frame = GameObject.Find("ExitButtonFrame");
+        //go_exit_button = GameObject.Find("ExitButton");
+        //go_exit_button_frame = GameObject.Find("ExitButtonFrame");
         //go_select_tex = GameObject.Find("SelectTex");
         //go_select_frame = GameObject.Find("SelectFrame");
         GameObject go_screen_fade = GameObject.Find("ScreenFade");
@@ -88,10 +88,10 @@ public class TitleDirector : MonoBehaviour
         start_fade_out = false;
         Data.stage_number = 0;
 
-        //明るいフレームに設定する
-        go_exit_button_frame.GetComponent<Image>().sprite = exit_button_frame[0];
-        go_exit_button_frame.GetComponent<Image>().color = new Color(0.65f, 0.65f, 0.65f);
-        go_exit_button.GetComponent<Image>().color = new Color(0.65f, 0.65f, 0.65f);
+        ////明るいフレームに設定する
+        //go_exit_button_frame.GetComponent<Image>().sprite = exit_button_frame[0];
+        //go_exit_button_frame.GetComponent<Image>().color = new Color(0.65f, 0.65f, 0.65f);
+        //go_exit_button.GetComponent<Image>().color = new Color(0.65f, 0.65f, 0.65f);
 
         //フェードの初期化
         Vector4 fade_color = go_screen_fade.GetComponent<Image>().color;
@@ -152,43 +152,43 @@ public class TitleDirector : MonoBehaviour
         ////    SoundFadeController.SetFadeInSpeed(0.01f);
         ////}
 
-        //スプライトを切り替える時間になったら
-        if (change_sprite_time + start_title_time < Time.time)
-        {
-            //スプライトを切り替える&時間を再設定する
-            if (go_exit_button_frame.GetComponent<Image>().sprite == exit_button_frame[0])
-            {
-                //暗いスプライトに切り替える
-                go_exit_button_frame.GetComponent<Image>().sprite = exit_button_frame[1];
-                //色も少し暗くする
-                go_exit_button_frame.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
-                go_exit_button.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
-                change_sprite_time += Random.Range(0.25f, 0.4f);    //短め
-            }
-            else if (go_exit_button_frame.GetComponent<Image>().sprite == exit_button_frame[1])
-            {
-                //明るいスプライトに切り替える
-                go_exit_button_frame.GetComponent<Image>().sprite = exit_button_frame[0];
-                //色も少し明るくする
-                go_exit_button_frame.GetComponent<Image>().color = new Color(0.65f, 0.65f, 0.65f);
-                go_exit_button.GetComponent<Image>().color = new Color(0.65f, 0.65f, 0.65f);
-                change_sprite_time += Random.Range(0.25f, 0.75f);     //長め
-            }
-        }
+        ////スプライトを切り替える時間になったら
+        //if (change_sprite_time + start_title_time < Time.time)
+        //{
+        //    //スプライトを切り替える&時間を再設定する
+        //    if (go_exit_button_frame.GetComponent<Image>().sprite == exit_button_frame[0])
+        //    {
+        //        //暗いスプライトに切り替える
+        //        go_exit_button_frame.GetComponent<Image>().sprite = exit_button_frame[1];
+        //        //色も少し暗くする
+        //        go_exit_button_frame.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
+        //        go_exit_button.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
+        //        change_sprite_time += Random.Range(0.25f, 0.4f);    //短め
+        //    }
+        //    else if (go_exit_button_frame.GetComponent<Image>().sprite == exit_button_frame[1])
+        //    {
+        //        //明るいスプライトに切り替える
+        //        go_exit_button_frame.GetComponent<Image>().sprite = exit_button_frame[0];
+        //        //色も少し明るくする
+        //        go_exit_button_frame.GetComponent<Image>().color = new Color(0.65f, 0.65f, 0.65f);
+        //        go_exit_button.GetComponent<Image>().color = new Color(0.65f, 0.65f, 0.65f);
+        //        change_sprite_time += Random.Range(0.25f, 0.75f);     //長め
+        //    }
+        //}
 
         //フェードアウトを始めていなかったら
         if (start_fade_out == false)
         {
-            //Spaceキーを押したら
-            if ((Input.GetKeyDown(KeyCode.Space)) ||
-                (Input.GetKeyDown(KeyCode.Escape)) ||
-                //Bボタンを押したら
-                (Input.GetAxis(Common.GamePad.BUTTON_B) > 0))
-            {
-                //ゲーム終了
-            }
+            ////Spaceキーを押したら
+            //if ((Input.GetKeyDown(KeyCode.Space)) ||
+            //    (Input.GetKeyDown(KeyCode.Escape)) ||
+            //    //Bボタンを押したら
+            //    (Input.GetAxis(Common.GamePad.BUTTON_B) > 0))
+            //{
+            //    //ゲーム終了
+            //}
             //どれかを押したら
-            else if (Input.anyKeyDown)
+            /*else */if (Input.anyKeyDown)
             {
                 //フェードアウトを始める
                 sc_screen_fade.SetFadeType(true);
