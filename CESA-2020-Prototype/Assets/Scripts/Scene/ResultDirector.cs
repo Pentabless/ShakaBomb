@@ -262,9 +262,9 @@ public class ResultDirector : MonoBehaviour
         ////}
 
         //何かのキーを押したら
-        if (Input.anyKeyDown ||
+        if ((Input.anyKeyDown ||
             //Aボタンを押したら
-            Input.GetAxis(Common.GamePad.BUTTON_A) > 0 &&
+            Input.GetAxis(Common.GamePad.BUTTON_A) > 0 )&&
             // フェードアウト中でないなら
             !FadeManager.isFadeOut)
         {
