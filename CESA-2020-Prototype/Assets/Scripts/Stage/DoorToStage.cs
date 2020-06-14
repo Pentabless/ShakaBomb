@@ -190,7 +190,7 @@ public class DoorToStage : MonoBehaviour
                 if(play_sutter_sound==false)
                 {
                     // 音を鳴らす
-                    SoundPlayer.Play(sound);
+                    SoundPlayer.Play(sound,0.5f);
                     //音を鳴らしたことにする
                     play_sutter_sound = true;
                 }

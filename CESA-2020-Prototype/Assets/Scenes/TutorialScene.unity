@@ -1043,7 +1043,7 @@ PrefabInstance:
     - target: {fileID: 8076579393067241675, guid: 8053fa58a1f82484faee4b9063b79de5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -443
+      value: -467
       objectReference: {fileID: 0}
     - target: {fileID: 8076579393067241675, guid: 8053fa58a1f82484faee4b9063b79de5,
         type: 3}
@@ -1344,7 +1344,7 @@ PrefabInstance:
     - target: {fileID: 5171810459210085289, guid: 8b85eccc268681c41b0426c415ee910f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -445.3
+      value: -469.3
       objectReference: {fileID: 0}
     - target: {fileID: 5171810459210085289, guid: 8b85eccc268681c41b0426c415ee910f,
         type: 3}
@@ -1981,7 +1981,7 @@ PrefabInstance:
     - target: {fileID: 7711719211848328980, guid: 9535e027ccb04754b92c187ce777276d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -444
+      value: -468
       objectReference: {fileID: 0}
     - target: {fileID: 7711719211848328980, guid: 9535e027ccb04754b92c187ce777276d,
         type: 3}
@@ -2101,7 +2101,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2125,15 +2125,15 @@ RectTransform:
   m_GameObject: {fileID: 940698098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4126, y: 1, z: 1}
+  m_LocalScale: {x: 1.4655726, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 996689815}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 986, y: 312}
-  m_SizeDelta: {x: 502.2, y: 193.47}
+  m_AnchoredPosition: {x: 985, y: 316}
+  m_SizeDelta: {x: 530.9, y: 190.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &996689811
 GameObject:
@@ -2622,7 +2622,7 @@ PrefabInstance:
     - target: {fileID: 7681048197403634999, guid: db1b674b3575dd046adc96bba9251006,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -443.69998
+      value: -467.69998
       objectReference: {fileID: 0}
     - target: {fileID: 7681048197403634999, guid: db1b674b3575dd046adc96bba9251006,
         type: 3}
@@ -2746,8 +2746,8 @@ MonoBehaviour:
   - {fileID: 131296335}
   onChange: 1
   canvasText: {fileID: 940698100}
-  text1: "\u6C5A\u67D3\u30DD\u30A4\u30F3\u30C8\u306E\u4E0A\u3067\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\u3092\u5DE6\u53F3\u4EA4\u4E92\u306B\u52D5\u304B\u3059\u3068\u6C5A\u67D3\u3092\u6D44\u5316\u3057\u307E\u3059"
-  text2: "\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\uFF0BB\u30DC\u30BF\u30F3\u3067\u50BE\u3051\u305F\u65B9\u5411\u306B\u30B7\u30E3\u30DC\u30F3\u7389\u306E\u30B9\u30C8\u30C3\u30AF\u304C\u3042\u308C\u3070\u30B7\u30E3\u30DC\u30F3\u7206\u5F3E\u3092\u98DB\u3070\u3057\u307E\u3059"
+  text1: "\u6C5A\u67D3\u30DD\u30A4\u30F3\u30C8\u306E\u4E0A\u3067\n\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\u3092\u5DE6\u53F3\u4EA4\u4E92\u306B\n\u52D5\u304B\u3059\u3068\u6C5A\u67D3\u3092\u6D44\u5316\u3057\u307E\u3059"
+  text2: "\u50BE\u3051\u305F\u65B9\u5411\u306B\u30B7\u30E3\u30DC\u30F3\u7389\u306E\n\u30B9\u30C8\u30C3\u30AF\u304C\u3042\u308C\u3070\r\n\u30B7\u30E3\u30DC\u30F3\u7206\u5F3E\u3092\u98DB\u3070\u3057\u307E\u3059\u3002"
   blinkTime: 0.6
   changeCount: 5
 --- !u!114 &1670954761 stripped
@@ -3153,8 +3153,8 @@ MonoBehaviour:
   - {fileID: 367980044}
   onChange: 1
   canvasText: {fileID: 940698100}
-  text1: "\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\u3092\u5DE6\u53F3\u4EA4\u4E92\u306B\u52D5\u304B\u3059\u3068\u30B7\u30E3\u30DC\u30F3\u7389\u3092\u751F\u6210\u3067\u304D\u307E\u3059"
-  text2: "\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\uFF0BA\u30DC\u30BF\u30F3\u3067\u50BE\u3051\u305F\u65B9\u5411\u306B\u30B8\u30E3\u30F3\u30D7\u3057\u307E\u3059\u3002\u30B7\u30E3\u30DC\u30F3\u7389\u306E\u30B9\u30C8\u30C3\u30AF\u304C\u3042\u308C\u3070\u3001A\u30DC\u30BF\u30F3\u3067\u66F4\u306B\u30B8\u30E3\u30F3\u30D7\u3057\u307E\u3059\u3002"
+  text1: "\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\u3092\u5DE6\u53F3\u4EA4\u4E92\u306B\n\u52D5\u304B\u3059\u3068\u30B7\u30E3\u30DC\u30F3\u7389\u3092\n\u751F\u6210\u3067\u304D\u307E\u3059"
+  text2: "\u30B7\u30E3\u30DC\u30F3\u7389\u306E\u30B9\u30C8\u30C3\u30AF\u304C\n\u3042\u308C\u3070\u50BE\u3051\u305F\u65B9\u5411\u306B\n\u66F4\u306B\u30B8\u30E3\u30F3\u30D7\u3057\u307E\u3059\u3002"
   blinkTime: 0.6
   changeCount: 4
 --- !u!1 &2145812351

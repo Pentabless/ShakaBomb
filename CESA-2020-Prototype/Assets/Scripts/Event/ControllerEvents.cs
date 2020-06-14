@@ -29,9 +29,9 @@ public class ControllerEvents : MonoBehaviour
     bool onChange = false;
     [SerializeField]
     Text canvasText;
-    [SerializeField]
+    [SerializeField, TextArea(15, 3)]
     string text1;
-    [SerializeField]
+    [SerializeField, TextArea(15, 3)]
     string text2;
 
 
