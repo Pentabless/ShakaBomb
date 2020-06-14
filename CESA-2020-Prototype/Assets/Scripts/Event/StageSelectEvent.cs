@@ -74,6 +74,8 @@ public class StageSelectEvent : MonoBehaviour
                 StopCoroutine(routine);
                 routine = null;
                 screen.alpha = 0.0f;
+                screen.gameObject.SetActive(false);
+                this.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
 
@@ -88,6 +90,9 @@ public class StageSelectEvent : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void StartEvent()
     {
+        if (Data.stage_number != 0)
+            return;
+
         //FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
         //FadeManager.FadeOut(fadeTime);
         playOn = true;
