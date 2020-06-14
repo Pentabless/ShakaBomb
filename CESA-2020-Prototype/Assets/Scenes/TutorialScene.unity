@@ -1759,6 +1759,11 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1147927087214721572, guid: dd77280caf3f31a468f13f35f500cd8e,
+        type: 3}
+      propertyPath: eventObj
+      value: 
+      objectReference: {fileID: 1892143714}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd77280caf3f31a468f13f35f500cd8e, type: 3}
 --- !u!1 &740559109
@@ -2929,6 +2934,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806187936}
   m_CullTransparentMesh: 0
+--- !u!114 &1892143714 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8085275816771829937, guid: be4453056f1b76b478b3409e9b45d934,
+    type: 3}
+  m_PrefabInstance: {fileID: 8085275817936323316}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4982b59265c8847a2e5dd3e3198146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1995374615
 GameObject:
   m_ObjectHideFlags: 0
@@ -3226,12 +3243,12 @@ PrefabInstance:
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.94
+      value: -3.31
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.43
+      value: -0.17
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -3364,5 +3381,11 @@ PrefabInstance:
       propertyPath: endEvents.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8085275816771829937, guid: be4453056f1b76b478b3409e9b45d934,
+        type: 3}
+      propertyPath: startInfo.condition
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8085275816771829936, guid: be4453056f1b76b478b3409e9b45d934, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: be4453056f1b76b478b3409e9b45d934, type: 3}
