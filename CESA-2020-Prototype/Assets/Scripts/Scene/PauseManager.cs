@@ -146,15 +146,29 @@ public class PauseManager : MonoBehaviour
     //ポーズ状態を変更する
     public void ChangePauseState()
     {
+        var go = GameObject.Find(Common.Player.NAME);
+        PlayerAnimator playerAnimator = null;
+        if (go)
+        {
+            playerAnimator = go.GetComponentInChildren<PlayerAnimator>();
+        }
         if (!isPausing)
         {
             //ポーズメニューを起動する
             pauseMenu.SetActive(true);
             Pause(0.001f);
+            if (playerAnimator)
+            {
+                playerAnimator.StopAnimation();
+            }
         }
         else
         {
             Resume();
+            if (playerAnimator)
+            {
+                playerAnimator.ResumeAnimation();
+            }
         }
     }
 
