@@ -150,6 +150,7 @@ public class FailedFrameController : MonoBehaviour
             // カーソル移動があった場合に処理する
             if (newChoice != choice)
             {
+                SoundPlayer.Play(cursorSE);
                 choices[choice].GetComponent<Text>().color = new Color(1f, 1f, 1f);
                 choice = newChoice;
                 choices[choice].GetComponent<Text>().color = new Color(1f, 0.8f, 0f);
@@ -162,7 +163,7 @@ public class FailedFrameController : MonoBehaviour
         if (pressSubmit)
         {
             state = FailedState.Finish;
-            //SoundPlayer.Play(decisionSE);
+            SoundPlayer.Play(decisionSE);
 
             switch (choice)
             {

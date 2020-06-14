@@ -97,13 +97,13 @@ public class TutorialEvents: MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void StartEvent()
     {
-        FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
-        FadeManager.FadeOut(fadeTime);
         playOn = true;
-        video.clip = clip;
-        video.Play();
+        FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
+        FadeManager.FadeOut(0.7f);
         routine = Fade();
         StartCoroutine(routine);
+        video.clip = clip;
+        video.Play();
         pauseManager.SetFilterColor(Color.clear);
         pauseManager.Pause(fadeTime);
         GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().StopAnimation();
@@ -116,10 +116,10 @@ public class TutorialEvents: MonoBehaviour
     {
         pauseManager.Resume();
         playOn = false;
+        FadeManager.FadeIn(0.5f);
+        GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
         routine = Fade();
         StartCoroutine(routine);
-        FadeManager.FadeIn(fadeTime);
-        GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
         StartCoroutine(ControlDelay());
     }
 
@@ -136,7 +136,7 @@ public class TutorialEvents: MonoBehaviour
                 screen.alpha -= 0.1f;
             }
 
-            yield return new WaitForSeconds(fadeTime);
+            yield return null;
         }
     }
 

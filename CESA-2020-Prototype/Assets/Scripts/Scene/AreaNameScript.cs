@@ -36,6 +36,10 @@ public class AreaNameScript : MonoBehaviour
     // タイマー
     private float timer = 0;
 
+    [SerializeField]
+    [Header("基本的にアタッチしなくてよい")]
+    EventObject eventObj;
+
 	//------------------------------------------------------------------------------------------
     // Awake
 	//------------------------------------------------------------------------------------------
@@ -75,6 +79,10 @@ public class AreaNameScript : MonoBehaviour
         {
             canvasGroup.alpha = 0;
             showing = false;
+            if(Data.stage_number == 0)
+            {
+                eventObj.StartEvent();
+            }
         }
     }
 
