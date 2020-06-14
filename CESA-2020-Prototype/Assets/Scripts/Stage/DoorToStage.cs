@@ -41,6 +41,8 @@ public class DoorToStage : MonoBehaviour
     bool touch_player = false;
     //シャッターの上がり具合
     float shutter_up = 0.0f;
+    //シャッターの音を鳴らしたか
+    bool play_sutter_sound = true;
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -56,8 +58,8 @@ public class DoorToStage : MonoBehaviour
     private void Start()
     {
         //自身の番号のステージのデータを貰う
-        bool can_play = SharedData.instance.GetCanPlay(numStage-1);
-        int purification = SharedData.instance.GetPurification(numStage-1);
+        bool can_play = SharedData.instance.GetCanPlay(numStage - 1);
+        int purification = SharedData.instance.GetPurification(numStage - 1);
         int rank = SharedData.instance.GetPercentRank(purification);
 
         //子オブジェクトを探す
@@ -81,7 +83,7 @@ public class DoorToStage : MonoBehaviour
                     //ランプ：全部赤
                     lamp.GetComponent<SpriteRenderer>().sprite = lamp_sprite[1];
                     //クリアしていたら
-                    if (SharedData.instance.GetClear(numStage-1))
+                    if (SharedData.instance.GetClear(numStage - 1))
                     {
                         //シャッターの上がり具合
                         shutter_up = ShutterMaxHeight;
@@ -92,8 +94,10 @@ public class DoorToStage : MonoBehaviour
                         shutter_up = 0.0f;
                         //シャッターのアニメーションをする
                         animate_shutter = true;
-                        // 音を入れる
-                        SoundPlayer.Play(sound);
+                        //音を鳴らしていない状態にする
+                        play_sutter_sound = false;
+                        //// 音を入れる
+                        //SoundPlayer.Play(sound);
                     }
                 }
                 else
@@ -160,7 +164,7 @@ public class DoorToStage : MonoBehaviour
     private void Update()
     {
         //シャッターが上がるアニメーションをする
-        if(animate_shutter)
+        if (animate_shutter)
         {
             var topLeft = cameraController.GetScreenTopLeft();
             var bottomRight = cameraController.GetScreenBottomRight();
@@ -168,6 +172,14 @@ public class DoorToStage : MonoBehaviour
                 topLeft.y > transform.position.y && transform.position.y > bottomRight.y)
             {
                 shutter_up += up_speed;
+                //シャッターの音を鳴らしていなかったら
+                if(play_sutter_sound==false)
+                {
+                    // 音を鳴らす
+                    SoundPlayer.Play(sound);
+                    //音を鳴らしたことにする
+                    play_sutter_sound = true;
+                }
             }
         }
         //シャッターの上がり具合を影響させる
@@ -175,7 +187,7 @@ public class DoorToStage : MonoBehaviour
 
         var goStage = Input.GetAxis(Player.VERTICAL);
 
-        if(goStage >= 1.0f&& touch_player||Input.GetKeyDown(KeyCode.UpArrow)&& touch_player)
+        if (goStage >= 1.0f && touch_player || Input.GetKeyDown(KeyCode.UpArrow) && touch_player)
         {
             //プレイできるドアだったら
             if (SharedData.instance.GetCanPlay(numStage - 1))
