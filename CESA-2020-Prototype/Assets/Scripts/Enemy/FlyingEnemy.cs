@@ -22,6 +22,8 @@ public class FlyingEnemy : IEnemy
 
     private Vector3 startPosition;
 
+    private float timer = 0;
+
     //------------------------------------------------------------------------------------------
     // Start
     //------------------------------------------------------------------------------------------
@@ -39,20 +41,21 @@ public class FlyingEnemy : IEnemy
 
         if (currentStatus == Status.None)
         {
+            timer += Time.deltaTime;
             if(vertical == horizontal)
             {
                 // 縦方向
-                this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * range + startPosition.y, startPosition.z);
+                this.transform.position = new Vector3(startPosition.x, Mathf.Sin(timer) * range + startPosition.y, startPosition.z);
             }
             else if(vertical)
             {
                 // 縦方向
-                this.transform.position = new Vector3(startPosition.x, Mathf.Sin(Time.time) * range + startPosition.y, startPosition.z);
+                this.transform.position = new Vector3(startPosition.x, Mathf.Sin(timer) * range + startPosition.y, startPosition.z);
             }
             else
             {
                 // 横方向
-                this.transform.position = new Vector3(Mathf.Sin(Time.time) * range + startPosition.x, startPosition.y, startPosition.z);
+                this.transform.position = new Vector3(Mathf.Sin(timer) * range + startPosition.x, startPosition.y, startPosition.z);
             }
         }
     }
