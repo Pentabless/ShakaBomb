@@ -69,6 +69,10 @@ public class DoorToStage : MonoBehaviour
 
         cameraController = GameObject.Find(Common.Camera.CONTROLLER).GetComponent<CameraController>();
 
+        Sprite shutter_tex=null;
+        Sprite door_tex=null;
+        Sprite lamp_tex=null;
+
         //画像を変更する
         switch (rank)
         {
@@ -77,11 +81,11 @@ public class DoorToStage : MonoBehaviour
                 if (can_play)
                 {
                     //シャッター：きたない
-                    shutter.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = shutter_sprite[0];
+                    shutter_tex = shutter_sprite[0];
                     //ドアフレーム：きたない
-                    door_frame.GetComponent<SpriteRenderer>().sprite = door_frame_sprite[0];
+                    door_tex = door_frame_sprite[0];
                     //ランプ：全部赤
-                    lamp.GetComponent<SpriteRenderer>().sprite = lamp_sprite[1];
+                    lamp_tex = lamp_sprite[1];
                     //クリアしていたら
                     if (SharedData.instance.GetClear(numStage - 1))
                     {
@@ -103,59 +107,69 @@ public class DoorToStage : MonoBehaviour
                 else
                 {
                     //シャッター：きたない
-                    shutter.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = shutter_sprite[0];
+                    shutter_tex = shutter_sprite[0];
                     //ドアフレーム：きたない
-                    door_frame.GetComponent<SpriteRenderer>().sprite = door_frame_sprite[0];
+                    door_tex = door_frame_sprite[0];
                     //ランプ：光っていない
-                    lamp.GetComponent<SpriteRenderer>().sprite = lamp_sprite[0];
+                    lamp_tex = lamp_sprite[0];
                     //シャッターの上がり具合
                     shutter_up = 0.0f;
                 }
                 break;
             case 1:
                 //シャッター：きれい
-                shutter.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = shutter_sprite[1];
+                shutter_tex = shutter_sprite[1];
                 //ドアフレーム：きたない
-                door_frame.GetComponent<SpriteRenderer>().sprite = door_frame_sprite[0];
+                door_tex = door_frame_sprite[0];
                 //ランプ：1つ光っている
-                lamp.GetComponent<SpriteRenderer>().sprite = lamp_sprite[2];
+                lamp_tex = lamp_sprite[2];
                 //シャッターの上がり具合
                 shutter_up = ShutterMaxHeight;
                 break;
             case 2:
                 //シャッター：きれい
-                shutter.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = shutter_sprite[1];
+                shutter_tex = shutter_sprite[1];
                 //ドアフレーム：きれい
-                door_frame.GetComponent<SpriteRenderer>().sprite = door_frame_sprite[1];
+                door_tex = door_frame_sprite[1];
                 //ランプ：2つ光っている
-                lamp.GetComponent<SpriteRenderer>().sprite = lamp_sprite[3];
+                lamp_tex = lamp_sprite[3];
                 //シャッターの上がり具合
                 shutter_up = ShutterMaxHeight;
                 break;
             case 3:
                 //シャッター：きれい
-                shutter.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = shutter_sprite[1];
+                shutter_tex = shutter_sprite[1];
                 //ドアフレーム：きれい
-                door_frame.GetComponent<SpriteRenderer>().sprite = door_frame_sprite[1];
+                door_tex = door_frame_sprite[1];
                 //ランプ：3つ光っている
-                lamp.GetComponent<SpriteRenderer>().sprite = lamp_sprite[4];
+                lamp_tex = lamp_sprite[4];
                 //シャッターの上がり具合
                 shutter_up = ShutterMaxHeight;
                 break;
+            default:
+                shutter_tex = null;
+                door_tex = null;
+                lamp_tex = null;
+                break;
         }
+
+        //画像を設定する
+        shutter.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = shutter_tex;
+        door_frame.GetComponent<SpriteRenderer>().sprite = door_tex;
+        lamp.GetComponent<SpriteRenderer>().sprite = lamp_tex;
 
         //シャッターの上がり具合を影響させる
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);
 
-        //親オブジェクトがあって　親オブジェクトの拡大率が 1,1,1でない時
-        if (transform.parent != null)
-        {
-            if (transform.parent.localScale != new Vector3(1.0f, 1.0f, 1.0f))
-            {
-                //親オブジェクトの拡大率の影響をなくす
-                transform.localScale = new Vector3(1.0f / transform.parent.localScale.x, 1.0f / transform.parent.localScale.y, 1.0f);
-            }
-        }
+        ////親オブジェクトがあって　親オブジェクトの拡大率が 1,1,1でない時
+        //if (transform.parent != null)
+        //{
+        //    if (transform.parent.localScale != new Vector3(1.0f, 1.0f, 1.0f))
+        //    {
+        //        //親オブジェクトの拡大率の影響をなくす
+        //        transform.localScale = new Vector3(1.0f / transform.parent.localScale.x, 1.0f / transform.parent.localScale.y, 1.0f);
+        //    }
+        //}
     }
 
     //------------------------------------------------------------------------------------------
