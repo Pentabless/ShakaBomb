@@ -121,7 +121,7 @@ public class DirtController : MonoBehaviour
                 var offset = collider.offset * transform.lossyScale;
                 EffectGenerator.CleanFX(new CleanFX.Param(size), transform.position+(Vector3)offset);
 
-                SoundPlayer.Play(audios[(int)AudioType.End],0.5f);
+                SoundPlayer.Play(audios[(int)AudioType.End]);
             }
 
             SoundPlayer.Play(audios[(int)AudioType.Cleaning]);

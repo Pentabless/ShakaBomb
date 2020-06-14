@@ -130,7 +130,7 @@ public class PauseManager : MonoBehaviour
 
         if (pressPause && !FadeManager.isFadeOut && canPause)
         {
-            SoundPlayer.Play(pauseSE, 0.5f);
+            SoundPlayer.Play(pauseSE);
             filterColor = defaultFilterColor;
             ChangePauseState();
         }
