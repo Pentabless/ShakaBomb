@@ -173,7 +173,7 @@ public class FailedFrameController : MonoBehaviour
                     break;
                 // ステージ選択
                 case 1:
-                    FadeManager.FadeOut("StageSelectScene");
+                    FadeManager.FadeOut("NewStageSelectScene");
                     break;
                 default:
                     Debug.Log("FailedFrameController:SelectError");
