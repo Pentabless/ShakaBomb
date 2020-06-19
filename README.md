@@ -1,2 +1,1 @@
-# CESA2020_ShakaBomb
-CESA2020_ShakaBomb
+# CESA2020 ShakaBomb
