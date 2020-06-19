@@ -1,1 +1,2 @@
-# CESA2020 ShakaBomb
+# 日本ゲーム大賞2020 アマチュア部門応募作品
+## ShakaBomb
