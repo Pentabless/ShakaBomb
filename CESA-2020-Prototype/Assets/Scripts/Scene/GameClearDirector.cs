@@ -12,7 +12,7 @@ public class GameClearDirector : MonoBehaviour
     Vector3 select_stage_start_pos;
     //円運動するための角度
     float select_stage_angle;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +22,7 @@ public class GameClearDirector : MonoBehaviour
         select_stage_start_pos = new Vector3(-200.0f, 100.0f, -2100.0f);
 
         //BGMを流す
-        SoundPlayer.PlayBGM(game_clear_bgm,0.5f);
+        SoundPlayer.PlayBGM(game_clear_bgm, 0.5f);
         //フェードインさせる
         FadeManager.fadeColor = Color.black;
         FadeManager.FadeIn(1.5f);
@@ -37,7 +37,7 @@ public class GameClearDirector : MonoBehaviour
         select_stage_angle += 0.1f;
 
         //何か入力をしたら
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && !FadeManager.isFadeOut)
         {
             //ステージ選択シーンへ
             FadeManager.FadeOut("NewStageSelectScene", 2.5f);
