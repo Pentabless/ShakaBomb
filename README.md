@@ -1,2 +1,2 @@
 # 日本ゲーム大賞2020 アマチュア部門応募作品
-## ShakaBomb
+ShakaBomb
