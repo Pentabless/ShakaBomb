@@ -8,7 +8,7 @@
  
  * Textures and Models
   - (c) 2019-2020 Takumi Yanase,Shun Kubota,Yuki Nagato,Ami Kawaguchi,Kazuaki Hashimoto
-  - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)
+  - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)]
 
 ## Downloads
 
