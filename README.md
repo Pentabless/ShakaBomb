@@ -1,4 +1,4 @@
-# 日本ゲーム大賞2020 アマチュア部門応募作品
+# 日本ゲーム大賞2020 アマチュア部門応募作品(https://awards.cesa.or.jp/amateur/index.html)
 
 ## License
 
