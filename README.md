@@ -1,4 +1,5 @@
-# Japan Game Awards 2020 Amateur
+# ShakaBomb
+**ShakaBomb** was developed for **Japan Game Awards 2020 Amateurs**.
 
 ## Table of Contents
 
@@ -9,6 +10,8 @@
 * [Credits](#credits)
 
 ## About
+
+
 
 ## Contacts
 
