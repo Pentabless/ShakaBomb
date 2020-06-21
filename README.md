@@ -3,11 +3,11 @@
 ## License
 
 * ShakaBomb
-  - (c) 2019-2020 Takumi Yanase,Shun Kubota,Yuki Nagato,Ami Kawaguchi,Kazuaki Hashimoto
+  - (c) 2019-2020 Shun Kubota,Yuki Nagato,Ami Kawaguchi,Kazuaki Hashimoto,Takumi Yanase
   - [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/mit-license.php)
    
 * Textures and Models
-  - (c) 2019-2020 Takumi Yanase,Shun Kubota,Yuki Nagato,Ami Kawaguchi,Kazuaki Hashimoto
+  - (c) 2019-2020 
   - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
 ## Downloads
