@@ -7,7 +7,7 @@
   - [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/mit-license.php)
    
 * Textures and Models
-  - (c) 2019-2020 
+  - (c) 2019-2020 ShakaBombs
   - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
 ## Downloads
