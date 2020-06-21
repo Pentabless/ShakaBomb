@@ -19,7 +19,7 @@ TakumiYanase@outlook.com
 ## License
 
 * ShakaBomb
-  - (c) 2019-2020 Shun Kubota,Yuki Nagato,Ami Kawaguchi,Kazuaki Hashimoto,Takumi Yanase
+  - (c) 2019-2020 Takumi Yanase,Shun Kubota,Yuki Nagato,Ami Kawaguchi,Kazuaki Hashimoto
   - [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/mit-license.php)
    
 * Textures and Models
