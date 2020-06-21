@@ -12,9 +12,9 @@
 
 **ShakaBomb** was developed for **Japan Game Awards 2020 Amateurs**.
 
-[![](https://img.youtube.com/vi/acis_QxdLbI/0.jpg)](https://www.youtube.com/watch?v=acis_QxdLbI)
-
 ## Contacts
+
+TakumiYanase@outlook.com
 
 ## License
 
