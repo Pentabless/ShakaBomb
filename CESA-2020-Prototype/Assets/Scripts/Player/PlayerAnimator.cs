@@ -115,6 +115,11 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (!playerIsDead)
         {
+            if (Data.time <= 0)
+            {
+                return;
+            }
+
             deathAnimationState = DeathAnimationInfo.DeathAnimatonState.Death;
             playerIsDead = true;
             deathAnimationTimer = 0;
