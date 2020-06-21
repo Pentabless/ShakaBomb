@@ -9,6 +9,8 @@
 * Textures and Models
   - (c) 2019-2020 ShakaBombs
   - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
+  
+  [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
 ## Downloads
 
