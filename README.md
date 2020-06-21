@@ -1,6 +1,4 @@
 # Japan Game Awards 2020 Amateur
-[![Latest Tag](https://img.shields.io/github/tag/Team-Fruit/Emojicord.svg?label=Latest%20Tag&style=flat)](https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/tags)
-[![Latest Release](https://img.shields.io/github/release/Team-Fruit/Emojicord.svg?label=Latest%20Release&style=flat)](https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/releases)
 
 ## Table of Contents
 
