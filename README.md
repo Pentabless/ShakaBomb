@@ -1,5 +1,17 @@
 # 日本ゲーム大賞2020 アマチュア部門応募作品
 
+## Table of Contents
+
+* [About](#about)
+* [Contacts](#contacts)
+* [License](#license)
+* [Downloads](#downloads)
+* [Credits](#credits)
+
+## About
+
+## Contacts
+
 ## License
 
 * ShakaBomb
@@ -13,3 +25,10 @@
 ## Downloads
 
 Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/releases).  
+
+## Credits
+
+Thanks to
+
+* Trident Computer College
+* Susumu Takaki
