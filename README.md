@@ -1,4 +1,4 @@
-# 日本ゲーム大賞2020 アマチュア部門応募作品
+# Japan Game Awards 2020 Amateur
 
 ## Table of Contents
 
