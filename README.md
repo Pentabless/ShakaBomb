@@ -41,7 +41,7 @@ TakumiYanase@outlook.com
 
 ## Downloads
 
-Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/releases).  
+Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/ShakaBomb/releases).  
 
 
 ## Usage
