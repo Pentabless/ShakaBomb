@@ -39,7 +39,6 @@ Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/CESA2020-
 ## Usage
 
 When the download is completed, run the file **ShakaBomb.exe**.
-
 You need an **Xbox 360 controller** to play the game.
 
 ## Credits
