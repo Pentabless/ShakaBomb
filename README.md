@@ -1,5 +1,7 @@
 # ShakaBomb
 
+<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Title.png?raw=true" alt="ShakaBombImage" /></p>
+
 ## Table of Contents
 
 * [About](#about)
