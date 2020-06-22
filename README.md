@@ -1,5 +1,4 @@
 # ShakaBomb
-<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image02.png?raw=true" alt="ShakaBombImage" /></p>
 
 ## Table of Contents
 
@@ -12,6 +11,8 @@
 ## About
 
 **ShakaBomb** was developed for **Japan Game Awards 2020 Amateurs**.
+
+<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image02.png?raw=true" alt="ShakaBombImage" /></p>
 
 <p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image01.png?raw=true" alt="ShakaBombImage" /></p>
 
@@ -38,4 +39,4 @@ Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/CESA2020-
 Thanks to
 
 * Trident Computer College
-* Susumu Takaki (executive producer)
+* Susumu Takaki
