@@ -7,7 +7,7 @@
 * [License](#license)
 * [Downloads](#downloads)
 * [Usage](#usage)
-* [Development member](#development member)
+* [Development member](#developmentmember)
 * [Credits](#credits)
 
 ## About
