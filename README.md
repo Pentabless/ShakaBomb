@@ -1,4 +1,5 @@
 # ShakaBomb
+<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image02.png?raw=true" alt="ShakaBombImage" /></p>
 
 ## Table of Contents
 
@@ -12,18 +13,20 @@
 
 **ShakaBomb** was developed for **Japan Game Awards 2020 Amateurs**.
 
+<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image01.png?raw=true" alt="ShakaBombImage" /></p>
+
 ## Contacts
 
 TakumiYanase@outlook.com
 
 ## License
 
-* ShakaBomb
-  - (c) 2019-2020 Takumi Yanase,Shun Kubota,Yuki Nagato,Ami Kawaguchi,Kazuaki Hashimoto
-  - [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/mit-license.php)
-   
+* Source code
+  - (c) 2020 Takumi Yanase , Shun Kubota , Yuki Nagato , Ami Kawaguchi , Kazuaki Hashimoto
+  - [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://opensource.org/licenses/mit-license.php)
+  
 * Textures and Models
-  - (c) 2019-2020 ShakaBombs
+  - (c) 2020 ShakaBombs
   - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
 ## Downloads
@@ -35,4 +38,4 @@ Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/CESA2020-
 Thanks to
 
 * Trident Computer College
-* Susumu Takaki
+* Susumu Takaki (executive producer)
