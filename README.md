@@ -1,7 +1,5 @@
 # ShakaBomb
 
-<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Title.png?raw=true" alt="ShakaBombImage" /></p>
-
 ## Table of Contents
 
 * [About](#about)
@@ -13,6 +11,8 @@
 ## About
 
 **ShakaBomb** was developed for **Japan Game Awards 2020 Amateurs**.
+
+<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Title.png?raw=true" alt="ShakaBombImage" /></p>
 
 <p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image04.png?raw=true" alt="ShakaBombImage" /></p>
 
