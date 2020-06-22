@@ -1,5 +1,6 @@
 # ShakaBomb
 
+
 ## Table of Contents
 
 * [About](#about)
@@ -9,6 +10,7 @@
 * [Usage](#usage)
 * [Member](#member)
 * [Credits](#credits)
+
 
 ## About
 
@@ -20,9 +22,11 @@
 
 <p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image03.png?raw=true" alt="ShakaBombImage" /></p>
 
+
 ## Contacts
 
 TakumiYanase@outlook.com
+
 
 ## License
 
@@ -34,14 +38,17 @@ TakumiYanase@outlook.com
   - (c) 2020 Team-ShakaBomb
   - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
+
 ## Downloads
 
 Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/releases).  
+
 
 ## Usage
 
 When the download is completed, run the file **ShakaBomb.exe**.  
 You need an **Xbox 360 controller** to play the game.
+
 
 ## Member
 
@@ -63,6 +70,7 @@ You need an **Xbox 360 controller** to play the game.
   - Kosuke Ogawa
   - Eisuke Uchida
   - Miki Fukuoka
+
 
 ## Credits
 
