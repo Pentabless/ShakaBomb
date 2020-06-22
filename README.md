@@ -7,7 +7,7 @@
 * [License](#license)
 * [Downloads](#downloads)
 * [Usage](#usage)
-* [Development member](#developmentmember)
+* [Member](#member)
 * [Credits](#credits)
 
 ## About
@@ -43,7 +43,7 @@ Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/CESA2020-
 When the download is completed, run the file **ShakaBomb.exe**.  
 You need an **Xbox 360 controller** to play the game.
 
-## Development member
+## Member
 
 * Director
   - Takumi Yanase
