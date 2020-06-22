@@ -30,8 +30,7 @@ TakumiYanase@outlook.com
   - [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://opensource.org/licenses/mit-license.php)
   
 * Textures and Models
-  - (c) 2020 Kie Suzuki , Yuusuke Shinada , Aoi Dozono , Taiki Ishizuki ,  
-  Yuki Sano , Kosuke Ogawa , Eisuke Uchida , Miki Fukuoka
+  - (c) 2020 Team-ShakaBomb
   - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
 ## Downloads
@@ -42,6 +41,27 @@ Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/CESA2020-
 
 When the download is completed, run the file **ShakaBomb.exe**.  
 You need an **Xbox 360 controller** to play the game.
+
+## Development member
+
+* Director
+- Takumi Yanase
+
+* Programmer
+- Shun Kubota
+- Yuki Nagato
+- Ami Kawaguchi
+- Kazuaki Hashimoto
+
+* Designer
+- Kie Suzuki
+- Yusuke Shinada
+- Aoi Dozono
+- Taiki Ishizuki
+- Yuki Sano
+- Kosuke Ogawa
+- Eisuke Uchida
+- Miki Fukuoka
 
 ## Credits
 
