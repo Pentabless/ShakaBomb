@@ -46,13 +46,13 @@ You need an **Xbox 360 controller** to play the game.
 ## Member
 
 * Director
-  - Takumi Yanase
+  - [Takumi Yanase](https://github.com/TakumiYanase)
 
 * Programmer
-  - Shun Kubota
-  - Yuki Nagato
-  - Ami Kawaguchi
-  - Kazuaki Hashimoto
+  - [Shun Kubota](https://github.com/KubotaP)
+  - [Yuki Nagato](https://github.com/onievui)
+  - [Ami Kawaguchi](https://github.com/PinkStarWarrior)
+  - [Kazuaki Hashimoto](https://github.com/kazu1184)
 
 * Designer
   - Kie Suzuki
