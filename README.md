@@ -7,6 +7,7 @@
 * [License](#license)
 * [Downloads](#downloads)
 * [Usage](#usage)
+* [Development member](#development member)
 * [Credits](#credits)
 
 ## About
@@ -45,23 +46,23 @@ You need an **Xbox 360 controller** to play the game.
 ## Development member
 
 * Director
-- Takumi Yanase
+  - Takumi Yanase
 
 * Programmer
-- Shun Kubota
-- Yuki Nagato
-- Ami Kawaguchi
-- Kazuaki Hashimoto
+  - Shun Kubota
+  - Yuki Nagato
+  - Ami Kawaguchi
+  - Kazuaki Hashimoto
 
 * Designer
-- Kie Suzuki
-- Yusuke Shinada
-- Aoi Dozono
-- Taiki Ishizuki
-- Yuki Sano
-- Kosuke Ogawa
-- Eisuke Uchida
-- Miki Fukuoka
+  - Kie Suzuki
+  - Yusuke Shinada
+  - Aoi Dozono
+  - Taiki Ishizuki
+  - Yuki Sano
+  - Kosuke Ogawa
+  - Eisuke Uchida
+  - Miki Fukuoka
 
 ## Credits
 
