@@ -25,7 +25,7 @@ TakumiYanase@outlook.com
 
 ## License
 
-* Source code
+* ShakaBomb
   - (c) 2020 Takumi Yanase , Shun Kubota , Yuki Nagato , Ami Kawaguchi , Kazuaki Hashimoto
   - [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://opensource.org/licenses/mit-license.php)
   
