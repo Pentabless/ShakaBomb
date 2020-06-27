@@ -78,5 +78,5 @@ Thanks to
 
 * Trident Computer College
 * Susumu Takaki
-* Tanabe
+* Go Tanabe
 
