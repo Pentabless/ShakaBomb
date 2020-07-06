@@ -12,9 +12,13 @@ public partial class Floor
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Player")
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
         {
-            collision.transform.parent = this.transform;
+            collision.transform.parent.parent = this.transform;
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
