@@ -2,10 +2,10 @@
 {
 	Properties
 	{
-		_MainTex("Texture", 2D) = "white" {}
-		_Center("Center", Vector) = (0, 0, 0, 0)
-		_Radius("Radius", FLoat) = 0
-		_Thick("Thick", Float) = 0
+		_MainTex("Texture", 2D) = "white" {}     // テクスチャ（未使用）
+		_Center("Center", Vector) = (0, 0, 0, 0) // ワイプの中心位置
+		_Radius("Radius", FLoat) = 0             // ワイプ半径
+		_Thick("Thick", Float) = 0               // ワイプの境界の太さ
 	}
 		SubShader
 	{
@@ -57,8 +57,10 @@
 				float2 pos = _Center.xy - 0.5f;
 				pos.x *= aspectRatio;
 
+				// 中心位置からワイプの半径以内のピクセルを黒にする
 				float dist = distance(uv, pos);
 				if (dist > _Radius - _Thick) {
+					// ワイプの境界部分をグラデーションさせる
 					col.rgb *= 1 - smoothstep(_Radius - _Thick, _Radius, dist);
 				}
 
