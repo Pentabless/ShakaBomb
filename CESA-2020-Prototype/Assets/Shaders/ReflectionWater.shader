@@ -1,15 +1,15 @@
 ﻿Shader "Custom/ReflectionWater" {
 	Properties{
-		_Tint("Tint", Color) = (1, 1, 1, 1)
-		_BlendColor("BlendColor", Color) = (0, 0, 0, 0)
-		_SaturationRate("SaturationRate", Float) = 1
-		_BrightnessRate("BrightnessRate", Float) = 1
-		_Displacement("Displacement", 2D) = "defaulttexture"
-		_Strength("Strength", Float) = 0.015
-		_LightGrid("LightGrid", Vector) = (35, 70, 0, 0)
-		_Lightness("Lightness", Float) = 0.01
-		_PerlinGrid("PerlinGrid", Vector) = (10, 10, 0, 0)
-		_PerlinThreshold("PerlinThreshold", Float) = 0.7
+		_Tint("Tint", Color) = (1, 1, 1, 1)                  // カラー
+		_BlendColor("BlendColor", Color) = (0, 0, 0, 0)      // 上からブレンドカラー
+		_SaturationRate("SaturationRate", Float) = 1         // 彩度の倍率
+		_BrightnessRate("BrightnessRate", Float) = 1         // 明度の倍率
+		_Displacement("Displacement", 2D) = "defaulttexture" // 歪みテクスチャ
+		_Strength("Strength", Float) = 0.015                 // 歪みの強さ
+		_LightGrid("LightGrid", Vector) = (35, 70, 0, 0)     // 光用グリッド
+		_Lightness("Lightness", Float) = 0.01                // 光の多さ
+		_PerlinGrid("PerlinGrid", Vector) = (10, 10, 0, 0)   // 光の有効領域を計算する用のグリッド
+		_PerlinThreshold("PerlinThreshold", Float) = 0.7     // 光の有効領域かどうかの閾値
 		
 	}
 
@@ -84,22 +84,31 @@
 			}
 
 			float4 frag(v2f i) : SV_TARGET {
+				// 下側を近く、上側を遠く見せる
 				float2 perspectiveCorrection = float2(1.0 * (i.uv.x - 0.5) * i.uv.y, 0.0);
 				float2 uv = TRANSFORM_TEX(frac(i.uv + perspectiveCorrection), _Displacement);
+				// 歪みをテクスチャから取得する
 				float4 displacement = normalize(tex2D(_Displacement, uv));
+				// 歪み後のUV座標を取得する
 				float2 adjusted = i.screenuv.xy + ((displacement.rg - 0.5) * _Strength);
 
+				// 反射した背景を取得する
 				float distanceToEdge = abs(_TopEdgePosition - adjusted.y);
 				float sampleY = _TopEdgePosition + distanceToEdge;
 
 				float4 output = tex2D(_SSWaterReflectionsTex, float2(adjusted.x, sampleY)) * _Tint;
 
+				// 彩度と明度を調整する
 				output.rgb = shift_col(output.rgb, float3(0, _SaturationRate, _BrightnessRate));
+				// ブレンドカラーをブレンドする
 				output.rgb = output.rgb*(1.0 - _BlendColor.a) + _BlendColor.rgb*_BlendColor.a;
 
 				float2 area = floor(frac(uv)*_LightGrid);
 				float2 seed = float2(80, 80);
 
+				// 水面を光らせる
+				// グリッドに分割して光るマスをランダムに決める
+				// パーリンノイズの値から、光るマスを光らせるかどうか決める
 				output.rgb = lerp(output.rgb, 1, step(1,
 					step(1-_Lightness, random2(area+seed).x)*
 					step(_PerlinThreshold, perlinNoise(i.uv*_PerlinGrid.xy*_Displacement_ST.xy))));

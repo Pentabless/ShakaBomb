@@ -2,14 +2,14 @@
 {
 	Properties
 	{
-		_MainTex("Texture", 2D) = "white" {}
-		_Seed("Seed", Float) = 0
-		_Timer("Timer", Float) = 0
-		_GrabDistortion("_GrabDistortion", Float) = 0.04
-		_Distortion("Distortion", Float) = 0.1
-		_DistortionSpeed("DistortionSpeed", Float) = 1.0
-		_ScaleRate("ScaleRate", Vector) = (1.3, 0.95, 0, 0)
-		_ScaleVec("ScaleVec", Vector) = (0, 0, 0, 0)
+		_MainTex("Texture", 2D) = "white" {}                // テクスチャ
+		_Seed("Seed", Float) = 0                            // シード値
+		_Timer("Timer", Float) = 0                          // アニメーション用タイマー
+		_GrabDistortion("_GrabDistortion", Float) = 0.04    // 背景の歪み量
+		_Distortion("Distortion", Float) = 0.1              // 歪み量
+		_DistortionSpeed("DistortionSpeed", Float) = 1.0    // 歪むスピード
+		_ScaleRate("ScaleRate", Vector) = (1.3, 0.95, 0, 0) // 押し付けた時の変形量
+		_ScaleVec("ScaleVec", Vector) = (0, 0, 0, 0)        // 変形の度合い
 	}
 		SubShader
 		{
@@ -61,6 +61,7 @@
 				v2f vert(appdata v)
 				{
 					v2f o;
+					// 描画範囲を拡大する
 					v.vertex.xy *= _ScaleRate.x;
 					o.vertex = UnityObjectToClipPos(v.vertex);
 					o.color = v.color;
@@ -98,19 +99,25 @@
 
 				float2 getPos(float2 p)
 				{
+					// 0.3~0.8の乱数を生成する
 					float r = hash(_Seed)*0.5 + 0.3;
+					// 歪ませる方向を決める
 					float2 n = float2(sin(_Timer*r*_DistortionSpeed), cos(_Timer*(1 - r)*_DistortionSpeed));
+					// 歪み量を計算する
 					float2 q = _Distortion * (noise2(p + n) - 0.5);
-
+					// 元の座標に歪み量を足して返す
 					return p + q;
 				}
 
 
 				fixed4 frag(v2f i) : SV_Target
 				{
+					// 描画範囲を拡大した分だけ画像を縮小する
 					float2 uv = (i.uv - 0.5)*_ScaleRate.x;
+					// 歪み後のUV座標を取得する
 					float2 p = getPos(uv);
 
+					// 押し付けた時に変形させる
 					float2 posX = p * (1.0 + (_ScaleRate.xy - 1.0)*_ScaleVec.x);
 					float2 posY = p * (1.0 + (_ScaleRate.yx - 1.0)*_ScaleVec.y);
 
@@ -118,6 +125,7 @@
 
 					fixed4 diff = tex2D(_MainTex, pos + 0.5);
 
+					// UV座標が0~1の間にない場合は透明にする
 					int v = pos.x * 2;
 					float range01 = 1 - (float)v / (v - 0.00001);
 					v = pos.y * 2;
@@ -127,6 +135,7 @@
 					diff.a *= range01;
 					clip(diff.a - 0.01f);
 
+					// 中心に近いほど背景の歪みを大きくする
 					float2 dist = length(p * 2);
 					dist = saturate(1 - dist);
 					dist = pow(dist, 1.5);
@@ -134,10 +143,6 @@
 					i.uvgrab.xy += dist.xy*abs(normalize(dist))*_GrabDistortion;
 
 					fixed4 color = tex2Dproj(_BackgroundTexture, UNITY_PROJ_COORD(i.uvgrab));
-
-					//diff.a *= diff.a;
-					//color.rgb = color.rgb*(1 - diff.a) + diff.rgb*diff.a;
-					
 
 					return color;
 				}
