@@ -39,9 +39,6 @@ public class NewStageSelectDirector : MonoBehaviour
     // ドアラッパー
     private GameObject doorWrapper = null;
 
-    // ポーズ可能かどうか
-    public bool canPause { get; private set; } = false;
-
     // ゲームの進行状況
     private StageSelectState state = StageSelectState.Start;
     // 待ち時間用タイマー
@@ -109,7 +106,8 @@ public class NewStageSelectDirector : MonoBehaviour
                 }
                 break;
             case StageSelectState.Playing:
-                canPause = true;
+                // ポーズ可能にする
+                pauseManager.EnablePauseButton(true);
                 break;
             case StageSelectState.Decide:
                 waitTime -= Time.deltaTime;
@@ -151,8 +149,9 @@ public class NewStageSelectDirector : MonoBehaviour
 
         state = StageSelectState.Decide;
         waitTime = 0.5f;
-        canPause = false;
 
+        // ポーズ不可にする
+        pauseManager.EnablePauseButton(false);
         // プレイヤーの入力を停止する
         playerController.EnableControl(false);
     }

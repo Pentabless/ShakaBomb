@@ -66,9 +66,6 @@ public class PlayDirector : MonoBehaviour
     // 待ち時間用タイマー
     private float waitTime = 0.0f;
 
-    // ポーズ可能かどうか
-    public bool canPause { get; private set; } = false;
-
 	//------------------------------------------------------------------------------------------
     // Awake
 	//------------------------------------------------------------------------------------------
@@ -139,7 +136,6 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             state = PlayState.Playing;
-            canPause = true;
             GameObject go = GameObject.Find(AreaNameScript.NAME);
             if (go)
             {
@@ -148,6 +144,8 @@ public class PlayDirector : MonoBehaviour
                 {
                     string text = "第" + (Data.stage_number) + "区画";
                     areaNameScript.ShowAreaName(text, 1.0f, 2.0f);
+                    // ポーズ可能にする
+                    pauseManager.EnablePauseButton(true);
                 }
                 else if (Data.stage_number == 0)
                 {
@@ -155,6 +153,8 @@ public class PlayDirector : MonoBehaviour
                     areaNameScript.SetOutlineColor(new Color(0.08f, 0.36f, 0, 0.5f));
                     areaNameScript.SetBackColor(new Color(0.3f, 0.9f, 0, 0.5f));
                     areaNameScript.SetBackScale(new Vector3(1.5f, 1, 1));
+                    // ポーズ不可にする
+                    pauseManager.EnablePauseButton(false);
                 }
             }
         }
@@ -264,8 +264,8 @@ public class PlayDirector : MonoBehaviour
     {
         state = PlayState.Goal;
         waitTime = 2.0f;
-        canPause = false;
-
+        // ポーズ不可にする
+        pauseManager.EnablePauseButton(false);
         // プレイヤーの入力を停止する
         playerController.EnableControl(false);
         // プレイヤーをゴールの位置に移動させる
@@ -287,8 +287,8 @@ public class PlayDirector : MonoBehaviour
     {
         state = PlayState.TutorialGoal;
         waitTime = 2.0f;
-        canPause = false;
-
+        // ポーズ不可にする
+        pauseManager.EnablePauseButton(false);
         // プレイヤーの入力を停止する
         playerController.EnableControl(false);
         // プレイヤーをゴールの位置に移動させる
@@ -306,8 +306,8 @@ public class PlayDirector : MonoBehaviour
     {
         state = PlayState.Failed;
         waitTime = 3.0f;
-        canPause = false;
-
+        // ポーズ不可にする
+        pauseManager.EnablePauseButton(false);
         // プレイヤーの入力を停止する
         playerController.EnableControl(false);
         // UIをフェードアウトさせる

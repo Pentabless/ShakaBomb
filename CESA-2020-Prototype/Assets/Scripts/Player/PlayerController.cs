@@ -87,7 +87,6 @@ public class PlayerController : MonoBehaviour
 
     // 接地フラグ
     bool isGround;
-    bool bubbleGround;
 
     // 敵接触時
     int hitCount = Integer.ZERO;
@@ -142,7 +141,6 @@ public class PlayerController : MonoBehaviour
     {
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
-        bubbleGround = false;
         checkController = false;
         dir = Integer.ZERO;
         lastDir = Integer.ZERO;
@@ -359,18 +357,6 @@ public class PlayerController : MonoBehaviour
             Data.playerDir = dir;
         }
 
-        //// プレイヤーの向き変更
-        //if (Data.playerDir != 1)
-        //{
-        //    this.transform.localRotation = new Quaternion(0, 180, 0, 0);
-        //    antiRotationWrapper.transform.rotation = Quaternion.identity;
-        //}
-        //else
-        //{
-        //    this.transform.localRotation = new Quaternion(0, 0, 0, 0);
-        //    antiRotationWrapper.transform.rotation = Quaternion.identity;
-        //}
-
         // プレイヤーの速度取得
         Data.prePlayerVel = Data.currentPlayerVel;
         Data.currentPlayerVel = this.rig.velocity;
@@ -499,11 +485,7 @@ public class PlayerController : MonoBehaviour
         {
             isGround = true;
         }
-
-        if (collision.tag == Bubble.GROUND)
-        {
-            bubbleGround = true;
-        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -570,7 +552,6 @@ public class PlayerController : MonoBehaviour
         {
             isGround = false;
             jumpCount = 1;
-            bubbleGround = false;
         }
 
         // 汚れ

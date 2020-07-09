@@ -34,13 +34,12 @@ public class PauseManager : MonoBehaviour
     [Header("ポーズを適用するオブジェクトのrootオブジェクト")]
     private GameObject objectsWrapper;      // ポーズを適用するオブジェクトの範囲
     
-    private PlayDirector playDirector;     // プレイディレクター
-    private NewStageSelectDirector stageSelectDirector; // ステージセレクトディレクター
     [SerializeField]
     private GameObject pauseMenu;            // ポーズメニューオブジェクト
     [SerializeField]
     private GameObject[] ignoreGameObjects;  // ポーズの影響を受けないオブジェクト
 
+    private bool canPauseButton = true;                 //ボタンを押したときにポーズ可能かどうか
     private bool isPausing = false;                     //ポーズ中かどうか
     private RigidbodyVelocity[] rigidbodyVelocities;    //ポーズ前の速度の配列
     private Rigidbody2D[] pausingRigidbodies;           //ポーズ中のRigidbodyの配列
@@ -100,16 +99,6 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
-        var obj = GameObject.Find(PlayDirector.NAME);
-        if (obj)
-        {
-            playDirector = obj.GetComponent<PlayDirector>();
-        }
-        obj = GameObject.Find(NewStageSelectDirector.NAME);
-        if (obj)
-        {
-            stageSelectDirector = obj.GetComponent<NewStageSelectDirector>();
-        }
         defaultFilterColor = filterColor;
         CreatePauseFilter();
     }
@@ -118,17 +107,8 @@ public class PauseManager : MonoBehaviour
     {
         //ボタンが押されたら状態を変更する
         bool pressPause = (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button7));
-        bool canPause = true;
-        if (playDirector)
-        {
-            canPause = playDirector.canPause;
-        }
-        if (stageSelectDirector)
-        {
-            canPause = stageSelectDirector.canPause;
-        }
 
-        if (pressPause && !FadeManager.isFadeOut && canPause)
+        if (pressPause && !FadeManager.isFadeOut && canPauseButton)
         {
             SoundPlayer.Play(pauseSE);
             filterColor = defaultFilterColor;
@@ -141,6 +121,12 @@ public class PauseManager : MonoBehaviour
             float t = Mathf.Min((fadeTime > 0.0f ? time / fadeTime : 0.0f), 1.0f);
             pauseImage.color = Color.Lerp(new Color(0, 0, 0, 0), filterColor, t);
         }
+    }
+
+    //ボタンを押したときにポーズ可能か設定する
+    public void EnablePauseButton(bool enable)
+    {
+        canPauseButton = enable;
     }
 
     //ポーズ状態を変更する
@@ -171,51 +157,6 @@ public class PauseManager : MonoBehaviour
             }
         }
     }
-
-    //public void StartSwitchMovie(SwitchObject[] objects, Vector2 target)
-    //{
-    //    playingMovie = true;
-    //    StartCoroutine(SwitchMovieCoroutine(objects, target));
-    //}
-
-    //private IEnumerator SwitchMovieCoroutine(SwitchObject[] objects, Vector2 target)
-    //{
-    //    GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-    //    CameraController cam_controller = camera.GetComponent<CameraController>();
-    //    Vector2 start_pos = GameObject.FindGameObjectWithTag("Player").transform.position;
-
-    //    Pause();
-
-    //    //cam_controller.enabled = true;
-
-    //    for (int i = 0; i <= 60; ++i)
-    //    {
-    //        Vector3 to = Vector2.Lerp(start_pos, target, i / 60f);
-    //        cam_controller.MoveCamera(to);
-    //        yield return new WaitForSeconds(1f / 60f);
-    //    }
-
-    //    foreach (var obj in objects)
-    //    {
-    //        obj.enabled = true;
-    //        obj.OnTurnOn();
-    //    }
-
-    //    for (int i = 0; i <= 60; ++i)
-    //    {
-    //        yield return new WaitForSeconds(1f / 60f);
-    //    }
-
-    //    for (int i = 0; i <= 60; ++i)
-    //    {
-    //        Vector3 to = Vector2.Lerp(target, start_pos, i / 60f);
-    //        cam_controller.MoveCamera(to);
-    //        yield return new WaitForSeconds(1f / 60f);
-    //    }
-
-    //    Resume();
-    //    playingMovie = false;
-    //}
 
     //中断処理
     public void Pause(float time)
