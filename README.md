@@ -1,5 +1,5 @@
 # ShakaBomb
-![LatestRelease](https://img.shields.io/badge/LatestRelease-v1.4-success.svg?style=flat)
+[![LatestRelease](https://img.shields.io/badge/LatestRelease-v1.4-success.svg?style=flat)](https://github.com/Trident-CESA2020/ShakaBomb/releases/tag/v1.4)
 
 ## Table of Contents
 
