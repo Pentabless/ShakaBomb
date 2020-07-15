@@ -1,5 +1,5 @@
 # ShakaBomb
-https://img.shields.io/badge/${LatestRelease}-${v1.4}-${success}.svg
+[![LatestRelease](https://img.shields.io/badge/LatestRelease-v1.4-success.svg?style=flat)]
 
 ## Table of Contents
 
