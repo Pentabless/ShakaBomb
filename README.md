@@ -1,5 +1,4 @@
-# ShakaBomb
-
+# ShakaBomb [![LatestRelease](https://img.shields.io/badge/LatestRelease-v1.4-success.svg?style=popout-square)](https://github.com/Trident-CESA2020/ShakaBomb/releases/tag/v1.4)
 
 ## Table of Contents
 
@@ -32,12 +31,12 @@ TakumiYanase@outlook.com
 
 * ShakaBomb
   - (c) 2020 Takumi Yanase , Shun Kubota , Yuki Nagato , Ami Kawaguchi , Kazuaki Hashimoto
-  - [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://opensource.org/licenses/mit-license.php)
+  - [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=popout-square)](https://opensource.org/licenses/mit-license.php)
   
 * Textures and Models
   - (c) 2020 Kie Suzuki , Yusuke Shinada , Aoi Dozono , Taiki Ishizuki , Yuki Sano  
   Kosuke Ogawa , Eisuke Uchida , Miki Fukuoka
-  - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=flat)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
+  - [![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-yellow.svg?style=popout-square)](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
 
 
 ## Downloads
