@@ -13,9 +13,7 @@
 
 ## About
 
-**ShakaBomb** was developed for **[Japan Game Awards 2020 Amateurs]**.(https://awards.cesa.or.jp/amateur/index.html)
-
-<p><img src="https://prtimes.jp/i/13057/35/resize/d13057-35-979476-2.png?raw=true" alt="ShakaBombImage" /></p>
+**ShakaBomb** was developed for [**Japan Game Awards 2020 Amateurs**](https://awards.cesa.or.jp/amateur/index.html).
 
 <p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Title.png?raw=true" alt="ShakaBombImage" /></p>
 
