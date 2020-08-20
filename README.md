@@ -24,13 +24,13 @@
 
 ## Contacts
 
-TakumiYanase@outlook.com
+Pentabless@outlook.com
 
 
 ## License
 
 * ShakaBomb
-  - (c) 2020 Takumi Yanase , Shun Kubota , Yuki Nagato , Ami Kawaguchi , Kazuaki Hashimoto
+  - (c) 2020 TeamPentabless
   - [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=popout-square)](https://opensource.org/licenses/mit-license.php)
   
 * Textures and Models
