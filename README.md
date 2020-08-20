@@ -41,7 +41,7 @@ Pentabless@outlook.com
 
 ## Downloads
 
-Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/ShakaBomb/releases).  
+Downloads can be found on [GitHub](https://github.com/Pentabless/ShakaBomb/releases).  
 
 
 ## Usage
