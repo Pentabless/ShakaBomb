@@ -65,12 +65,11 @@ You need an **Xbox 360 controller** to play the game.
   - Kie Suzuki
   - Yusuke Shinada
   - Aoi Dozono
-  - Taiki Ishizuki
   - Yuki Sano
   - Kosuke Ogawa
   - Eisuke Uchida
   - Miki Fukuoka
-
+  
 
 ## Credits
 
