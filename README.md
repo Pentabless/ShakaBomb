@@ -1,4 +1,4 @@
-# ShakaBomb [![LatestRelease](https://img.shields.io/badge/LatestRelease-v1.4-success.svg?style=popout-square)](https://github.com/Trident-CESA2020/ShakaBomb/releases/tag/v1.4)
+# ShakaBomb [![LatestRelease](https://img.shields.io/badge/LatestRelease-v1.5-success.svg?style=popout-square)](https://github.com/Pentabless/ShakaBomb/releases/tag/v1.5)
 
 ## Table of Contents
 
