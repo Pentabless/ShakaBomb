@@ -13,7 +13,7 @@
 
 ## About
 
-**ShakaBomb** was developed for **Japan Game Awards 2020 Amateurs**.
+**ShakaBomb** was developed for [**Japan Game Awards 2020 Amateurs**](https://awards.cesa.or.jp/amateur/index.html).
 
 <p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Title.png?raw=true" alt="ShakaBombImage" /></p>
 
@@ -24,13 +24,13 @@
 
 ## Contacts
 
-TakumiYanase@outlook.com
+Pentabless@outlook.com
 
 
 ## License
 
 * ShakaBomb
-  - (c) 2020 Takumi Yanase , Shun Kubota , Yuki Nagato , Ami Kawaguchi , Kazuaki Hashimoto
+  - (c) 2020 TeamPentabless
   - [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=popout-square)](https://opensource.org/licenses/mit-license.php)
   
 * Textures and Models
@@ -41,7 +41,7 @@ TakumiYanase@outlook.com
 
 ## Downloads
 
-Downloads can be found on [GitHub](https://github.com/Trident-CESA2020/ShakaBomb/releases).  
+Downloads can be found on [GitHub](https://github.com/Pentabless/ShakaBomb/releases).  
 
 
 ## Usage
@@ -65,12 +65,11 @@ You need an **Xbox 360 controller** to play the game.
   - Kie Suzuki
   - Yusuke Shinada
   - Aoi Dozono
-  - Taiki Ishizuki
   - Yuki Sano
   - Kosuke Ogawa
   - Eisuke Uchida
   - Miki Fukuoka
-
+  
 
 ## Credits
 
