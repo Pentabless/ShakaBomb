@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class GameInitial
 {
-    [RuntimeInitializeOnLoadMethod]
-    static void OnRuntimeMethodLoad()
-    {
-        Screen.SetResolution(1920, 1080, false);
-    }
+    //[RuntimeInitializeOnLoadMethod]
+    //static void OnRuntimeMethodLoad()
+    //{
+    //    Screen.SetResolution(1920, 1080, false);
+    //}
 }
