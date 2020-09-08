@@ -102,12 +102,12 @@ public class SharedData : MonoBehaviour
             {
                 case 0:
                     decorations = back_decoration_list;
-                    Debug.Log("飾りの数=" + decorations.Count);
+                    //Debug.Log("飾りの数=" + decorations.Count);
                     break;
 
                 case 1:
                     decorations = front_decoration_list;
-                    Debug.Log("飾りの数=" + decorations.Count);
+                    //Debug.Log("飾りの数=" + decorations.Count);
                     break;
                 default:
                     decorations = new List<BackGroundDecorationController>();
