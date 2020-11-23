@@ -62,6 +62,8 @@ public class BackGroundDecorationGenerator : MonoBehaviour
         {
             //プレファブと同じオブジェクトを作る
             GameObject go = Instantiate(decoration_prefab) as GameObject;
+            // ジェネレーターの子オブジェクトにする
+            go.transform.parent = this.gameObject.transform;
             //座標を設定する
             go.transform.position = position;
             //座標を設定する
