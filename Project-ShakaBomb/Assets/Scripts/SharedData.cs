@@ -140,9 +140,6 @@ public class SharedData : MonoBehaviour
         back_decoration_list.Clear();
         front_decoration_list.Clear();
 
-        Debug.Log(back_decoration_list.Count);
-        Debug.Log(front_decoration_list.Count);
-
         //タグが「Decoration」のオブジェクトを全て取得する
         GameObject[] decoration_array = GameObject.FindGameObjectsWithTag("Decoration");
 
@@ -170,10 +167,6 @@ public class SharedData : MonoBehaviour
                 back_decoration_list.Add(decoration_array[i].GetComponent<BackGroundDecorationController>());
             }
         }
-
-        Debug.Log(back_decoration_list.Count);
-        Debug.Log(front_decoration_list.Count);
-
     }
     /*--終わり：SetDecorationList--*/
 
