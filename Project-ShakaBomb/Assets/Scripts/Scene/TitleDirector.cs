@@ -188,7 +188,7 @@ public class TitleDirector : MonoBehaviour
             //    //ゲーム終了
             //}
             //どれかを押したら
-            /*else */if (Input.anyKeyDown)
+            /*else */if (Input.GetButtonDown(("Button A")))
             {
                 //フェードアウトを始める
                 sc_screen_fade.SetFadeType(true);
