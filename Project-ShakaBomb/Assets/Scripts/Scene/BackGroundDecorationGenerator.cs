@@ -16,16 +16,6 @@ public class BackGroundDecorationGenerator : MonoBehaviour
     //飾り(前景)のカウント
     int front_decoration_count;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     //飾りを作る
     public bool CreateDecoration(Vector3 position, Vector3 scale, Color color, int layer)
     {
