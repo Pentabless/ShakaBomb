@@ -1,20 +1,15 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: Floor.cs 
 /// Summary		: 
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
-using UnityEngine.UI;
 //==============================================================================================
 public partial class Floor : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    
     // 最初・最後のポジション
     [SerializeField]
     protected Vector3 startPosition;
@@ -32,8 +27,13 @@ public partial class Floor : MonoBehaviour
     protected BoxCollider2D thisCollider;
     protected PlatformEffector2D platform;
 
+
+
     //------------------------------------------------------------------------------------------
-    // Awake
+    // summary : Awake
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
@@ -41,28 +41,31 @@ public partial class Floor : MonoBehaviour
         platform = GetComponent<PlatformEffector2D>();
     }
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
-    private void Start()
-    {
-    }
+
 
     //------------------------------------------------------------------------------------------
-    // Update
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Update()
     {
         Pass();
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // 通り抜け処理
+    // summary : 通り抜け処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     protected void Pass()
     {
         // 下入力時に通り抜けるようにする
-        if (Input.GetAxis(Player.VERTICAL) < -passSensitivity)
+        if (Input.GetAxis(ConstPlayer.VERTICAL) < -passSensitivity)
         {
             passable = true;
             platform.colliderMask &= ~passLayerMask.value;
@@ -88,8 +91,6 @@ public partial class Floor : MonoBehaviour
         else
         {
             platform.colliderMask |= passLayerMask.value;
-        }
-        
-        
+        }  
     }
 }

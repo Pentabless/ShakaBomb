@@ -1,22 +1,16 @@
-﻿/*--------------------------------------*/
-/*--ファイル名：StageDataController.cs--*/
-/*--概要：ステージの詳細を描画する------*/
-/*--------------------------------------*/
-using System.Collections;
-using System.Collections.Generic;
+﻿//==============================================================================================
+/// File Name	: StageDataController.cs
+/// Summary		: 
+//==============================================================================================
 using UnityEngine;
-using UnityEngine.UI;   //UI
-
+using UnityEngine.UI;
+using Common;
+//==============================================================================================
 public class StageDataController : MonoBehaviour
 {
-    /*----------*/
-    /*--public--*/
-    /*----------*/
-    //浄化率のテキストオブジェクト
-    ////public GameObject PurificationRateTextPrefab;
-    /*-----------*/
-    /*--private--*/
-    /*-----------*/
+    //------------------------------------------------------------------------------------------
+    // member variable
+    //------------------------------------------------------------------------------------------
     //ドアオブジェクト
     private GameObject[] door_obj;
     ////テキストオブジェクト
@@ -39,30 +33,32 @@ public class StageDataController : MonoBehaviour
     //ロゴの回転向き
     private bool logo_angle_direction;
 
-    /*------------------------------*/
-    /*--関数名：Awake---------------*/
-    /*--概要：Startより早い初期化---*/
-    /*--引数：なし------------------*/
-    /*--戻り値：なし----------------*/
-    /*------------------------------*/
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Awake
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Awake()
     {
         //**ステージのドア**//*************************************************************
         //シーン内にあるドアオブジェクトを全部探す
         door_obj = GameObject.FindGameObjectsWithTag("StageDoor");
-        //ドアオブジェクトのリストを並べ変える(要素番号とステージ番号が合うように)
-        //door_obj = SortDoorObjectList();
         //ステージデータの初期化をする(初期化していたら何もしない)
         SharedData.instance.SetStageDataSize(door_obj.Length);    //ドアオブジェクトの数だけ
     }
 
-    /*-----------------*/
-    /*--関数名：Start--*/
-    /*--概要：初期化---*/
-    /*--引数：なし-----*/
-    /*--戻り値：なし---*/
-    /*-----------------*/
-    void Start()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Start()
     {
         //自身のCanvasの設定をする
         SharedData.instance.SetCanvasOption(GetComponent<Canvas>());
@@ -94,55 +90,18 @@ public class StageDataController : MonoBehaviour
         image_operation_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(operation_logo_angle, 0.0f, 0.0f);
 
 
-        playerController = GameObject.Find(Common.Player.NAME).GetComponent<PlayerController>();
-
-        ////テキストオブジェクトのサイズを決める
-        //text_obj = new GameObject[door_obj.Length];
-
-        //Debug.Log(door_obj.Length);
-
-        ////ドアオブジェクトの数だけテキストオブジェクトを作る
-        //for (int i = 0; i < door_obj.Length; i++)
-        //{
-        //    //プレファブを元にテキストオブジェクトを作る
-        //    GameObject text = Instantiate(PurificationRateTextPrefab) as GameObject;
-        //    //ドアオブジェクトからステージ番号をもらう
-        //    int stage_number = door_obj[i].GetComponent<DoorToStage>().GetStageNumber();
-        //    //ステージ番号を使って浄化率をもらう
-        //    int purification = SharedData.instance.GetPurification(stage_number);
-        //    //テキスト内容を変える
-        //    text.GetComponent<Text>().text = purification.ToString() + "%";
-        //    //テキストオブジェクトを覚える
-        //    text_obj[i] = text;
-        //    //作ったテキストオブジェクトを子オブジェクトに登録する
-        //    text.transform.parent = transform;
-        //    //拡大率
-        //    text_obj[i].GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        //}
-
-        ////ドアの色を変える
-        //for (int i = 0; i < door_obj.Length; i++)
-        //{
-        //    //プレイできるものは赤色にできないものは黒色に
-        //    if (SharedData.instance.GetCanPlay(door_obj[i].GetComponent<DoorToStage>().GetStageNumber()))
-        //    {
-        //        door_obj[i].GetComponent<SpriteRenderer>().color = Color.red;
-        //    }
-        //    else
-        //    {
-        //        door_obj[i].GetComponent<SpriteRenderer>().color = Color.black;
-        //    }
-        //}
+        playerController = GameObject.Find(ConstPlayer.NAME).GetComponent<PlayerController>();
     }
-    /*--終わり：Start--*/
 
-    /*------------------*/
-    /*--関数名：Update--*/
-    /*--概要：更新------*/
-    /*--引数：なし------*/
-    /*--戻り値：なし----*/
-    /*------------------*/
-    void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         logo_angle_direction = false;
         bool enableJump = true;
@@ -155,16 +114,6 @@ public class StageDataController : MonoBehaviour
                 logo_angle_direction = true;
                 int stage_num = door_obj[i].GetComponent<DoorToStage>().GetStageNumber();
                 text_stage_number.text = "第" + (stage_num).ToString() + "区画";
-                //ステージ番号が二桁だったら
-                //if (i>=10)
-                //{
-                //    text_stage_number.text = "ステージ" + door_obj[i].GetComponent<DoorToStage>().GetStageNumber().ToString();
-                //}
-                //ステージ番号が一桁だったら
-                //else
-                //{
-                //    text_stage_number.text = "ステージ0" + door_obj[i].GetComponent<DoorToStage>().GetStageNumber().ToString();
-                //}
 
                 Color color = image_dirty_logo.color;
                 //プレイできないステージだったら
@@ -183,8 +132,6 @@ public class StageDataController : MonoBehaviour
                 break;
             }
         }
-
-        //playerController.EnableJump(enableJump);
 
         //見えるように回転する時
         if (logo_angle_direction)
@@ -232,22 +179,16 @@ public class StageDataController : MonoBehaviour
         //回転更新
         image_stage_number_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(number_logo_angle, 0.0f, 0.0f);
         image_operation_logo.GetComponent<RectTransform>().localRotation = Quaternion.Euler(operation_logo_angle, 0.0f, 0.0f);
-
-        ////移動するドアのために毎回座標更新する
-        //for (int i = 0; i < door_obj.Length; i++)
-        //{
-        //    text_obj[i].GetComponent<RectTransform>().position = new Vector3(door_obj[i].transform.position.x, door_obj[i].transform.position.y, text_obj[i].GetComponent<RectTransform>().position.z);
-        //    text_obj[i].GetComponent<RectTransform>().position += new Vector3(0.0f, -2.0f, 0.0f);
-        //}
     }
-    /*--終わり：Update--*/
 
-    /*--------------------------------------------------------*/
-    /*--関数名：SortDoorObjectList(private)-------------------*/
-    /*--概要：ドアオブジェクトをステージ番号の順に並べ変える--*/
-    /*--引数：なし--------------------------------------------*/
-    /*--戻り値：なし------------------------------------------*/
-    /*--------------------------------------------------------*/
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : SortDoorObjectList
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private GameObject[] SortDoorObjectList()
     {
         //ドアの数分の配列を作る
@@ -271,5 +212,4 @@ public class StageDataController : MonoBehaviour
 
         return obj_list;
     }
-    /*--終わり：SortDoorObjectList--*/
 }

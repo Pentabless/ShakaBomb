@@ -2,11 +2,9 @@
 /*--ファイル名：ResultDirector.cs-----------------------*/
 /*--概要：リザルトシーンの処理(プレイ評価やシーン遷移)--*/
 /*------------------------------------------------------*/
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;  //シーン遷移
 using UnityEngine.UI;   //UI
+using Common;
 
 
 public class ResultDirector : MonoBehaviour
@@ -266,7 +264,7 @@ public class ResultDirector : MonoBehaviour
         //何かのキーを押したら
         if ((Input.anyKeyDown ||
             //Aボタンを押したら
-            Input.GetAxis(Common.GamePad.BUTTON_A) > 0) &&
+            Input.GetAxis(ConstGamePad.BUTTON_A) > 0) &&
             // フェードアウト中でないなら
             !FadeManager.isFadeOut)
         {

@@ -2,10 +2,7 @@
 /// File Name	: NewStageSelectDirecotr.cs
 /// Summary		: ステージセレクト制御スクリプト
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 //==============================================================================================
 public class NewStageSelectDirector : MonoBehaviour
@@ -44,22 +41,19 @@ public class NewStageSelectDirector : MonoBehaviour
     // 待ち時間用タイマー
     private float waitTime = 0.0f;
 
-    //------------------------------------------------------------------------------------------
-    // Awake
-    //------------------------------------------------------------------------------------------
-    private void Awake()
-    {
 
-    }
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         Data.time = 100;
 
-        player = GameObject.Find(Player.NAME);
+        player = GameObject.Find(ConstPlayer.NAME);
         playerController = player.GetComponent<PlayerController>();
 
         if (Data.stage_number > 0)
@@ -70,7 +64,7 @@ public class NewStageSelectDirector : MonoBehaviour
                 if (door.GetStageNumber() == Data.stage_number)
                 {
                     player.transform.position = door.transform.position;
-                    GameObject.Find(Common.Camera.CONTROLLER).GetComponent<CameraController>().ResetCameraPos(player.transform.position);
+                    GameObject.Find(ConstCamera.CONTROLLER).GetComponent<CameraController>().ResetCameraPos(player.transform.position);
                     break;
                 }
             }
@@ -85,14 +79,19 @@ public class NewStageSelectDirector : MonoBehaviour
         pauseManager = go.GetComponent<PauseManager>();
         // シーン開始時にフェードインする
         FadeManager.FadeIn(0.01f);
-        wipeCamera = GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<WipeCamera>();
+        wipeCamera = GameObject.Find(ConstCamera.MAIN_CAMERA).GetComponent<WipeCamera>();
         wipeCamera.StartFadeIn(player.transform.position, 1.0f);
         waitTime = 1.0f;
 
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // Update
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Update()
     {
@@ -132,8 +131,13 @@ public class NewStageSelectDirector : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // ステージの決定
+    // summary : ステージの決定
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void DecideStage()
     {

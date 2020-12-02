@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
     bool isGround;
 
     // 敵接触時
-    int hitCount = Integer.ZERO;
+    int hitCount = ConstInteger.ZERO;
 
     // 空中ブーストの強さ
     [SerializeField]
@@ -108,11 +108,11 @@ public class PlayerController : MonoBehaviour
     int dirCount;       // 切り替えし用向き保持カウント
 
     // キー入力の情報保持
-    float jumpButton = Decimal.ZERO;
-    float jumpButtonTrigger = Decimal.ZERO;
+    float jumpButton = ConstDecimal.ZERO;
+    float jumpButtonTrigger = ConstDecimal.ZERO;
 
-    float boostButton = Decimal.ZERO;
-    float boostButtonTrigger = Decimal.ZERO;
+    float boostButton = ConstDecimal.ZERO;
+    float boostButtonTrigger = ConstDecimal.ZERO;
 
     // 浮力が最高になるバルーンサイズ
     [SerializeField]
@@ -133,6 +133,8 @@ public class PlayerController : MonoBehaviour
     bool autoMoveFinished = false;
     // 移動先
     Vector3 targetPos = Vector3.zero;
+    
+
 
     //------------------------------------------------------------------------------------------
     // Start
@@ -142,11 +144,11 @@ public class PlayerController : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
         checkController = false;
-        dir = Integer.ZERO;
-        lastDir = Integer.ZERO;
-        dirCount = Integer.ZERO;
+        dir = ConstInteger.ZERO;
+        lastDir = ConstInteger.ZERO;
+        dirCount = ConstInteger.ZERO;
         jumpForce = defaultJumpForce;
-        jumpCount = Integer.ZERO;
+        jumpCount = ConstInteger.ZERO;
         jumpStopFlag = false;
         jumpTiming = false;
         playerSpeed = accelForce;
@@ -155,6 +157,8 @@ public class PlayerController : MonoBehaviour
         bubbleGenerator = bubbleG.GetComponent<BubbleGenerator>();
         bulletGenerator = bulletG.GetComponent<BulletGenerator>();
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // Update
@@ -202,7 +206,7 @@ public class PlayerController : MonoBehaviour
 
         if (!canControl)
         {
-            dir = Integer.ZERO;
+            dir = ConstInteger.ZERO;
             bulletGenerator.DisableGuideLines();
             return;
         }
@@ -212,17 +216,17 @@ public class PlayerController : MonoBehaviour
         checkController = gamaepadManager.GetCheckGamepad();
 
         // 左右移動
-        if (Input.GetAxis(Player.HORIZONTAL) < Integer.ZERO)
+        if (Input.GetAxis(ConstPlayer.HORIZONTAL) < ConstInteger.ZERO)
         {
             dir = -1;
             dirCount = turnCount;
-            stickSence = Input.GetAxis(Player.HORIZONTAL);
+            stickSence = Input.GetAxis(ConstPlayer.HORIZONTAL);
         }
-        else if (Input.GetAxis(Player.HORIZONTAL) > Integer.ZERO)
+        else if (Input.GetAxis(ConstPlayer.HORIZONTAL) > ConstInteger.ZERO)
         {
             dir = 1;
             dirCount = turnCount;
-            stickSence = Input.GetAxis(Player.HORIZONTAL);
+            stickSence = Input.GetAxis(ConstPlayer.HORIZONTAL);
         }
         else
         {
@@ -230,13 +234,13 @@ public class PlayerController : MonoBehaviour
         }
 
         // バレットの発射
-        bool releaseAttack = Input.GetButtonUp(Player.ATTACK);
-        var balloonFloor = Input.GetAxis(GamePad.BUTTON_B);
+        bool releaseAttack = Input.GetButtonUp(ConstPlayer.ATTACK);
+        var balloonFloor = Input.GetAxis(ConstGamePad.BUTTON_B);
         if (releaseAttack && Data.balloonSize >= bulletCost)
         {
             float angle = 0.0f;
-            float v = Input.GetAxis(Player.VERTICAL);
-            float h = Input.GetAxis(Player.HORIZONTAL);
+            float v = Input.GetAxis(ConstPlayer.VERTICAL);
+            float h = Input.GetAxis(ConstPlayer.HORIZONTAL);
             if (Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f)
             {
                 angle = Mathf.Atan2(v, h);
@@ -252,11 +256,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // バレットの発射ボタンを押している間、ガイドラインを表示する
-        if (Input.GetButton(Player.ATTACK))
+        if (Input.GetButton(ConstPlayer.ATTACK))
         {
             stickSence = 0.0f;
             dir = 0;
-            var inputDir = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
+            var inputDir = new Vector2(Input.GetAxis(ConstPlayer.HORIZONTAL), Input.GetAxis(ConstPlayer.VERTICAL));
             if (inputDir.magnitude > 0)
             {
                 bulletGenerator.EnableGuideLines(transform.position, Mathf.Atan2(inputDir.y, inputDir.x));
@@ -272,13 +276,13 @@ public class PlayerController : MonoBehaviour
         }
 
         // 空中ブースト
-        jumpButton = Input.GetAxis(Player.JUMP);
-        boostButton = Input.GetAxis(Player.BOOST);
-        float sticV = Mathf.Abs(Input.GetAxis(Player.VERTICAL));
+        jumpButton = Input.GetAxis(ConstPlayer.JUMP);
+        boostButton = Input.GetAxis(ConstPlayer.BOOST);
+        float sticV = Mathf.Abs(Input.GetAxis(ConstPlayer.VERTICAL));
 
         if ((jumpButton > 0 && jumpButtonTrigger == 0.0f && boostCost <= Data.balloonSize && jumpCount > 0) || (boostButton > 0 && boostButtonTrigger == 0.0f && boostCost <= Data.balloonSize))
         {
-            Vector2 direction = new Vector2(Input.GetAxis(Player.HORIZONTAL), Input.GetAxis(Player.VERTICAL));
+            Vector2 direction = new Vector2(Input.GetAxis(ConstPlayer.HORIZONTAL), Input.GetAxis(ConstPlayer.VERTICAL));
             if (sticV <= 0.1f)
             {
                 direction.y = 0;
@@ -372,6 +376,8 @@ public class PlayerController : MonoBehaviour
         isEnemyBoost = false;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // FixedUpdate
     //------------------------------------------------------------------------------------------
@@ -424,6 +430,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // OnCollision
     //------------------------------------------------------------------------------------------
@@ -435,12 +443,12 @@ public class PlayerController : MonoBehaviour
             ExplosionForce(collision.transform.position, 500.0f, 800.0f);
         }
 
-        if (collision.gameObject.tag == Enemy.NAME || collision.gameObject.tag == Enemy.ATTACK)
+        if (collision.gameObject.tag == ConstEnemy.NAME || collision.gameObject.tag == ConstEnemy.ATTACK)
         {
             if (!deathFlag)
             {
                 StartCoroutine(AudioPlay());
-                GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
+                GameObject.Find(ConstCamera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
             }
             KnockBack(collision.transform.position);
             balloonController.Burst();
@@ -450,12 +458,12 @@ public class PlayerController : MonoBehaviour
         }
 
         // ダメージタイルと衝突した時に破裂させる
-        if (collision.gameObject.tag == Stage.DAMAGE_TILE)
+        if (collision.gameObject.tag == ConstStage.DAMAGE_TILE)
         {
             if (!deathFlag)
             {
                 StartCoroutine(AudioPlay());
-                GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
+                GameObject.Find(ConstCamera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
             }
             //SoundPlayer.Play(audios[(int)AudioType.Damage]);
             balloonController.Burst();
@@ -465,28 +473,39 @@ public class PlayerController : MonoBehaviour
         }
 
         // エネミーと接触したらぶっ飛ぶ(入力方向)
-        if (collision.gameObject.tag == Enemy.HIT_STATE)
+        if (collision.gameObject.tag == ConstEnemy.HIT_STATE)
         {
             isEnemyBoost = true;
         }
 
     }
+
+
+
     private IEnumerator AudioPlay()
     {
         SoundPlayer.Play(audios[(int)AudioType.Damage]);
         yield return null;
     }
+
+
+
     //------------------------------------------------------------------------------------------
     // OnTrigger
     //------------------------------------------------------------------------------------------
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME || collision.tag == "DamageTile")
+        if (collision.tag == ConstStage.GROUND || 
+            collision.tag == ConstBubble.GROUND || 
+            collision.tag == ConstFloor.NAME || 
+            collision.tag == ConstStage.DAMAGE_TILE)
         {
             isGround = true;
         }
         
     }
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -496,7 +515,10 @@ public class PlayerController : MonoBehaviour
             Data.initialPlayerPos = collision.gameObject.transform.position;
         }
 
-        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME || collision.tag == "DamageTile")
+        if (collision.tag == ConstStage.GROUND || 
+            collision.tag == ConstBubble.GROUND || 
+            collision.tag == ConstFloor.NAME || 
+            collision.tag == ConstStage.DAMAGE_TILE)
         {
             isGround = true;
             jumpCount = 0;
@@ -518,16 +540,20 @@ public class PlayerController : MonoBehaviour
         {
             collision.gameObject.transform.parent.gameObject.GetComponent<BubbleCannon>().HitToPlayer();
             rig.velocity = rig.velocity * 0.0f;
-            float sticV = Input.GetAxis(Player.VERTICAL);
+            float sticV = Input.GetAxis(ConstPlayer.VERTICAL);
             Mathf.Abs(sticV); // 入力の度合
 
-            if (Input.GetAxis(Player.VERTICAL) <= 0.0f && sticV >= 0.1f)
+            if (Input.GetAxis(ConstPlayer.VERTICAL) <= 0.0f && sticV >= 0.1f)
             {
-                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)), ForceMode2D.Impulse);
+                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(ConstPlayer.HORIZONTAL), 
+                    boostForce.y * 1.3f * Input.GetAxis(ConstPlayer.VERTICAL)), 
+                    ForceMode2D.Impulse);
             }
             else
             {
-                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(Player.HORIZONTAL), (boostForce.y * 1.3f * Input.GetAxis(Player.VERTICAL)) + 10.0f), ForceMode2D.Impulse);
+                rig.AddForce(new Vector2(boostForce.x * 1.3f * Input.GetAxis(ConstPlayer.HORIZONTAL), 
+                    (boostForce.y * 1.3f * Input.GetAxis(ConstPlayer.VERTICAL)) + 10.0f), 
+                    ForceMode2D.Impulse);
             }
             // ブースト回数の回復
             boostCount = 2;
@@ -546,9 +572,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == Stage.GROUND || collision.tag == Bubble.GROUND || collision.tag == Common.Floor.NAME)
+        if (collision.tag == ConstStage.GROUND || 
+            collision.tag == ConstBubble.GROUND || 
+            collision.tag == ConstFloor.NAME)
         {
             isGround = false;
             jumpCount = 1;
@@ -561,6 +591,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 入力を受け付けるか設定する
     //------------------------------------------------------------------------------------------
@@ -568,6 +600,8 @@ public class PlayerController : MonoBehaviour
     {
         canControl = enable;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // ジャンプを受け付けるか設定する
@@ -577,6 +611,8 @@ public class PlayerController : MonoBehaviour
         canJump = enable;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 自動操作に切り替えるか設定する
     //------------------------------------------------------------------------------------------
@@ -584,6 +620,8 @@ public class PlayerController : MonoBehaviour
     {
         autoControl = enable;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 自動操作の行き先を設定する
@@ -594,6 +632,8 @@ public class PlayerController : MonoBehaviour
         autoMoveFinished = false;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 自動移動が完了しているか取得する
     //------------------------------------------------------------------------------------------
@@ -601,6 +641,8 @@ public class PlayerController : MonoBehaviour
     {
         return autoMoveFinished;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 現在の方向を取得する
@@ -610,6 +652,8 @@ public class PlayerController : MonoBehaviour
         return dir;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // ジャンプしたタイミングか取得する
     //------------------------------------------------------------------------------------------
@@ -617,6 +661,8 @@ public class PlayerController : MonoBehaviour
     {
         return jumpTiming;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 接地しているか取得する
@@ -626,6 +672,8 @@ public class PlayerController : MonoBehaviour
         return isGround;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 死亡しているか取得する
     //------------------------------------------------------------------------------------------
@@ -633,6 +681,8 @@ public class PlayerController : MonoBehaviour
     {
         return deathFlag;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // バルーン追加
@@ -645,15 +695,19 @@ public class PlayerController : MonoBehaviour
         Data.num_balloon++;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // バルーンを使用する(古い順に消費する)
     //------------------------------------------------------------------------------------------
     public void UsedBalloon()
     {
-        Destroy(m_balloonList[Integer.ZERO]);
-        m_balloonList.RemoveAt(Integer.ZERO);
+        Destroy(m_balloonList[ConstInteger.ZERO]);
+        m_balloonList.RemoveAt(ConstInteger.ZERO);
         Data.num_balloon--;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // バルーンが壊れる
@@ -664,6 +718,8 @@ public class PlayerController : MonoBehaviour
             Data.num_balloon--;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // バルーンの現在の所持数を取得
     //------------------------------------------------------------------------------------------
@@ -672,6 +728,8 @@ public class PlayerController : MonoBehaviour
         return m_balloonList.Count;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // ブースト移動コストを取得
     //------------------------------------------------------------------------------------------
@@ -679,6 +737,8 @@ public class PlayerController : MonoBehaviour
     {
         return boostCost;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // ブースト移動
@@ -697,6 +757,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 爆発
     //------------------------------------------------------------------------------------------
@@ -709,6 +771,8 @@ public class PlayerController : MonoBehaviour
         vel.y = vel.y * yPow;
         this.rig.AddForce(vel);
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // ノックバック
@@ -729,6 +793,8 @@ public class PlayerController : MonoBehaviour
         this.rig.AddForce(addVel, ForceMode2D.Impulse);
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 死亡時処理
     //------------------------------------------------------------------------------------------
@@ -736,6 +802,8 @@ public class PlayerController : MonoBehaviour
     {
         EnableControl(false);
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 復活

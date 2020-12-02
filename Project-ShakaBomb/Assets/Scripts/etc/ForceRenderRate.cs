@@ -14,7 +14,7 @@ public class ForceRenderRate : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    private float m_rate = RenderRate.RATE;
+    private float m_rate = ConstRenderRate.RATE;
     private float m_currentFrameTime;
 
 	//------------------------------------------------------------------------------------------

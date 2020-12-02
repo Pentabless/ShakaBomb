@@ -1,19 +1,13 @@
-﻿/*--------------------------------------------------*/
-/*--ファイル名：LogoDirector.cs---------------------*/
-/*--概要：ロゴシーンの処理(ロゴの描画やシーン遷移)--*/
-/*--------------------------------------------------*/
-using System.Collections;
-using System.Collections.Generic;
+﻿//==============================================================================================
+/// File Name	: LogoDirector.cs
+/// Summary		: 
+//==============================================================================================
 using UnityEngine;
-using UnityEngine.SceneManagement;  //シーン遷移
-using UnityEngine.UI;   //UI
-
-
+using UnityEngine.SceneManagement;
+using Common;
+//==============================================================================================
 public class LogoDirector : MonoBehaviour
 {
-    /*----------*/
-    /*--public--*/
-    /*----------*/
     //次のシーンに移るまでの時間(単位：秒)
     public float next_scene_second_time;
     //ロゴがフェードアウトする時間の割合(next_scene_second_timeを1とする)
@@ -21,9 +15,9 @@ public class LogoDirector : MonoBehaviour
     //スクリーンフェードがフェードアウトする時間の割合(next_scene_second_timeを1とする)
     public float screen_fade_out_time_rate;
 
-    /*-----------*/
-    /*--private--*/
-    /*-----------*/
+    //------------------------------------------------------------------------------------------
+    // member variable
+    //------------------------------------------------------------------------------------------
     //ロゴ
     private GameObject go_logo;
     //スクリーンフェード
@@ -36,13 +30,14 @@ public class LogoDirector : MonoBehaviour
     private float start_time;
 
 
-    /*-----------------*/
-    /*--関数名：Start--*/
-    /*--概要：初期化---*/
-    /*--引数：なし-----*/
-    /*--戻り値：なし---*/
-    /*-----------------*/
-    void Start()
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Start()
     {
         //オブジェクトを探す
         go_logo = GameObject.Find("LogoTex");
@@ -64,15 +59,16 @@ public class LogoDirector : MonoBehaviour
         //一番最初はプレイしていたステージ番号を0にする
         SharedData.instance.play_stage_number = 0;
     }
-    /*--終わり：Start--*/
 
-    /*------------------*/
-    /*--関数名：Update--*/
-    /*--概要：更新------*/
-    /*--引数：なし------*/
-    /*--戻り値：なし----*/
-    /*------------------*/
-    void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         //背景の飾りを作成する
         float decoration_scale = Random.Range(0.3f, 3.0f);
@@ -85,13 +81,13 @@ public class LogoDirector : MonoBehaviour
             //Startボタンを押したら
             (Input.GetAxis("Start") > 0) ||
             //Aボタンを押したら
-            (Input.GetAxis(Common.GamePad.BUTTON_A) > 0) ||
+            (Input.GetAxis(ConstGamePad.BUTTON_A) > 0) ||
             //Bボタンを押したら
-            (Input.GetAxis(Common.GamePad.BUTTON_B) > 0) ||
+            (Input.GetAxis(ConstGamePad.BUTTON_B) > 0) ||
             //Xボタンを押したら
-            (Input.GetAxis(Common.GamePad.BUTTON_X) > 0) ||
+            (Input.GetAxis(ConstGamePad.BUTTON_X) > 0) ||
             //Yボタンを押したら
-            (Input.GetAxis(Common.GamePad.BUTTON_Y) > 0))
+            (Input.GetAxis(ConstGamePad.BUTTON_Y) > 0))
         {
             //ロゴがフェードインする設定になっていたら
             if (go_logo.GetComponent<FadeController>().GetFadeType() == true)
@@ -117,5 +113,4 @@ public class LogoDirector : MonoBehaviour
             SceneManager.LoadScene("TitleScene");
         }
     }
-    /*--終わり：Update--*/
 }

@@ -1,11 +1,10 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: ControllerEvents.cs
 /// Summary		: 
 //==============================================================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 using UnityEngine.UI;
 //==============================================================================================
@@ -46,6 +45,8 @@ public class ControllerEvents : MonoBehaviour
     bool change = false;
     bool start = false;
 
+
+
     //------------------------------------------------------------------------------------------
     // Awake
     //------------------------------------------------------------------------------------------
@@ -55,13 +56,7 @@ public class ControllerEvents : MonoBehaviour
         ui.SetActive(false);
     }
 
-    //------------------------------------------------------------------------------------------
-    // Start
-    //------------------------------------------------------------------------------------------
-    private void Start()
-    {
-        
-    }
+
 
     //------------------------------------------------------------------------------------------
     // Update
@@ -90,7 +85,7 @@ public class ControllerEvents : MonoBehaviour
             change = true;
         }
 
-        if(count <= Common.Decimal.ZERO)
+        if(count <= ConstDecimal.ZERO)
         {
             if (change)
             {
@@ -100,6 +95,8 @@ public class ControllerEvents : MonoBehaviour
             change = false;
         }
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // イベントの開始
@@ -121,6 +118,8 @@ public class ControllerEvents : MonoBehaviour
         StartCoroutine(routine);
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // イベントの終了
     //------------------------------------------------------------------------------------------
@@ -138,6 +137,8 @@ public class ControllerEvents : MonoBehaviour
             routine = null;
         }
     }
+
+
 
     private IEnumerator OnBlink()
     {

@@ -2,10 +2,7 @@
 /// File Name	: GoalController.cs
 /// Summary		: ゴール
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 //==============================================================================================
 public class GoalController : MonoBehaviour
@@ -14,22 +11,18 @@ public class GoalController : MonoBehaviour
     // member variable
     //------------------------------------------------------------------------------------------
     [SerializeField]
-    PlayDirector playDirector;
-    PlayBGM bgm;
+    PlayDirector playDirector = null;
+    PlayBGM bgm = null;
+    private bool once = false;
 
-    bool once = false;  // 一度だけイベントを通知するための変数
 
-	//------------------------------------------------------------------------------------------
-    // Awake
-	//------------------------------------------------------------------------------------------
-    private void Awake()
-    {
-        
-    }
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         bgm = GameObject.Find("PlaySceneBgm").GetComponent<PlayBGM>();
@@ -39,16 +32,13 @@ public class GoalController : MonoBehaviour
         }
     }
 
-	//------------------------------------------------------------------------------------------
-    // Update
-	//------------------------------------------------------------------------------------------
-	private void Update()
-    {
-        
-    }
+
 
     //------------------------------------------------------------------------------------------
-    // ゴールにプレイヤーが触れた
+    // summary : ゴールにプレイヤーが触れた
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -57,7 +47,7 @@ public class GoalController : MonoBehaviour
             return;
         }    
 
-        if (col.tag == Player.NAME)
+        if (col.tag == ConstPlayer.NAME)
         {
             // 通常の状態でない場合はゴール出来ない
             var playerController = col.gameObject.GetComponentInParent<PlayerController>();

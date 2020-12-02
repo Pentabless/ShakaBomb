@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Common;
 
 public class BulletController : MonoBehaviour
 {
@@ -37,12 +36,17 @@ public class BulletController : MonoBehaviour
     // 破裂時の効果音
     private AudioClip burstSE = null;
 
+
+
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         wasShoted = false;
     }
     float t = 0;Vector3 f;Vector3 p;
+
+
+
     void Update()
     {
         if (!wasShoted)
@@ -56,23 +60,25 @@ public class BulletController : MonoBehaviour
         else
         {
             t += Time.deltaTime;
-            //Debug.Log("real:" + transform.position + " t:"+t);
-            //Debug.Log("calc:" + (p + f * t + Vector3.up * 0.5f * rig.gravityScale*Physics2D.gravity.y * t * t) + " t:" + t);
         }
 
     }
+
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag != "Player")
         {
-            if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == Common.Enemy.HIT_STATE)
+            if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == ConstEnemy.HIT_STATE)
             {
                 hitEnemy = true;
             }
             Destroy();
         }
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 発射方向を設定する
@@ -81,6 +87,8 @@ public class BulletController : MonoBehaviour
     {
         shotAngle = angle;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 発射時の力を計算する
@@ -104,6 +112,8 @@ public class BulletController : MonoBehaviour
         return force;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 破裂処理
     //------------------------------------------------------------------------------------------
@@ -116,6 +126,8 @@ public class BulletController : MonoBehaviour
         }
         Destroy(this.gameObject);
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 破裂エフェクトの生成
