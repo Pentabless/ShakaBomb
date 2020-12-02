@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common;
 
 public class CameraController : MonoBehaviour
 {
@@ -77,7 +78,7 @@ public class CameraController : MonoBehaviour
 
         if (initializePos != Vector3.zero)
         {
-            initializePos.z = Common.Camera.POSITION_Z;
+            initializePos.z = ConstCamera.POSITION_Z;
             mainCamera.transform.position = initializePos;
             nextPos = initializePos;
         }
@@ -112,7 +113,7 @@ public class CameraController : MonoBehaviour
             // カメラ移動中
             followOn = FollowCamera(currentPos, nextPos);
             playerLockCount += Time.deltaTime;
-            if (playerLockCount >= Common.Camera.CANNOT_FRAME)
+            if (playerLockCount >= ConstCamera.CANNOT_FRAME)
             {
                 pController.EnableControl(false);
                 playerLockCount = 0.0f;
@@ -166,14 +167,14 @@ public class CameraController : MonoBehaviour
 
             if (fourCorners.height <= player.transform.position.y)
             {
-                if (nextPos.y >= Common.Camera.FIRST_CELL_Y)
-                    cellY = Common.Camera.SECOND_CELL_Y;
+                if (nextPos.y >= ConstCamera.FIRST_CELL_Y)
+                    cellY = ConstCamera.SECOND_CELL_Y;
                 UpdateNextPos(Vector3.up * cellY);
             }
             if (fourCorners.y >= player.transform.position.y)
             {
-                if (nextPos.y <= Common.Camera.FIRST_CELL_Y)
-                    cellY = Common.Camera.FIRST_CELL_Y;
+                if (nextPos.y <= ConstCamera.FIRST_CELL_Y)
+                    cellY = ConstCamera.FIRST_CELL_Y;
                 UpdateNextPos(Vector3.up * -cellY);
             }
             // カメラが移動していないときの設定
@@ -187,7 +188,7 @@ public class CameraController : MonoBehaviour
         //{
         //    respawnCount += Time.deltaTime;
         //    //　数フレームは記憶する
-        //    if (respawnCount >= Common.Camera.REMEMBER_FRAME)
+        //    if (respawnCount >= ConstCamera.REMEMBER_FRAME)
         //    {
         //        Data.initialPlayerPos = player.transform.position;
         //        rememberPos = false;
@@ -228,15 +229,15 @@ public class CameraController : MonoBehaviour
 
             if (topLeft.y < target.y)
             {
-                if (mainCamera.transform.position.y >= Common.Camera.FIRST_CELL_Y)
-                    cellY = Common.Camera.SECOND_CELL_Y;
+                if (mainCamera.transform.position.y >= ConstCamera.FIRST_CELL_Y)
+                    cellY = ConstCamera.SECOND_CELL_Y;
                 mainCamera.transform.Translate(0, cellY, 0);
                 loop = true;
             }
             else if (bottomRight.y > target.y)
             {
-                if (mainCamera.transform.position.y <= Common.Camera.FIRST_CELL_Y)
-                    cellY = Common.Camera.FIRST_CELL_Y;
+                if (mainCamera.transform.position.y <= ConstCamera.FIRST_CELL_Y)
+                    cellY = ConstCamera.FIRST_CELL_Y;
                 mainCamera.transform.Translate(0, -cellY, 0);
                 loop = true;
             }
@@ -254,7 +255,7 @@ public class CameraController : MonoBehaviour
     /// <returns>完了していればtrue</returns>
     private bool FollowCamera(Vector3 start, Vector3 end)
     {
-        var percentage = ((Time.time - startTime) * Common.Camera.SPEED) / distance;
+        var percentage = ((Time.time - startTime) * ConstCamera.SPEED) / distance;
 
         mainCamera.transform.position = Vector3.Lerp(start, end, percentage);
 

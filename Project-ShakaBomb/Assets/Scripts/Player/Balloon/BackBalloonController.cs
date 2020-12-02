@@ -2,13 +2,11 @@
 /// File Name	: BackBalloonController.cs
 /// Summary		: バックバルーン
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 //==============================================================================================
 [RequireComponent(typeof(CircleCollider2D))]
+//==============================================================================================
 public class BackBalloonController : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
@@ -84,6 +82,8 @@ public class BackBalloonController : MonoBehaviour
     // 移動判定用レイキャスト情報
     private RaycastHit2D[] hits = new RaycastHit2D[20];
 
+
+
     //------------------------------------------------------------------------------------------
     // Awake
     //------------------------------------------------------------------------------------------
@@ -95,13 +95,17 @@ public class BackBalloonController : MonoBehaviour
         offsetDirection.Normalize();
     }
 
+
+
 	//------------------------------------------------------------------------------------------
     // Start
 	//------------------------------------------------------------------------------------------
     private void Start()
     {
-        playerController = GameObject.Find(Player.NAME).GetComponent<PlayerController>();
+        playerController = GameObject.Find(ConstPlayer.NAME).GetComponent<PlayerController>();
     }
+
+
 
 	//------------------------------------------------------------------------------------------
     // Update
@@ -154,6 +158,8 @@ public class BackBalloonController : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // OnTriggerStay2D
     //------------------------------------------------------------------------------------------
@@ -165,6 +171,8 @@ public class BackBalloonController : MonoBehaviour
         }
         HitBubble(collision);
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 泡との接触処理
@@ -184,6 +192,8 @@ public class BackBalloonController : MonoBehaviour
         collision.gameObject.GetComponent<BubbleController>().Destroy();
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // バルーンの有効無効化
     //------------------------------------------------------------------------------------------
@@ -194,6 +204,8 @@ public class BackBalloonController : MonoBehaviour
         hasBalloon = enable;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 合体の有効無効化
     //------------------------------------------------------------------------------------------
@@ -201,6 +213,8 @@ public class BackBalloonController : MonoBehaviour
     {
         enableMerge = enable;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // バルーンのサイズ変更
@@ -233,13 +247,11 @@ public class BackBalloonController : MonoBehaviour
         if (burst)
         {
             SoundPlayer.Play(burstSE,0.7f);
-            //Vector2 direction = playerController.transform.position - transform.position;
-            //direction.x = (direction.x >= 0 ? burstDirection.x : -burstDirection.x);
-            //direction.y = (direction.y >= 0 ? burstDirection.y : -burstDirection.y);
-            //playerController.Boost(direction.normalized*burstForce);
             Burst();
         }
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // バルーンの消費
@@ -257,6 +269,8 @@ public class BackBalloonController : MonoBehaviour
         
         return true;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // ブースト移動
@@ -276,6 +290,8 @@ public class BackBalloonController : MonoBehaviour
         return true;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // 破裂させる
     //------------------------------------------------------------------------------------------
@@ -284,6 +300,8 @@ public class BackBalloonController : MonoBehaviour
         GenerateBurstEffect();
         ChangeSize(-Data.balloonSize);
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // 破裂エフェクトの生成
@@ -295,5 +313,4 @@ public class BackBalloonController : MonoBehaviour
             transform.position,
             null);
     }
-
 }

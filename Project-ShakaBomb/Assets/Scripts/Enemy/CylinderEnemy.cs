@@ -56,7 +56,7 @@ public class CylinderEnemy : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Start()
     {
-        cameraController = GameObject.Find(Common.Camera.CONTROLLER).GetComponent<CameraController>();
+        cameraController = GameObject.Find(ConstCamera.CONTROLLER).GetComponent<CameraController>();
     }
 
     //------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ public class CylinderEnemy : MonoBehaviour
                 {
                     Respawn();
                 }
-                count = Common.Decimal.ZERO;
+                count = ConstDecimal.ZERO;
             }
         }
     }
@@ -102,17 +102,17 @@ public class CylinderEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == Player.NAME)
+        if (collision.tag == ConstPlayer.NAME)
         {
             stopRespawn = true;
-            count = Common.Decimal.ZERO;
+            count = ConstDecimal.ZERO;
         }
 
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == Player.NAME)
+        if (collision.tag == ConstPlayer.NAME)
         {
             stopRespawn = false;
         }

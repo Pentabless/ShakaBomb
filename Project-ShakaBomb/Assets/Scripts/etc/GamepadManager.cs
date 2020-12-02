@@ -3,10 +3,8 @@
 /// Summary		: ゲームパッドの接続確認
 //==============================================================================================
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 using Common;
 //==============================================================================================
 public class GamepadManager : MonoBehaviour
@@ -22,6 +20,8 @@ public class GamepadManager : MonoBehaviour
     // ゲームパッドの接続確認
     private bool m_checkGamepad = false;
 
+
+
     //------------------------------------------------------------------------------------------
     // Awake
     //------------------------------------------------------------------------------------------
@@ -31,6 +31,8 @@ public class GamepadManager : MonoBehaviour
         m_disconnected.gameObject.SetActive(false);
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // Start
     //------------------------------------------------------------------------------------------
@@ -38,6 +40,8 @@ public class GamepadManager : MonoBehaviour
     {
         StartCoroutine(DelayCheck());
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // Update
@@ -47,6 +51,8 @@ public class GamepadManager : MonoBehaviour
         DebugCheckGamepad();
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // ゲームパッドの接続確認
     //------------------------------------------------------------------------------------------
@@ -54,6 +60,8 @@ public class GamepadManager : MonoBehaviour
     {
         return m_checkGamepad;
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // デバッグ用
@@ -72,6 +80,8 @@ public class GamepadManager : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // ゲームパッドの接続確認
     //------------------------------------------------------------------------------------------
@@ -79,7 +89,7 @@ public class GamepadManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(GamePad.CHECK_INTERVAL);
+            yield return new WaitForSecondsRealtime(ConstGamePad.CHECK_INTERVAL);
 
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {

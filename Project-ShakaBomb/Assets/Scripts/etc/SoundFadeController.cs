@@ -2,8 +2,6 @@
 /*--ファイル名：SoundFadeController.cs--*/
 /*--概要：サウンドのフェードを処理する--*/
 /*--------------------------------------*/
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundFadeController : MonoBehaviour

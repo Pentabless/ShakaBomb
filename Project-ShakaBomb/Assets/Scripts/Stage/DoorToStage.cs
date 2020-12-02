@@ -1,13 +1,9 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: DoorToStage.cs
 /// Summary		: 
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
-using UnityEngine.SceneManagement;
 //==============================================================================================
 public class DoorToStage : MonoBehaviour
 {
@@ -67,7 +63,7 @@ public class DoorToStage : MonoBehaviour
         door_frame = transform.GetChild(2).gameObject;   //ドアフレーム
         lamp = transform.GetChild(3).gameObject;         //ランプ
 
-        cameraController = GameObject.Find(Common.Camera.CONTROLLER).GetComponent<CameraController>();
+        cameraController = GameObject.Find(ConstCamera.CONTROLLER).GetComponent<CameraController>();
 
         Sprite shutter_tex=null;
         Sprite door_tex=null;
@@ -199,7 +195,7 @@ public class DoorToStage : MonoBehaviour
         //シャッターの上がり具合を影響させる
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);
 
-        var goStage = Input.GetAxis(Player.VERTICAL);
+        var goStage = Input.GetAxis(ConstPlayer.VERTICAL);
 
         if (goStage >= 1.0f && touch_player || Input.GetKeyDown(KeyCode.UpArrow) && touch_player)
         {
@@ -216,7 +212,7 @@ public class DoorToStage : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == Player.NAME)
+        if (collision.tag == ConstPlayer.NAME)
         {
             touch_player = true;
         }

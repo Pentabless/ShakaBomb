@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Common;
 
 public class BubbleGenerator : MonoBehaviour
@@ -29,7 +27,7 @@ public class BubbleGenerator : MonoBehaviour
 
     void Start()
     {
-        playerTransform = GameObject.Find(Player.NAME).transform;
+        playerTransform = GameObject.Find(ConstPlayer.NAME).transform;
 
         limit_scale = new Vector3(5.0f, 5.0f, 5.0f);
         color = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);

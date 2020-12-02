@@ -2,11 +2,10 @@
 /*--ファイル名：StageSelectDirector.cs------------------------*/
 /*--概要：ステージ選択シーンの処理(ステージ選択やシーン遷移)--*/
 /*------------------------------------------------------------*/
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;  //シーン遷移
-using UnityEngine.UI;   //UI
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Common;
 
 public class StageSelectDirector : MonoBehaviour
 {
@@ -73,13 +72,15 @@ public class StageSelectDirector : MonoBehaviour
     //開発している時の画面サイズ
     private Vector2 making_screen_size;
 
-    /*-----------------*/
-    /*--関数名：Start--*/
-    /*--概要：初期化---*/
-    /*--引数：なし-----*/
-    /*--戻り値：なし---*/
-    /*-----------------*/
-    void Start()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Start()
     {
         //オブジェクトを探す
         go_camera = GameObject.Find("Main Camera");
@@ -159,15 +160,16 @@ public class StageSelectDirector : MonoBehaviour
         //カメラの移る幅を渡す
         camera_width = camera_range[1].x - camera_range[0].x;
     }
-    /*--終わり：Start--*/
 
-    /*------------------*/
-    /*--関数名：Update--*/
-    /*--概要：更新------*/
-    /*--引数：なし------*/
-    /*--戻り値：なし----*/
-    /*------------------*/
-    void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         //背景の飾りを作成する
         float decoration_scale = Random.Range(0.3f, 3.0f);
@@ -202,7 +204,7 @@ public class StageSelectDirector : MonoBehaviour
                         //十字下ボタンを押したら
                         (Input.GetAxis("cross Y") > 0.5) ||
                         //左スティックを下に傾けたら
-                        (Input.GetAxis(Common.GamePad.VERTICAL) < 0))
+                        (Input.GetAxis(ConstGamePad.VERTICAL) < 0))
                     {
                         //カウントを設定されていなかったら(ステージ選択ボタンを押していなかったら)
                         if (select_next_stage_count != select_next_stage_frame)
@@ -224,7 +226,7 @@ public class StageSelectDirector : MonoBehaviour
                         //十字上ボタンを押したら
                         (Input.GetAxis("cross Y") < -0.5) ||
                         //左スティックを上に傾けたら
-                        (Input.GetAxis(Common.GamePad.VERTICAL) > 0))
+                        (Input.GetAxis(ConstGamePad.VERTICAL) > 0))
                     {
                         //タイトルを選択していない状態にする
                         select_title = false;
@@ -235,7 +237,7 @@ public class StageSelectDirector : MonoBehaviour
                 //Spaceキーを押したら
                 if ((Input.GetKeyDown(KeyCode.Space)) ||
                     //Aボタンを押したら
-                    (Input.GetAxis(Common.GamePad.BUTTON_A) > 0))
+                    (Input.GetAxis(ConstGamePad.BUTTON_A) > 0))
                 {
                     //フェードアウトを始める
                     sc_screen_fade.SetFadeType(true);
@@ -259,7 +261,7 @@ public class StageSelectDirector : MonoBehaviour
                 }
 
                 //Bボタンを押したら
-                if ((Input.GetAxis(Common.GamePad.BUTTON_B) > 0))
+                if ((Input.GetAxis(ConstGamePad.BUTTON_B) > 0))
                 {
                     //フェードアウトを始める
                     sc_screen_fade.SetFadeType(true);
@@ -344,14 +346,15 @@ public class StageSelectDirector : MonoBehaviour
         //背景の座標をカメラの座標
         go_background.transform.position = new Vector3(go_camera.transform.position.x, go_camera.transform.position.y, 0.0f);
     }
-    /*--終わり：Update--*/
 
-    /*-----------------------------------*/
-    /*--関数名：LeftRightInput(private)--*/
-    /*--概要：左右入力の処理-------------*/
-    /*--引数：なし-----------------------*/
-    /*--戻り値：なし---------------------*/
-    /*-----------------------------------*/
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : LeftRightInput
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void LeftRightInput()
     {
         //入力判断するための変数
@@ -362,7 +365,7 @@ public class StageSelectDirector : MonoBehaviour
             //十字左ボタンを押したら
             (Input.GetAxis("cross X") < 0) ||
             //左スティックを左に傾けたら
-            (Input.GetAxis(Common.GamePad.HORIZONTAL) < 0))
+            (Input.GetAxis(ConstGamePad.HORIZONTAL) < 0))
         {
             //ステージ番号が0より大きかったら
             if (stage_number > 0)
@@ -375,7 +378,7 @@ public class StageSelectDirector : MonoBehaviour
             //十字右ボタンを押したら
             (Input.GetAxis("cross X") > 0) ||
             //左スティックを右に傾けたら
-            (Input.GetAxis(Common.GamePad.HORIZONTAL) > 0))
+            (Input.GetAxis(ConstGamePad.HORIZONTAL) > 0))
         {
             //ステージ番号がクリアしているステージ番号+1より小さかったら
             if (stage_number < clear_stage_number + 1/*stage_number < go_stage.Length - 1*/)
@@ -393,22 +396,23 @@ public class StageSelectDirector : MonoBehaviour
             PreparaChangeSelectStage(num);
         }
     }
-    /*--終わり：LeftRightInput--*/
 
-    /*-------------------------------------------------------------------------------*/
-    /*--関数名：PreparaChangeSelectStage(private)------------------------------------*/
-    /*--概要：選択しているステージを変更する準備-------------------------------------*/
-    /*--引数：選択していたステージ番号と選択しようとしているステージ番号との差(int)--*/
-    /*--戻り値：なし-----------------------------------------------------------------*/
-    /*-------------------------------------------------------------------------------*/
-    private void PreparaChangeSelectStage(int number_difference)
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : PreparaChangeSelectStage
+    // remarks : none
+    // param   : numberDifference
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void PreparaChangeSelectStage(int numberDifference)
     {
         //選択していたステージの座標を覚える
         last_position = go_stage[stage_number].transform.position;
         //選択していたステージ番号を覚える
         last_number = stage_number;
         //ステージ番号を変更する
-        stage_number += number_difference;
+        stage_number += numberDifference;
         //円運動を始める
         angle += speed;
         //選択していたステージと選択するステージの距離を求める
@@ -416,14 +420,15 @@ public class StageSelectDirector : MonoBehaviour
         //ステージフレームに選ばれている番号を教える
         SetSelectStage(false);
     }
-    /*--終わり：PreparaChangeSelectStage--*/
 
-    /*------------------------------------------------------*/
-    /*--関数名：PreparaChangeTitle(private)-----------------*/
-    /*--概要：選択しているステージorタイトルを変更する準備--*/
-    /*--引数：タイトルへボタンを選択しているか(bool)--------*/
-    /*--戻り値：なし----------------------------------------*/
-    /*------------------------------------------------------*/
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : PreparaChangeTitle
+    // remarks : none
+    // param   : select
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void PreparaChangeTitle(bool select)
     {
         //円運動を始める
@@ -448,22 +453,23 @@ public class StageSelectDirector : MonoBehaviour
             SetSelectStage(false);
         }
     }
-    /*--終わり：PreparaChangeTitle--*/
 
-    /*------------------------------------------------------------*/
-    /*--関数名：SetSelectStage(private)---------------------------*/
-    /*--概要：選ばれているステージをステージフレーム側に知らせる--*/
-    /*--引数：タイトルへボタンを選択しているか(bool)--------------*/
-    /*--戻り値：なし----------------------------------------------*/
-    /*------------------------------------------------------------*/
-    private void SetSelectStage(bool select_title)
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : SetSelectStage
+    // remarks : none
+    // param   : selectTitle
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void SetSelectStage(bool selectTitle)
     {
         //ステージフレームに選ばれている番号を教える
         for (int i = 0; i < go_stage.Length; i++)
         {
             bool select = false;
             //タイトルが選ばれていなかったら
-            if (select_title == false)
+            if (selectTitle == false)
             {
                 //選ばれている番号と同じだったら
                 if (i == stage_number)
@@ -474,13 +480,15 @@ public class StageSelectDirector : MonoBehaviour
             go_stage[i].GetComponent<StageFrameController>().SetNowSelect(select);
         }
     }
-    /*--終わり：SetSelectStage--*/
-    /*------------------------------------------------------------*/
-    /*--関数名：CountNotOperateTime(private)----------------------*/
-    /*--概要：操作していない時間を計ってタイトルに戻るようにする--*/
-    /*--引数：なし------------------------------------------------*/
-    /*--戻り値：なし----------------------------------------------*/
-    /*------------------------------------------------------------*/
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : CountNotOperateTime
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void CountNotOperateTime()
     {
         //操作していなかったら
@@ -516,14 +524,15 @@ public class StageSelectDirector : MonoBehaviour
             not_operate_time = -1.0f;
         }
     }
-    /*--終わり：CountNotOperateTime--*/
 
-    /*------------------------------------------------*/
-    /*--関数名：FindStageObject(private)--------------*/
-    /*--概要：ステージの数を数えて配列に順番に入れる--*/
-    /*--引数：なし------------------------------------*/
-    /*--戻り値：なし----------------------------------*/
-    /*------------------------------------------------*/
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : FindStageObject
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void FindStageObject()
     {
         //ステージの数を初期化する
@@ -549,14 +558,15 @@ public class StageSelectDirector : MonoBehaviour
             go_stage[i] = GameObject.Find("StagePrefab (" + i.ToString() + ")");
         }
     }
-    /*--終わり：FindStageObject--*/
 
-    /*-------------------------------------*/
-    /*--関数名：AllStageLinePass(private)--*/
-    /*--概要：ステージを全てLineで通す-----*/
-    /*--引数：なし-------------------------*/
-    /*--戻り値：なし-----------------------*/
-    /*-------------------------------------*/
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : AllStageLinePass
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void AllStageLinePass()
     {
         //ステージの数に対応して線を引く
@@ -595,14 +605,15 @@ public class StageSelectDirector : MonoBehaviour
             Destroy(GameObject.Find("StageLine"));
         }
     }
-    /*--終わり：AllStageLinePass--*/
 
-    /*------------------------------------------------*/
-    /*--関数名：UpdateSelectFrame(private)------------*/
-    /*--概要：選択フレームの更新(移動と拡大率変更)----*/
-    /*--引数：タイトルへボタンを選択しているか(bool)--*/
-    /*--戻り値：なし----------------------------------*/
-    /*------------------------------------------------*/
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : UpdateSelectFrame
+    // remarks : none
+    // param   : select
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void UpdateSelectFrame(bool select)
     {
         //選択フレームを動かす
@@ -645,10 +656,6 @@ public class StageSelectDirector : MonoBehaviour
             go_select_tex.transform.localScale += new Vector3(0.5f, 0.5f, 0.0f);
 
             component_select_frame.transform.localScale = go_select_tex.transform.localScale;
-
-            //画面の大きさによって拡大率を変える
-            //component_select_frame.localScale = new Vector3(component_select_frame.localScale.x * (making_screen_size.x / Screen.width), component_select_frame.localScale.y * (making_screen_size.y / Screen.height), 1.0f);
         }
     }
-    /*--終わり：UpdateSelectFrame--*/
 }

@@ -2,12 +2,9 @@
 /// File Name	: FailedFrameController.cs
 /// Summary		: クリア失敗用フレーム
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
 using Common;
 //==============================================================================================
 public class FailedFrameController : MonoBehaviour
@@ -29,7 +26,6 @@ public class FailedFrameController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-
     private Canvas failedCanvas = null;               // キャンバス
     private CanvasGroup canvasGroup = null;           // キャンバスグループ
 
@@ -50,8 +46,12 @@ public class FailedFrameController : MonoBehaviour
     private float pressDelay = 0f;                    // 次の入力を受け付けるまでの時間
 
 
+
     //------------------------------------------------------------------------------------------
-    // 初期化処理
+    // summary : 初期化
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Init()
     {
@@ -69,17 +69,27 @@ public class FailedFrameController : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // Awake
+    // summary : Awake
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
         Init();
     }
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         failedCanvas = GetComponentInChildren<Canvas>();
@@ -88,10 +98,15 @@ public class FailedFrameController : MonoBehaviour
         canvasGroup.alpha = 0.0f;
     }
 
-	//------------------------------------------------------------------------------------------
-    // Update
-	//------------------------------------------------------------------------------------------
-	private void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         if (!enableFrame)
         {
@@ -110,22 +125,32 @@ public class FailedFrameController : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // 起動中処理
+    // summary : 起動中の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateStart()
     {
         waitTime -= Time.deltaTime;
-        canvasGroup.alpha = 1.0f - Mathf.Max(waitTime, 0.0f) / FailedFrame.FADE_TIME;
+        canvasGroup.alpha = 1.0f - Mathf.Max(waitTime, 0.0f) / ConstFailedFrame.FADE_TIME;
         if (waitTime <= 0.0f)
         {
             state = FailedState.Select;
         }
 
     }
-    
+
+
+
     //------------------------------------------------------------------------------------------
-    // 選択中処理
+    // summary : 選択中の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateSelect()
     {
@@ -181,23 +206,33 @@ public class FailedFrameController : MonoBehaviour
             }
         }
     }
-    
+
+
+
     //------------------------------------------------------------------------------------------
-    // 終了中処理
+    // summary : 終了中の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateFinish()
     {
 
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // オブジェクトを起動する
+    // summary : オブジェクトを起動する
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void EnableFrame(FailedType type)
     {
         enableFrame = true;
         failedCanvas.enabled = true;
-        waitTime = FailedFrame.FADE_TIME;
+        waitTime = ConstFailedFrame.FADE_TIME;
         this.type = type;
         if (type == FailedType.TimeUp)
         {
@@ -208,5 +243,4 @@ public class FailedFrameController : MonoBehaviour
             typeText.text = "Fall";
         }
     }
-
 }

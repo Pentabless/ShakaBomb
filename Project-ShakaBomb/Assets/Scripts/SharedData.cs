@@ -2,7 +2,6 @@
 /*--ファイル名：SharedData.cs-------------------------------*/
 /*--概要：シーン間で共有したいものや共通の関数を入れている--*/
 /*----------------------------------------------------------*/
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

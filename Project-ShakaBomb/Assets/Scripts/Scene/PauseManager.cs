@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
+using Common;
 
 // ポーズ管理クラス
 public class PauseManager : MonoBehaviour
@@ -60,7 +59,14 @@ public class PauseManager : MonoBehaviour
     // 効果音
     private AudioClip pauseSE = null;
 
-    //ポーズ用のCanvasとImage生成
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ポーズ用のCanvasとImage生成
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void CreatePauseFilter()
     {
         //ポーズ用のCanvas生成
@@ -97,12 +103,28 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         defaultFilterColor = filterColor;
         CreatePauseFilter();
     }
 
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Update()
     {
         //ボタンが押されたら状態を変更する
@@ -123,16 +145,30 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    //ボタンを押したときにポーズ可能か設定する
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ボタンを押したときにポーズ可能か設定する
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public void EnablePauseButton(bool enable)
     {
         canPauseButton = enable;
     }
 
-    //ポーズ状態を変更する
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ポーズ状態を変更する
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public void ChangePauseState()
     {
-        var go = GameObject.Find(Common.Player.NAME);
+        var go = GameObject.Find(ConstPlayer.NAME);
         PlayerAnimator playerAnimator = null;
         if (go)
         {
@@ -158,7 +194,14 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    //中断処理
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : 中断処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public void Pause(float time)
     {
         if (isPausing)
@@ -267,7 +310,13 @@ public class PauseManager : MonoBehaviour
     }
 
 
-    //再開処理
+
+    //------------------------------------------------------------------------------------------
+    // summary : 再開処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public void Resume()
     {
         if (!isPausing)
@@ -314,16 +363,40 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : カラーをセットする
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public void SetFilterColor(in Color color)
     {
         filterColor = color;
     }
 
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : カラーをリセット
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public void ResetFilterColor()
     {
         filterColor = defaultFilterColor;
     }
 
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : 無視するオブジェクトを追加
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public void AddIgnoreObject(GameObject obj)
     {
         ignoreGameObjects = ignoreGameObjects.Concat(new GameObject[] { obj }).ToArray();

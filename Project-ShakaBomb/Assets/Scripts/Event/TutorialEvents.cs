@@ -1,11 +1,9 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: TutorialEvents.cs
 /// Summary		: 
 //==============================================================================================
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 using UnityEngine.Video;
 //==============================================================================================
@@ -84,8 +82,8 @@ public class TutorialEvents: MonoBehaviour
 
         if (video.isPlaying)
         {
-            var inputA = Input.GetButtonDown(GamePad.BUTTON_A);
-            if (count >= Stage.NotInputCount && inputA)
+            var inputA = Input.GetButtonDown(ConstGamePad.BUTTON_A);
+            if (count >= ConstStage.NOT_INPUT_COUNT && inputA)
             {
                 eventObj.EndEvent();
             }
@@ -106,7 +104,7 @@ public class TutorialEvents: MonoBehaviour
         video.Play();
         pauseManager.SetFilterColor(Color.clear);
         pauseManager.Pause(fadeTime);
-        GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().StopAnimation();
+        GameObject.Find(ConstPlayer.NAME).GetComponentInChildren<PlayerAnimator>().StopAnimation();
     }
 
     //------------------------------------------------------------------------------------------
@@ -117,7 +115,7 @@ public class TutorialEvents: MonoBehaviour
         pauseManager.Resume();
         playOn = false;
         FadeManager.FadeIn(0.5f);
-        GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
+        GameObject.Find(ConstPlayer.NAME).GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
         routine = Fade();
         StartCoroutine(routine);
         StartCoroutine(ControlDelay());
@@ -142,7 +140,7 @@ public class TutorialEvents: MonoBehaviour
 
     private IEnumerator ControlDelay()
     {
-        var player = GameObject.Find(Player.NAME).GetComponent<PlayerController>();
+        var player = GameObject.Find(ConstPlayer.NAME).GetComponent<PlayerController>();
         player.EnableControl(false);
         yield return new WaitForSeconds(0.2f);
         player.EnableControl(true);

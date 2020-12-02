@@ -54,14 +54,14 @@ public class BalloonController : MonoBehaviour
         Vector3 playerPos = m_player.transform.position;
         if (Data.playerDir > 0)
         {
-            playerPos.x -= Balloon.DISTANCE_X;
+            playerPos.x -= ConstBalloon.DISTANCE_X;
         }
         else
         {
-            playerPos.x += Balloon.DISTANCE_X;
+            playerPos.x += ConstBalloon.DISTANCE_X;
         }
 
-        playerPos.y += Balloon.DISTANCE_Y;
+        playerPos.y += ConstBalloon.DISTANCE_Y;
 
         Vector3 move_force = playerPos - this.transform.position;
 
@@ -82,7 +82,7 @@ public class BalloonController : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == Stage.DAMAGE_TILE)
+        if (collision.tag == ConstStage.DAMAGE_TILE)
         {
             Destroy();
         }
@@ -94,12 +94,12 @@ public class BalloonController : MonoBehaviour
     private void Init()
     {
         m_rigid2D = GetComponent<Rigidbody2D>();
-        m_player = GameObject.Find(Player.NAME);
-        m_balloonG = GameObject.Find(Balloon.GENERATOR).GetComponent<BalloonGenerator>();
+        m_player = GameObject.Find(ConstPlayer.NAME);
+        m_balloonG = GameObject.Find(ConstBalloon.GENERATOR).GetComponent<BalloonGenerator>();
         m_line = GetComponent<LineRenderer>();
 
-        m_line.startWidth = Balloon.LINE_WIDTH;
-        m_line.endWidth = Balloon.LINE_WIDTH;
+        m_line.startWidth = ConstBalloon.LINE_WIDTH;
+        m_line.endWidth = ConstBalloon.LINE_WIDTH;
         m_line.positionCount = 2;
     }
 
