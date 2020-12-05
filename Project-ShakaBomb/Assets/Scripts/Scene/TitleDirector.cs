@@ -82,7 +82,7 @@ public class TitleDirector : MonoBehaviour
     {
         // Aボタンが押されたか
         if (!isPressed &&
-            Input.GetKeyDown(ConstGamePad.BUTTON_A) ||
+            Input.GetButtonDown(ConstGamePad.BUTTON_A) ||
             Input.GetKeyDown(KeyCode.Z))
         {
             // 通過確認

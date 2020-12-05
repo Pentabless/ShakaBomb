@@ -1,6 +1,6 @@
 ﻿//==============================================================================================
 /// File Name	: GameClearDirector.cs
-/// Summary		: ゲームクリアシーンの管理を行う
+/// Summary		: クリアシーンの管理を行うクラス
 //==============================================================================================
 using UnityEngine;
 using Common;
@@ -78,7 +78,7 @@ public class GameClearDirector : MonoBehaviour
     {
         // Aボタンが押されたか
         if (!isPressed &&
-            Input.GetKeyDown(ConstGamePad.BUTTON_A) ||
+            Input.GetButtonDown(ConstGamePad.BUTTON_A) ||
             Input.GetKeyDown(KeyCode.Z))
         {
             // 通過確認
