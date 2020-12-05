@@ -1,18 +1,19 @@
 ﻿//==============================================================================================
-/// File Name	: GameClearDirector.cs
-/// Summary		: ゲームクリアシーンの管理を行う
+/// File Name	: CreditDirector.cs
+/// Summary		: クレジットシーンの管理を行うクラス
 //==============================================================================================
 using UnityEngine;
+using UnityEngine.UI;
 using Common;
 //==============================================================================================
-public class GameClearDirector : MonoBehaviour
+public class CreditDirector : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
     // 音声ファイル(BGM)
-    [SerializeField, Header("Clear BGM"), Tooltip("クリアシーンで再生したい音声ファイルをアタッチ")]
-    private AudioClip allClearBGM = null;
+    [SerializeField, Header("Credit BGM"), Tooltip("クレジットシーンで再生したい音声ファイルをアタッチ")]
+    private AudioClip creditBGM = null;
     // 音声ファイル(SE)
     [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
     private AudioClip pressedSE = null;
@@ -36,7 +37,7 @@ public class GameClearDirector : MonoBehaviour
         FadeManager.FadeIn(ConstScene.FADE_TIME);
 
         // BGMを再生
-        SoundPlayer.PlayBGM(allClearBGM);
+        SoundPlayer.PlayBGM(creditBGM);
     }
 
 
@@ -49,8 +50,8 @@ public class GameClearDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        // Aボタンが押されたか
-        IsPressedAButton();
+        // STARTボタンが押されたか
+        IsPressedStartButton();
     }
 
 
@@ -69,16 +70,16 @@ public class GameClearDirector : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // summary : Aボタンが押された際に行う処理
+    // summary : STARTボタンが押された際に行う処理
     // remarks : Zキー（デバッグ用）
     // param   : none
     // return  : none
     //------------------------------------------------------------------------------------------
-    private void IsPressedAButton()
+    private void IsPressedStartButton()
     {
-        // Aボタンが押されたか
+        // STARTボタンが押されたか
         if (!isPressed &&
-            Input.GetKeyDown(ConstGamePad.BUTTON_A) ||
+            Input.GetKeyDown(KeyCode.Joystick1Button7) ||
             Input.GetKeyDown(KeyCode.Z))
         {
             // 通過確認
@@ -106,6 +107,6 @@ public class GameClearDirector : MonoBehaviour
         SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
 
         // フェードアウトを開始
-        FadeManager.FadeOut(ConstScene.CREDIT, ConstScene.FADE_TIME);
+        FadeManager.FadeOut(ConstScene.STAGE_SELECT, ConstScene.FADE_TIME);
     }
 }

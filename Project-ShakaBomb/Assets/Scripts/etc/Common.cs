@@ -52,6 +52,7 @@ namespace Common
         public static readonly string GAME_PLAY         = ("PlayScene");
         public static readonly string RESULT            = ("NewResultScene");
         public static readonly string ALL_CLEAR         = ("GameClearScene");
+        public static readonly string CREDIT            = ("CreditScene");
         // フェード時間
         public static readonly float FADE_TIME          = (2.0f);
         public static readonly float SOUND_FADE_TIME    = (0.01f);

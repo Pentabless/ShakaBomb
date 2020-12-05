@@ -67,20 +67,6 @@ public class AnnounceDirector : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // summary : 遷移処理
-    // remarks : none
-    // param   : none
-    // return  : none
-    //------------------------------------------------------------------------------------------
-    private void Transition()
-    {
-        // フェードアウトを開始
-        FadeManager.FadeOut(ConstScene.TITLE, ConstScene.FADE_TIME);
-    }
-
-
-
-    //------------------------------------------------------------------------------------------
     // summary : いずれかのボタンが押されたが押された際に行う処理
     // remarks : none
     // param   : none
@@ -102,6 +88,20 @@ public class AnnounceDirector : MonoBehaviour
             // 遷移処理
             Transition();
         }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : 遷移処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Transition()
+    {
+        // フェードアウトを開始
+        FadeManager.FadeOut(ConstScene.TITLE, ConstScene.FADE_TIME);
     }
 
 
