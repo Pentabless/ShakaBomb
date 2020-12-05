@@ -3,6 +3,7 @@
 /// Summary		: タイトルシーンの管理を行うクラス
 //==============================================================================================
 using UnityEngine;
+using UnityEngine.UI;
 using Common;
 //==============================================================================================
 public class TitleDirector : MonoBehaviour
@@ -16,6 +17,9 @@ public class TitleDirector : MonoBehaviour
     // 音声ファイル(SE)
     [SerializeField, Header("Game Start SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
     private AudioClip startSE = null;
+    // PressAButton(Image)
+    [SerializeField, Header("PressAButton(Image)"), Tooltip("PressAButton(Image)をアタッチする")]
+    private Image pressAButtonImage = null;
     // ボタンが押されたか
     private bool isPressed = false;
 
@@ -31,6 +35,12 @@ public class TitleDirector : MonoBehaviour
     {
         // 初期化処理
         Init();
+
+        // フェードインを開始
+        FadeManager.FadeIn(ConstScene.FADE_TIME);
+
+        // BGMを再生
+        SoundPlayer.PlayBGM(titleBGM);
     }
 
 
@@ -58,12 +68,6 @@ public class TitleDirector : MonoBehaviour
     private void Init()
     {
         isPressed = false;
-
-        // フェードインを開始
-        FadeManager.FadeIn(ConstScene.FADE_TIME);
-
-        // BGMを再生
-        SoundPlayer.PlayBGM(titleBGM);
     }
 
 
@@ -79,10 +83,17 @@ public class TitleDirector : MonoBehaviour
         // Aボタンが押されたか
         if (!isPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
         {
+            // 通過確認
             isPressed = true;
 
             // SEを再生
             SoundPlayer.Play(startSE);
+
+            // ブリンク処理を停止させる
+            StopBlink();
+
+            // アピール処理を行う
+            pressAButtonImage.GetComponent<AppealImage>().Play();
 
             // 遷移処理
             Transition();
@@ -104,5 +115,18 @@ public class TitleDirector : MonoBehaviour
 
         // フェードアウトを開始
         FadeManager.FadeOut(ConstScene.PROLOGUE, ConstScene.FADE_TIME);
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ブリンク処理を停止する
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void StopBlink()
+    {
+        pressAButtonImage.GetComponent<Blink>().StopBlink();
     }
 }

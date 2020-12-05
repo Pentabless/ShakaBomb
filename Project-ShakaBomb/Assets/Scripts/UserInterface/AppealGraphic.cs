@@ -14,18 +14,18 @@ public class AppealGraphic : BaseMeshEffect
     // member variable
     //------------------------------------------------------------------------------------------
     [SerializeField]
-    private bool playOnAwake = true;
+    private bool playOnAwake = false;
+    [SerializeField, Range(0.0f, 500.0f)]
+    private float power = 0.0f;
     [SerializeField]
-    private float power;
+    private float time = 0.0f;
     [SerializeField]
-    private float time;
-    [SerializeField]
-    private bool isRepeat;
-    [SerializeField]
-    private float repeatInterval;
+    private bool isRepeat = false;
+    [SerializeField, Range(0.0f, 10.0f)]
+    private float repeatInterval = 0.0f;
 
-    private float current;
-    private float t;
+    private float current = 0.0f;
+    private float t = 0.0f;
     private readonly List<UIVertex> vertexList = new List<UIVertex>();
 
     private static readonly Vector3[] normals =
@@ -39,8 +39,12 @@ public class AppealGraphic : BaseMeshEffect
     };
 
 
+
     //------------------------------------------------------------------------------------------
-    // Awake
+    // summary : Awake
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
@@ -50,9 +54,12 @@ public class AppealGraphic : BaseMeshEffect
 
 
     //------------------------------------------------------------------------------------------
-    // Play
+    // summary : Play
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
-    private void Play()
+    public void Play()
     {
         current = 0;
     }
@@ -60,7 +67,10 @@ public class AppealGraphic : BaseMeshEffect
 
 
     //------------------------------------------------------------------------------------------
-    // Update
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Update()
     {
@@ -85,7 +95,10 @@ public class AppealGraphic : BaseMeshEffect
 
 
     //------------------------------------------------------------------------------------------
-    // ModifyMesh
+    // summary : ModifyMesh
+    // remarks : none
+    // param   : VertexHelper
+    // return  : none
     //------------------------------------------------------------------------------------------
     public override void ModifyMesh(VertexHelper helper)
     {

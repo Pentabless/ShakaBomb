@@ -1,18 +1,24 @@
 ﻿//==============================================================================================
-/// File Name	: GamepadManager.cs
-/// Summary		: ゲームパッドの接続確認
+/// File Name	: AnnounceDirector.cs
+/// Summary		: アナウンスシーンの管理を行うクラス
 //==============================================================================================
-using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Common;
 //==============================================================================================
-public class GamepadManager : MonoBehaviour
+public class AnnounceDirector : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    // ゲームパッドの接続確認
-    private bool checkGamepad = false;
+    // 音声ファイル(SE)
+    [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
+    private AudioClip pressedSE = null;
+    // PressAnyButton(Text)
+    [SerializeField, Header("PressAnyButton(Text)"), Tooltip("PressAnyButton(Text)をアタッチする")]
+    private Text pressAnyButtonText = null;
+    // ボタンが押されたか
+    private bool isPressed = false;
 
 
 
@@ -24,7 +30,11 @@ public class GamepadManager : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Start()
     {
+        // 初期化処理
+        Init();
 
+        // フェードインを開始
+        FadeManager.FadeIn(ConstScene.FADE_TIME);
     }
 
 
@@ -35,9 +45,10 @@ public class GamepadManager : MonoBehaviour
     // param   : none
     // return  : none
     //------------------------------------------------------------------------------------------
-    private void Update()
+	private void Update()
     {
-
+        // いずれかのボタンが押された
+        IsPressedAnyButton();
     }
 
 
@@ -50,53 +61,59 @@ public class GamepadManager : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Init()
     {
-
+        isPressed = false;
     }
 
 
 
     //------------------------------------------------------------------------------------------
-    // summary : ゲームパッドの接続確認
+    // summary : 遷移処理
     // remarks : none
     // param   : none
     // return  : none
     //------------------------------------------------------------------------------------------
-    public bool GetCheckGamepad()
+    private void Transition()
     {
-        return checkGamepad;
+        // フェードアウトを開始
+        FadeManager.FadeOut(ConstScene.TITLE, ConstScene.FADE_TIME);
     }
 
 
 
     //------------------------------------------------------------------------------------------
-    // summary : ゲームパッドの接続確認
+    // summary : いずれかのボタンが押されたが押された際に行う処理
     // remarks : none
     // param   : none
     // return  : none
     //------------------------------------------------------------------------------------------
-    IEnumerator DelayCheck()
+    private void IsPressedAnyButton()
     {
-        while (true)
+        if (!isPressed && Input.anyKey)
         {
-            yield return new WaitForSecondsRealtime(ConstGamePad.CHECK_INTERVAL);
+            // 通過確認
+            isPressed = true;
 
-            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
-            {
-                if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
-                {
-                    // ゲームパッドが接続されている
-                    i = Input.GetJoystickNames().Length;
-                    checkGamepad = true;
-                    Debug.Log("接続されている");
-                }
-                else
-                {
-                    // ゲームパッドが接続されていない
-                    i = Input.GetJoystickNames().Length;
-                    checkGamepad = false;
-                    Debug.Log("接続されていない");
-                }
-            }
+            // SEを再生
+            SoundPlayer.Play(pressedSE);
+
+            // ブリンク処理を停止する
+            StopBlink();
+
+            // 遷移処理
+            Transition();
         }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ブリンク処理を停止する
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void StopBlink()
+    {
+        pressAnyButtonText.GetComponent<Blink>().StopBlink();
     }
 }
