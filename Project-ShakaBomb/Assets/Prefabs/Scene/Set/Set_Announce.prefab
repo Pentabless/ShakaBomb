@@ -107,6 +107,11 @@ PrefabInstance:
       propertyPath: pressAnyButtonText
       value: 
       objectReference: {fileID: 4486964333650395735}
+    - target: {fileID: 1274633897066723191, guid: ffc6b371bfc1ef8458a5298a2e654df9,
+        type: 3}
+      propertyPath: pressedSE
+      value: 
+      objectReference: {fileID: 8300000, guid: caf9b64268cbc834ab072606a4df35fe, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffc6b371bfc1ef8458a5298a2e654df9, type: 3}
 --- !u!4 &2663497717685299932 stripped

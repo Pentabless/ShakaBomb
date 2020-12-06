@@ -1,15 +1,11 @@
 ﻿//==============================================================================================
-/// File Name	: 
-/// Summary		: 
+/// File Name	: PrologueDirector.cs
+/// Summary		: プロローグシーンの管理を行うクラス
 //==============================================================================================
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using Common;
-using UnityEngine.SceneManagement;
-using System.Linq;
 //==============================================================================================
 public class PrologueDirector : MonoBehaviour
 {
@@ -23,18 +19,10 @@ public class PrologueDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    //[SerializeField]
-    //List<FadeController> fadeControllers;
-    //[SerializeField]
-    //FadeController fadeScreen;
-    //[SerializeField]
-    //float fadeInterval;
-    //[SerializeField]
-    //float fadeValues;
+    // 音声ファイル(SE)
+    [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
+    private AudioClip pressedSE = null;
 
-    //float count;
-    //int imageIndex = 0;
-    //bool startFadeOut = false;
 
     [SerializeField]
     private List<Image> images = null;
@@ -49,32 +37,47 @@ public class PrologueDirector : MonoBehaviour
     private int index = 0;
     private float timer = 0;
 
-	//------------------------------------------------------------------------------------------
-    // Awake
-	//------------------------------------------------------------------------------------------
-    private void Awake()
-    {
-    }
+    // 通過確認
+    private bool isPressed = false;
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
+        // 初期化処理
+        Init();
+
         foreach(var image in images)
         {
             image.color = Color.clear;
         }
         images[0].color = Color.white;
-        FadeManager.fadeColor = Color.white;
-        FadeManager.FadeIn(fadeTime);
+
+        //FadeManager.fadeColor = Color.white;
+
+        // フェードインを開始
+        FadeManager.FadeIn(ConstScene.FADE_TIME);
     }
 
-	//------------------------------------------------------------------------------------------
-    // Update
-	//------------------------------------------------------------------------------------------
-	private void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
+        // STARTボタンが押されたか
+        IsPressedStartButton();
+
         timer += Time.deltaTime;
         switch (state)
         {
@@ -122,39 +125,61 @@ public class PrologueDirector : MonoBehaviour
                 Debug.Log("PrologeState:error");
                 break;
         }
+    }
 
-        //count += Time.deltaTime;
-        //var i = imageIndex;
-        //i++;
-        //if(count >= fadeInterval && fadeControllers.Count() >= i)
-        //{
-        //    fadeControllers[imageIndex].SetFadeValue(Common.Decimal.ZERO);
-        //    fadeControllers[imageIndex].fade_type = false;
 
-        //    if (imageIndex == 3)
-        //    {
-        //        Debug.Log("yes");
-        //        if (!startFadeOut)
-        //        {
-        //            fadeScreen.SetFadeType(true);
-        //            fadeScreen.SetFadeValue(0.0f);
-        //            SoundFadeController.SetFadeOutSpeed(0.01f);
-        //        }
-        //        startFadeOut = true;
 
-        //        if (fadeScreen.GetFadeValue() == 1.0f)
-        //        {
-        //            SceneManager.LoadScene("TutorialScene");
-        //        }
-        //    }
+    //------------------------------------------------------------------------------------------
+    // summary : 初期化処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Init()
+    {
+        isPressed = false;
+    }
 
-        //    if (fadeControllers.Count() > i)
-        //    {
-        //        imageIndex++;
-        //        fadeControllers[imageIndex].fade_type = true;
-        //    }
 
-        //    count = Common.Decimal.ZERO;
-        //}
+
+    //------------------------------------------------------------------------------------------
+    // summary : STARTボタンが押された際に行う処理
+    // remarks : Zキー（デバッグ用）
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void IsPressedStartButton()
+    {
+        // STARTボタンが押されたか
+        if (!isPressed &&
+            Input.GetKeyDown(KeyCode.Joystick1Button7) ||
+            Input.GetKeyDown(KeyCode.Z))
+        {
+            // 通過確認
+            isPressed = true;
+
+            // SEを再生
+            SoundPlayer.Play(pressedSE);
+
+            // 遷移処理
+            Transition();
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : 遷移処理
+    // remarks : チュートリアルシーンに遷移
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Transition()
+    {
+        // BGMのフェードアウトを開始
+        SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
+
+        // フェードアウトを開始
+        FadeManager.FadeOut(ConstScene.TUTORIAL, ConstScene.FADE_TIME);
     }
 }
