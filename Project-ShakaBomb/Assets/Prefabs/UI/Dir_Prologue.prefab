@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6532208912914780761}
   - component: {fileID: 6532208912914780760}
   m_Layer: 0
-  m_Name: PrologueDirector
+  m_Name: Dir_Prologue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6532208912914780763}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.7159057, y: -0.5173403, z: 0.0031235395}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -43,9 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74b2be065d528a42b5f0fe948621234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeControllers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  fadeInterval: 5
+  pressedSE: {fileID: 8300000, guid: caf9b64268cbc834ab072606a4df35fe, type: 3}
+  images: []
+  fadeTime: 0
+  showTime: 0
+  crossFadeTime: 0
