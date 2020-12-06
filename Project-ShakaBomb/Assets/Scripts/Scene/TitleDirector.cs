@@ -74,14 +74,16 @@ public class TitleDirector : MonoBehaviour
 
     //------------------------------------------------------------------------------------------
     // summary : Aボタンが押された際に行う処理
-    // remarks : none
+    // remarks : Zキー（デバッグ用）
     // param   : none
     // return  : none
     //------------------------------------------------------------------------------------------
     private void IsPressedAButton()
     {
         // Aボタンが押されたか
-        if (!isPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
+        if (!isPressed &&
+            Input.GetButtonDown(ConstGamePad.BUTTON_A) ||
+            Input.GetKeyDown(KeyCode.Z))
         {
             // 通過確認
             isPressed = true;

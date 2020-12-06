@@ -1,6 +1,6 @@
 ﻿//==============================================================================================
 /// File Name	: AppealImage.cs
-/// Summary		: 
+/// Summary		: Imageにアピール処理を行う
 //==============================================================================================
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,8 +24,8 @@ public class AppealImage : MonoBehaviour
     private float scalePercentage = 0.0f;
     // 最大サイズ
     private Vector2 maxSize = Vector2.zero;
-    // 通過したか
-    private bool isPassed = false;
+    // アピールするか
+    private bool isAppeal = false;
 
 
 
@@ -50,7 +50,7 @@ public class AppealImage : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        if (isPassed && (maxSize.x >= size.x))
+        if (isAppeal && (maxSize.x >= size.x))
         {
             image.color = GetReduceAlpha(image.color);
             size += new Vector2(scaleValue, scaleValue);
@@ -95,7 +95,7 @@ public class AppealImage : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void Play()
     {
-        isPassed = true;
+        isAppeal = true;
     }
 
 
@@ -108,10 +108,8 @@ public class AppealImage : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private Color GetReduceAlpha(Color color)
     {
-        if (color.a >= 0.0f)
-        {
-            color.a -= 0.1f;
-        }
+        // Alpha値を減らす
+        color.a -= 0.05f;
 
         return color;
     }

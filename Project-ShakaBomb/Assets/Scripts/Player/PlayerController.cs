@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     List<AudioClip> audios;
 
-    bool checkController;
     // 入力を受け付けるかのフラグ
     bool canControl = true;
     // ジャンプできるかのフラグ
@@ -133,17 +132,19 @@ public class PlayerController : MonoBehaviour
     bool autoMoveFinished = false;
     // 移動先
     Vector3 targetPos = Vector3.zero;
-    
+
 
 
     //------------------------------------------------------------------------------------------
-    // Start
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
-    void Start()
+    private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         isGround = false;
-        checkController = false;
         dir = ConstInteger.ZERO;
         lastDir = ConstInteger.ZERO;
         dirCount = ConstInteger.ZERO;
@@ -153,7 +154,6 @@ public class PlayerController : MonoBehaviour
         jumpTiming = false;
         playerSpeed = accelForce;
 
-        gamaepadManager = gamepadManagerObject.GetComponent<GamepadManager>();
         bubbleGenerator = bubbleG.GetComponent<BubbleGenerator>();
         bulletGenerator = bulletG.GetComponent<BulletGenerator>();
     }
@@ -161,9 +161,12 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // Update
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
-    void Update()
+    private void Update()
     {
         jumpTiming = false;
 
@@ -212,8 +215,6 @@ public class PlayerController : MonoBehaviour
         }
 
         // プレイヤー操作系統 (入力が必要なもの)--------------------------------------------------
-        // コントローラの接続チェック
-        checkController = gamaepadManager.GetCheckGamepad();
 
         // 左右移動
         if (Input.GetAxis(ConstPlayer.HORIZONTAL) < ConstInteger.ZERO)
@@ -379,7 +380,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // FixedUpdate
+    // summary : FixedUpdate
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void FixedUpdate()
     {
@@ -433,11 +437,13 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // OnCollision
+    // summary : OnCollisionEnter2D
+    // remarks : none
+    // param   : Collision2D
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //SoundPlayer.Play(audios[(int)AudioType.Damage]);
         if (collision.gameObject.tag == "BreakObject")
         {
             ExplosionForce(collision.transform.position, 500.0f, 800.0f);
@@ -482,6 +488,13 @@ public class PlayerController : MonoBehaviour
 
 
 
+
+    //------------------------------------------------------------------------------------------
+    // summary : AudioPlay
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private IEnumerator AudioPlay()
     {
         SoundPlayer.Play(audios[(int)AudioType.Damage]);
@@ -491,7 +504,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // OnTrigger
+    // summary : OnTriggerStay2D
+    // remarks : none
+    // param   : Collider2D
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -502,11 +518,16 @@ public class PlayerController : MonoBehaviour
         {
             isGround = true;
         }
-        
     }
 
 
 
+    //------------------------------------------------------------------------------------------
+    // summary : OnTriggerEnter2D
+    // remarks : none
+    // param   : Collider2D
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "CollectObject")
@@ -574,6 +595,12 @@ public class PlayerController : MonoBehaviour
 
 
 
+    //------------------------------------------------------------------------------------------
+    // summary : OnTriggerExit2D
+    // remarks : none
+    // param   : Collider2D
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == ConstStage.GROUND || 
@@ -594,7 +621,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 入力を受け付けるか設定する
+    // summary : 入力を受け付けるか設定する
+    // remarks : none
+    // param   : bool
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void EnableControl(bool enable)
     {
@@ -604,7 +634,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // ジャンプを受け付けるか設定する
+    // summary : ジャンプを受け付けるか設定する
+    // remarks : none
+    // param   : bool
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void EnableJump(bool enable)
     {
@@ -614,7 +647,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 自動操作に切り替えるか設定する
+    // summary : 自動操作に切り替えるか設定する
+    // remarks : none
+    // param   : bool
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void EnableAutoControl(bool enable)
     {
@@ -624,7 +660,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 自動操作の行き先を設定する
+    // summary : 自動操作の行き先を設定する
+    // remarks : none
+    // param   : Vector3
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void SetTargetPos(Vector3 pos)
     {
@@ -635,7 +674,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 自動移動が完了しているか取得する
+    // summary : 自動移動が完了しているか取得する
+    // remarks : none
+    // param   : none
+    // return  : bool
     //------------------------------------------------------------------------------------------
     public bool AutoMoveFinished()
     {
@@ -645,7 +687,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 現在の方向を取得する
+    // summary : 現在の方向を取得する
+    // remarks : none
+    // param   : none
+    // return  : int
     //------------------------------------------------------------------------------------------
     public int GetCurrentDir()
     {
@@ -655,7 +700,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // ジャンプしたタイミングか取得する
+    // summary : ジャンプしたタイミングか取得する
+    // remarks : none
+    // param   : none
+    // return  : bool
     //------------------------------------------------------------------------------------------
     public bool JumpTiming()
     {
@@ -665,7 +713,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 接地しているか取得する
+    // summary : 接地しているか取得する
+    // remarks : none
+    // param   : none
+    // return  : bool
     //------------------------------------------------------------------------------------------
     public bool IsGround()
     {
@@ -675,7 +726,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 死亡しているか取得する
+    // summary : 死亡しているか取得する
+    // remarks : none
+    // param   : none
+    // return  : bool
     //------------------------------------------------------------------------------------------
     public bool IsDead()
     {
@@ -685,7 +739,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // バルーン追加
+    // summary : バルーン追加
+    // remarks : none
+    // param   : GameObject
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void AddBalloon(GameObject go)
     {
@@ -698,7 +755,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // バルーンを使用する(古い順に消費する)
+    // summary : バルーンを使用する(古い順に消費する)
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void UsedBalloon()
     {
@@ -710,7 +770,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // バルーンが壊れる
+    // summary : バルーンが壊れる
+    // remarks : none
+    // param   : GameObject
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void BrokenBalloon(GameObject balloon)
     {
@@ -721,7 +784,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // バルーンの現在の所持数を取得
+    // summary : バルーンの現在の所持数を取得
+    // remarks : none
+    // param   : none
+    // return  : int
     //------------------------------------------------------------------------------------------
     public int GetMaxBalloons()
     {
@@ -731,7 +797,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // ブースト移動コストを取得
+    // summary : ブースト移動コストを取得
+    // remarks : none
+    // param   : none
+    // return  : float
     //------------------------------------------------------------------------------------------
     public float GetBoostCost()
     {
@@ -741,7 +810,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // ブースト移動
+    // summary : ブースト移動
+    // remarks : none
+    // param   : Vector3
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void Boost(Vector3 direction)
     {
@@ -760,7 +832,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 爆発
+    // summary : 爆発
+    // remarks : none
+    // param   : Vector3、float、float
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void ExplosionForce(Vector3 expPos, float xPow, float yPow)
     {
@@ -775,7 +850,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // ノックバック
+    // summary : ノックバック処理
+    // remarks : none
+    // param   : Vector3
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void KnockBack(Vector3 hitPos)
     {
@@ -796,7 +874,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 死亡時処理
+    // summary : 死亡時処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void DeathUpdate()
     {
@@ -806,7 +887,10 @@ public class PlayerController : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
-    // 復活
+    // summary : 復活処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void Repair()
     {

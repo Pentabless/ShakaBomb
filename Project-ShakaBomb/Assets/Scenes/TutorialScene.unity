@@ -134,7 +134,7 @@ PrefabInstance:
     - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_Name
-      value: TutolialEvent (3)
+      value: Event_04
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -179,7 +179,7 @@ PrefabInstance:
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -444,7 +444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 115563185}
   m_Layer: 0
-  m_Name: Event
+  m_Name: EventList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -461,10 +461,10 @@ Transform:
   m_LocalPosition: {x: -12.4, y: 9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1184580167}
   - {fileID: 44247942}
   - {fileID: 1352257141}
   - {fileID: 1137126293}
-  - {fileID: 1184580167}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -742,7 +742,7 @@ PrefabInstance:
     - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_Name
-      value: TutolialEvent (2)
+      value: Event_03
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -787,7 +787,7 @@ PrefabInstance:
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -1413,7 +1413,7 @@ PrefabInstance:
     - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_Name
-      value: TutolialEvent (1)
+      value: Event_02
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -1458,7 +1458,7 @@ PrefabInstance:
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -2100,8 +2100,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5c9a9cc61b5a64f4ba9a781f108490ed, type: 3}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: e6d11e01533ac744c83b613ac26184f1, type: 3}
+    m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2109,8 +2109,8 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: New Text
 --- !u!222 &940698101
@@ -2130,7 +2130,7 @@ RectTransform:
   m_GameObject: {fileID: 940698098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4655726, y: 1, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children: []
   m_Father: {fileID: 996689815}
   m_RootOrder: 4
@@ -2708,7 +2708,7 @@ GameObject:
   - component: {fileID: 1411967490}
   - component: {fileID: 1411967491}
   m_Layer: 0
-  m_Name: ControllerEvent (2)
+  m_Name: ControllerEvent_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2752,7 +2752,7 @@ MonoBehaviour:
   onChange: 1
   canvasText: {fileID: 940698100}
   text1: "\u6C5A\u67D3\u30DD\u30A4\u30F3\u30C8\u306E\u4E0A\u3067\n\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\u3092\u5DE6\u53F3\u4EA4\u4E92\u306B\n\u52D5\u304B\u3059\u3068\u6C5A\u67D3\u3092\u6D44\u5316\u3057\u307E\u3059"
-  text2: "\u50BE\u3051\u305F\u65B9\u5411\u306B\u30B7\u30E3\u30DC\u30F3\u7389\u306E\n\u30B9\u30C8\u30C3\u30AF\u304C\u3042\u308C\u3070\r\n\u30B7\u30E3\u30DC\u30F3\u7206\u5F3E\u3092\u98DB\u3070\u3057\u307E\u3059\u3002"
+  text2: "\u50BE\u3051\u305F\u65B9\u5411\u306B\u30B7\u30E3\u30DC\u30F3\u7389\u306E\n\u30B9\u30C8\u30C3\u30AF\u304C\u3042\u308C\u3070\r\n\u30B7\u30E3\u30DC\u30F3\u7206\u5F3E\u3092\u98DB\u3070\u3057\u307E\u3059"
   blinkTime: 0.6
   changeCount: 5
 --- !u!114 &1670954761 stripped
@@ -2957,7 +2957,7 @@ GameObject:
   - component: {fileID: 1995374616}
   - component: {fileID: 1995374617}
   m_Layer: 0
-  m_Name: ControllerEvent
+  m_Name: ControllerEvent_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3127,7 +3127,7 @@ GameObject:
   - component: {fileID: 2108323286}
   - component: {fileID: 2108323287}
   m_Layer: 0
-  m_Name: ControllerEvent (1)
+  m_Name: ControllerEvent_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3171,7 +3171,7 @@ MonoBehaviour:
   onChange: 1
   canvasText: {fileID: 940698100}
   text1: "\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\u3092\u5DE6\u53F3\u4EA4\u4E92\u306B\n\u52D5\u304B\u3059\u3068\u30B7\u30E3\u30DC\u30F3\u7389\u3092\n\u751F\u6210\u3067\u304D\u307E\u3059"
-  text2: "\u30B7\u30E3\u30DC\u30F3\u7389\u306E\u30B9\u30C8\u30C3\u30AF\u304C\n\u3042\u308C\u3070\u50BE\u3051\u305F\u65B9\u5411\u306B\n\u66F4\u306B\u30B8\u30E3\u30F3\u30D7\u3057\u307E\u3059\u3002"
+  text2: "\u30B7\u30E3\u30DC\u30F3\u7389\u306E\u30B9\u30C8\u30C3\u30AF\u304C\n\u3042\u308C\u3070\u50BE\u3051\u305F\u65B9\u5411\u306B\n\u66F4\u306B\u30B8\u30E3\u30F3\u30D7\u3057\u307E\u3059"
   blinkTime: 0.6
   changeCount: 4
 --- !u!1 &2145812351
@@ -3185,7 +3185,7 @@ GameObject:
   - component: {fileID: 2145812352}
   - component: {fileID: 2145812353}
   m_Layer: 0
-  m_Name: ControllerEvent
+  m_Name: ControllerEvent_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3238,7 +3238,7 @@ PrefabInstance:
     - target: {fileID: 8085275816771829943, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_Name
-      value: TutolialEvent
+      value: Event_01
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
@@ -3278,7 +3278,7 @@ PrefabInstance:
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8085275816771829939, guid: be4453056f1b76b478b3409e9b45d934,
         type: 3}

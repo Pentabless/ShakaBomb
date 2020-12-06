@@ -281,6 +281,11 @@ PrefabInstance:
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9013673314962234439, guid: 4185d805ab219fc40a2c67b08975b808,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8416207593949514743, guid: 4185d805ab219fc40a2c67b08975b808,
         type: 3}
       propertyPath: playOnAwake
