@@ -3,7 +3,6 @@
 /// Summary		: クレジットシーンの管理を行うクラス
 //==============================================================================================
 using UnityEngine;
-using UnityEngine.UI;
 using Common;
 //==============================================================================================
 public class CreditDirector : MonoBehaviour
@@ -17,8 +16,17 @@ public class CreditDirector : MonoBehaviour
     // 音声ファイル(SE)
     [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
     private AudioClip pressedSE = null;
-    // ボタンが押されたか
+    // CreditBoard(GameObject)
+    [SerializeField, Header("Credit Board"), Tooltip("CreditBoardをアタッチする")]
+    private GameObject creditBoard = null;
+    // スクロールの速度
+    [SerializeField, Header("スクロールの速度(0.0 - 10.0)"), Tooltip("スクロールの速度を設定する"), Range(0.0f, 10.0f)]
+    private float scrollSpeed = ConstDecimal.ZERO;
+    [SerializeField, Header("スクロールの限界"), Tooltip("スクロールの限界を設定する")]
+    private float scrollLimit = ConstDecimal.ZERO;
+    // 通過確認
     private bool isPressed = false;
+    private bool isPassed = false;
 
 
 
@@ -52,6 +60,9 @@ public class CreditDirector : MonoBehaviour
     {
         // STARTボタンが押されたか
         IsPressedStartButton();
+
+        // スクロール処理
+        ScrollBoard();
     }
 
 
@@ -65,6 +76,7 @@ public class CreditDirector : MonoBehaviour
     private void Init()
     {
         isPressed = false;
+        isPassed = false;
     }
 
 
@@ -108,5 +120,31 @@ public class CreditDirector : MonoBehaviour
 
         // フェードアウトを開始
         FadeManager.FadeOut(ConstScene.STAGE_SELECT, ConstScene.FADE_TIME);
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : スクロール処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void ScrollBoard()
+    {
+        var speed = (scrollSpeed / 100);
+        var positionY = creditBoard.transform.position.y;
+
+        // スクロール
+        creditBoard.transform.position += new Vector3(ConstDecimal.ZERO, speed, ConstDecimal.ZERO);
+
+        if (!isPassed && positionY > scrollLimit)
+        {
+            // 通過確認
+            isPassed = true;
+
+            // 遷移処理
+            Transition();
+        }
     }
 }
