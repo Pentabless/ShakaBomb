@@ -28,6 +28,8 @@ public class Blink : MonoBehaviour
     private float time = 0.0f;
     private ObjType thisObjType = ObjType.TEXT;
     private bool isBlink = false;
+    // 通過確認
+    private bool isPassed = false;
 
 
 
@@ -54,24 +56,10 @@ public class Blink : MonoBehaviour
     private void Update()
     {
         // オブジェクトのAlpha値を更新
-        if (isBlink && thisObjType == ObjType.IMAGE)
-        {
-            image.color = GetAlphaColor(image.color);
-        }
-        else if (isBlink && thisObjType == ObjType.TEXT)
-        {
-            text.color = GetAlphaColor(text.color);
-        }
+        UpdateAlpha();
 
-        // ブリンクを停止した際に指定のオブジェクトのAlpha値を更新
-        if (!isBlink && thisObjType == ObjType.IMAGE)
-        {
-            image.color = GetMaxAlpha(image.color);
-        }
-        else if (!isBlink && thisObjType == ObjType.TEXT)
-        {
-            text.color = GetMaxAlpha(text.color);
-        }
+        // ブリンクを停止した際に指定のオブジェクトのAlpha値をリセット
+        ResetAlpha();
     }
 
 
@@ -118,16 +106,7 @@ public class Blink : MonoBehaviour
         isBlink = true;
 
         // アタッチしてるオブジェクトを判別
-        if (this.gameObject.GetComponent<Image>())
-        {
-            thisObjType = ObjType.IMAGE;
-            image = this.gameObject.GetComponent<Image>();
-        }
-        else if (this.gameObject.GetComponent<Text>())
-        {
-            thisObjType = ObjType.TEXT;
-            text = this.gameObject.GetComponent<Text>();
-        }
+        DetermineObject();
     }
 
 
@@ -143,5 +122,69 @@ public class Blink : MonoBehaviour
         color.a = 1.0f;
 
         return color;
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : オブジェクトのAlpha値を更新
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void UpdateAlpha()
+    {
+        if (isBlink && thisObjType == ObjType.IMAGE)
+        {
+            image.color = GetAlphaColor(image.color);
+        }
+        else if (isBlink && thisObjType == ObjType.TEXT)
+        {
+            text.color = GetAlphaColor(text.color);
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ブリンクを停止した際に指定のオブジェクトのAlpha値をリセット
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void ResetAlpha()
+    {
+        if (!isBlink && !isPassed && thisObjType == ObjType.IMAGE)
+        {
+            isPassed = true;
+            image.color = GetMaxAlpha(image.color);
+        }
+        else if (!isBlink && !isPassed && thisObjType == ObjType.TEXT)
+        {
+            isPassed = true;
+            text.color = GetMaxAlpha(text.color);
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : アタッチしてるオブジェクトを判別
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void DetermineObject()
+    {
+        if (this.gameObject.GetComponent<Image>())
+        {
+            thisObjType = ObjType.IMAGE;
+            image = this.gameObject.GetComponent<Image>();
+        }
+        else if (this.gameObject.GetComponent<Text>())
+        {
+            thisObjType = ObjType.TEXT;
+            text = this.gameObject.GetComponent<Text>();
+        }
     }
 }
