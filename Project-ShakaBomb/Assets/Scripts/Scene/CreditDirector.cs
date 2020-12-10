@@ -22,6 +22,7 @@ public class CreditDirector : MonoBehaviour
     // スクロールの速度
     [SerializeField, Header("スクロールの速度(0.0 - 10.0)"), Tooltip("スクロールの速度を設定する"), Range(0.0f, 10.0f)]
     private float scrollSpeed = ConstDecimal.ZERO;
+    // スクロールの限界
     [SerializeField, Header("スクロールの限界"), Tooltip("スクロールの限界を設定する")]
     private float scrollLimit = ConstDecimal.ZERO;
     // 通過確認
@@ -90,9 +91,7 @@ public class CreditDirector : MonoBehaviour
     private void IsPressedStartButton()
     {
         // STARTボタンが押されたか
-        if (!isPressed &&
-            Input.GetKeyDown(KeyCode.Joystick1Button7) ||
-            Input.GetKeyDown(KeyCode.Z))
+        if (!isPressed && Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
             // 通過確認
             isPressed = true;
@@ -133,10 +132,11 @@ public class CreditDirector : MonoBehaviour
     private void ScrollBoard()
     {
         var speed = (scrollSpeed / 100);
-        var positionY = creditBoard.transform.position.y;
 
         // スクロール
         creditBoard.transform.position += new Vector3(ConstDecimal.ZERO, speed, ConstDecimal.ZERO);
+
+        var positionY = creditBoard.transform.position.y;
 
         if (!isPassed && positionY > scrollLimit)
         {

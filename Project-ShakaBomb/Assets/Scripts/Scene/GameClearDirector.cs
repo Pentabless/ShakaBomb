@@ -10,13 +10,16 @@ public class GameClearDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    // SlideObject(GameObject)
+    [SerializeField, Header("Slide Object"), Tooltip("SlideObjectをアタッチする")]
+    private SlideInObject slideObject = null;
     // 音声ファイル(BGM)
     [SerializeField, Header("Clear BGM"), Tooltip("クリアシーンで再生したい音声ファイルをアタッチ")]
     private AudioClip allClearBGM = null;
     // 音声ファイル(SE)
     [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
     private AudioClip pressedSE = null;
-    // ボタンが押されたか
+    // 通過確認
     private bool isPressed = false;
 
 
@@ -37,6 +40,9 @@ public class GameClearDirector : MonoBehaviour
 
         // BGMを再生
         SoundPlayer.PlayBGM(allClearBGM);
+
+        // UIのスライドインを開始
+        slideObject.PlayIn();
     }
 
 
@@ -77,9 +83,7 @@ public class GameClearDirector : MonoBehaviour
     private void IsPressedAButton()
     {
         // Aボタンが押されたか
-        if (!isPressed &&
-            Input.GetButtonDown(ConstGamePad.BUTTON_A) ||
-            Input.GetKeyDown(KeyCode.Z))
+        if (!isPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
         {
             // 通過確認
             isPressed = true;

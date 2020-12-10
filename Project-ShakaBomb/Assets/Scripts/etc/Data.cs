@@ -2,7 +2,6 @@
 /// File Name	: Data.cs
 /// Summary		: データ保持
 //==============================================================================================
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //==============================================================================================
@@ -14,7 +13,7 @@ public class Data
     public static float playerVelX;
     public static Vector2 currentPlayerVel = Vector2.zero;
     public static Vector2 prePlayerVel = Vector2.zero;
-    public static UnityEngine.Vector3 initialPlayerPos;
+    public static Vector3 initialPlayerPos;
     
     public static int colletcObject = 0;            // プレイ中のステージで獲得したCollectObjectの数
     

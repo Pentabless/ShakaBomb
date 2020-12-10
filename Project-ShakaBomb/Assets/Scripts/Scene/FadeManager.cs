@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//==============================================================================================
+/// File Name	: FadeManager.cs
+/// Summary		: フェード処理用スクリプト
+//==============================================================================================
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
-//フェード処理用スクリプト
+//==============================================================================================
 public class FadeManager : MonoBehaviour
 {
     private static Canvas fadeCanvas;           // フェード用Canvas
@@ -22,7 +23,13 @@ public class FadeManager : MonoBehaviour
 
     public static Color fadeColor { get; set; } = new Color(0, 0, 0, 1); // フェード用カラー
 
-    // フェード用のCanvasとImage生成
+
+    //------------------------------------------------------------------------------------------
+    // summary : 初期化処理
+    // remarks : フェード用のCanvasとImage生成
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private static void Init()
     {
         // フェード用のCanvas生成
@@ -46,7 +53,14 @@ public class FadeManager : MonoBehaviour
         fadeImage.rectTransform.sizeDelta = new Vector2(9999, 9999);
     }
 
-    // フェード用のCanvasを取得する
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェード用のCanvasを取得する
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static Canvas GetCanvas()
     {
         // 生成済みか確認
@@ -57,7 +71,14 @@ public class FadeManager : MonoBehaviour
         return fadeCanvas;
     }
 
-    // フェードイン開始
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェードイン開始
+    // remarks : none
+    // param   : float
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static void FadeIn(float fadeTime = 1.0f)
     {
         // 生成済みか確認
@@ -72,14 +93,28 @@ public class FadeManager : MonoBehaviour
         alpha = 1f;
     }
 
-    // フェードアウト開始（シーン遷移）
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェードアウト開始
+    // remarks : シーン遷移
+    // param   : string、float
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static void FadeOut(string nextSceneName, float fadeTime = 1.0f)
     {
         FadeManager.nextSceneName = nextSceneName;
         FadeOut(-2, fadeTime);
     }
 
-    // フェードアウト開始（シーン遷移）
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェードアウト開始
+    // remarks : シーン遷移
+    // param   : int、float
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static void FadeOut(int nextSceneId, float fadeTime = 1.0f)
     {
         // 生成済みか確認
@@ -98,14 +133,27 @@ public class FadeManager : MonoBehaviour
         alpha = 0f;
     }
 
-    // フェードアウト開始
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェードアウト開始
+    // remarks : none
+    // param   : float
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static void FadeOut(float fadeTime = 1.0f)
     {
         FadeOut(-1, fadeTime);
     }
 
-    
 
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     void Update()
     {
         // フラグ有効なら毎フレームフェードイン/アウト処理

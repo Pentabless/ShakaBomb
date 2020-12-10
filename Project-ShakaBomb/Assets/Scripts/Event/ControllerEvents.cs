@@ -17,25 +17,22 @@ public class ControllerEvents : MonoBehaviour
     GameObject ui;
     [SerializeField]
     List<Image> circle;
-    [SerializeField]
-    [Header("1回目の点滅")]
+    [SerializeField, Header("1回目の点滅")]
     List<GameObject> first;
-    [SerializeField]
-    [Header("2回目の点滅")]
+    [SerializeField, Header("2回目の点滅")]
     List<GameObject> seconds;
-    [SerializeField]
-    [Header("カウントで変えるか")]
+    [SerializeField, Header("カウントで変えるか")]
     bool onChange = false;
     [SerializeField]
     Text canvasText;
     [SerializeField, TextArea(15, 3)]
-    string text1;
+    private string text1 = string.Empty;
     [SerializeField, TextArea(15, 3)]
-    string text2;
+    private string text2 = string.Empty;
 
 
     [SerializeField]
-    float blinkTime;
+    private float blinkTime;
 
     [SerializeField]
     float changeCount;

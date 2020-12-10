@@ -20,7 +20,7 @@ public class TitleDirector : MonoBehaviour
     // PressAButton(Image)
     [SerializeField, Header("PressAButton(Image)"), Tooltip("PressAButton(Image)をアタッチする")]
     private Image pressAButtonImage = null;
-    // ボタンが押されたか
+    // 通過確認
     private bool isPressed = false;
 
 
@@ -81,9 +81,7 @@ public class TitleDirector : MonoBehaviour
     private void IsPressedAButton()
     {
         // Aボタンが押されたか
-        if (!isPressed &&
-            Input.GetButtonDown(ConstGamePad.BUTTON_A) ||
-            Input.GetKeyDown(KeyCode.Z))
+        if (!isPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
         {
             // 通過確認
             isPressed = true;

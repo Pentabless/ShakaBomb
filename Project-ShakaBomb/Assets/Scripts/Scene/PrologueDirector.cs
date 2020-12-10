@@ -9,6 +9,12 @@ using Common;
 //==============================================================================================
 public class PrologueDirector : MonoBehaviour
 {
+    //------------------------------------------------------------------------------------------
+    // const variable
+    //------------------------------------------------------------------------------------------
+    // カウントダウン
+    private readonly int COUNT_MAX = (300);
+    // ステート
     enum PrologueState
     {
         Start,
@@ -16,12 +22,20 @@ public class PrologueDirector : MonoBehaviour
         CrossFade,
         End,
     }
+
+
+
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    // SlideObject(GameObject)
+    [SerializeField, Header("Slide Object"), Tooltip("SlideObjectをアタッチする")]
+    private SlideInObject slideObject = null;
     // 音声ファイル(SE)
     [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
     private AudioClip pressedSE = null;
+    // カウントダウン
+    private int countDown = ConstInteger.ZERO;
 
 
     [SerializeField]
@@ -38,7 +52,8 @@ public class PrologueDirector : MonoBehaviour
     private float timer = 0;
 
     // 通過確認
-    private bool isPressed = false;
+    private bool isStartPressed = false;
+    private bool isAnyPressed = false;
 
 
 
@@ -59,8 +74,6 @@ public class PrologueDirector : MonoBehaviour
         }
         images[0].color = Color.white;
 
-        //FadeManager.fadeColor = Color.white;
-
         // フェードインを開始
         FadeManager.FadeIn(ConstScene.FADE_TIME);
     }
@@ -75,8 +88,8 @@ public class PrologueDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        // STARTボタンが押されたか
-        IsPressedStartButton();
+        // いずれかのボタンが押された
+        IsPressedAnyButton();
 
         timer += Time.deltaTime;
         switch (state)
@@ -137,32 +150,96 @@ public class PrologueDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Init()
     {
-        isPressed = false;
+        isStartPressed = false;
+        isAnyPressed = false;
+        countDown = COUNT_MAX;
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : いずれかのボタンが押された際に行う処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void IsPressedAnyButton()
+    {
+        if (!isAnyPressed && Input.anyKey)
+        {
+            // UIの表示状態の取得
+            var isDisplay = slideObject.GetObjectState();
+
+            if (!isDisplay)
+            {
+                // 通過確認
+                isAnyPressed = true;
+
+                // UIのスライドインを開始
+                slideObject.PlayIn();
+            }
+        }
+
+        // STARTボタンが押されたか
+        IsPressedStartButton();
     }
 
 
 
     //------------------------------------------------------------------------------------------
     // summary : STARTボタンが押された際に行う処理
-    // remarks : Zキー（デバッグ用）
+    // remarks : none
     // param   : none
     // return  : none
     //------------------------------------------------------------------------------------------
     private void IsPressedStartButton()
     {
-        // STARTボタンが押されたか
-        if (!isPressed &&
-            Input.GetKeyDown(KeyCode.Joystick1Button7) ||
-            Input.GetKeyDown(KeyCode.Z))
+        if (isAnyPressed)
         {
-            // 通過確認
-            isPressed = true;
+            // UIの表示状態の取得
+            var isDisplay = slideObject.GetObjectState();
 
-            // SEを再生
-            SoundPlayer.Play(pressedSE);
+            if(isDisplay)
+            {
+                // カウントダウン処理
+                CountDown();
+            }
 
-            // 遷移処理
-            Transition();
+            // STARTボタンが押されたか
+            if (!isStartPressed && Input.GetKeyDown(KeyCode.Joystick1Button7))
+            {
+                // 通過確認
+                isStartPressed = true;
+
+                // SEを再生
+                SoundPlayer.Play(pressedSE);
+
+                // 遷移処理
+                Transition();
+            }
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : カウントダウン処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void CountDown()
+    {
+        // カウントダウン
+        countDown--;
+
+        if (countDown < 0)
+        {
+            // UIのスライドアウトを開始
+            slideObject.PlayOut();
+
+            // 初期化処理
+            Init();
         }
     }
 
