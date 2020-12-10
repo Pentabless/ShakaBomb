@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AlertMaterial
-  m_Shader: {fileID: 4800000, guid: e19e6ddb9d2a94e4caab9947be189eec, type: 3}
+  m_Name: M_TimeGauge_01
+  m_Shader: {fileID: 4800000, guid: 5b6f5ed8fdfa5fd459ca91478c5c398a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,8 +39,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GaugeMask:
+        m_Texture: {fileID: 2800000, guid: 49a7b0360051f7740be985661edd387c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3a57221b5d853d443b130bf8dfb7a769, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -56,27 +60,45 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Border: 10
+    - PixelSnap: 0
+    - _AlertBlinkSpeed: 2
+    - _AlertTime: 0
     - _BumpScale: 1
+    - _CutEnd: 0.2
+    - _CutStart: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _LowerLine: 0.03
+    - _MainAmplitude: 0.02
+    - _MainFrequency: 2.4
+    - _MainSpeed: 0.25
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Radius: 0.45
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SpeedUpRate: 2
     - _SrcBlend: 1
-    - _Thick: 0.1
-    - _Transparency: 0.9601102
+    - _SubAmplitude: 0.03
+    - _SubFrequency: 2
+    - _SubHeight: 0.05
+    - _SubOffset: 0.4
+    - _SubSpeed: 0.25
+    - _TimeRate: 1
     - _UVSec: 0
+    - _UpperLine: 0.85
     - _ZWrite: 1
     m_Colors:
+    - _AlertColor: {r: 0.9, g: 0.1, b: 0.1, a: 0.69803923}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 1, g: 0.40971437, b: 0.25098038, a: 0.49803922}
-    - _SubColor: {r: 0.7830189, g: 0.57557625, b: 0.22530258, a: 0}
+    - _LightColor: {r: 0.094117664, g: 0.68881005, b: 0.7254902, a: 1}
+    - _MainColor: {r: 0.18019675, g: 0.16540584, b: 0.5943396, a: 1}
+    - _SubColorCoef: {r: 1.25, g: 1.25, b: 1.25, a: 1}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
