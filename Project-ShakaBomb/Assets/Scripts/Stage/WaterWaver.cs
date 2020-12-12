@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿//==============================================================================================
+/// File Name	: WaterWaver.cs
+/// Summary		: 
+//==============================================================================================
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
-
+//==============================================================================================
 [RequireComponent(typeof(MeshRenderer)), RequireComponent(typeof(MeshFilter))]
+//==============================================================================================
 public class WaterWaver : MonoBehaviour
 {
     [SerializeField]
@@ -45,7 +47,14 @@ public class WaterWaver : MonoBehaviour
 
     private Mesh mesh;
 
-    // 初期化処理
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         // メッシュとバッファを初期化する
