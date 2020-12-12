@@ -21,7 +21,8 @@ public class TitleDirector : MonoBehaviour
     [SerializeField, Header("PressAButton(Image)"), Tooltip("PressAButton(Image)をアタッチする")]
     private Image pressAButtonImage = null;
     // 通過確認
-    private bool isPressed = false;
+    private bool isAPressed = false;
+    private bool isXPressed = false;
 
 
 
@@ -55,6 +56,8 @@ public class TitleDirector : MonoBehaviour
     {
         // Aボタンが押されたか
         IsPressedAButton();
+        // Xボタンが押されたか
+        IsPressedXButton();
     }
 
 
@@ -67,7 +70,8 @@ public class TitleDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Init()
     {
-        isPressed = false;
+        isAPressed = false;
+        isXPressed = false;
     }
 
 
@@ -81,10 +85,10 @@ public class TitleDirector : MonoBehaviour
     private void IsPressedAButton()
     {
         // Aボタンが押されたか
-        if (!isPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
+        if (!isAPressed && !isXPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
         {
             // 通過確認
-            isPressed = true;
+            isAPressed = true;
 
             // SEを再生
             SoundPlayer.Play(startSE);
@@ -103,6 +107,30 @@ public class TitleDirector : MonoBehaviour
 
 
     //------------------------------------------------------------------------------------------
+    // summary : Xボタンが押された際に行う処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void IsPressedXButton()
+    {
+        // Xボタンが押されたか
+        if (!isXPressed && !isAPressed && Input.GetButtonDown(ConstGamePad.BUTTON_X))
+        {
+            // 通過確認
+            isXPressed = true;
+
+            // SEを再生
+            SoundPlayer.Play(startSE);
+
+            // 遷移処理
+            Transition();
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
     // summary : 遷移処理
     // remarks : none
     // param   : none
@@ -110,11 +138,22 @@ public class TitleDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Transition()
     {
-        // BGMのフェードアウトを開始
-        SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
+        if(isAPressed)
+        {
+            // BGMのフェードアウトを開始
+            SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
 
-        // フェードアウトを開始
-        FadeManager.FadeOut(ConstScene.PROLOGUE, ConstScene.FADE_TIME);
+            // フェードアウトを開始
+            FadeManager.FadeOut(ConstScene.PROLOGUE, ConstScene.FADE_TIME);
+        }
+        else if (isXPressed)
+        {
+            // BGMのフェードアウトを開始
+            SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
+
+            // フェードアウトを開始
+            FadeManager.FadeOut(ConstScene.CREDIT, ConstScene.FADE_TIME);
+        }
     }
 
 

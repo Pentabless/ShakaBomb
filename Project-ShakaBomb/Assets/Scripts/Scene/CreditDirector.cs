@@ -8,6 +8,14 @@ using Common;
 public class CreditDirector : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
+    // const variable
+    //------------------------------------------------------------------------------------------
+    // カウントダウン
+    private readonly int COUNT_MAX = (300);
+
+
+
+    //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
     // 音声ファイル(BGM)
@@ -19,15 +27,21 @@ public class CreditDirector : MonoBehaviour
     // CreditBoard(GameObject)
     [SerializeField, Header("Credit Board"), Tooltip("CreditBoardをアタッチする")]
     private GameObject creditBoard = null;
+    // SlideObject(GameObject)
+    [SerializeField, Header("Slide Object"), Tooltip("SlideObjectをアタッチする")]
+    private SlideInObject slideObject = null;
     // スクロールの速度
     [SerializeField, Header("スクロールの速度(0.0 - 10.0)"), Tooltip("スクロールの速度を設定する"), Range(0.0f, 10.0f)]
     private float scrollSpeed = ConstDecimal.ZERO;
     // スクロールの限界
     [SerializeField, Header("スクロールの限界"), Tooltip("スクロールの限界を設定する")]
     private float scrollLimit = ConstDecimal.ZERO;
+    // カウントダウン
+    private int countDown = ConstInteger.ZERO;
     // 通過確認
-    private bool isPressed = false;
     private bool isPassed = false;
+    private bool isStartPressed = false;
+    private bool isAnyPressed = false;
 
 
 
@@ -59,8 +73,8 @@ public class CreditDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        // STARTボタンが押されたか
-        IsPressedStartButton();
+        // いずれかのボタンが押された
+        IsPressedAnyButton();
 
         // スクロール処理
         ScrollBoard();
@@ -76,8 +90,39 @@ public class CreditDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Init()
     {
-        isPressed = false;
         isPassed = false;
+        isStartPressed = false;
+        isAnyPressed = false;
+        countDown = COUNT_MAX;
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : いずれかのボタンが押された際に行う処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void IsPressedAnyButton()
+    {
+        if (!isAnyPressed && Input.anyKey)
+        {
+            // UIの表示状態の取得
+            var isDisplay = slideObject.GetObjectState();
+
+            if (!isDisplay)
+            {
+                // 通過確認
+                isAnyPressed = true;
+
+                // UIのスライドインを開始
+                slideObject.PlayIn();
+            }
+        }
+
+        // STARTボタンが押されたか
+        IsPressedStartButton();
     }
 
 
@@ -90,17 +135,53 @@ public class CreditDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void IsPressedStartButton()
     {
-        // STARTボタンが押されたか
-        if (!isPressed && Input.GetKeyDown(KeyCode.Joystick1Button7))
+
+        if (isAnyPressed)
         {
-            // 通過確認
-            isPressed = true;
+            // UIの表示状態の取得
+            var isDisplay = slideObject.GetObjectState();
 
-            // SEを再生
-            SoundPlayer.Play(pressedSE);
+            if (isDisplay)
+            {
+                // カウントダウン処理
+                CountDown();
+            }
 
-            // 遷移処理
-            Transition();
+            // STARTボタンが押されたか
+            if (!isStartPressed && Input.GetKeyDown(KeyCode.Joystick1Button7))
+            {
+                // 通過確認
+                isStartPressed = true;
+
+                // SEを再生
+                SoundPlayer.Play(pressedSE);
+
+                // 遷移処理
+                Transition();
+            }
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : カウントダウン処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void CountDown()
+    {
+        // カウントダウン
+        countDown--;
+
+        if (countDown < 0)
+        {
+            // UIのスライドアウトを開始
+            slideObject.PlayOut();
+
+            // 初期化処理
+            Init();
         }
     }
 
