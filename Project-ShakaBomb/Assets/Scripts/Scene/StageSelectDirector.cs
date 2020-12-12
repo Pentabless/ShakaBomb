@@ -101,7 +101,7 @@ public class StageSelectDirector : MonoBehaviour
         stage_distance = Vector2.zero;
         last_position = Vector2.zero;
         next_scene_name = "";
-        stage_number = SharedData.instance.play_stage_number;
+        stage_number = SharedData.instance.playStageNumber;
         last_number = 0;
         select_next_stage_count = 0;
         angle = 0.0f;
@@ -151,10 +151,10 @@ public class StageSelectDirector : MonoBehaviour
         GameObject.Find("SelectFrame").GetComponent<Canvas>().sortingOrder = 10;
 
         //座標変更
-        go_select_tex.transform.position = go_stage[SharedData.instance.play_stage_number].transform.position;
+        go_select_tex.transform.position = go_stage[SharedData.instance.playStageNumber].transform.position;
         component_select_frame.position = new Vector3(go_select_tex.transform.position.x, go_select_tex.transform.position.y, component_select_frame.position.z);
         //拡大率変更
-        go_select_tex.transform.position = (go_stage[SharedData.instance.play_stage_number].transform.localScale.x * go_stage[SharedData.instance.play_stage_number].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f); ;
+        go_select_tex.transform.position = (go_stage[SharedData.instance.playStageNumber].transform.localScale.x * go_stage[SharedData.instance.playStageNumber].transform.Find("StageFrame").transform.localScale) + new Vector3(0.5f, 0.5f, 0.0f); ;
         component_select_frame.localScale = go_select_tex.transform.localScale;
         Debug.Log(go_camera.transform.position);
         //カメラの移る幅を渡す
@@ -251,7 +251,7 @@ public class StageSelectDirector : MonoBehaviour
                         //移ろうとしているシーンの名前を設定する
                         next_scene_name = stage_names[stage_number];
                         //プレイするステージ番号を覚える
-                        SharedData.instance.play_stage_number = stage_number;
+                        SharedData.instance.playStageNumber = stage_number;
                     }
                     else
                     {

@@ -5,23 +5,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Common;
 //==============================================================================================
 public class FadeManager : MonoBehaviour
 {
-    private static Canvas fadeCanvas;           // フェード用Canvas
-    private static Image fadeImage;             // フェード用Image
-                                                   
-    private static float alpha = 0.0f;            // フェード用Imageの透明度
-                                                   
-    public static bool isFadeIn = false;        // フェード処理のフラグ
-    public static bool isFadeOut = false;          
-                                                   
-    private static float fadeTime = 1.0f;         // フェードにかかる時間
-                                                   
-    private static int nextSceneId = -1;        // 遷移先のシーンID
-    private static string nextSceneName = "";   // 遷移先のシーン名
+    // フェード用Canvas
+    private static Canvas fadeCanvas = null;
+    // フェード用Image
+    private static Image fadeImage = null;
+    // フェード用Imageの透明度
+    private static float alpha = ConstDecimal.ZERO;
+    // フェード処理のフラグ
+    public static bool isFadeIn = false;        
+    public static bool isFadeOut = false;
+    // フェードにかかる時間
+    private static float fadeTime = 1.0f;
+    // 遷移先のシーンID
+    private static int nextSceneId = -1;
+    // 遷移先のシーン名
+    private static string nextSceneName = "";
+    // フェード用カラー
+    public static Color fadeColor { get; set; } = new Color(0, 0, 0, 1); 
 
-    public static Color fadeColor { get; set; } = new Color(0, 0, 0, 1); // フェード用カラー
 
 
     //------------------------------------------------------------------------------------------
@@ -154,7 +159,7 @@ public class FadeManager : MonoBehaviour
     // param   : none
     // return  : none
     //------------------------------------------------------------------------------------------
-    void Update()
+    private void Update()
     {
         // フラグ有効なら毎フレームフェードイン/アウト処理
         if (isFadeIn)

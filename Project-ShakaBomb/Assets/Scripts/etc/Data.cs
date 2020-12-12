@@ -14,8 +14,9 @@ public class Data
     public static Vector2 currentPlayerVel = Vector2.zero;
     public static Vector2 prePlayerVel = Vector2.zero;
     public static Vector3 initialPlayerPos;
-    
-    public static int colletcObject = 0;            // プレイ中のステージで獲得したCollectObjectの数
+
+    // プレイ中のステージで獲得したCollectObjectの数
+    public static int colletcObject = 0;
     
     public static float timeLimit = 0.0f;
     public static float time = 0.0f;
