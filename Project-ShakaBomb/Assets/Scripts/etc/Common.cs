@@ -45,9 +45,9 @@ namespace Common
         public static readonly string TITLE             = ("TitleScene");
         public static readonly string PROLOGUE          = ("PrologueScene");
         public static readonly string TUTORIAL          = ("TutorialScene");
-        public static readonly string STAGE_SELECT      = ("NewStageSelectScene");
+        public static readonly string STAGE_SELECT      = ("StageSelectScene");
         public static readonly string GAME_PLAY         = ("PlayScene");
-        public static readonly string RESULT            = ("NewResultScene");
+        public static readonly string RESULT            = ("ResultScene");
         public static readonly string ALL_CLEAR         = ("GameClearScene");
         public static readonly string CREDIT            = ("CreditScene");
         // フェード時間
@@ -205,6 +205,18 @@ namespace Common
     {
         // オブジェクト名・タグ名
         public static readonly string NAME = ("GoalObject");
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // ゴール関連
+    //------------------------------------------------------------------------------------------
+    public static class ConstDirector
+    {
+        // オブジェクト名・タグ名
+        public static readonly string STAGE_SELECT  = ("StageSelectDirector");
+        public static readonly string PLAY          = ("PlayDirector");
     }
 
 

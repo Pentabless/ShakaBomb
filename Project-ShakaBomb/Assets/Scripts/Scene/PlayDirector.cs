@@ -10,29 +10,19 @@ using Common;
 //==============================================================================================
 public class PlayDirector : MonoBehaviour
 {
-    public const string NAME = "PlayDirector";
-
+    //------------------------------------------------------------------------------------------
+    // const variable
+    //------------------------------------------------------------------------------------------
     // プレイシーンの状態
     enum PlayState
     {
-        Start,      // 開始演出
-        Playing,    // プレイ中
-        Goal,       // ゴール演出
-        Failed,     // クリア失敗演出
-        Result,     // リザルト演出
-
-        TutorialGoal,       // チュートリアル専用ゴール演出
-        TutorialResult,     // チュートリアル専用リザルト演出
-    }
-
-    // タイムデータ
-    [System.Serializable]
-    public struct TimeData
-    {
-        public float timeLimit; // 制限時間
-        public float star3Time; // 星3のタイム
-        public float star2Time; // 星2のタイム
-        public float star1Time; // 星1のタイム
+        START,      // 開始演出
+        PLAYING,    // プレイ中
+        GOAL,       // ゴール演出
+        FAILED,     // クリア失敗演出
+        RESULT,     // リザルト演出
+        TUTORIAL_GOAL,       // チュートリアル専用ゴール演出
+        TUTORIAL_RESULT,     // チュートリアル専用リザルト演出
     }
 
 
@@ -46,26 +36,31 @@ public class PlayDirector : MonoBehaviour
     // 残り時間
     [SerializeField]
     private float time = 0.0f;
-
     // イベント時にフェードアウトを適用させるオブジェクト
     [SerializeField]
     private List<GameObject> uiObjects;
-
     // プレイヤー
     private GameObject player;
     private PlayerController playerController;
-
     // ワイプエフェクト
     private WipeCamera wipeCamera;
     // ポーズマネージャー
     private PauseManager pauseManager;
     // クリア失敗用フレーム
     private FailedFrameController failedFrameController;
-
     // ゲームの進行状況
     private PlayState state;
     // 待ち時間用タイマー
     private float waitTime = 0.0f;
+    // タイムデータ
+    [System.Serializable]
+    public struct TimeData
+    {
+        public float timeLimit; // 制限時間
+        public float star3Time; // 星3のタイム
+        public float star2Time; // 星2のタイム
+        public float star1Time; // 星1のタイム
+    }
 
 
 
@@ -77,7 +72,7 @@ public class PlayDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
-        state = PlayState.Start;
+        state = PlayState.START;
         Data.time = time = timeData.timeLimit;
         Data.timeLimit = timeData.timeLimit;
         Data.star_num = 0;
@@ -129,16 +124,15 @@ public class PlayDirector : MonoBehaviour
         // ステートで処理を分岐する
         switch (state)
         {
-            case PlayState.Start:   UpdateStart();      break;
-            case PlayState.Playing: UpdatePlaying();    break;
-            case PlayState.Goal:    UpdateGoal();       break;
-            case PlayState.Failed:  UpdateFailed();     break;
-            case PlayState.Result:  UpdateResult();     break;
-
-            case PlayState.TutorialGoal: UpdateTutorialGoal(); break;
-            case PlayState.TutorialResult: UpdateTutorialResult(); break;
+            case PlayState.START:   UpdateStart();      break;
+            case PlayState.PLAYING: UpdatePlaying();    break;
+            case PlayState.GOAL:    UpdateGoal();       break;
+            case PlayState.FAILED:  UpdateFailed();     break;
+            case PlayState.RESULT:  UpdateResult();     break;
+            case PlayState.TUTORIAL_GOAL: UpdateTutorialGoal(); break;
+            case PlayState.TUTORIAL_RESULT: UpdateTutorialResult(); break;
             default:
-                Debug.Log("PlayDirecotr:StateError");
+                DebugLogger.Log("PlayDirecotr:StateError");
                 break;
         }
     }
@@ -156,7 +150,7 @@ public class PlayDirector : MonoBehaviour
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
-            state = PlayState.Playing;
+            state = PlayState.PLAYING;
             GameObject go = GameObject.Find(AreaNameScript.NAME);
             if (go)
             {
@@ -205,10 +199,7 @@ public class PlayDirector : MonoBehaviour
             time = 0.0f;
             TimeUp();
         }
-
         Data.time = time;
-
-
     }
 
 
@@ -224,7 +215,7 @@ public class PlayDirector : MonoBehaviour
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
-            state = PlayState.Result;
+            state = PlayState.RESULT;
             waitTime = 0.0f;
         }
     }
@@ -242,7 +233,7 @@ public class PlayDirector : MonoBehaviour
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
-            state = PlayState.TutorialResult;
+            state = PlayState.TUTORIAL_RESULT;
             waitTime = 0.0f;
         }
     }
@@ -261,7 +252,7 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             waitTime = 999.0f;
-            failedFrameController.EnableFrame(FailedFrameController.FailedType.TimeUp);
+            failedFrameController.EnableFrame(FailedFrameController.FailedType.TIME_UP);
             pauseManager.ResetFilterColor();
             pauseManager.Pause(1.0f);
         }
@@ -281,9 +272,8 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             FadeManager.fadeColor = Color.clear;
-            FadeManager.FadeOut("NewResultScene", 1.5f);
+            FadeManager.FadeOut(ConstScene.RESULT, ConstScene.FADE_TIME);
             wipeCamera.StartFadeOut(player.transform.position, 1.4f);
-            //SceneEffecterController.StartEffect();
             waitTime = 99.0f;
         }
     }
@@ -302,9 +292,8 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             FadeManager.fadeColor = Color.clear;
-            FadeManager.FadeOut("NewStageSelectScene", 1.5f);
+            FadeManager.FadeOut(ConstScene.STAGE_SELECT, ConstScene.FADE_TIME);
             wipeCamera.StartFadeOut(player.transform.position, 1.4f);
-            //SceneEffecterController.StartEffect();
             waitTime = 99.0f;
         }
     }
@@ -319,7 +308,7 @@ public class PlayDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void Goal()
     {
-        state = PlayState.Goal;
+        state = PlayState.GOAL;
         waitTime = 2.0f;
         // ポーズ不可にする
         pauseManager.EnablePauseButton(false);
@@ -347,7 +336,7 @@ public class PlayDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void TutorialGoal()
     {
-        state = PlayState.TutorialGoal;
+        state = PlayState.TUTORIAL_GOAL;
         waitTime = 2.0f;
         // ポーズ不可にする
         pauseManager.EnablePauseButton(false);
@@ -370,7 +359,7 @@ public class PlayDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     public void TimeUp()
     {
-        state = PlayState.Failed;
+        state = PlayState.FAILED;
         waitTime = 3.0f;
         // ポーズ不可にする
         pauseManager.EnablePauseButton(false);

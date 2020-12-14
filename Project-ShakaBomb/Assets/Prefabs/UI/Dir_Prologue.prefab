@@ -43,7 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74b2be065d528a42b5f0fe948621234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressedSE: {fileID: 8300000, guid: caf9b64268cbc834ab072606a4df35fe, type: 3}
+  slideObject: {fileID: 0}
+  pressedSE: {fileID: 8300000, guid: 41aa5ce3253f19746b13e448d4b961ea, type: 3}
   images: []
   fadeTime: 0
   showTime: 0

@@ -1,5 +1,5 @@
 ﻿//==============================================================================================
-/// File Name	: DoorToStage.cs
+/// File Name	: DoorToStage.cs（修正予定）
 /// Summary		: 
 //==============================================================================================
 using UnityEngine;
@@ -17,14 +17,15 @@ public class DoorToStage : MonoBehaviour
     public AudioClip sound;
     //シャッターが当たる速さ
     public float up_speed;
+
+
+
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-
     // 対応するステージ番号
     [SerializeField]
     int numStage;
-
     GameObject shutter;      //シャッター
     GameObject door_frame;   //ドアフレーム
     GameObject lamp;         //ランプ
@@ -34,22 +35,19 @@ public class DoorToStage : MonoBehaviour
     //シャッターが上がるアニメーションをするか
     bool animate_shutter = false;
     //プレイヤーがドアに当たっているか
-    bool touch_player = false;
+    bool touchPlayer = false;
     //シャッターの上がり具合
     float shutter_up = 0.0f;
     //シャッターの音を鳴らしたか
     bool play_sutter_sound = true;
 
-    //------------------------------------------------------------------------------------------
-    // Awake
-    //------------------------------------------------------------------------------------------
-    private void Awake()
-    {
 
-    }
 
     //------------------------------------------------------------------------------------------
-    // Start
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Start()
     {
@@ -156,20 +154,15 @@ public class DoorToStage : MonoBehaviour
 
         //シャッターの上がり具合を影響させる
         shutter.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0.0f, shutter_up, 0.0f);
-
-        ////親オブジェクトがあって　親オブジェクトの拡大率が 1,1,1でない時
-        //if (transform.parent != null)
-        //{
-        //    if (transform.parent.localScale != new Vector3(1.0f, 1.0f, 1.0f))
-        //    {
-        //        //親オブジェクトの拡大率の影響をなくす
-        //        transform.localScale = new Vector3(1.0f / transform.parent.localScale.x, 1.0f / transform.parent.localScale.y, 1.0f);
-        //    }
-        //}
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // Update
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Update()
     {
@@ -197,40 +190,70 @@ public class DoorToStage : MonoBehaviour
 
         var goStage = Input.GetAxis(ConstPlayer.VERTICAL);
 
-        if (goStage >= 1.0f && touch_player || Input.GetKeyDown(KeyCode.UpArrow) && touch_player)
+        if (goStage >= 1.0f && touchPlayer || Input.GetKeyDown(KeyCode.UpArrow) && touchPlayer)
         {
             //プレイできるドアだったら
             if (SharedData.instance.GetCanPlay(numStage - 1))
             {
                 // ToDo:静的な変数に代入
                 Data.stage_number = numStage;
-                GameObject.Find(NewStageSelectDirector.NAME).GetComponent<NewStageSelectDirector>().DecideStage();
+                GameObject.Find(ConstDirector.STAGE_SELECT).GetComponent<StageSelectDirector>().DecideStage();
             }
         }
     }
 
 
+
+    //------------------------------------------------------------------------------------------
+    // summary : OnTriggerStay2D
+    // remarks : none
+    // param   : Collider2D
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == ConstPlayer.NAME)
         {
-            touch_player = true;
+            touchPlayer = true;
         }
     }
 
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : OnTriggerExit2D
+    // remarks : none
+    // param   : Collider2D
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void OnTriggerExit2D(Collider2D collision)
     {
-        touch_player = false;
+        touchPlayer = false;
     }
 
-    //扉のステージ番号を渡す
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : GetStageNumber
+    // remarks : 扉のステージ番号を渡す
+    // param   : none
+    // return  : int
+    //------------------------------------------------------------------------------------------
     public int GetStageNumber()
     {
         return numStage;
     }
 
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : GetTouchPlayer
+    // remarks : none
+    // param   : none
+    // return  : bool
+    //------------------------------------------------------------------------------------------
     public bool GetTouchPlayer()
     {
-        return touch_player;
+        return touchPlayer;
     }
 }

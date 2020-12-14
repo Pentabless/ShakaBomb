@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4006004727390949185}
-  - component: {fileID: 3954775672663104684}
+  - component: {fileID: 7341543223375911194}
   m_Layer: 0
-  m_Name: NewStageSelectDirector
+  m_Name: StageSelectDirector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3954775672663104684
+--- !u!114 &7341543223375911194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e6b9e292cbea54fb8e742fe003c48a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPos: {x: -22, y: 3.11, z: 0}
+  doorWrapper: {fileID: 0}

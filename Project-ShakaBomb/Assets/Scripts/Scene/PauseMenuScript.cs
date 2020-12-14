@@ -1,85 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//==============================================================================================
+/// File Name	: PauseMenuScript.cs（修正予定）
+/// Summary		: ポーズメニュに関わるスクリプト
+//==============================================================================================
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
-//ポーズメニュースクリプト
+using Common;
+//==============================================================================================
 public class PauseMenuScript : MonoBehaviour
 {
+    //------------------------------------------------------------------------------------------
+    // member variable
+    //------------------------------------------------------------------------------------------
+    // ポーズ管理スクリプト
     [SerializeField]
-    private PauseManager pauseManager;      //ポーズ管理スクリプト
+    private PauseManager pauseManager = null;
+    // 選択肢オブジェクト
     [SerializeField]
-    private GameObject[] choices;           //選択肢オブジェクト
+    private GameObject[] choices = null;
+    // カーソル効果音
+    public AudioClip cursorSE = null;
+    // 決定効果音
+    public AudioClip decisionSE = null;
+    // 選択中の選択肢
+    private int choice = 0;
+    // 次の入力を受け付けるまでの時間
+    private float pressDelay = 0f;
+    // 決定済みかどうか
+    private bool wasDecided = false;    
 
-    public AudioClip cursorSE;          //カーソル効果音
-    public AudioClip decisionSE;        //決定効果音
 
-    private int choice = 0;             //選択中の選択肢
-    private float pressDelay = 0f;      //次の入力を受け付けるまでの時間
-    private bool wasDecided = false;    //決定済みかどうか
 
-    //初期化処理
-    private void Init()
-    {
-        choice = 1;
-        for (int i = 0; i < choices.Length; ++i)
-        {
-            if (i == choice)
-            {
-                choices[i].GetComponent<Text>().color = new Color(1f, 0.8f, 0f);
-            }
-            else
-            {
-                choices[i].GetComponent<Text>().color = new Color(1f, 1f, 1f);
-            }
-        }
-        wasDecided = false;
-    }
-
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
+        // 初期化処理
         Init();
     }
 
-    ////エネルギーの入手状況の設定
-    //public void SetResult(bool[] getEnergies)
-    //{
-    //    for (int i = 0; i < getEnergyImages.Length; ++i)
-    //    {
-    //        //入手してないなら飛ばす
-    //        if (!getEnergies[i])
-    //        {
-    //            continue;
-    //        }
-    //        //入手していないなら色を明るくする
-    //        Image image = getEnergyImages[i].GetComponent<Image>();
-    //        image.color = new Color(1f, 1f, 1f);
-    //    }
-    //}
 
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Update()
     {
-        //選択済みなら処理しない
+        // 選択済みなら処理しない
         if (wasDecided)
         {
             return;
         }
 
-        //入力状態受け取り
+        // 入力状態受け取り
         float axis = Input.GetAxisRaw("Vertical");
         float axis2 = Input.GetAxisRaw("Vertical2");
         bool pressUp = (Input.GetKey(KeyCode.UpArrow) || axis > 0.0f || axis2 > 0.0f);
         bool pressDown = (Input.GetKey(KeyCode.DownArrow) || axis < 0.0f || axis2 < 0.0f);
 
 
-        //連続入力制御
+        // 連続入力制御
         if (pressDelay > 0f)
         {
             pressDelay -= Time.deltaTime;
         }
         
-        //カーソル移動
+        // カーソル移動
         if (pressDelay <= 0f)
         {
             int input = (pressDown ? 1 : pressUp ? choices.Length - 1 : 0);
@@ -96,7 +89,7 @@ public class PauseMenuScript : MonoBehaviour
             }
         }
 
-        //ステージ選択
+        // ステージ選択
         bool pressSubmit = Input.GetButtonDown("Submit");
         if (pressSubmit)
         {
@@ -105,25 +98,50 @@ public class PauseMenuScript : MonoBehaviour
 
             switch (choice)
             {
-                //プレイに戻る
+                // プレイに戻る
                 case 0:
                     Init();
                     pauseManager.ChangePauseState();
                     break;
-                //リトライ
+                // リトライ
                 case 1:
                     FadeManager.fadeColor = Color.black;
                     FadeManager.FadeOut(SceneManager.GetActiveScene().buildIndex);
                     break;
-                //ステージ選択
+                // ステージ選択
                 case 2:
                     FadeManager.fadeColor = Color.black;
-                    FadeManager.FadeOut("NewStageSelectScene");
+                    FadeManager.FadeOut(ConstScene.STAGE_SELECT);
                     break;
                 default:
-                    Debug.Log("PauseMenu:SelectError");
+                    DebugLogger.Log("PauseMenu:SelectError");
                     break;
             }
         }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : 初期化処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Init()
+    {
+        choice = 1;
+        for (int i = 0; i < choices.Length; ++i)
+        {
+            if (i == choice)
+            {
+                choices[i].GetComponent<Text>().color = new Color(1f, 0.8f, 0f);
+            }
+            else
+            {
+                choices[i].GetComponent<Text>().color = new Color(1f, 1f, 1f);
+            }
+        }
+        wasDecided = false;
     }
 }

@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿//==============================================================================================
+/// File Name	: PauseManager.cs
+/// Summary		: 
+//==============================================================================================
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
 using Common;
-
+//==============================================================================================
 // ポーズ管理クラス
 public class PauseManager : MonoBehaviour
 {

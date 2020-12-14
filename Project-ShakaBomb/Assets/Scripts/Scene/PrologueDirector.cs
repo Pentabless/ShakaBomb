@@ -232,7 +232,6 @@ public class PrologueDirector : MonoBehaviour
 
             // STARTボタンが押されたか
             if (!isStartPressed && Input.GetKeyDown(KeyCode.Joystick1Button7))
-            //if (!isStartPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
             {
                 // 通過確認
                 isStartPressed = true;
