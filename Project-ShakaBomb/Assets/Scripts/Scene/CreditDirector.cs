@@ -199,7 +199,7 @@ public class CreditDirector : MonoBehaviour
         SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
 
         // フェードアウトを開始
-        FadeManager.FadeOut(ConstScene.STAGE_SELECT, ConstScene.FADE_TIME);
+        FadeManager.FadeOut(ConstScene.TITLE, ConstScene.FADE_TIME);
     }
 
 

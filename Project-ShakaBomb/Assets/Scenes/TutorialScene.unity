@@ -2057,6 +2057,7 @@ GameObject:
   - component: {fileID: 940698101}
   - component: {fileID: 940698100}
   - component: {fileID: 940698099}
+  - component: {fileID: 940698103}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -2140,6 +2141,21 @@ RectTransform:
   m_AnchoredPosition: {x: 985, y: 316}
   m_SizeDelta: {x: 530.9, y: 190.8}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &940698103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940698098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 20, y: 20}
+  m_UseGraphicAlpha: 1
 --- !u!1 &996689811
 GameObject:
   m_ObjectHideFlags: 0
@@ -3022,9 +3038,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2061336238}
   - component: {fileID: 2061336240}
-  - component: {fileID: 2061336241}
   - component: {fileID: 2061336239}
   - component: {fileID: 2061336237}
+  - component: {fileID: 2061336241}
   m_Layer: 5
   m_Name: ButtonUI
   m_TagString: Untagged
@@ -3056,7 +3072,7 @@ RectTransform:
   m_GameObject: {fileID: 2061336236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 996689815}
   m_RootOrder: 3
@@ -3064,7 +3080,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -440, y: 294}
-  m_SizeDelta: {x: 500, y: 328}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061336239
 MonoBehaviour:
@@ -3086,7 +3102,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 7806a5dd5c5c820418971455113b32dc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cf2b93db73e4af47a82d815fe0ebd10, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3112,10 +3128,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2061336236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6df27e39573dc449bb44704db940e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 40ab8f810e57c0b48a46b1ec3fcfb3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: -440, y: 300, z: 0}
+  playOnAwake: 1
+  power: 50
+  time: 0.5
+  isRepeat: 1
+  repeatInterval: 1
 --- !u!1 &2108323285
 GameObject:
   m_ObjectHideFlags: 0

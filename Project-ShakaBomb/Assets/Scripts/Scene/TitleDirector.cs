@@ -23,6 +23,7 @@ public class TitleDirector : MonoBehaviour
     // 通過確認
     private bool isAPressed = false;
     private bool isXPressed = false;
+    private bool isYPressed = false;
 
 
 
@@ -56,8 +57,12 @@ public class TitleDirector : MonoBehaviour
     {
         // Aボタンが押されたか
         IsPressedAButton();
+
         // Xボタンが押されたか
         IsPressedXButton();
+
+        // Yボタンが押されたか
+        IsPressedYButton();
     }
 
 
@@ -72,6 +77,11 @@ public class TitleDirector : MonoBehaviour
     {
         isAPressed = false;
         isXPressed = false;
+        isXPressed = false;
+
+        SharedData.instance.initializeStageData = false;
+        SharedData.instance.SetStageDataSize(15);
+        Data.stage_number = 0;
     }
 
 
@@ -85,7 +95,7 @@ public class TitleDirector : MonoBehaviour
     private void IsPressedAButton()
     {
         // Aボタンが押されたか
-        if (!isAPressed && !isXPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
+        if (!isXPressed && !isYPressed && !isAPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
         {
             // 通過確認
             isAPressed = true;
@@ -115,10 +125,34 @@ public class TitleDirector : MonoBehaviour
     private void IsPressedXButton()
     {
         // Xボタンが押されたか
-        if (!isXPressed && !isAPressed && Input.GetButtonDown(ConstGamePad.BUTTON_X))
+        if (!isXPressed && !isYPressed && !isAPressed && Input.GetButtonDown(ConstGamePad.BUTTON_X))
         {
             // 通過確認
             isXPressed = true;
+
+            // SEを再生
+            SoundPlayer.Play(startSE);
+
+            // ゲーム終了
+            ExitGame();
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Yボタンが押された際に行う処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void IsPressedYButton()
+    {
+        // Yボタンが押されたか
+        if (!isXPressed && !isYPressed && !isAPressed && Input.GetButtonDown(ConstGamePad.BUTTON_Y))
+        {
+            // 通過確認
+            isYPressed = true;
 
             // SEを再生
             SoundPlayer.Play(startSE);
@@ -146,7 +180,7 @@ public class TitleDirector : MonoBehaviour
             // フェードアウトを開始
             FadeManager.FadeOut(ConstScene.PROLOGUE, ConstScene.FADE_TIME);
         }
-        else if (isXPressed)
+        else if (isYPressed)
         {
             // BGMのフェードアウトを開始
             SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
@@ -167,5 +201,22 @@ public class TitleDirector : MonoBehaviour
     private void StopBlink()
     {
         pressAButtonImage.GetComponent<Blink>().StopBlink();
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ゲームを終了する
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
     }
 }
