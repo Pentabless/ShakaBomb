@@ -28,7 +28,7 @@ public class GoalController : MonoBehaviour
         bgm = GameObject.Find("PlaySceneBgm").GetComponent<PlayBGM>();
         if(!bgm)
         {
-            Debug.Log("BGMをアタッチしてください");
+            DebugLogger.Log("BGMをアタッチしてください");
         }
     }
 
