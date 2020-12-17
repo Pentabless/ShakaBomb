@@ -52,7 +52,7 @@ You need an **Xbox 360 controller** to play the game.
 
 ## Member
 
-* Director
+* Director / Planner / Programmer
   - [Takumi Yanase](https://github.com/TakumiYanase)
 
 * Programmer
