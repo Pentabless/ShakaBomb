@@ -43,11 +43,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4486964332398775400}
     m_Modifications:
-    - target: {fileID: 1274633897066723190, guid: ffc6b371bfc1ef8458a5298a2e654df9,
-        type: 3}
-      propertyPath: m_Name
-      value: Dir_Announce
-      objectReference: {fileID: 0}
     - target: {fileID: 1274633897066723184, guid: ffc6b371bfc1ef8458a5298a2e654df9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -103,11 +98,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1274633897066723190, guid: ffc6b371bfc1ef8458a5298a2e654df9,
+        type: 3}
+      propertyPath: m_Name
+      value: Dir_Announce
+      objectReference: {fileID: 0}
     - target: {fileID: 1274633897066723191, guid: ffc6b371bfc1ef8458a5298a2e654df9,
         type: 3}
       propertyPath: pressAnyButtonText
       value: 
-      objectReference: {fileID: 4486964333650395735}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1274633897066723191, guid: ffc6b371bfc1ef8458a5298a2e654df9,
+        type: 3}
+      propertyPath: pressAnyButtonTMP
+      value: 
+      objectReference: {fileID: 4757511741914313843}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffc6b371bfc1ef8458a5298a2e654df9, type: 3}
 --- !u!4 &2663497717685299932 stripped
@@ -332,16 +337,16 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4196511422346846311}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4486964333650395735 stripped
+--- !u!114 &4757511741914313843 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 322542484604199472, guid: 792498956d5a3b84d85ddb554bc45be5,
+  m_CorrespondingSourceObject: {fileID: 8663539605298418708, guid: 792498956d5a3b84d85ddb554bc45be5,
     type: 3}
   m_PrefabInstance: {fileID: 4196511422346846311}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5507988474997147227
@@ -426,11 +431,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4486964332398775400}
     m_Modifications:
-    - target: {fileID: 5057855250909079543, guid: 7eee6d6aab9883d4db05a7cec7142398,
-        type: 3}
-      propertyPath: m_Name
-      value: EventSystem
-      objectReference: {fileID: 0}
     - target: {fileID: 5057855250909079540, guid: 7eee6d6aab9883d4db05a7cec7142398,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -486,6 +486,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5057855250909079543, guid: 7eee6d6aab9883d4db05a7cec7142398,
+        type: 3}
+      propertyPath: m_Name
+      value: EventSystem
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eee6d6aab9883d4db05a7cec7142398, type: 3}
 --- !u!4 &2197505424882017846 stripped
@@ -501,11 +506,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4486964332398775400}
     m_Modifications:
-    - target: {fileID: 6931030559622723056, guid: 8eea13d548ec0f04c9e56b5ec5f741fe,
-        type: 3}
-      propertyPath: m_Name
-      value: CursorVisible
-      objectReference: {fileID: 0}
     - target: {fileID: 6931030559622723058, guid: 8eea13d548ec0f04c9e56b5ec5f741fe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -560,6 +560,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6931030559622723056, guid: 8eea13d548ec0f04c9e56b5ec5f741fe,
+        type: 3}
+      propertyPath: m_Name
+      value: CursorVisible
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8eea13d548ec0f04c9e56b5ec5f741fe, type: 3}

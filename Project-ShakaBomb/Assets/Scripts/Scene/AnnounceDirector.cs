@@ -3,7 +3,7 @@
 /// Summary		: アナウンスシーンの管理を行うクラス
 //==============================================================================================
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 using Common;
 //==============================================================================================
 public class AnnounceDirector : MonoBehaviour
@@ -14,9 +14,9 @@ public class AnnounceDirector : MonoBehaviour
     // 音声ファイル(SE)
     [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
     private AudioClip pressedSE = null;
-    // PressAnyButton(Text)
-    [SerializeField, Header("PressAnyButton(Text)"), Tooltip("PressAnyButton(Text)をアタッチする")]
-    private Text pressAnyButtonText = null;
+    // PressAnyButton(TMP)
+    [SerializeField, Header("PressAnyButton(TMP)"), Tooltip("PressAnyButton(TMP)をアタッチする")]
+    private TextMeshProUGUI pressAnyButtonTMP = null;
     // ボタンが押されたか
     private bool isPressed = false;
 
@@ -114,6 +114,6 @@ public class AnnounceDirector : MonoBehaviour
     //------------------------------------------------------------------------------------------
     private void StopBlink()
     {
-        pressAnyButtonText.GetComponent<Blink>().StopBlink();
+        pressAnyButtonTMP.GetComponent<Blink>().StopBlink();
     }
 }
