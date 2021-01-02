@@ -4,6 +4,7 @@
 //==============================================================================================
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 //==============================================================================================
 public class Blink : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class Blink : MonoBehaviour
     private enum ObjType
     {
         TEXT,
-        IMAGE
+        IMAGE,
+        TMP
     }
 
 
@@ -23,8 +25,9 @@ public class Blink : MonoBehaviour
     //------------------------------------------------------------------------------------------
     [SerializeField]
     private float speed = 0.0f;
-    private Text text = null;
     private Image image = null;
+    private Text text = null;
+    private TextMeshProUGUI tmpro = null;
     private float time = 0.0f;
     private ObjType thisObjType = ObjType.TEXT;
     private bool isBlink = false;
@@ -142,6 +145,10 @@ public class Blink : MonoBehaviour
         {
             text.color = GetAlphaColor(text.color);
         }
+        else if (isBlink && thisObjType == ObjType.TMP)
+        {
+            tmpro.color = GetAlphaColor(tmpro.color);
+        }
     }
 
 
@@ -164,6 +171,11 @@ public class Blink : MonoBehaviour
             isPassed = true;
             text.color = GetMaxAlpha(text.color);
         }
+        else if (!isBlink && !isPassed && thisObjType == ObjType.TMP)
+        {
+            isPassed = true;
+            tmpro.color = GetMaxAlpha(tmpro.color);
+        }
     }
 
 
@@ -185,6 +197,11 @@ public class Blink : MonoBehaviour
         {
             thisObjType = ObjType.TEXT;
             text = this.gameObject.GetComponent<Text>();
+        }
+        else if (this.gameObject.GetComponent<TextMeshProUGUI>())
+        {
+            thisObjType = ObjType.TMP;
+            tmpro = this.gameObject.GetComponent<TextMeshProUGUI>();
         }
     }
 }
