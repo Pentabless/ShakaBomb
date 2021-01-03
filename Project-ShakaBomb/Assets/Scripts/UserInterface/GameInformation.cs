@@ -3,16 +3,16 @@
 /// Summary		: 公開年、コピーライト表示
 //==============================================================================================
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 //==============================================================================================
 public class GameInformation : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    // コピーライト用テキスト
+    // コピーライト用TMP
     [SerializeField]
-    private Text copyright = null;
+    private TextMeshProUGUI copyright = null;
 
 
 
@@ -25,6 +25,7 @@ public class GameInformation : MonoBehaviour
         var version = Application.version;
         // リリース
         var companyName = Application.companyName;
+
         // テキストに挿入
         copyright.text = $"Ver.{version} © 2020 {companyName}";
     }
