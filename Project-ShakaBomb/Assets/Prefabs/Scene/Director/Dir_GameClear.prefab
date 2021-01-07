@@ -43,5 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c52678e39f9c334bb64bb382390a823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allClearBGM: {fileID: 8300000, guid: 33604a2697173b948b589e45cf95ae7a, type: 3}
-  pressedSE: {fileID: 8300000, guid: caf9b64268cbc834ab072606a4df35fe, type: 3}
+  slideObject: {fileID: 0}
+  allClearBGM: {fileID: 8300000, guid: e7136dcf8add7cb4e98985437b7eb16c, type: 3}
+  pressedSE: {fileID: 8300000, guid: 95e171e4642913e438fd6385b5676b5c, type: 3}
