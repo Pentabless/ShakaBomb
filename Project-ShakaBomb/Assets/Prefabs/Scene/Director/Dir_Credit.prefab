@@ -43,8 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ba1b35b3ebb2e4bb49c1f541a5c0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creditBGM: {fileID: 8300000, guid: 41b8b3a574dad4444a320a676bf1f87e, type: 3}
-  pressedSE: {fileID: 8300000, guid: 41aa5ce3253f19746b13e448d4b961ea, type: 3}
+  creditBGM: {fileID: 8300000, guid: 7094b62fec8bf7749be430c40a50bbf5, type: 3}
+  pressedSE: {fileID: 8300000, guid: 95e171e4642913e438fd6385b5676b5c, type: 3}
   creditBoard: {fileID: 0}
+  slideObject: {fileID: 0}
   scrollSpeed: 0.75
   scrollLimit: 51
