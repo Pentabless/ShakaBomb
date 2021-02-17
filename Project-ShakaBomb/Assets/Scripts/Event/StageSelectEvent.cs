@@ -1,11 +1,9 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: StageSelectEvent.cs（修正予定）
 /// Summary		: 
 //==============================================================================================
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 using UnityEngine.UI;
 //==============================================================================================
@@ -31,13 +29,7 @@ public class StageSelectEvent : MonoBehaviour
     float count;
     bool playOn = false;
 
-    //------------------------------------------------------------------------------------------
-    // Awake
-    //------------------------------------------------------------------------------------------
-    private void Awake()
-    {
-        
-    }
+
 
 	//------------------------------------------------------------------------------------------
     // Start
@@ -56,6 +48,8 @@ public class StageSelectEvent : MonoBehaviour
         screen.alpha = 0.0f;
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // Update
     //------------------------------------------------------------------------------------------
@@ -71,7 +65,7 @@ public class StageSelectEvent : MonoBehaviour
                 screen.alpha = 1.0f;
             }
 
-            if (Input.GetButtonDown(GamePad.BUTTON_A) && count >= interval)
+            if (Input.GetButtonDown(ConstGamePad.BUTTON_A) && count >= interval)
             {
                 count = 0.0f;
                 eventObj.EndEvent();
@@ -89,6 +83,8 @@ public class StageSelectEvent : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // イベントの開始
     //------------------------------------------------------------------------------------------
@@ -97,16 +93,16 @@ public class StageSelectEvent : MonoBehaviour
         if (Data.stage_number != 0)
             return;
 
-        //FadeManager.fadeColor = new Color(0, 0, 0, 0.75f);
-        //FadeManager.FadeOut(fadeTime);
         playOn = true;
         routine = Fade();
         canvasText.text = text;
         pauseManager.Pause(fadeTime);
         StartCoroutine(routine);
         pauseManager.SetFilterColor(Color.clear);
-        GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().StopAnimation();
+        GameObject.Find(ConstPlayer.NAME).GetComponentInChildren<PlayerAnimator>().StopAnimation();
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // イベントの終了
@@ -118,9 +114,11 @@ public class StageSelectEvent : MonoBehaviour
         routine = Fade();
         StartCoroutine(routine);
         FadeManager.FadeIn(fadeTime);
-        GameObject.Find(Player.NAME).GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
+        GameObject.Find(ConstPlayer.NAME).GetComponentInChildren<PlayerAnimator>().ResumeAnimation();
         StartCoroutine(ControlDelay());
     }
+
+
 
     private IEnumerator Fade()
     {
@@ -139,9 +137,11 @@ public class StageSelectEvent : MonoBehaviour
         }
     }
 
+
+
     private IEnumerator ControlDelay()
     {
-        var player = GameObject.Find(Player.NAME).GetComponent<PlayerController>();
+        var player = GameObject.Find(ConstPlayer.NAME).GetComponent<PlayerController>();
         player.EnableControl(false);
         yield return new WaitForSeconds(0.2f);
         player.EnableControl(true);

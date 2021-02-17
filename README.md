@@ -1,4 +1,4 @@
-# ShakaBomb [![LatestRelease](https://img.shields.io/badge/LatestRelease-v1.5-success.svg?style=popout-square)](https://github.com/Pentabless/ShakaBomb/releases/tag/v1.5)
+# ShakaBomb [![LatestRelease](https://img.shields.io/badge/LatestRelease-v2.0.0-success.svg?style=popout-square)](https://github.com/Pentabless/ShakaBomb/releases/tag/v2.0.0)
 
 ## Table of Contents
 
@@ -17,9 +17,9 @@
 
 <p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Title.png?raw=true" alt="ShakaBombImage" /></p>
 
-<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image04.png?raw=true" alt="ShakaBombImage" /></p>
+<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image02.png?raw=true" alt="ShakaBombImage" /></p>
 
-<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image03.png?raw=true" alt="ShakaBombImage" /></p>
+<p><img src="https://github.com/Trident-CESA2020/CESA2020-ShakaBomb/blob/Images/Images/Image01.png?raw=true" alt="ShakaBombImage" /></p>
 
 
 ## Contacts
@@ -52,7 +52,7 @@ You need an **Xbox 360 controller** to play the game.
 
 ## Member
 
-* Director
+* Director / Planner / Programmer
   - [Takumi Yanase](https://github.com/TakumiYanase)
 
 * Programmer

@@ -1,5 +1,5 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: HitBubble.cs
 /// Summary		: 
 //==============================================================================================
 using System.Collections;
@@ -24,7 +24,7 @@ public class HitBubble : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Player" && !burst)
+        if (collision.transform.tag == ConstPlayer.NAME && !burst)
         {
             SoundPlayer.Play(burstSE);
             Vector2 effectSize = Vector2.one * 1.5f;
@@ -33,7 +33,7 @@ public class HitBubble : MonoBehaviour
                 transform.position,
                 null);
             burst = true;
-            GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
+            GameObject.Find(ConstCamera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
         }
         if (collision.transform.tag == "Bullet" && !burst)
         {
@@ -44,7 +44,7 @@ public class HitBubble : MonoBehaviour
                 transform.position,
                 null);
             burst = true;
-            GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
+            GameObject.Find(ConstCamera.MAIN_CAMERA).GetComponent<CameraShake>().Shake(0.1f, 1.0f);
         }
     }
 }

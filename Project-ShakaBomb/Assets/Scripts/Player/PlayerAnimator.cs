@@ -2,10 +2,7 @@
 /// File Name	: PlayerAnimator.cs
 /// Summary		: プレイヤーのアニメーション制御
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 //==============================================================================================
 public class PlayerAnimator : MonoBehaviour
@@ -60,34 +57,45 @@ public class PlayerAnimator : MonoBehaviour
     // 死亡位置
     private Vector3 deathPos = Vector3.zero;
 
+
+
     //------------------------------------------------------------------------------------------
-    // Awake
+    // summary : Awake
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // Start
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Start()
     {
-        player = GameObject.Find(Player.NAME).GetComponent<PlayerController>();
+        player = GameObject.Find(ConstPlayer.NAME).GetComponent<PlayerController>();
         GameObject.Find(PauseManager.NAME).GetComponent<PauseManager>().AddIgnoreObject(gameObject);
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // Update
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Update()
     {
         animator.SetInteger("Direction", player.GetCurrentDir());
         animator.SetInteger("LastDirection", Data.playerDir);
-        //if (player.JumpTiming())
-        //{
-        //    animator.SetTrigger("Jump");
-        //}
         animator.SetBool("Jump", player.JumpTiming());
         animator.SetBool("IsGround", player.IsGround());
         animator.SetFloat("VelocityY", Data.prePlayerVel.y);
@@ -108,8 +116,13 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // 死亡時処理
+    // summary : 死亡時処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void DeathUpdate()
     {
@@ -187,8 +200,13 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // アニメーションを停止する
+    // summary : アニメーションを停止
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void StopAnimation()
     {
@@ -196,8 +214,13 @@ public class PlayerAnimator : MonoBehaviour
         animator.speed = 0;
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // アニメーションを再開する
+    // summary : アニメーションを再開する
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void ResumeAnimation()
     {

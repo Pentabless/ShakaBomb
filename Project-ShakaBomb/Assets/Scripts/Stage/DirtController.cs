@@ -2,10 +2,8 @@
 /// File Name	: DirtController.cs
 /// Summary		: 汚れ制御用スクリプト
 //==============================================================================================
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 //==============================================================================================
 public class DirtController : MonoBehaviour
@@ -93,7 +91,7 @@ public class DirtController : MonoBehaviour
             amount = Mathf.FloorToInt(amount * scale);
             sweepLevel = Mathf.FloorToInt(sweepLevel * scale);
         }
-        dirtManager = GameObject.Find(Dirt.MANAGER).GetComponent<DirtManager>();
+        dirtManager = GameObject.Find(ConstDirt.MANAGER).GetComponent<DirtManager>();
         dirtManager.RegisterDirt(amount);
     }
 

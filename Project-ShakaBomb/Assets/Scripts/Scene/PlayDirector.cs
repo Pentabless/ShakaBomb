@@ -6,35 +6,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using Common;
 //==============================================================================================
 public class PlayDirector : MonoBehaviour
 {
-    public const string NAME = "PlayDirector";
-
+    //------------------------------------------------------------------------------------------
+    // const variable
+    //------------------------------------------------------------------------------------------
     // プレイシーンの状態
     enum PlayState
     {
-        Start,      // 開始演出
-        Playing,    // プレイ中
-        Goal,       // ゴール演出
-        Failed,     // クリア失敗演出
-        Result,     // リザルト演出
-
-        TutorialGoal,       // チュートリアル専用ゴール演出
-        TutorialResult,     // チュートリアル専用リザルト演出
+        START,      // 開始演出
+        PLAYING,    // プレイ中
+        GOAL,       // ゴール演出
+        FAILED,     // クリア失敗演出
+        RESULT,     // リザルト演出
+        TUTORIAL_GOAL,       // チュートリアル専用ゴール演出
+        TUTORIAL_RESULT,     // チュートリアル専用リザルト演出
     }
 
-    // タイムデータ
-    [System.Serializable]
-    public struct TimeData
-    {
-        public float timeLimit; // 制限時間
-        public float star3Time; // 星3のタイム
-        public float star2Time; // 星2のタイム
-        public float star1Time; // 星1のタイム
-    }
+
 
     //------------------------------------------------------------------------------------------
     // member variable
@@ -45,44 +36,59 @@ public class PlayDirector : MonoBehaviour
     // 残り時間
     [SerializeField]
     private float time = 0.0f;
-
     // イベント時にフェードアウトを適用させるオブジェクト
     [SerializeField]
     private List<GameObject> uiObjects;
-
     // プレイヤー
     private GameObject player;
     private PlayerController playerController;
-
     // ワイプエフェクト
     private WipeCamera wipeCamera;
     // ポーズマネージャー
     private PauseManager pauseManager;
     // クリア失敗用フレーム
     private FailedFrameController failedFrameController;
-
     // ゲームの進行状況
     private PlayState state;
     // 待ち時間用タイマー
     private float waitTime = 0.0f;
+    // タイムデータ
+    [System.Serializable]
+    public struct TimeData
+    {
+        public float timeLimit; // 制限時間
+        public float star3Time; // 星3のタイム
+        public float star2Time; // 星2のタイム
+        public float star1Time; // 星1のタイム
+    }
 
-	//------------------------------------------------------------------------------------------
-    // Awake
-	//------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Awake
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Awake()
     {
-        state = PlayState.Start;
+        state = PlayState.START;
         Data.time = time = timeData.timeLimit;
         Data.timeLimit = timeData.timeLimit;
         Data.star_num = 0;
     }
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
-        player = GameObject.Find(Player.NAME);
+        player = GameObject.Find(ConstPlayer.NAME);
         playerController = player.GetComponent<PlayerController>();
         GameObject go = GameObject.Find(PauseManager.NAME);
         if (!go)
@@ -90,7 +96,7 @@ public class PlayDirector : MonoBehaviour
             Debug.Log("PauseManagerをシーンに追加してください");
         }
         pauseManager = go.GetComponent<PauseManager>();
-        go = GameObject.Find(FailedFrame.NAME);
+        go = GameObject.Find(ConstFailedFrame.NAME);
         if (!go)
         {
             Debug.Log("FailedFrameをシーンに追加してください\nPauseManagerのignoreObjectsにFailedFrameを追加してください");
@@ -99,43 +105,52 @@ public class PlayDirector : MonoBehaviour
 
         // シーン開始時にフェードインする
         FadeManager.FadeIn(0.01f);
-        wipeCamera = GameObject.Find(Common.Camera.MAIN_CAMERA).GetComponent<WipeCamera>();
+        wipeCamera = GameObject.Find(ConstCamera.MAIN_CAMERA).GetComponent<WipeCamera>();
         wipeCamera.StartFadeIn(player.transform.position, 1.0f);
         waitTime = 1.0f;
 
     }
 
-	//------------------------------------------------------------------------------------------
-    // Update
-	//------------------------------------------------------------------------------------------
-	private void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         // ステートで処理を分岐する
         switch (state)
         {
-            case PlayState.Start:   UpdateStart();      break;
-            case PlayState.Playing: UpdatePlaying();    break;
-            case PlayState.Goal:    UpdateGoal();       break;
-            case PlayState.Failed:  UpdateFailed();     break;
-            case PlayState.Result:  UpdateResult();     break;
-
-            case PlayState.TutorialGoal: UpdateTutorialGoal(); break;
-            case PlayState.TutorialResult: UpdateTutorialResult(); break;
+            case PlayState.START:   UpdateStart();      break;
+            case PlayState.PLAYING: UpdatePlaying();    break;
+            case PlayState.GOAL:    UpdateGoal();       break;
+            case PlayState.FAILED:  UpdateFailed();     break;
+            case PlayState.RESULT:  UpdateResult();     break;
+            case PlayState.TUTORIAL_GOAL: UpdateTutorialGoal(); break;
+            case PlayState.TUTORIAL_RESULT: UpdateTutorialResult(); break;
             default:
-                Debug.Log("PlayDirecotr:StateError");
+                DebugLogger.Log("PlayDirecotr:StateError");
                 break;
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // スタート中処理
+    // summary : スタート中の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateStart()
     {
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
-            state = PlayState.Playing;
+            state = PlayState.PLAYING;
             GameObject go = GameObject.Find(AreaNameScript.NAME);
             if (go)
             {
@@ -160,8 +175,13 @@ public class PlayDirector : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // プレイ中処理
+    // summary : プレイ中の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdatePlaying()
     {
@@ -179,39 +199,52 @@ public class PlayDirector : MonoBehaviour
             time = 0.0f;
             TimeUp();
         }
-
         Data.time = time;
-
-
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // ゴール処理
+    // summary : ゴール時の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateGoal()
     {
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
-            state = PlayState.Result;
+            state = PlayState.RESULT;
             waitTime = 0.0f;
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // チュートリアルゴール処理
+    // summary : チュートリアルのゴール時処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateTutorialGoal()
     {
         waitTime -= Time.deltaTime;
         if (waitTime <= 0.0f)
         {
-            state = PlayState.TutorialResult;
+            state = PlayState.TUTORIAL_RESULT;
             waitTime = 0.0f;
         }
     }
+
+
+
     //------------------------------------------------------------------------------------------
-    // クリア失敗処理
+    // summary : クリア失敗時の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateFailed()
     {
@@ -219,14 +252,19 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             waitTime = 999.0f;
-            failedFrameController.EnableFrame(FailedFrameController.FailedType.TimeUp);
+            failedFrameController.EnableFrame(FailedFrameController.FailedType.TIME_UP);
             pauseManager.ResetFilterColor();
             pauseManager.Pause(1.0f);
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // リザルト処理
+    // summary : リザルト時の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateResult()
     {
@@ -234,15 +272,19 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             FadeManager.fadeColor = Color.clear;
-            FadeManager.FadeOut("NewResultScene", 1.5f);
+            FadeManager.FadeOut(ConstScene.RESULT, ConstScene.FADE_TIME);
             wipeCamera.StartFadeOut(player.transform.position, 1.4f);
-            //SceneEffecterController.StartEffect();
             waitTime = 99.0f;
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // チュートリアルリザルト処理
+    // summary : チュートリアルのリザルト時の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateTutorialResult()
     {
@@ -250,19 +292,23 @@ public class PlayDirector : MonoBehaviour
         if (waitTime <= 0.0f)
         {
             FadeManager.fadeColor = Color.clear;
-            FadeManager.FadeOut("NewStageSelectScene", 1.5f);
+            FadeManager.FadeOut(ConstScene.STAGE_SELECT, ConstScene.FADE_TIME);
             wipeCamera.StartFadeOut(player.transform.position, 1.4f);
-            //SceneEffecterController.StartEffect();
             waitTime = 99.0f;
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // ゴールイベント
+    // summary : ゴールイベント
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void Goal()
     {
-        state = PlayState.Goal;
+        state = PlayState.GOAL;
         waitTime = 2.0f;
         // ポーズ不可にする
         pauseManager.EnablePauseButton(false);
@@ -270,7 +316,7 @@ public class PlayDirector : MonoBehaviour
         playerController.EnableControl(false);
         // プレイヤーをゴールの位置に移動させる
         playerController.EnableAutoControl(true);
-        playerController.SetTargetPos(GameObject.Find(Common.Goal.NAME).transform.position);
+        playerController.SetTargetPos(GameObject.Find(ConstGoal.NAME).transform.position);
         // UIをフェードアウトさせる
         StartCoroutine(FadeOutUICoroutine());
 
@@ -280,12 +326,17 @@ public class PlayDirector : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // チュートリアルゴールイベント
+    // summary : チュートリアルのゴールイベント
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void TutorialGoal()
     {
-        state = PlayState.TutorialGoal;
+        state = PlayState.TUTORIAL_GOAL;
         waitTime = 2.0f;
         // ポーズ不可にする
         pauseManager.EnablePauseButton(false);
@@ -299,12 +350,16 @@ public class PlayDirector : MonoBehaviour
     }
 
 
+
     //------------------------------------------------------------------------------------------
-    // タイムアップイベント
+    // summary : タイムアップ時のイベント
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void TimeUp()
     {
-        state = PlayState.Failed;
+        state = PlayState.FAILED;
         waitTime = 3.0f;
         // ポーズ不可にする
         pauseManager.EnablePauseButton(false);
@@ -315,8 +370,12 @@ public class PlayDirector : MonoBehaviour
     }
 
 
+
     //------------------------------------------------------------------------------------------
-    // UIのフェードアウト処理
+    // summary : UIのフェード処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private IEnumerator FadeOutUICoroutine()
     {

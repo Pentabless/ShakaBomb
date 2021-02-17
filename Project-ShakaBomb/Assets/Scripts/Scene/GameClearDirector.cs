@@ -1,48 +1,115 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//==============================================================================================
+/// File Name	: GameClearDirector.cs
+/// Summary		: クリアシーンの管理を行うクラス
+//==============================================================================================
 using UnityEngine;
-
+using Common;
+//==============================================================================================
 public class GameClearDirector : MonoBehaviour
 {
-    //BGM
-    public AudioClip game_clear_bgm;
-    //ステージ選択シーンへ
-    private GameObject go_select_stage;
-    //ステージ選択シーンへ初期位置
-    Vector3 select_stage_start_pos;
-    //円運動するための角度
-    float select_stage_angle;
+    //------------------------------------------------------------------------------------------
+    // member variable
+    //------------------------------------------------------------------------------------------
+    // SlideObject(GameObject)
+    [SerializeField, Header("Slide Object"), Tooltip("SlideObjectをアタッチする")]
+    private SlideInObject slideObject = null;
+    // 音声ファイル(BGM)
+    [SerializeField, Header("Clear BGM"), Tooltip("クリアシーンで再生したい音声ファイルをアタッチ")]
+    private AudioClip allClearBGM = null;
+    // 音声ファイル(SE)
+    [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
+    private AudioClip pressedSE = null;
+    // 通過確認
+    private bool isPressed = false;
 
-    // Start is called before the first frame update
-    void Start()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Start()
     {
-        //オブジェクトを探す
-        go_select_stage = GameObject.Find("SelectStageButton");
-        //初期位置を覚える
-        select_stage_start_pos = new Vector3(-200.0f, 100.0f, -2100.0f);
+        // 初期化処理
+        Init();
 
-        //BGMを流す
-        SoundPlayer.PlayBGM(game_clear_bgm, 0.5f);
-        //フェードインさせる
-        FadeManager.fadeColor = Color.black;
-        FadeManager.FadeIn(1.5f);
+        // フェードインを開始
+        FadeManager.FadeIn(ConstScene.FADE_TIME);
 
+        // BGMを再生
+        SoundPlayer.PlayBGM(allClearBGM);
+
+        // UIのスライドインを開始
+        slideObject.PlayIn();
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
-        go_select_stage.GetComponent<RectTransform>().anchoredPosition = new Vector3(select_stage_start_pos.x + (Mathf.Sin(select_stage_angle - 90.0f) * 30.0f), select_stage_start_pos.y, select_stage_start_pos.z);
+        // Aボタンが押されたか
+        IsPressedAButton();
+    }
 
-        select_stage_angle += 0.1f;
 
-        //何か入力をしたら
-        if (Input.anyKeyDown && !FadeManager.isFadeOut)
+
+    //------------------------------------------------------------------------------------------
+    // summary : 初期化処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Init()
+    {
+        isPressed = false;
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Aボタンが押された際に行う処理
+    // remarks : Zキー（デバッグ用）
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void IsPressedAButton()
+    {
+        // Aボタンが押されたか
+        if (!isPressed && Input.GetButtonDown(ConstGamePad.BUTTON_A))
         {
-            //ステージ選択シーンへ
-            FadeManager.FadeOut("NewStageSelectScene", 2.5f);
-            //BGMをフェードアウトする
-            SoundFadeController.SetFadeOutSpeed(-0.005f);
+            // 通過確認
+            isPressed = true;
+
+            // SEを再生
+            SoundPlayer.Play(pressedSE);
+
+            // 遷移処理
+            Transition();
         }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : 遷移処理
+    // remarks : クレジットシーンに遷移
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Transition()
+    {
+        // BGMのフェードアウトを開始
+        SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
+
+        // フェードアウトを開始
+        FadeManager.FadeOut(ConstScene.CREDIT, ConstScene.FADE_TIME);
     }
 }

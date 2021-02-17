@@ -1,41 +1,32 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: PlayBGM.cs
 /// Summary		: 
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
-using UnityEngine.SceneManagement;
 //==============================================================================================
 public class PlayBGM : MonoBehaviour
 {
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
+    [SerializeField, Header("ステージBGM")]
+    private AudioClip bgm = null;
+    [SerializeField, Header("ファンファーレ")]
+    private AudioClip clip = null;
     [SerializeField]
-    [Header("ステージBGM")]
-    AudioClip bgm;
+    private float volum = ConstDecimal.ZERO;
     [SerializeField]
-    [Header("ファンファーレ")]
-    AudioClip clip;
-    [SerializeField]
-    float volum;
-    [SerializeField]
-    int fadeTime = 90;
+    private int fadeTime = 90;
+
+
 
     //------------------------------------------------------------------------------------------
-    // Awake
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
-    private void Awake()
-    {
-        
-    }
-
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
     private void Start()
     {
         if (volum == 0.0f)
@@ -43,18 +34,17 @@ public class PlayBGM : MonoBehaviour
         SoundPlayer.PlayBGM(bgm, volum);
     }
 
-    //------------------------------------------------------------------------------------------
-    // Update
-    //------------------------------------------------------------------------------------------
-    private void Update()
-    {
-    }
 
+
+    //------------------------------------------------------------------------------------------
+    // summary : ゴールイベント
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public void GoalEvent()
     {
         SoundPlayer.Play(clip);
         SoundFadeController.SetFadeOutSpeed(0.0020f);
-        // ToDoファンファーレを入れる
     }
-    
 }

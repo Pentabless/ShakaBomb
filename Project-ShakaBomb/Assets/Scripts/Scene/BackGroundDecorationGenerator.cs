@@ -16,16 +16,6 @@ public class BackGroundDecorationGenerator : MonoBehaviour
     //飾り(前景)のカウント
     int front_decoration_count;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     //飾りを作る
     public bool CreateDecoration(Vector3 position, Vector3 scale, Color color, int layer)
     {
@@ -62,6 +52,8 @@ public class BackGroundDecorationGenerator : MonoBehaviour
         {
             //プレファブと同じオブジェクトを作る
             GameObject go = Instantiate(decoration_prefab) as GameObject;
+            // ジェネレーターの子オブジェクトにする
+            go.transform.parent = this.gameObject.transform;
             //座標を設定する
             go.transform.position = position;
             //座標を設定する

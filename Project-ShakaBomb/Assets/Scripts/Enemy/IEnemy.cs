@@ -3,9 +3,7 @@
 /// Summary		: 
 //==============================================================================================
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 //==============================================================================================
 public class IEnemy : MonoBehaviour
@@ -35,7 +33,7 @@ public class IEnemy : MonoBehaviour
     {
         if (bubble && hitBubble.burst)
         {
-            GameObject.Find(Bubble.GENERATOR).GetComponent<BubbleGenerator>().BubbleCreate(transform.position, 4, false);
+            GameObject.Find(ConstBubble.GENERATOR).GetComponent<BubbleGenerator>().BubbleCreate(transform.position, 4, false);
             currentStatus = Status.Dead;
 
             Destroy(bubble.gameObject);
@@ -61,8 +59,8 @@ public class IEnemy : MonoBehaviour
             bubble.transform.localPosition *= 0;
             hitBubble = bubble.GetComponent<HitBubble>();
             StartCoroutine(BubbleAppear());
-            bubble.transform.tag = Enemy.HIT_STATE;
-            this.transform.tag = Enemy.HIT_STATE;
+            bubble.transform.tag = ConstEnemy.HIT_STATE;
+            this.transform.tag = ConstEnemy.HIT_STATE;
             currentStatus = Status.Hit;
         }
     }

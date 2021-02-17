@@ -2,56 +2,66 @@
 /// File Name	: FailedFrameController.cs
 /// Summary		: クリア失敗用フレーム
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
 using Common;
 //==============================================================================================
 public class FailedFrameController : MonoBehaviour
 {
+    //------------------------------------------------------------------------------------------
+    // const variable
+    //------------------------------------------------------------------------------------------
     public enum FailedType
     {
-        TimeUp,
-        Fall,
+        TIME_UP,
+        FALL,
     }
-
 
     private enum FailedState
     {
-        Start,      // 起動中
-        Select,     // 選択中
-        Finish,     // 終了
+        START,      
+        SELECT,     
+        FINISH,     
     }
 
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-
-    private Canvas failedCanvas = null;               // キャンバス
-    private CanvasGroup canvasGroup = null;           // キャンバスグループ
-
+    // キャンバス
+    private Canvas failedCanvas = null;
+    // キャンバスグループ
+    private CanvasGroup canvasGroup = null;
+    // 種類を表すテキスト
     [SerializeField]
-    private Text typeText = null;                     // 種類を表すテキスト
-    private bool enableFrame = false;                 // 有効かどうか
-    private FailedType type = FailedType.TimeUp;      // 失敗の種類
-    private FailedState state = FailedState.Start;    // 状態
-    private float waitTime = 0.0f;                    // 待ち時間
-
+    private Text typeText = null;
+    // 有効かどうか
+    private bool enableFrame = false;
+    // 失敗の種類
+    private FailedType type = FailedType.TIME_UP;
+    // 状態
+    private FailedState state = FailedState.START;
+    // 待ち時間
+    private float waitTime = 0.0f;
+    // 選択肢オブジェクト
     [SerializeField]
-    private GameObject[] choices;                     // 選択肢オブジェクト
+    private GameObject[] choices;
+    // カーソル効果音
+    public AudioClip cursorSE;
+    // 決定効果音
+    public AudioClip decisionSE;
+    // 選択中の選択肢
+    private int choice = 0;
+    // 次の入力を受け付けるまでの時間
+    private float pressDelay = 0f;                    
 
-    public AudioClip cursorSE;                        // カーソル効果音
-    public AudioClip decisionSE;                      // 決定効果音
-
-    private int choice = 0;                           // 選択中の選択肢
-    private float pressDelay = 0f;                    // 次の入力を受け付けるまでの時間
 
 
     //------------------------------------------------------------------------------------------
-    // 初期化処理
+    // summary : 初期化処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Init()
     {
@@ -69,17 +79,27 @@ public class FailedFrameController : MonoBehaviour
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // Awake
+    // summary : Awake
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
         Init();
     }
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
         failedCanvas = GetComponentInChildren<Canvas>();
@@ -88,10 +108,15 @@ public class FailedFrameController : MonoBehaviour
         canvasGroup.alpha = 0.0f;
     }
 
-	//------------------------------------------------------------------------------------------
-    // Update
-	//------------------------------------------------------------------------------------------
-	private void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         if (!enableFrame)
         {
@@ -101,31 +126,40 @@ public class FailedFrameController : MonoBehaviour
         // ステートで処理を分岐する
         switch (state)
         {
-            case FailedState.Start:  UpdateStart();  break;
-            case FailedState.Select: UpdateSelect(); break;
-            case FailedState.Finish: UpdateFinish(); break;
+            case FailedState.START:  UpdateStart();  break;
+            case FailedState.SELECT: UpdateSelect(); break;
+            case FailedState.FINISH: UpdateFinish(); break;
             default:
-                Debug.Log("FailedFrameController:StateError");
+                DebugLogger.Log("FailedFrameController:StateError");
                 break;
         }
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // 起動中処理
+    // summary : 起動中の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateStart()
     {
         waitTime -= Time.deltaTime;
-        canvasGroup.alpha = 1.0f - Mathf.Max(waitTime, 0.0f) / FailedFrame.FADE_TIME;
+        canvasGroup.alpha = 1.0f - Mathf.Max(waitTime, 0.0f) / ConstFailedFrame.FADE_TIME;
         if (waitTime <= 0.0f)
         {
-            state = FailedState.Select;
+            state = FailedState.SELECT;
         }
-
     }
-    
+
+
+
     //------------------------------------------------------------------------------------------
-    // 選択中処理
+    // summary : 選択中の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateSelect()
     {
@@ -162,7 +196,7 @@ public class FailedFrameController : MonoBehaviour
         bool pressSubmit = Input.GetButtonDown("Submit");
         if (pressSubmit)
         {
-            state = FailedState.Finish;
+            state = FailedState.FINISH;
             SoundPlayer.Play(decisionSE);
 
             switch (choice)
@@ -173,40 +207,49 @@ public class FailedFrameController : MonoBehaviour
                     break;
                 // ステージ選択
                 case 1:
-                    FadeManager.FadeOut("NewStageSelectScene");
+                    FadeManager.FadeOut(ConstScene.STAGE_SELECT);
                     break;
                 default:
-                    Debug.Log("FailedFrameController:SelectError");
+                    DebugLogger.Log("FailedFrameController:SelectError");
                     break;
             }
         }
     }
-    
+
+
+
     //------------------------------------------------------------------------------------------
-    // 終了中処理
+    // summary : 終了中の処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void UpdateFinish()
     {
 
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // オブジェクトを起動する
+    // summary : オブジェクトを起動する
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public void EnableFrame(FailedType type)
     {
         enableFrame = true;
         failedCanvas.enabled = true;
-        waitTime = FailedFrame.FADE_TIME;
+        waitTime = ConstFailedFrame.FADE_TIME;
         this.type = type;
-        if (type == FailedType.TimeUp)
+        if (type == FailedType.TIME_UP)
         {
             typeText.text = "Time Up";
         }
-        else if (type == FailedType.Fall)
+        else if (type == FailedType.FALL)
         {
             typeText.text = "Fall";
         }
     }
-
 }

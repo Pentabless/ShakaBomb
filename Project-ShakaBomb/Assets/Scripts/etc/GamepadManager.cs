@@ -3,10 +3,7 @@
 /// Summary		: ゲームパッドの接続確認
 //==============================================================================================
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
 using Common;
 //==============================================================================================
 public class GamepadManager : MonoBehaviour
@@ -14,72 +11,74 @@ public class GamepadManager : MonoBehaviour
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    [SerializeField]
-    private Image m_connected = null;
-    [SerializeField]
-    private Image m_disconnected = null;
-
     // ゲームパッドの接続確認
-    private bool m_checkGamepad = false;
+    private bool checkGamepad = false;
+
+
 
     //------------------------------------------------------------------------------------------
-    // Awake
-    //------------------------------------------------------------------------------------------
-    private void Awake()
-    {
-        m_connected.gameObject.SetActive(false);
-        m_disconnected.gameObject.SetActive(false);
-    }
-
-    //------------------------------------------------------------------------------------------
-    // Start
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Start()
     {
-        StartCoroutine(DelayCheck());
+
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // Update
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Update()
     {
-        DebugCheckGamepad();
+
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // ゲームパッドの接続確認
+    // summary : 初期化処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Init()
+    {
+
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ゲームパッドの接続確認
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     public bool GetCheckGamepad()
     {
-        return m_checkGamepad;
+        return checkGamepad;
     }
 
-    //------------------------------------------------------------------------------------------
-    // デバッグ用
-    //------------------------------------------------------------------------------------------
-    private void DebugCheckGamepad()
-    {
-        if (m_checkGamepad)
-        {
-            m_connected.gameObject.SetActive(true);
-            m_disconnected.gameObject.SetActive(false);
-        }
-        else
-        {
-            m_connected.gameObject.SetActive(false);
-            m_disconnected.gameObject.SetActive(true);
-        }
-    }
+
 
     //------------------------------------------------------------------------------------------
-    // ゲームパッドの接続確認
+    // summary : ゲームパッドの接続確認
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     IEnumerator DelayCheck()
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(GamePad.CHECK_INTERVAL);
+            yield return new WaitForSecondsRealtime(ConstGamePad.CHECK_INTERVAL);
 
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {
@@ -87,13 +86,15 @@ public class GamepadManager : MonoBehaviour
                 {
                     // ゲームパッドが接続されている
                     i = Input.GetJoystickNames().Length;
-                    m_checkGamepad = true;
+                    checkGamepad = true;
+                    Debug.Log("接続されている");
                 }
                 else
                 {
                     // ゲームパッドが接続されていない
                     i = Input.GetJoystickNames().Length;
-                    m_checkGamepad = false;
+                    checkGamepad = false;
+                    Debug.Log("接続されていない");
                 }
             }
         }

@@ -77,7 +77,7 @@ public class BubbleController : MonoBehaviour
 
         target_scale_time = 60;
 
-        playerObj = GameObject.Find(Player.NAME);
+        playerObj = GameObject.Find(ConstPlayer.NAME);
         //balloonG = GameObject.Find(Balloon.GENERATOR).GetComponent<BalloonGenerator>();
     }
 
@@ -123,7 +123,7 @@ public class BubbleController : MonoBehaviour
         angle += 0.1f;
 
         //バブルの消滅(カウント)
-        if (deleteCount >= Bubble.EXTINCTION_TIME)
+        if (deleteCount >= ConstBubble.EXTINCTION_TIME)
         {
             //Vector3 position = new Vector3(transform.position.x, -0.25f, 0.0f);
             //transform.position = position;
@@ -252,7 +252,7 @@ public class BubbleController : MonoBehaviour
     public void OnTriggerExit2D(Collider2D collision)
     {
         // バルーンから離れたら追従するようにする
-        if (collision.tag == Balloon.NAME && !stopChaise)
+        if (collision.tag == ConstBalloon.NAME && !stopChaise)
         {
             mergeTarget = collision.gameObject;
         }

@@ -66,7 +66,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 916dfed7d8bd2a045878f2cb95921fc2, type: 3}
+    m_Font: {fileID: 12800000, guid: e6d11e01533ac744c83b613ac26184f1, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 916dfed7d8bd2a045878f2cb95921fc2, type: 3}
+    m_Font: {fileID: 12800000, guid: e6d11e01533ac744c83b613ac26184f1, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 916dfed7d8bd2a045878f2cb95921fc2, type: 3}
+    m_Font: {fileID: 12800000, guid: e6d11e01533ac744c83b613ac26184f1, type: 3}
     m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
@@ -323,7 +323,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 6721029518872107390}
   ignoreGameObjects:
   - {fileID: 6721029518872107390}
-  pauseSE: {fileID: 8300000, guid: 40b98956f3636124f9c0c371a02d926d, type: 3}
+  pauseSE: {fileID: 8300000, guid: 14b43ec52ec0a714f99b734fe0bf750e, type: 3}
 --- !u!1 &6721029518872107390
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,5 +441,5 @@ MonoBehaviour:
   - {fileID: 6721029517943758119}
   - {fileID: 6721029517766716732}
   - {fileID: 6721029517351925892}
-  cursorSE: {fileID: 8300000, guid: f53ae5bc772726744a2039d8ed02030c, type: 3}
-  decisionSE: {fileID: 8300000, guid: caf9b64268cbc834ab072606a4df35fe, type: 3}
+  cursorSE: {fileID: 8300000, guid: 1834fc3f2941fad43b0d7f210d5ebd0f, type: 3}
+  decisionSE: {fileID: 8300000, guid: f1673470781b7be41992e2bde78901f1, type: 3}

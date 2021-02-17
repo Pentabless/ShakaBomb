@@ -2,11 +2,8 @@
 /// File Name	: TimeGaugeController.cs
 /// Summary		: タイムゲージ用スクリプト
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using Common;
 //==============================================================================================
 public class TimeGaugeController : MonoBehaviour
@@ -43,26 +40,41 @@ public class TimeGaugeController : MonoBehaviour
     AudioClip audio;
     bool onPlay = false;
 
+
+
     //------------------------------------------------------------------------------------------
-    // Awake
+    // summary : Awake
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void Awake()
     {
         canvasGroup = GetComponentInChildren<CanvasGroup>();
     }
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
-        player = GameObject.Find(Player.NAME);
+        player = GameObject.Find(ConstPlayer.NAME);
     }
 
-	//------------------------------------------------------------------------------------------
-    // Update
-	//------------------------------------------------------------------------------------------
-	private void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         float timeRate = Data.time / Data.timeLimit;
         if(timeRate <= alertTimeRate)
@@ -82,8 +94,13 @@ public class TimeGaugeController : MonoBehaviour
         mat.SetFloat("_AlertTime", alertTime);
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // プレイヤーとの重なり処理
+    // summary : プレイヤーとの重なり処理
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void OverlapPlayer()
     {
@@ -96,8 +113,13 @@ public class TimeGaugeController : MonoBehaviour
         canvasGroup.alpha = Mathf.Lerp(fadeAlpha, 1.0f, t);
     }
 
+
+
     //------------------------------------------------------------------------------------------
-    // OnApplicationQuit
+    // summary : OnApplicationQuit
+    // remarks : none
+    // param   : none
+    // return  : none
     //------------------------------------------------------------------------------------------
     private void OnApplicationQuit()
     {

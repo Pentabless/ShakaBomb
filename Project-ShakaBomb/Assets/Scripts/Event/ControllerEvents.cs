@@ -1,11 +1,10 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: ControllerEvents.cs
 /// Summary		: 
 //==============================================================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 using UnityEngine.UI;
 //==============================================================================================
@@ -18,25 +17,22 @@ public class ControllerEvents : MonoBehaviour
     GameObject ui;
     [SerializeField]
     List<Image> circle;
-    [SerializeField]
-    [Header("1回目の点滅")]
+    [SerializeField, Header("1回目の点滅")]
     List<GameObject> first;
-    [SerializeField]
-    [Header("2回目の点滅")]
+    [SerializeField, Header("2回目の点滅")]
     List<GameObject> seconds;
-    [SerializeField]
-    [Header("カウントで変えるか")]
+    [SerializeField, Header("カウントで変えるか")]
     bool onChange = false;
     [SerializeField]
     Text canvasText;
     [SerializeField, TextArea(15, 3)]
-    string text1;
+    private string text1 = string.Empty;
     [SerializeField, TextArea(15, 3)]
-    string text2;
+    private string text2 = string.Empty;
 
 
     [SerializeField]
-    float blinkTime;
+    private float blinkTime;
 
     [SerializeField]
     float changeCount;
@@ -45,6 +41,8 @@ public class ControllerEvents : MonoBehaviour
     float count;
     bool change = false;
     bool start = false;
+
+
 
     //------------------------------------------------------------------------------------------
     // Awake
@@ -55,13 +53,7 @@ public class ControllerEvents : MonoBehaviour
         ui.SetActive(false);
     }
 
-    //------------------------------------------------------------------------------------------
-    // Start
-    //------------------------------------------------------------------------------------------
-    private void Start()
-    {
-        
-    }
+
 
     //------------------------------------------------------------------------------------------
     // Update
@@ -90,7 +82,7 @@ public class ControllerEvents : MonoBehaviour
             change = true;
         }
 
-        if(count <= Common.Decimal.ZERO)
+        if(count <= ConstDecimal.ZERO)
         {
             if (change)
             {
@@ -100,6 +92,8 @@ public class ControllerEvents : MonoBehaviour
             change = false;
         }
     }
+
+
 
     //------------------------------------------------------------------------------------------
     // イベントの開始
@@ -121,6 +115,8 @@ public class ControllerEvents : MonoBehaviour
         StartCoroutine(routine);
     }
 
+
+
     //------------------------------------------------------------------------------------------
     // イベントの終了
     //------------------------------------------------------------------------------------------
@@ -138,6 +134,8 @@ public class ControllerEvents : MonoBehaviour
             routine = null;
         }
     }
+
+
 
     private IEnumerator OnBlink()
     {

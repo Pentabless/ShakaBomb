@@ -1,28 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//==============================================================================================
+/// File Name	: FadeManager.cs
+/// Summary		: フェード処理用スクリプト
+//==============================================================================================
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
-//フェード処理用スクリプト
+using Common;
+//==============================================================================================
 public class FadeManager : MonoBehaviour
 {
-    private static Canvas fadeCanvas;           // フェード用Canvas
-    private static Image fadeImage;             // フェード用Image
-                                                   
-    private static float alpha = 0.0f;            // フェード用Imageの透明度
-                                                   
-    public static bool isFadeIn = false;        // フェード処理のフラグ
-    public static bool isFadeOut = false;          
-                                                   
-    private static float fadeTime = 1.0f;         // フェードにかかる時間
-                                                   
-    private static int nextSceneId = -1;        // 遷移先のシーンID
-    private static string nextSceneName = "";   // 遷移先のシーン名
+    // フェード用Canvas
+    private static Canvas fadeCanvas = null;
+    // フェード用Image
+    private static Image fadeImage = null;
+    // フェード用Imageの透明度
+    private static float alpha = ConstDecimal.ZERO;
+    // フェード処理のフラグ
+    public static bool isFadeIn = false;        
+    public static bool isFadeOut = false;
+    // フェードにかかる時間
+    private static float fadeTime = 1.0f;
+    // 遷移先のシーンID
+    private static int nextSceneId = -1;
+    // 遷移先のシーン名
+    private static string nextSceneName = "";
+    // フェード用カラー
+    public static Color fadeColor { get; set; } = new Color(0, 0, 0, 1); 
 
-    public static Color fadeColor { get; set; } = new Color(0, 0, 0, 1); // フェード用カラー
 
-    // フェード用のCanvasとImage生成
+
+    //------------------------------------------------------------------------------------------
+    // summary : 初期化処理
+    // remarks : フェード用のCanvasとImage生成
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private static void Init()
     {
         // フェード用のCanvas生成
@@ -46,7 +58,14 @@ public class FadeManager : MonoBehaviour
         fadeImage.rectTransform.sizeDelta = new Vector2(9999, 9999);
     }
 
-    // フェード用のCanvasを取得する
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェード用のCanvasを取得する
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static Canvas GetCanvas()
     {
         // 生成済みか確認
@@ -57,7 +76,14 @@ public class FadeManager : MonoBehaviour
         return fadeCanvas;
     }
 
-    // フェードイン開始
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェードイン開始
+    // remarks : none
+    // param   : float
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static void FadeIn(float fadeTime = 1.0f)
     {
         // 生成済みか確認
@@ -72,14 +98,28 @@ public class FadeManager : MonoBehaviour
         alpha = 1f;
     }
 
-    // フェードアウト開始（シーン遷移）
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェードアウト開始
+    // remarks : シーン遷移
+    // param   : string、float
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static void FadeOut(string nextSceneName, float fadeTime = 1.0f)
     {
         FadeManager.nextSceneName = nextSceneName;
         FadeOut(-2, fadeTime);
     }
 
-    // フェードアウト開始（シーン遷移）
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェードアウト開始
+    // remarks : シーン遷移
+    // param   : int、float
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static void FadeOut(int nextSceneId, float fadeTime = 1.0f)
     {
         // 生成済みか確認
@@ -98,15 +138,28 @@ public class FadeManager : MonoBehaviour
         alpha = 0f;
     }
 
-    // フェードアウト開始
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : フェードアウト開始
+    // remarks : none
+    // param   : float
+    // return  : none
+    //------------------------------------------------------------------------------------------
     public static void FadeOut(float fadeTime = 1.0f)
     {
         FadeOut(-1, fadeTime);
     }
 
-    
 
-    void Update()
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
     {
         // フラグ有効なら毎フレームフェードイン/アウト処理
         if (isFadeIn)

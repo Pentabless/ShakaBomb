@@ -1,11 +1,8 @@
 ﻿//==============================================================================================
-/// File Name	: 
+/// File Name	: BubbleChargeController.cs
 /// Summary		: 
 //==============================================================================================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Common;
 //==============================================================================================
 public class BubbleChargeController : MonoBehaviour
@@ -23,13 +20,7 @@ public class BubbleChargeController : MonoBehaviour
     BubbleGenerator bubbleG;
     bool atOnce = false;
 
-    //------------------------------------------------------------------------------------------
-    // Awake
-    //------------------------------------------------------------------------------------------
-    private void Awake()
-    {
 
-    }
 
     //------------------------------------------------------------------------------------------
     // Start
@@ -39,17 +30,11 @@ public class BubbleChargeController : MonoBehaviour
         bubbleG = bubbleGeneratorObject.GetComponent<BubbleGenerator>();
     }
 
-    //------------------------------------------------------------------------------------------
-    // Update
-    //------------------------------------------------------------------------------------------
-    private void Update()
-    {
 
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == Player.NAME && !atOnce)
+        if (collision.tag == ConstPlayer.NAME && !atOnce)
         {
             atOnce = true;
             // バブルを生成(複数個)

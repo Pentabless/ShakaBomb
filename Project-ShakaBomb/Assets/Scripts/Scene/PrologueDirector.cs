@@ -1,114 +1,170 @@
 ﻿//==============================================================================================
-/// File Name	: 
-/// Summary		: 
+/// File Name	: PrologueDirector.cs
+/// Summary		: プロローグシーンの管理を行うクラス
 //==============================================================================================
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using Common;
-using UnityEngine.SceneManagement;
-using System.Linq;
 //==============================================================================================
 public class PrologueDirector : MonoBehaviour
 {
-    enum PrologueState
+    //------------------------------------------------------------------------------------------
+    // const variable
+    //------------------------------------------------------------------------------------------
+    // カウントダウン
+    private readonly int COUNT_MAX = (300);
+    // ステート
+    private enum PrologueState
     {
-        Start,
-        Show,
-        CrossFade,
-        End,
+        START,
+        SHOW,
+        CROSS_FADE,
+        END,
     }
+    
+
+
     //------------------------------------------------------------------------------------------
     // member variable
     //------------------------------------------------------------------------------------------
-    //[SerializeField]
-    //List<FadeController> fadeControllers;
-    //[SerializeField]
-    //FadeController fadeScreen;
-    //[SerializeField]
-    //float fadeInterval;
-    //[SerializeField]
-    //float fadeValues;
-
-    //float count;
-    //int imageIndex = 0;
-    //bool startFadeOut = false;
-
+    // SlideObject(GameObject)
+    [SerializeField, Header("Slide Object"), Tooltip("SlideObjectをアタッチする")]
+    private SlideInObject slideObject = null;
+    // 音声ファイル(SE)
+    [SerializeField, Header("Pressed SE"), Tooltip("ボタンが押された際に再生したい音声ファイルをアタッチ")]
+    private AudioClip pressedSE = null;
+    // カウントダウン
+    private int countDown = ConstInteger.ZERO;
+    // イメージ
     [SerializeField]
     private List<Image> images = null;
+    // イメージのフェード時間
     [SerializeField]
-    private float fadeTime = 0;
+    private float fadeTime = ConstDecimal.ZERO;
+    // イメージの表示時間
     [SerializeField]
-    private float showTime = 0;
+    private float showTime = ConstDecimal.ZERO;
+    // クロスフェードの時間
     [SerializeField]
-    private float crossFadeTime = 0;
+    private float crossFadeTime = ConstDecimal.ZERO;
+    // ステート
+    private PrologueState state = PrologueState.START;
+    private int index = ConstInteger.ZERO;
+    private float timer = ConstDecimal.ZERO;
+    // 通過確認
+    private bool isStartPressed = false;
+    private bool isAnyPressed = false;
+    private bool isPassed = false;
 
-    private PrologueState state = PrologueState.Start;
-    private int index = 0;
-    private float timer = 0;
 
-	//------------------------------------------------------------------------------------------
-    // Awake
-	//------------------------------------------------------------------------------------------
-    private void Awake()
-    {
-    }
 
-	//------------------------------------------------------------------------------------------
-    // Start
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
+    // summary : Start
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
     private void Start()
     {
-        foreach(var image in images)
-        {
-            image.color = Color.clear;
-        }
-        images[0].color = Color.white;
-        FadeManager.fadeColor = Color.white;
-        FadeManager.FadeIn(fadeTime);
+        // 初期化処理
+        Init();
+
+        // フェードインを開始
+        FadeManager.FadeIn(ConstScene.FADE_TIME);
     }
 
-	//------------------------------------------------------------------------------------------
-    // Update
-	//------------------------------------------------------------------------------------------
-	private void Update()
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : Update
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Update()
+    {
+        // いずれかのボタンが押された
+        IsPressedAnyButton();
+
+        // ステートの切り替え処理
+        SwitchingState();
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : 初期化処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Init()
+    {
+        isStartPressed = false;
+        isAnyPressed = false;
+        countDown = COUNT_MAX;
+
+        if(!isPassed)
+        {
+            foreach (var image in images)
+            {
+                // 配列内のイメージを非表示
+                image.color = Color.clear;
+            }
+            // 1枚目のイメージを表示
+            images[0].color = Color.white;
+
+            // 通過確認
+            isPassed = true;
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : ステート切り替え
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void SwitchingState()
     {
         timer += Time.deltaTime;
+
         switch (state)
         {
-            case PrologueState.Start:
-                if(timer >= fadeTime)
+            case PrologueState.START:
+                if (timer >= fadeTime)
                 {
                     timer = 0;
-                    state = PrologueState.Show;
+                    state = PrologueState.SHOW;
                 }
                 break;
-            case PrologueState.Show:
-                if(timer >= showTime)
+            case PrologueState.SHOW:
+                if (timer >= showTime)
                 {
                     timer = 0;
-                    if(index < images.Count - 1)
+                    if (index < images.Count - 1)
                     {
-                        state = PrologueState.CrossFade;
+                        state = PrologueState.CROSS_FADE;
                         index++;
                     }
                     else
                     {
-                        state = PrologueState.End;
+                        state = PrologueState.END;
                         FadeManager.fadeColor = Color.black;
-                        FadeManager.FadeOut("TutorialScene", fadeTime);
+                        FadeManager.FadeOut(ConstScene.TUTORIAL, fadeTime);
                         SoundFadeController.SetFadeOutSpeed(1.0f / fadeTime / 60 * SoundFadeController.GetAudioSource().volume * 1.5f);
                     }
                 }
                 break;
-            case PrologueState.CrossFade:
+            case PrologueState.CROSS_FADE:
                 if (timer >= showTime)
                 {
                     images[index].color = Color.white;
                     timer = 0;
-                    state = PrologueState.Show;
+                    state = PrologueState.SHOW;
                 }
                 else
                 {
@@ -116,45 +172,116 @@ public class PrologueDirector : MonoBehaviour
                     images[index].color = new Color(1, 1, 1, alpha);
                 }
                 break;
-            case PrologueState.End:
+            case PrologueState.END:
                 break;
             default:
                 Debug.Log("PrologeState:error");
                 break;
         }
+    }
 
-        //count += Time.deltaTime;
-        //var i = imageIndex;
-        //i++;
-        //if(count >= fadeInterval && fadeControllers.Count() >= i)
-        //{
-        //    fadeControllers[imageIndex].SetFadeValue(Common.Decimal.ZERO);
-        //    fadeControllers[imageIndex].fade_type = false;
 
-        //    if (imageIndex == 3)
-        //    {
-        //        Debug.Log("yes");
-        //        if (!startFadeOut)
-        //        {
-        //            fadeScreen.SetFadeType(true);
-        //            fadeScreen.SetFadeValue(0.0f);
-        //            SoundFadeController.SetFadeOutSpeed(0.01f);
-        //        }
-        //        startFadeOut = true;
 
-        //        if (fadeScreen.GetFadeValue() == 1.0f)
-        //        {
-        //            SceneManager.LoadScene("TutorialScene");
-        //        }
-        //    }
+    //------------------------------------------------------------------------------------------
+    // summary : いずれかのボタンが押された際に行う処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void IsPressedAnyButton()
+    {
+        if (!isAnyPressed && Input.anyKey)
+        {
+            // UIの表示状態の取得
+            var isDisplay = slideObject.GetObjectState();
 
-        //    if (fadeControllers.Count() > i)
-        //    {
-        //        imageIndex++;
-        //        fadeControllers[imageIndex].fade_type = true;
-        //    }
+            if (!isDisplay)
+            {
+                // 通過確認
+                isAnyPressed = true;
 
-        //    count = Common.Decimal.ZERO;
-        //}
+                // UIのスライドインを開始
+                slideObject.PlayIn();
+            }
+        }
+
+        // STARTボタンが押されたか
+        IsPressedStartButton();
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : STARTボタンが押された際に行う処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void IsPressedStartButton()
+    {
+        if (isAnyPressed)
+        {
+            // UIの表示状態の取得
+            var isDisplay = slideObject.GetObjectState();
+
+            if(isDisplay)
+            {
+                // カウントダウン処理
+                CountDown();
+            }
+
+            // STARTボタンが押されたか
+            if (!isStartPressed && Input.GetKeyDown(KeyCode.Joystick1Button7))
+            {
+                // 通過確認
+                isStartPressed = true;
+
+                // SEを再生
+                SoundPlayer.Play(pressedSE);
+
+                // 遷移処理
+                Transition();
+            }
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : カウントダウン処理
+    // remarks : none
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void CountDown()
+    {
+        // カウントダウン
+        countDown--;
+
+        if (countDown < 0)
+        {
+            // UIのスライドアウトを開始
+            slideObject.PlayOut();
+
+            // 初期化処理
+            Init();
+        }
+    }
+
+
+
+    //------------------------------------------------------------------------------------------
+    // summary : 遷移処理
+    // remarks : チュートリアルシーンに遷移
+    // param   : none
+    // return  : none
+    //------------------------------------------------------------------------------------------
+    private void Transition()
+    {
+        // BGMのフェードアウトを開始
+        SoundFadeController.SetFadeOutSpeed(ConstScene.SOUND_FADE_TIME);
+
+        // フェードアウトを開始
+        FadeManager.FadeOut(ConstScene.TUTORIAL, ConstScene.FADE_TIME);
     }
 }
