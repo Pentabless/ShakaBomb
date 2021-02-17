@@ -2828,6 +2828,11 @@ PrefabInstance:
       propertyPath: doorWrapper
       value: 
       objectReference: {fileID: 42886054}
+    - target: {fileID: 7383620921653592841, guid: 19bbf27b380108a49b87dae6fd7fc102,
+        type: 3}
+      propertyPath: doorWrapper
+      value: 
+      objectReference: {fileID: 42886054}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19bbf27b380108a49b87dae6fd7fc102, type: 3}
 --- !u!4 &865233901 stripped
